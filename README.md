@@ -1,4 +1,2 @@
-# blog
-my blog site ♪(^∇^*)
-
+# blog site ♪(^∇^*)
 www.damonc.top
