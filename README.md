@@ -1,2 +1,3 @@
-# damonc-top.github.io
+# blog
 my blog site ♪(^∇^*)
+www.damonc.top
