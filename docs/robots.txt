@@ -2,4 +2,4 @@ User-agent: *
 
 Disallow: /norobots/
 
-Sitemap: http://www.damonc.com/sitemap.xml
+Sitemap: https://www.damonc.com/sitemap.xml
