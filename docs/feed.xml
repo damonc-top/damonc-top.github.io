@@ -1,1 +1,251 @@
-<feed xmlns="http://www.w3.org/2005/Atom"> <id>https://www.damonc.top/</id><title>afeng</title><subtitle>云上日志</subtitle> <updated>2022-11-22T23:58:29+08:00</updated> <author> <name>阿锋</name> <uri>https://www.damonc.top/</uri> </author><link rel="self" type="application/atom+xml" href="https://www.damonc.top/feed.xml"/><link rel="alternate" type="text/html" hreflang="zh-CN" href="https://www.damonc.top/"/> <generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator> <rights> © 2022 阿锋 </rights> <icon>/assets/img/favicons/favicon.ico</icon> <logo>/assets/img/favicons/favicon-96x96.png</logo> <entry><title>Unity Shader 延迟渲染(翻译十三)</title><link href="https://www.damonc.top/posts/Unity-Deferred-Shading13/" rel="alternate" type="text/html" title="Unity Shader 延迟渲染(翻译十三)" /><published>2018-01-10T20:00:00+08:00</published> <updated>2018-01-10T20:00:00+08:00</updated> <id>https://www.damonc.top/posts/Unity-Deferred-Shading13/</id> <content src="https://www.damonc.top/posts/Unity-Deferred-Shading13/" /> <author> <name>catlikecoding</name> </author> <category term="翻译" /> <category term="Shader" /> <summary> 本篇摘要: G-Buffer HDR与LDR Deffered反射 Deferred Rendering Path 到目前为止一直使用了Unity的Forward Render Path，现在开始学习Deferred Path，以及对比这两者间的差异 准备工作 通过Edit/Project Setting/Graphic切换Render Path； 关闭环境光、反射光； Quality设置阴影质量为最高，方便观察； 启用dynamic batching 开始对比Draw Calls 一共有64个Object可见物体组成一个Prefab。 通过对比这个prefab有和没有阴影，分别计算处于ForwardPath和DeferredPath下的Draw Call数。 $\downarrow$------Use Forward Path-... </summary> </entry> <entry><title>Unity 透明渲染(翻译十二)</title><link href="https://www.damonc.top/posts/Unity-Shader-Transparent12/" rel="alternate" type="text/html" title="Unity 透明渲染(翻译十二)" /><published>2018-01-09T20:00:00+08:00</published> <updated>2022-11-22T00:56:37+08:00</updated> <id>https://www.damonc.top/posts/Unity-Shader-Transparent12/</id> <content src="https://www.damonc.top/posts/Unity-Shader-Transparent12/" /> <author> <name>catlikecoding</name> </author> <category term="翻译" /> <category term="Shader" /> <summary> 本篇摘要: 支持镂空阴影 噪声 粗略的半透明阴影 镂空阴影和半透明阴影之间切换 镂空阴影 翻译11介绍了镂空渲染，可能也注意到了，物体的投射的阴影是物体本身的形状，跟镂空形状完全不一致。这是因为我们之前的Shader投射阴影只是简单的采样了光的方向和到达物体表面的距离，没有区分表面形状。 不符合现实的半透明阴影. 重写阴影 为了将透明度考虑在内，需要在阴影投射pass通道访问alpha值。这意味着我们要采样albedo纹理。然而，当仅用opaque渲染模式时就不需要采样，为此需要适配Shader变体。 现在的Shader已经集成了两个变体阴影，一是针对PointLight立方体阴影，二是针对其他类型灯光。现在增加第三个变体。改造一下之前的Shadow.cginc-略 裁剪阴影片段 就像渲染镂空... </summary> </entry> <entry><title>Unity 透明渲染(翻译十一)</title><link href="https://www.damonc.top/posts/Unity-Shader-Transparent11/" rel="alternate" type="text/html" title="Unity 透明渲染(翻译十一)" /><published>2018-01-08T20:00:00+08:00</published> <updated>2018-01-08T20:00:00+08:00</updated> <id>https://www.damonc.top/posts/Unity-Shader-Transparent11/</id> <content src="https://www.damonc.top/posts/Unity-Shader-Transparent11/" /> <author> <name>catlikecoding</name> </author> <category term="翻译" /> <category term="Shader" /> <summary> 本篇摘要: 剪纸镂空shader 渲染队列 半透明材质 合并反射和透明 Cutout-镂空渲染 要创建透明的材质，首先要了解每个片元的透明度。透明度信息存储在颜色的alpha通道，在我们的shader里是主纹理的alpha通道和调色值的alpha通道。 确定Alpha值 获取alpha值 //采样alpha float GetAlpha(Interpolators i){ return _Tint.a * tex2D(_MainTex, i.uv.xy).a; } 但是前面讲了SMOOTHNESS_ALBEDO值可能被用来确定平滑度，所以要在该值不被使用时才能采样该纹理的alpha值，避免错误 //采样alpha float GetAlpha(Interpolators i){ float alpha = _Tint.a; #if... </summary> </entry> <entry><title>Unity Shader GUI 扩展二(翻译十)</title><link href="https://www.damonc.top/posts/Unity-ShaderGUI-Extension10/" rel="alternate" type="text/html" title="Unity Shader GUI 扩展二(翻译十)" /><published>2018-01-07T22:00:00+08:00</published> <updated>2018-01-07T22:00:00+08:00</updated> <id>https://www.damonc.top/posts/Unity-ShaderGUI-Extension10/</id> <content src="https://www.damonc.top/posts/Unity-ShaderGUI-Extension10/" /> <author> <name>catlikecoding</name> </author> <category term="翻译" /> <category term="Shader" /> <summary> 本篇摘要: 把自身阴影烘焙进材质 增加细节纹理部分 支持更丰富的shader变体 一次编辑多个材质球 遮挡区域的Self-Shading 美术能够创作非常复杂丰富的表面纹理，它只是一个视错觉。为了增强表面纹理视觉真实感，引入Self-Shading。 如何增强呢？通常我们使用了法线来增强模型表面的凹凸层次感，法线带来的视觉增强是第一步，但是法线只适用于采样直接光照下。现在开始第二步增强，给凹凸表面引入阴影：凸向凹投射阴影 Occlusion Map 使用遮挡纹理增加self-shadings，也是灰度图，凹趋近黑色0。在Properties声明和拓展gui: [NoScaleOffset]_OcclusionMap("OcclusionMap", 2D) = "white"{} _Occlusion("Occlusion", Range(0,1)) ... </summary> </entry> <entry><title>Unity Shader GUI 扩展一(翻译九)</title><link href="https://www.damonc.top/posts/Unity-ShaderGUI-Extension9/" rel="alternate" type="text/html" title="Unity Shader GUI 扩展一(翻译九)" /><published>2018-01-07T20:00:00+08:00</published> <updated>2018-01-07T20:00:00+08:00</updated> <id>https://www.damonc.top/posts/Unity-ShaderGUI-Extension9/</id> <content src="https://www.damonc.top/posts/Unity-ShaderGUI-Extension9/" /> <author> <name>catlikecoding</name> </author> <category term="翻译" /> <category term="Shader" /> <summary> 本篇摘要: 自定义Shader GUI面板拓展 混合金属与非金属效果 非均匀平滑 表面自发光 自定义界面 自定义Shader界面功能，与自定义GUI面板类似，区别在于重实现函数不同。 myLightingShader vs standard. ShaderGUI 拓展 创建一脚本继承UnityEditor.ShaderGUI，脚本放入Editor文件夹下 using UnityEngine; namespace GUIExtension { public class MyCustomShaderGUI : UnityEditor.ShaderGUI { } } 同时在需要修改面板界面的Shader文件内，引用该类文件。注意命名空间也要带上 Sh... </summary> </entry> </feed>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bitfeng</title>
+    <description></description>
+    <link>www.damonc.top/</link>
+    <atom:link href="www.damonc.top/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 17 Dec 2022 17:27:54 +0800</pubDate>
+    <lastBuildDate>Sat, 17 Dec 2022 17:27:54 +0800</lastBuildDate>
+    <generator>Jekyll v4.2.2</generator>
+    
+      <item>
+        <title>Unity Shader Fog(翻译十四)</title>
+        <description>
+本篇摘要：
+&lt;ul&gt;
+  &lt;li&gt;应用雾到游戏对象&lt;/li&gt;
+  &lt;li&gt;基于距离或深度的雾&lt;/li&gt;
+  &lt;li&gt;支持deferred fog&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 10 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/10/test/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/10/test/</guid>
+        
+        <category>Shader</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity Shader 延迟渲染(翻译十三)</title>
+        <description>
+本篇摘要:
+&lt;ul&gt;
+  &lt;li&gt;G-Buffer&lt;/li&gt;
+  &lt;li&gt;HDR与LDR&lt;/li&gt;
+  &lt;li&gt;Deffered反射&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 10 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/10/Unity-Deferred-Shading13/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/10/Unity-Deferred-Shading13/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity 透明渲染(翻译十二)</title>
+        <description>
+本篇摘要:
+&lt;ul&gt;
+  &lt;li&gt;支持镂空阴影&lt;/li&gt;
+  &lt;li&gt;噪声&lt;/li&gt;
+  &lt;li&gt;粗略的半透明阴影&lt;/li&gt;
+  &lt;li&gt;镂空阴影和半透明阴影之间切换&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 09 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/09/Unity-Shader-Transparent12/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/09/Unity-Shader-Transparent12/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity 透明渲染(翻译十一)</title>
+        <description>
+本篇摘要:
+&lt;ul&gt;
+  &lt;li&gt;剪纸镂空shader&lt;/li&gt;
+  &lt;li&gt;渲染队列&lt;/li&gt;
+  &lt;li&gt;半透明材质&lt;/li&gt;
+  &lt;li&gt;合并反射和透明&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 08 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/08/Unity-Shader-Transparent11/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/08/Unity-Shader-Transparent11/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity Shader GUI 扩展二(翻译十)</title>
+        <description>
+本篇摘要:
+&lt;ul&gt;
+  &lt;li&gt;把自身阴影烘焙进材质&lt;/li&gt;
+  &lt;li&gt;增加细节纹理部分&lt;/li&gt;
+  &lt;li&gt;支持更丰富的shader变体&lt;/li&gt;
+  &lt;li&gt;一次编辑多个材质球&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 07 Jan 2018 22:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/07/Unity-ShaderGUI-Extension10/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/07/Unity-ShaderGUI-Extension10/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity Shader GUI 扩展一(翻译九)</title>
+        <description>
+本篇摘要:
+&lt;ul&gt;
+  &lt;li&gt;自定义Shader GUI面板拓展&lt;/li&gt;
+  &lt;li&gt;混合金属与非金属效果&lt;/li&gt;
+  &lt;li&gt;非均匀平滑&lt;/li&gt;
+  &lt;li&gt;表面自发光&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 07 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/07/Unity-ShaderGUI-Extension9/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/07/Unity-ShaderGUI-Extension9/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity Reflection 反射(翻译八)</title>
+        <description>
+本篇摘要:
+&lt;ul&gt;
+  &lt;li&gt;采样坏境&lt;/li&gt;
+  &lt;li&gt;使用reflection probes探针&lt;/li&gt;
+  &lt;li&gt;创建粗糙或光滑的镜面&lt;/li&gt;
+  &lt;li&gt;完成box投影与立方体采样&lt;/li&gt;
+  &lt;li&gt;混合两个探针&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 06 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/06/Unity-Reflection-8/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/06/Unity-Reflection-8/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity Shadow 阴影(翻译七)</title>
+        <description>
+本篇摘要:
+&lt;ul&gt;
+  &lt;li&gt;探索Unity中的阴影渲染&lt;/li&gt;
+  &lt;li&gt;投射一个方向光阴影&lt;/li&gt;
+  &lt;li&gt;接收一个方向光阴影&lt;/li&gt;
+  &lt;li&gt;支持对聚光源和点光源阴影&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 05 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/05/Unity-Shadows-7/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/05/Unity-Shadows-7/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity 纹理高级用法(翻译六)</title>
+        <description>
+本篇摘要:
+&lt;ul&gt;
+  &lt;li&gt;扰动法线以模拟凹凸视觉&lt;/li&gt;
+  &lt;li&gt;从高度场计算法线&lt;/li&gt;
+  &lt;li&gt;采样和混合法线贴图&lt;/li&gt;
+  &lt;li&gt;从切线空间转换到世界空间&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 04 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/04/Unity-Advance-Texture-6/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/04/Unity-Advance-Texture-6/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity 基础光照多光源采样(翻译五)</title>
+        <description>
+本篇摘要：
+&lt;ul&gt;
+  &lt;li&gt;使用多个光源渲染&lt;/li&gt;
+  &lt;li&gt;支持多光源类型&lt;/li&gt;
+  &lt;li&gt;使用光照信息&lt;/li&gt;
+  &lt;li&gt;计算顶点光照&lt;/li&gt;
+  &lt;li&gt;了解球谐函数&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 03 Jan 2018 09:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/03/Unity-Multi-Light-5/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/03/Unity-Multi-Light-5/</guid>
+        
+        <category>Shader</category>
+        
+        <category>Unity3d</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+  </channel>
+</rss>
