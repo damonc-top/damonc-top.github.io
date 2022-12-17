@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -320,8 +320,6 @@
 
 <h3 id="horizontal-rule">Horizontal Rule</h3>
 
-<hr />
-
 <h3 id="link">Link</h3>
 
 <p><a href="https://www.markdownguide.org">Markdown Guide</a></p>
@@ -370,9 +368,11 @@
   </tbody>
 </table>
 
-<p>:— 或者|   代表左对齐
-:–:        代表居中对齐
-—:        代表右对齐</p>
+<dl>
+  <dt>: 或者|   代表左对齐</dt>
+  <dt>:–:        代表居中对齐</dt>
+  <dd>代表右对齐</dd>
+</dl>
 
 <h3 id="fenced-code-block">Fenced Code Block</h3>
 
@@ -622,59 +622,61 @@ a_3x+b_3y+c_3z=d_3\\
 <h3 id="箭头">箭头</h3>
 
 <table>
-  <thead>
-    <tr>
-      <th style="text-align: center">短箭头形状</th>
-      <th>MarkDown</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
-      <td style="text-align: center">$\uparrow$</td>
+      <td>短箭头形状</td>
+      <td>MarkDown</td>
+    </tr>
+    <tr>
+      <td>::</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>$\uparrow$</td>
       <td>$\uparrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\Uparrow$</td>
+      <td>$\Uparrow$</td>
       <td>$\Uparrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\downarrow$</td>
+      <td>$\downarrow$</td>
       <td>$\downarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\Downarrow$</td>
+      <td>$\Downarrow$</td>
       <td>$\Downarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\leftarrow$</td>
+      <td>$\leftarrow$</td>
       <td>$\leftarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\Leftarrow$</td>
+      <td>$\Leftarrow$</td>
       <td>$\Leftarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\rightarrow$</td>
+      <td>$\rightarrow$</td>
       <td>$\rightarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\Rightarrow$</td>
+      <td>$\Rightarrow$</td>
       <td>$\Rightarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\updownarrow$</td>
+      <td>$\updownarrow$</td>
       <td>$\updownarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\Updownarrow$</td>
+      <td>$\Updownarrow$</td>
       <td>$\Updownarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\leftrightarrow$</td>
+      <td>$\leftrightarrow$</td>
       <td>$\leftrightarrow$</td>
     </tr>
     <tr>
-      <td style="text-align: center">$\Leftrightarrow$</td>
+      <td>$\Leftrightarrow$</td>
       <td>$\Leftrightarrow$</td>
     </tr>
   </tbody>
@@ -955,6 +957,27 @@ a_3x+b_3y+c_3z=d_3\\
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

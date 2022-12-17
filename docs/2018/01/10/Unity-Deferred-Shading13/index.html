@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -265,7 +265,6 @@
 </ul>
 
 <h2 id="deferred-rendering-path">Deferred Rendering Path</h2>
-<hr />
 
 <p>到目前为止一直使用了Unity的Forward Render Path，现在开始学习Deferred Path，以及对比这两者间的差异</p>
 
@@ -284,7 +283,7 @@
 
 <p>通过对比这个prefab有和没有阴影，分别计算处于ForwardPath和DeferredPath下的Draw Call数。</p>
 <center>
-<b>$\downarrow$------Use Forward Path------$\downarrow$</b>
+<b>$\downarrow$Use Forward Path$\downarrow$</b>
 </center>
 
 <p><strong>1. No Shadows</strong></p>
@@ -322,12 +321,12 @@
             <center><i><a>Forward，enable shadow.</a></i></center>    
         </font>
 <center>
-<b>$\uparrow$**------Use Forward Path------**$\uparrow$</b>
+<b>$\uparrow$**Use Forward Path**$\uparrow$</b>
 </center>
 
 <p>上面是分析前向渲染，下面是分析延迟渲染。</p>
 <center>
-<b>$\downarrow$**------Use Deferred Path------**$\downarrow$</b>
+<b>$\downarrow$**Use Deferred Path**$\downarrow$</b>
 </center>
 
 <p><strong>1. No Shadows</strong>
@@ -365,7 +364,7 @@
 三角形边缘仍然可以从MSAA中受益，但延迟的数据仍会混叠。 您必须依靠一个后处理过滤器来进行抗锯齿。</p>
 </blockquote>
 <center>
-<b>$\uparrow$**------Use Deferred Path------**$\uparrow$</b>
+<b>$\uparrow$**Use Deferred Path**$\uparrow$</b>
 </center>
 
 <h3 id="分析12的对比数据">分析1.2的对比数据</h3>
@@ -493,9 +492,9 @@
 <center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748906-1729642644.png" width="250" alt="loading failed, need vpn." /><body></body>
         <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085749514-1177384899.png" width="250" alt="loading failed, need vpn." /></center>
 
-<p>Albedo—-对应RT0；典型代表diffuse color<br />
+<p>Albedo-对应RT0；典型代表diffuse color<br />
 Specular–对应RT1；典型代表specular + roughness<br />
-Normal—-对应RT2；典型代表normals<br />
+Normal-对应RT2；典型代表normals<br />
 Emission–对应RT3；典型代表emission + reflection</p>
 
 <h3 id="混合使用deferred与forward渲染模型">混合使用Deferred与Forward渲染模型</h3>
@@ -526,7 +525,6 @@ Emission–对应RT3；典型代表emission + reflection</p>
         <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085753560-1117632710.png" width="250" alt="loading failed, need vpn." /></center>
 
 <h2 id="开始写deferred-shader">开始写Deferred Shader</h2>
-<hr />
 
 <p>增加一个Pass，指定光照标签Light Mode = “Deferred”，pass的顺序不重要。</p>
 
@@ -769,7 +767,6 @@ Emission–对应RT3；典型代表emission + reflection</p>
         </font>
 
 <h2 id="deferred-reflections">Deferred Reflections</h2>
-<hr />
 
 <p>展示不同渲染模式下的，探针照射区域过渡对比。下图显示了每个反射可混合多个反射探针。
 <!--url1 url2 url3 url4 url5
@@ -890,7 +887,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1095,7 +1092,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
     <div class="nex">
 
         
-        <p><strong>下一篇</strong> <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)</a></p>
+        <p><strong>下一篇</strong> <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)</a></p>
         
     </div>
 </div>
@@ -1184,6 +1181,27 @@ Emission–对应RT3；典型代表emission + reflection</p>
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

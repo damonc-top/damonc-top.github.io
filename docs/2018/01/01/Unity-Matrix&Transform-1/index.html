@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -266,7 +266,6 @@
 </ul>
 
 <h2 id="可视空间">可视空间</h2>
-<hr />
 
 <p>Unity Shader是怎么知道一个像素该画在哪个位置？下面是先展示一组Cube，一步步分析下去</p>
 
@@ -331,7 +330,6 @@
 </code></pre></div></div>
 
 <h2 id="空间变换">空间变换</h2>
-<hr />
 
 <p><em>positionning, rotating, and scaling</em></p>
 
@@ -519,7 +517,7 @@
         </font>
 
 <h2 id="旋转完全体">旋转完全体</h2>
-<hr />
+<p>-</p>
 
 <p>现在我们只能绕Z轴旋转，但是为了能够复刻Unity的Transform组件那样的旋转，现在就得要支持绕X轴和绕Y轴旋转。虽然分别绕这些轴旋转与绕Z轴旋转的方法相似，但是当一次同时绕多个轴旋转时这就很复杂了。目标：一次同时绕多个轴旋转，迎难而上。</p>
 
@@ -790,7 +788,6 @@ $+sin\theta$
 </code></pre></div></div>
 
 <h2 id="矩阵变换">矩阵变换</h2>
-<hr />
 
 <p><em>实现一个矩阵完成缩放、旋转、位移的计算</em></p>
 
@@ -1104,7 +1101,6 @@ z \over w\\
 <p>到目前为止只有位移变换需要第四行。所以缩放、旋转使用Matrix4x4.MultiplayPoint3x4计算速度会更快。现在就把Apply()方法改为虚方法，再由旋转、缩放组件重写，代码就不贴了。</p>
 
 <h2 id="3d到2d投影矩阵">3D到2D投影矩阵</h2>
-<hr />
 
 <p><em>到目前为止，我们能够把一个点的坐标从一个3D空间变换到另一个3D空间。但是这些点又如何展示到2D空间呢？这肯定需要一个从3D到2D的变换矩阵。那么我们开始寻找这个矩阵吧！</em></p>
 
@@ -1280,7 +1276,7 @@ $\rightarrow$
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1574,6 +1570,27 @@ $\rightarrow$
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

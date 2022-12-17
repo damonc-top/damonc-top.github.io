@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -271,7 +271,6 @@
 </ul>
 
 <h2 id="场景初始化">场景初始化</h2>
-<hr />
 
 <p>新建一个默认场景，新建一个圆球。这个默认场景本身进行了大量复杂的渲染，为了更容易的掌握Unity的渲染过程，我们先做一些简化设置，把默认的某些花里胡哨的东西先剥离掉。</p>
 
@@ -318,7 +317,6 @@
         </font>
 
 <h2 id="图像渲染">图像渲染</h2>
-<hr />
 
 <p>分两步绘制上面的场景，一是使用相机的背景色填充图像，然后再在上面画出球体的轮廓。</p>
 
@@ -626,7 +624,7 @@
 
 <p>然后看看Unity的shader汇编</p>
 
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//--------------D3D11-----------------</span>
+<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//--D3D11--</span>
 <span class="o">--</span> <span class="n">Vertex</span> <span class="n">shader</span> <span class="k">for</span> <span class="s">"d3d11"</span><span class="o">:</span>
 <span class="n">Shader</span> <span class="n">Disassembly</span><span class="o">:</span>
       <span class="n">vs_4_0</span>                            <span class="c1">//顶点着色器版本</span>
@@ -641,7 +639,7 @@
    <span class="mi">0</span><span class="o">:</span> <span class="n">mov</span> <span class="n">o0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">l</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
    <span class="mi">1</span><span class="o">:</span> <span class="n">ret</span>
 
-<span class="c1">//---------------GL CORE-----------</span>
+<span class="c1">//GL CORE--</span>
 <span class="cp">#ifdef VERTEX
 </span><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
 <span class="p">{</span>
@@ -666,14 +664,14 @@
 
 <p>为了得到模型空间的顶点坐标，给ertex顶点函数增加一条语义<em>POSITON</em>。而模型空间的顶点坐标是其次坐标。先直接返回这个顶点坐标，贴汇编：</p>
 
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//---D3d11-------</span>
+<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//D3d11-</span>
       <span class="n">vs_4_0</span>                            <span class="c1">//版本</span>
       <span class="n">dcl_input</span> <span class="n">v0</span><span class="p">.</span><span class="n">xyzw</span>                 <span class="c1">//申明v0 输入系统值</span>
       <span class="n">dcl_output_siv</span> <span class="n">o0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">position</span>  <span class="c1">//申明o0 输出系统值</span>
    <span class="mi">0</span><span class="o">:</span> <span class="n">mov</span> <span class="n">o0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">v0</span><span class="p">.</span><span class="n">xyzw</span>              <span class="c1">//把v0值 移动到 o0</span>
    <span class="mi">1</span><span class="o">:</span> <span class="n">ret</span>
 
-<span class="c1">//--GL CORE---</span>
+<span class="c1">//--GL CORE</span>
 <span class="cp">#ifdef VERTEX
 </span><span class="n">in</span>  <span class="n">vec4</span> <span class="n">in_POSITION0</span><span class="p">;</span>
 <span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
@@ -755,7 +753,6 @@
         </font>
 
 <h2 id="像素颜色">像素颜色</h2>
-<hr />
 
 <p>先给Fragment函数返回点东西，</p>
 
@@ -1243,7 +1240,7 @@
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1537,6 +1534,27 @@
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

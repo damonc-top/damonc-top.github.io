@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -280,7 +280,6 @@
 </ul>
 
 <h2 id="include-files">Include Files</h2>
-<hr />
 
 <p>为了给Shader增加支持多个光源，我们需要增加更多Pass通道。但是这些Pass最终包含了几乎完全相似的代码，为了避免代码的重复性，我们可以通过把着色器代码移动到一个CG文件，然后在Shader代码中引用该文件</p>
 
@@ -295,7 +294,6 @@
 </span></code></pre></div></div>
 
 <h2 id="第二光源-direction">第二光源-Direction</h2>
-<hr />
 
 <p>新建两个方向光对象，参数设置如下图：</p>
 
@@ -440,7 +438,6 @@
 <p>Unity渲染顺序是front-to-back，同时Unity喜欢把相似的物体分组。例如，sphere和cube分开，可避免在不同mesh网格间切换；或者把使用相同的material分组。</p>
 
 <h2 id="点光源point-lights">点光源Point Lights</h2>
-<hr />
 
 <p>先关闭两个方向光，再创建一个Point Light光。然后打开Frame Debugger调试查看。单步调试发现，第一次渲染的的纯黑色，然后才有怪异的光。</p>
 
@@ -600,7 +597,6 @@
 <p>需要在引用AutoLight文件之间宏定义POINT，才能呈现最终正确的画面.</p>
 
 <h2 id="混合光源-mixing-light">混合光源-Mixing Light</h2>
-<hr />
 
 <p>关闭Point Light再次打开两个Directional light，这里又出现了错误的addition pass计算，把minor 方向光作为点光源计算。为了解决它，我们引入Shader variant 变体。</p>
 
@@ -609,12 +605,12 @@
 <p>选中Shader文件，在Inspector点击Compileed code查看</p>
 
 <div file="cg" class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Total snippets: 2</span>
-<span class="c1">// -----------------------------------------</span>
+<span class="c1">// --</span>
 <span class="c1">// Snippet #0 platforms ffffffff:</span>
 
 <span class="n">Just</span> <span class="n">one</span> <span class="n">shader</span> <span class="n">variant</span><span class="p">.</span>
 
-<span class="c1">// -----------------------------------------</span>
+<span class="c1">// --</span>
 <span class="c1">// Snippet #1 platforms ffffffff:</span>
 
 <span class="n">Just</span> <span class="n">one</span> <span class="n">shader</span> <span class="n">variant</span><span class="p">.</span>
@@ -643,12 +639,12 @@
 <p>编译后能看见2个关键字：</p>
 
 <div file="cg" class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Total snippets: 2</span>
-<span class="c1">// -----------------------------------------</span>
+<span class="c1">// --</span>
 <span class="c1">// Snippet #0 platforms ffffffff:</span>
 
 <span class="n">Just</span> <span class="n">one</span> <span class="n">shader</span> <span class="n">variant</span><span class="p">.</span>
 
-<span class="c1">// -----------------------------------------</span>
+<span class="c1">// --</span>
 <span class="c1">// Snippet #1 platforms ffffffff:</span>
 <span class="n">DIRECTION</span> <span class="n">POINT</span>
 
@@ -685,7 +681,6 @@
         </font>
 
 <h2 id="聚光源-spotlights">聚光源-Spotlights</h2>
-<hr />
 
 <p>上面说了方向光和点光源，Unity还提供了聚光灯。聚光灯与点光源类似，不过它发射的是呈圆锥形光束。同样，为了支持聚光灯，需再加一个变体支持。</p>
 
@@ -693,7 +688,7 @@
 </span></code></pre></div></div>
 
 <p>查看增加了SPOT光源编译后的变体文件</p>
-<div file="cg" class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// -----------------------------------------</span>
+<div file="cg" class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// --</span>
 <span class="c1">// Snippet #1 platforms ffffffff:</span>
 <span class="n">DIRECTION</span> <span class="n">POINT</span> <span class="n">SPOT</span>
 
@@ -738,7 +733,6 @@
 </span></code></pre></div></div>
 
 <h2 id="光斑阴影-light-cookies">光斑阴影-Light Cookies</h2>
-<hr />
 
 <p>Cookies名字来源于剪影<code class="language-plaintext highlighter-rouge">[cucoloris]</code>，是指在电影、戏剧、摄影中为光线添加阴影。Unity支持3种light Cookies：DirectionLight、spotLight、pointLight。Cookie需要采样到纹理中。</p>
 
@@ -823,7 +817,6 @@
     </font>
 
 <h2 id="顶点光照计算-vertex-lights">顶点光照计算-Vertex Lights</h2>
-<hr />
 
 <p><strong>在Forward前向渲染路径，每个可见的物体都必须在BasePass中渲染一次。这个Pass只关心主方向光，而有cookie的方向光会忽略</strong>。在此之上其他多余的光会自动增加additive pass。因此有多少光就会产生多少Draw Call。</p>
 
@@ -1077,7 +1070,6 @@
     </font>
 
 <h2 id="球谐函数-spherical-harmonics">球谐函数-Spherical Harmonics</h2>
-<hr />
 
 <p>除了用像素光和顶点光以外，还可以用球谐函数计算支持所有光源类型。<strong>球谐函数思想是用一个函数描述入射光在球体表面某一点的情况</strong>。通常该函数用球坐标描述，但也可以用3D坐标。这允许使用物体的法向量来采样该函数。要创建该函数，需要采样所有方向上的光照强度，然后想办法转为一个连续函数。理想情况是在物体表面每个点都采样，但这是不现实的，这需要<strong>噪声理论算法</strong>近似模拟来完成。</p>
 
@@ -1396,7 +1388,7 @@ m|}cosθ,l∈N, –l ≤ m ≤ l$
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1690,6 +1682,27 @@ m|}cosθ,l∈N, –l ≤ m ≤ l$
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

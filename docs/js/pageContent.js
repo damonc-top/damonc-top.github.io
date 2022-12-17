@@ -74,7 +74,6 @@ function isMaxHeight() {
     if (window.innerWidth <= 770) {
         var anchorBtn = document.querySelector('.anchor')
         var rightDiv = document.querySelector('.right')
-
         /**
          * 监听锚点按钮
          */

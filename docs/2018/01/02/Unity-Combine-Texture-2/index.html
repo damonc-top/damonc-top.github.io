@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -255,7 +255,6 @@
 </ul>
 
 <h2 id="纹理合并">纹理合并</h2>
-<hr />
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
@@ -596,7 +595,7 @@
 <div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Output signature:</span>
 <span class="c1">//</span>
 <span class="c1">// Name                 Index   Mask Register SysValue  Format   Used</span>
-<span class="c1">// -------------------- ----- ------ -------- -------- ------- ------</span>
+<span class="c1">// -- --  -- -- - </span>
 <span class="c1">// SV_POSITION              0   xyzw        0      POS   float   xyzw</span>
 <span class="c1">// TEXCOORD                 0   xy          1     NONE   float   xy  </span>
 <span class="c1">// TEXCOORD                 1     zw        1     NONE   float     zw</span>
@@ -771,7 +770,6 @@
 <p>通过这种更改，无论我们在哪个颜色空间中渲染，我们的细节材质看起来都一样。</p>
 
 <h2 id="纹理splat过渡遮罩">纹理splat过渡遮罩</h2>
-<hr />
 
 <p>细节纹理的一个限制是对整个表面使用相同的细节。 这适用于均匀的表面，如大理石板。但是，如果材质没有统一的外观，不希望在任何地方都使用相同的细节。</p>
 
@@ -1076,7 +1074,7 @@
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1370,6 +1368,27 @@
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

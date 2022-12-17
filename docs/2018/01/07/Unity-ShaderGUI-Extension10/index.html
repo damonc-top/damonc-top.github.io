@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -253,7 +253,6 @@
 </ul>
 
 <h2 id="遮挡区域的self-shading">遮挡区域的Self-Shading</h2>
-<hr />
 
 <p>美术能够创作非常复杂丰富的表面纹理，它只是一个视错觉。为了增强表面纹理视觉真实感，引入Self-Shading。</p>
 
@@ -419,7 +418,6 @@ _shader_feature _OCCLUSION_MAP</p>
 </ul>
 
 <h2 id="细节纹理">细节纹理</h2>
-<hr />
 
 <p>增加细节纹理和法线，把细节纹理和法线设置为fade-out mipmap。
 <!--url1 url2 url3 url4 url5
@@ -491,7 +489,7 @@ _shader_feature _OCCLUSION_MAP</p>
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -785,6 +783,27 @@ _shader_feature _OCCLUSION_MAP</p>
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

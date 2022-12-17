@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -267,7 +267,6 @@
 </ul>
 
 <h2 id="环境映射-environment-mapping">环境映射-Environment Mapping</h2>
-<hr />
 
 <p>一块完美的镜子是不会发生漫反射，但现在我们自己的Shader包含的光照：环境光、漫反射、高光反射、纹理、阴影，结果看起来蛮好。但是当把Metallic设为1，Smoothness设位0.95，看起来很亮就很不自然了。从下图看尽管颜色是白色但整个表面都是黑色，只有一个很小的高亮点。这个亮点形成1是光源的入射，2朝向观察者的反射。
 <!--url1 url2 url3 url4 url5
@@ -384,7 +383,6 @@
 <p>Type可以设置位bake或realtime，不管那种模式都会渲染6次。其中realtime模式下可以让程序通过代码配置：采样频率、在满足某种情况下激活采样，这能适当地节省运行时计算量。而烘焙模式下，需要把物体设置为静态模式。</p>
 
 <h2 id="有瑕疵的反射">有瑕疵的反射</h2>
-<hr />
 
 <p>只有完美的光滑表面才能产生完美的反射，越粗糙的表面它的漫反射越多。<strong>如何模拟暗淡的模糊镜面反射</strong>？</p>
 
@@ -449,7 +447,7 @@
 
 <p><code class="language-plaintext highlighter-rouge">这是Unity_GlossyEnvironment函数，内部计算细节与我们计算大致相同。</code></p>
 
-<div file="cg" class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ----------------------------------------------------------------------------</span>
+<div file="cg" class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// -</span>
 <span class="n">half3</span> <span class="nf">Unity_GlossyEnvironment</span> <span class="p">(</span><span class="n">UNITY_ARGS_TEXCUBE</span><span class="p">(</span><span class="n">tex</span><span class="p">),</span> <span class="n">half4</span> <span class="n">hdr</span><span class="p">,</span> <span class="n">Unity_GlossyEnvironmentData</span> <span class="n">glossIn</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">half</span> <span class="n">perceptualRoughness</span> <span class="o">=</span> <span class="n">glossIn</span><span class="p">.</span><span class="n">roughness</span> <span class="cm">/* perceptualRoughness */</span> <span class="p">;</span>
@@ -543,7 +541,7 @@
         </font>
 
 <h2 id="box投影">Box投影</h2>
-<hr />
+
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
@@ -691,7 +689,7 @@
 
 <p>Unity也提供了计算采样boxProjection反射方向的函数：<code class="language-plaintext highlighter-rouge">BoxProjectedCubemapDirection</code>定义在_UnityStandardUtils文件中。不使用的原因是对方向做了归一化，前面讲了任何非零向量都可采样。</p>
 
-<div file="cg" class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//-------------------------------------------------------------------------------------</span>
+<div file="cg" class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//-</span>
 <span class="kr">inline</span> <span class="n">half3</span> <span class="nf">BoxProjectedCubemapDirection</span> <span class="p">(</span><span class="n">half3</span> <span class="n">worldRefl</span><span class="p">,</span> <span class="n">float3</span> <span class="n">worldPos</span><span class="p">,</span> <span class="n">float4</span> <span class="n">cubemapCenter</span><span class="p">,</span> <span class="n">float4</span> <span class="n">boxMin</span><span class="p">,</span> <span class="n">float4</span> <span class="n">boxMax</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// Do we have a valid reflection probe?</span>
@@ -723,7 +721,6 @@
 </code></pre></div></div>
 
 <h2 id="混合反射探针">混合反射探针</h2>
-<hr />
 
 <p>在探针组件定义的立方体区域边界切换时，如何做到自然过渡？
 <!--url1 url2 url3 url4 url5
@@ -845,7 +842,7 @@
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1139,6 +1136,27 @@
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

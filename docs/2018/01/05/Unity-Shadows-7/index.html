@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -269,7 +269,6 @@
 </ul>
 
 <h2 id="方向光阴影-direction">方向光阴影-Direction</h2>
-<hr />
 
 <p>前面写的光照shader产生了相当真实的效果，可它假设着来自每个光源的光线最终都会击中它的片元，但是这只有在那些光线没有被遮挡才成立。</p>
 
@@ -625,7 +624,6 @@
 <p>当然也有FXAA，是<strong>屏幕后处理抗锯齿</strong>，效果挺好！</p>
 
 <h2 id="投射阴影">投射阴影</h2>
-<hr />
 
 <p>通过上面我们知道了Unity如何创建方向光阴影，是时候写自己的Shader来支持阴影了。当前光照shader既不支持投射阴影也不支持接收阴影。</p>
 
@@ -733,7 +731,6 @@
 <p>写完就具备了完全的阴影投射</p>
 
 <h2 id="接收阴影">接收阴影</h2>
-<hr />
 
 <p>First,我们先关注主方向光的阴影，因为该光源属于BasePass，必须要先适配。<strong>当主方向光投射阴影，Unity会找一个启用了SHADOWS_SCREEN关键字的shader变体</strong>。所以我们要在Base Pass创建两个变体，同之前使用顶点光关键字类似：一个无，一个是该关键字。</p>
 
@@ -744,7 +741,7 @@
 <p>该basePass有两个multi_compile指令，每个都是单关键字。因此编译后这里会有4个变体：</p>
 
 <div file="cg" class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Total snippets: 3</span>
-<span class="c1">// -----------------------------------------</span>
+<span class="c1">// --</span>
 <span class="c1">// Snippet #0 platforms ffffffff:</span>
 <span class="n">SHADOWS_SCREEN</span> <span class="n">VERTEXLIGHT_ON</span>
 
@@ -918,7 +915,6 @@ Third,需要获取屏幕空间纹理坐标，从顶点函数传递给片元函�
 </code></pre></div></div>
 
 <h2 id="聚光灯阴影">聚光灯阴影</h2>
-<hr />
 
 <p>关闭方向光，增加聚光灯后，竟然直接有阴影了。这是Unity宏带来的便利。
 <!--url1 url2 url3 url4 url5
@@ -960,7 +956,7 @@ Third,需要获取屏幕空间纹理坐标，从顶点函数传递给片元函�
 
 <div file="cg" class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//阴影坐标把顶点坐标从模型空间转到世界空间再转到光的阴影空间得到。</span>
 
-<span class="c1">// ---- Spot light shadows</span>
+<span class="c1">// - Spot light shadows</span>
 <span class="cp">#if defined (SHADOWS_DEPTH) &amp;&amp; defined (SPOT)
 </span>
 <span class="cp">#define SHADOW_COORDS(idx1) unityShadowCoord4 _ShadowCoord : TEXCOORD##idx1;
@@ -1039,7 +1035,6 @@ Third,需要获取屏幕空间纹理坐标，从顶点函数传递给片元函�
 </code></pre></div></div>
 
 <h2 id="点光源阴影">点光源阴影</h2>
-<hr />
 
 <p>如果直接使用点光源，会有编译报错：undeclared identifier ‘UnityDecodeCubeShadowDepth’。该函数在_UnityCG.cginc_文件。
 <!--url1 url2 url3 url4 url5
@@ -1077,7 +1072,7 @@ Third,需要获取屏幕空间纹理坐标，从顶点函数传递给片元函�
 
 <div file="cg" class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma multi_compile_shadowcaster
 </span>
-<span class="c1">// -----------------------------------------</span>
+<span class="c1">// --</span>
 <span class="c1">// Snippet #2 platforms ffffffff:</span>
 <span class="n">SHADOWS_CUBE</span> <span class="n">SHADOWS_DEPTH</span>
 
@@ -1155,14 +1150,14 @@ Third,需要获取屏幕空间纹理坐标，从顶点函数传递给片元函�
 <p>在additional pass的编译指令，Unity宏已经做了。</p>
 
 <div file="cg" class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//同样计算光的方向，然后采样cubeMap。区别是float3类型而不是float4，不需要齐次坐标。</span>
-<span class="c1">// ---- Point light shadows</span>
+<span class="c1">// - Point light shadows</span>
 <span class="cp">#if defined (SHADOWS_CUBE)
 #define SHADOW_COORDS(idx1) unityShadowCoord3 _ShadowCoord : TEXCOORD##idx1;
 #define TRANSFER_SHADOW(a) a._ShadowCoord = mul(unity_ObjectToWorld, v.vertex).xyz - _LightPositionRange.xyz;
 #define SHADOW_ATTENUATION(a) UnitySampleShadowmap(a._ShadowCoord)
 #endif
 </span>
-<span class="c1">// ------------------------------------------------------------------</span>
+<span class="c1">// </span>
 <span class="c1">// Point light shadows</span>
 <span class="c1">//在这种情况下，UnitySampleShadowmap采样一个立方体地图，而不是2D纹理。</span>
 <span class="cp">#if defined (SHADOWS_CUBE)
@@ -1226,7 +1221,7 @@ Third,需要获取屏幕空间纹理坐标，从顶点函数传递给片元函�
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1520,6 +1515,27 @@ Third,需要获取屏幕空间纹理坐标，从顶点函数传递给片元函�
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

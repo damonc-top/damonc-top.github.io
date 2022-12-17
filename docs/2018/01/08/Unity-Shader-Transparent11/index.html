@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -261,7 +261,6 @@
 </ul>
 
 <h2 id="cutout-镂空渲染">Cutout-镂空渲染</h2>
-<hr />
 
 <p>要创建透明的材质，首先要了解每个片元的透明度。透明度信息存储在颜色的alpha通道，在我们的shader里是主纹理的alpha通道和调色值的alpha通道。</p>
 
@@ -402,7 +401,7 @@
 </code></pre></div></div>
 
 <h2 id="半透明-淡入淡出渲染">半透明-淡入淡出渲染</h2>
-<hr />
+<p>-</p>
 
 <p>Cutout渲染<strong>局限性</strong>：</p>
 <ol>
@@ -595,7 +594,6 @@
         </font>
 
 <h2 id="全透明渲染-逼真的材质">全透明渲染-逼真的材质</h2>
-<hr />
 
 <p>Fade缺点：</p>
 <ul>
@@ -675,7 +673,7 @@
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -969,6 +967,27 @@
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>

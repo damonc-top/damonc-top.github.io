@@ -63,7 +63,7 @@
     <header id="top">
     <div class="wrapper">
         <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but intresting.</small>
+        <small>maybe useless, but interesting.</small>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -265,7 +265,6 @@
 </ul>
 
 <h2 id="自定义界面">自定义界面</h2>
-<hr />
 
 <p>自定义Shader界面功能，与自定义GUI面板类似，区别在于重实现函数不同。</p>
 
@@ -509,7 +508,6 @@
         </font>
 
 <h2 id="金属纹理">金属纹理</h2>
-<hr />
 
 <p>如何混合金属与非金属纹理，两个不同光泽的纹理如何混合？
 <!--url1 url2 url3 url4 url5
@@ -755,7 +753,6 @@
         </font>
 
 <h2 id="自发光">自发光</h2>
-<hr />
 
 <p>通过模拟材质表面光源效果，只需要在basePase采样一次即可。</p>
 
@@ -829,7 +826,7 @@
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/test/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1123,6 +1120,27 @@
         easing: 'easeInOutCubic', // Easing pattern to use
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
+
+      function displayWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            var rightDiv = document.querySelector('.right')
+            var footer = document.querySelector('.site-footer')
+            console.log(w, h)
+            if(w <= 1700){
+                rightDiv.style.visibility = "hidden";
+                footer.style.visibility = "hidden";
+            }else{
+                rightDiv.style.visibility = "visible";
+                footer.style.visibility = "visible";
+            }
+        }
+
+        // 将事件侦听器函数附加到窗口的resize事件
+        window.addEventListener("resize", displayWindowSize);
+
+        // 第一次调用该函数
+        displayWindowSize();
     </script>
     <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
