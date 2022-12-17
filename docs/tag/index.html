@@ -1339,13 +1339,12 @@
             var h = document.documentElement.clientHeight;
             var rightDiv = document.querySelector('.right')
             var footer = document.querySelector('.site-footer')
-            console.log(w, h)
             if(w <= 1700){
-                rightDiv.style.visibility = "hidden";
-                footer.style.visibility = "hidden";
+                rightDiv.style.display='none';
+                footer.style.display='none';
             }else{
-                rightDiv.style.visibility = "visible";
-                footer.style.visibility = "visible";
+                rightDiv.style.display='block';
+                footer.style.display = "block";
             }
         }
 
