@@ -138,7 +138,11 @@
                 </div>
                 <ul class="content-ul" recent>
                     
-                        <li><a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)</a></li>
+                        <li><a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六)</a></li>
+                    
+                        <li><a href="/2018/01/17/Unity-Deferred-Lights15/">Unity Deferred Lights-延迟光照(翻译十五)</a></li>
+                    
+                        <li><a href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四)</a></li>
                     
                         <li><a href="/2018/01/10/Unity-Deferred-Shading13/">Unity Shader 延迟渲染(翻译十三)</a></li>
                     
@@ -153,10 +157,6 @@
                         <li><a href="/2018/01/06/Unity-Reflection-8/">Unity Reflection 反射(翻译八)</a></li>
                     
                         <li><a href="/2018/01/05/Unity-Shadows-7/">Unity Shadow 阴影(翻译七)</a></li>
-                    
-                        <li><a href="/2018/01/04/Unity-Advance-Texture-6/">Unity 纹理高级用法(翻译六)</a></li>
-                    
-                        <li><a href="/2018/01/03/Unity-Multi-Light-5/">Unity 基础光照多光源采样(翻译五)</a></li>
                     
                 </ul>
             </div>
@@ -183,7 +183,7 @@
                             <span class="name">
                                 翻译
                             </span>
-                            <span class="badge">15</span>
+                            <span class="badge">17</span>
                         </a>
                     </li>
                     
@@ -230,7 +230,14 @@
                       
                       
                       
-                      <a href="/tag/#Unity3d" style="font-size: 17.5pt; color: #111;">Unity3d</a>
+                      <a href="/tag/#Unity3d" style="font-size: 16pt; color: #222;">Unity3d</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Unity3D" style="font-size: 10pt; color: #888;">Unity3D</a>
                     
                 </div>
             </div>
@@ -256,11 +263,11 @@
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)</a>
+                  <a class="post-link" href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六)</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2018-01-10
+                        <i class="fa fa-calendar"></i>2018-01-19
                     </div>
                     <div class="label-card">
                         <i class="fa fa-user"></i>catlikecoding
@@ -296,6 +303,141 @@
   <i class="fa fa-tags"></i>
   
     
+        <a href="/tag/#Unity3D" title="Tag: Unity3D" rel="tag">Unity3D</a>&nbsp;
+    
+        <a href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</a>
+    
+  
+
+</span>
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                    
+<p>实时光照计算的开销非常昂贵。根据翻译13，延迟渲染允许程序员使用的光源可以多于Forward渲染，但阴影的开销仍然对性能有一个限制。如果我们的场景是动态的，那么没有办法来避免执行这些计算。但是如果光源和几何物体位置都是不变的，那么我们可以只计算一次光照并重复使用。这使得我们可以在场景中放置许多光源，而不必在运行的时候再渲染它们。这种方法也可以使用那些不能用作实时光源的区域光源(area lighting)。</p>
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2018/01/19/Unity-Static-Lightting16/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2018/01/17/Unity-Deferred-Lights15/">Unity Deferred Lights-延迟光照(翻译十五)</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2018-01-17
+                    </div>
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>catlikecoding
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#翻译" title="Category: 翻译" rel="category">翻译</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#Unity3D" title="Tag: Unity3D" rel="tag">Unity3D</a>&nbsp;
+    
+        <a href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</a>
+    
+  
+
+</span>
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                    
+<p>本篇摘要：</p>
+<ul>
+  <li>自定义灯光渲染</li>
+  <li>解码LDR颜色</li>
+  <li>增加独立Pass渲染光</li>
+  <li>支持方向光、点光源、聚光灯</li>
+  <li>手动采样阴影纹理</li>
+</ul>
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2018/01/17/Unity-Deferred-Lights15/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四)</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2018-01-15
+                    </div>
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>catlikecoding
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#翻译" title="Category: 翻译" rel="category">翻译</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#Unity3D" title="Tag: Unity3D" rel="tag">Unity3D</a>&nbsp;
+    
         <a href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</a>
     
   
@@ -315,7 +457,7 @@
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2018/01/10/UNity-Shader-Fog14/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2018/01/15/Unity-Shader-Fog14/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
@@ -799,145 +941,6 @@
                 </div>
                 <div class="read-all">
                     <a  href="/2018/01/05/Unity-Shadows-7/"><i class="fa fa-newspaper-o"></i>Read All</a>
-                </div>
-                <hr>
-              </li>
-            
-              <li>
-                <h2>
-                  <a class="post-link" href="/2018/01/04/Unity-Advance-Texture-6/">Unity 纹理高级用法(翻译六)</a>
-                </h2>
-                <div class="label">
-                    <div class="label-card">
-                        <i class="fa fa-calendar"></i>2018-01-04
-                    </div>
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>catlikecoding
-                        
-                    </div>
-                    <div class="label-card">
-                        
-                    </div>
-
-                    <div class="label-card">
-                    
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#翻译" title="Category: 翻译" rel="category">翻译</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-                    </div>
-
-                    <div class="label-card">
-                    
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <a href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</a>&nbsp;
-    
-        <a href="/tag/#Unity3d" title="Tag: Unity3d" rel="tag">Unity3d</a>
-    
-  
-
-</span>
-
-                    </div>
-                </div>
-                <div class="excerpt">
-                    
-<p>本篇摘要:</p>
-<ul>
-  <li>扰动法线以模拟凹凸视觉</li>
-  <li>从高度场计算法线</li>
-  <li>采样和混合法线贴图</li>
-  <li>从切线空间转换到世界空间</li>
-</ul>
-
-                </div>
-                <div class="read-all">
-                    <a  href="/2018/01/04/Unity-Advance-Texture-6/"><i class="fa fa-newspaper-o"></i>Read All</a>
-                </div>
-                <hr>
-              </li>
-            
-              <li>
-                <h2>
-                  <a class="post-link" href="/2018/01/03/Unity-Multi-Light-5/">Unity 基础光照多光源采样(翻译五)</a>
-                </h2>
-                <div class="label">
-                    <div class="label-card">
-                        <i class="fa fa-calendar"></i>2018-01-03
-                    </div>
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>catlikecoding
-                        
-                    </div>
-                    <div class="label-card">
-                        
-                    </div>
-
-                    <div class="label-card">
-                    
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#翻译" title="Category: 翻译" rel="category">翻译</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-                    </div>
-
-                    <div class="label-card">
-                    
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <a href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</a>&nbsp;
-    
-        <a href="/tag/#Unity3d" title="Tag: Unity3d" rel="tag">Unity3d</a>
-    
-  
-
-</span>
-
-                    </div>
-                </div>
-                <div class="excerpt">
-                    
-<p>本篇摘要：</p>
-<ul>
-  <li>使用多个光源渲染</li>
-  <li>支持多光源类型</li>
-  <li>使用光照信息</li>
-  <li>计算顶点光照</li>
-  <li>了解球谐函数</li>
-</ul>
-
-                </div>
-                <div class="read-all">
-                    <a  href="/2018/01/03/Unity-Multi-Light-5/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>

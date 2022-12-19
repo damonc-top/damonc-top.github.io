@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="www.damonc.top/2018/01/10/UNity-Shader-Fog14/">
+    <link rel="canonical" href="www.damonc.top/2018/01/15/Unity-Shader-Fog14/">
     <link rel="alternate" type="application/rss+xml" title="bitfeng" href="www.damonc.top/feed.xml ">
     
 
@@ -172,7 +172,7 @@
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2018-01-10
+                <i class="fa fa-calendar"></i>2018-01-15
             </div>
 
             <div class="label-card">
@@ -209,6 +209,9 @@
 <span class="pageTag">
   <i class="fa fa-tags"></i>
   
+    
+        <!--a href="/tag/#Unity3D" title="Tag: Unity3D" rel="tag">Unity3D</a-->
+        <b href="/tag/#Unity3D" title="Tag: Unity3D" rel="tag">Unity3D</b>&nbsp;
     
         <!--a href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</a-->
         <b href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</b>
@@ -321,7 +324,7 @@ f值 被限定在[0, 1]范围，被用在雾和物体着色之间插值。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235204598-417023262.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235204598-417023262.png" width="150" alt="loading failed, need vpn." /></center>
 
 <p>d 是fog的密度因子；<br />
 c 是距离因子。</p>
@@ -341,7 +344,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235207307-166956062.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235207307-166956062.png" width="150" alt="loading failed, need vpn." /></center>
 
 <h3 id="渲染雾-adding-fog">渲染雾-Adding Fog</h3>
 
@@ -403,7 +406,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235208597-1924410952.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235208597-1924410952.png" width="350" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>linear：standard vs. mine.</a></i></center>    
         </font>
@@ -411,7 +414,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235209833-525170101.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235209833-525170101.png" width="350" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>exp：standard vs. mine.</a></i></center>    
         </font>
@@ -419,7 +422,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235210707-599317063.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235210707-599317063.png" width="350" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>exp2：standard vs. mine.</a></i></center>    
         </font>
@@ -776,7 +779,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
             <center><i><a>Image每个像素发射一条射线.</a></i></center>    
         </font>
 
-<p>若击中某个物体，那么对应像素的深度就要小于1. 如果，该射线在半道击中了物体，射线对应的像素深度值就是1/2.这就意味着射线对应的Z值 = 射线击中物体时的长度 ➗ 射线总长度。范围[0, 1]。又由于射线的方向都是一致的，X和Y坐标也应该减半。</p>
+<p>若击中某个物体，那么对应像素的深度就要小于1. 如果，该射线在半道击中了物体，射线对应的像素深度值就是1/2.这就意味着 $射线对应的Z值 ={射线击中物体时的长度\over射线总长度}$。范围[0, 1]。又由于射线的方向都是一致的，X和Y坐标也应该减半。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
@@ -902,6 +905,56 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
                         <ul>
                         
                         <li class="relatedPost">
+                            <a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六)
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2018/01/17/Unity-Deferred-Lights15/">Unity Deferred Lights-延迟光照(翻译十五)
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
                             <a href="/2018/01/10/Unity-Deferred-Shading13/">Unity Shader 延迟渲染(翻译十三)
                             
                             </a>
@@ -914,10 +967,14 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
                 
                     
                 
+                    
+                
             
         
             
             
+                
+                    
                 
                     
                         
@@ -934,10 +991,14 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
                 
                     
                 
+                    
+                
             
         
             
             
+                
+                    
                 
                     
                         
@@ -954,10 +1015,14 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
                 
                     
                 
+                    
+                
             
         
             
             
+                
+                    
                 
                     
                         
@@ -974,24 +1039,6 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
                 
                     
                 
-            
-        
-            
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/07/Unity-ShaderGUI-Extension9/">Unity Shader GUI 扩展一(翻译九)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-            
-                
                     
                 
             
@@ -1000,17 +1047,12 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
             
                 
                     
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/06/Unity-Reflection-8/">Unity Reflection 反射(翻译八)
-                            
-                            </a>
-                        </li>
-                        
-                        
+                
                     
                 
             
+                
+                    
                 
                     
                 
@@ -1021,7 +1063,11 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
                 
                     
                 
+                    
+                
             
+                
+                    
                 
                     
                 
@@ -1032,7 +1078,11 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
                 
                     
                 
+                    
+                
             
+                
+                    
                 
                     
                 
@@ -1043,18 +1093,11 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
                 
                     
                 
-            
-                
                     
                 
             
-        
-            
-            
                 
                     
-                
-            
                 
                     
                 
@@ -1073,6 +1116,8 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
     <div class="nex">
 
         
+        <p><strong>下一篇</strong> <a href="/2018/01/17/Unity-Deferred-Lights15/">Unity Deferred Lights-延迟光照(翻译十五)</a></p>
+        
     </div>
 </div>
 
@@ -1088,8 +1133,8 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
      * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
      */
     var disqus_config = function() {
-        this.page.url = 'www.damonc.top/2018/01/10/UNity-Shader-Fog14/'; // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'www.damonc.top/2018/01/10/UNity-Shader-Fog14/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'www.damonc.top/2018/01/15/Unity-Shader-Fog14/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'www.damonc.top/2018/01/15/Unity-Shader-Fog14/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 
     (function() { // DON'T EDIT BELOW THIS LINE

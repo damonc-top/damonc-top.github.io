@@ -452,7 +452,7 @@
 
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">MyFragmentProgram</span><span class="p">()</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="n">MyFragmentProgram</span><span class="p">()</span> <span class="p">{</span>
 
 <span class="p">}</span>
 
@@ -527,7 +527,7 @@
 <span class="cp">#endif
 </span>
 <span class="cp">#ifdef FRAGMENT
-</span><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
@@ -566,7 +566,7 @@
 
     <span class="p">}</span>
 
-    <span class="kt">void</span> <span class="nf">MyFragmentProgram</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">MyFragmentProgram</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="p">}</span>
 
@@ -648,7 +648,7 @@
 </span>
 <span class="cp">#ifdef FRAGMENT
 </span><span class="n">layout</span><span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">out</span> <span class="n">vec4</span> <span class="n">SV_TARGET0</span><span class="p">;</span>
-<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="n">SV_TARGET0</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">);</span>
     <span class="k">return</span><span class="p">;</span>
@@ -757,7 +757,7 @@
 <div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="nf">MyFragmentProgram</span><span class="p">(</span><span class="n">float4</span> <span class="n">position</span> <span class="o">:</span> <span class="n">SV_POSITION</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">float4</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <!--url1 url2 url3 url4 url5
@@ -822,14 +822,14 @@
     <span class="k">return</span> <span class="n">UnityObjectToClipPos</span><span class="p">(</span><span class="n">position</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">float4</span> <span class="nf">MyFragmentProgram</span>
+<span class="n">float4</span> <span class="n">MyFragmentProgram</span>
 <span class="p">(</span>
     <span class="n">float4</span> <span class="n">position</span> <span class="o">:</span> <span class="n">SV_POSITION</span><span class="p">,</span>
     <span class="n">float3</span> <span class="n">localPosition</span> <span class="o">:</span> <span class="n">TEXCOORD0</span>
 <span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">float4</span><span class="p">(</span><span class="n">localPosition</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <!--url1 url2 url3 url4 url5
@@ -849,17 +849,17 @@
     <span class="n">float3</span> <span class="n">localPosition</span> <span class="o">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">Interpolators</span> <span class="nf">MyVertexProgram</span> <span class="p">(</span><span class="n">float4</span> <span class="n">position</span><span class="o">:</span> <span class="n">POSITION</span> <span class="p">){</span>
+<span class="n">Interpolators</span> <span class="n">MyVertexProgram</span> <span class="p">(</span><span class="n">float4</span> <span class="n">position</span><span class="o">:</span> <span class="n">POSITION</span> <span class="p">){</span>
     <span class="n">Interpolators</span> <span class="n">i</span><span class="p">;</span>
     <span class="n">i</span><span class="p">.</span><span class="n">localPosition</span> <span class="o">=</span> <span class="n">position</span><span class="p">.</span><span class="n">xyz</span><span class="p">;</span>
     <span class="n">i</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">UnityObjectToClipPos</span><span class="p">(</span><span class="n">position</span><span class="p">);</span>
      <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">float4</span> <span class="nf">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span>
+<span class="n">float4</span> <span class="n">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">float4</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">localPosition</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
- <span class="err">}</span>
+ <span class="p">}</span>
 </code></pre></div></div>
 
 <blockquote class="prompt-tip">
@@ -940,16 +940,16 @@
     <span class="n">float2</span> <span class="n">uv</span> <span class="o">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">Interpolators</span> <span class="nf">MyVertexProgram</span> <span class="p">(</span><span class="n">VertedData</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">Interpolators</span> <span class="n">MyVertexProgram</span> <span class="p">(</span><span class="n">VertedData</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Interpolators</span> <span class="n">i</span><span class="p">;</span>
     <span class="n">i</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">UNITY_MATRIX_MVP</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
     <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">float4</span> <span class="nf">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+<span class="n">float4</span> <span class="n">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">float4</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>再看看汇编</p>
@@ -1034,7 +1034,7 @@
 <p>通过在片段程序中使用tex2D函数，完成对纹理UV坐标进行采样。</p>
 <div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="nf">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>再查看汇编后的shader代码</p>
@@ -1233,12 +1233,66 @@
             
                 
                     
+                
+                    
+                
+            
+                
+                    
                         
                         <h2 id="similar_posts">Similar Posts</h2>
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2018/01/10/UNity-Shader-Fog14/">Unity Shader Fog(翻译十四)
+                            <a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六)
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2018/01/17/Unity-Deferred-Lights15/">Unity Deferred Lights-延迟光照(翻译十五)
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四)
                             
                             </a>
                         </li>
@@ -1305,54 +1359,6 @@
                         
                         <li class="relatedPost">
                             <a href="/2018/01/08/Unity-Shader-Transparent11/">Unity 透明渲染(翻译十一)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/07/Unity-ShaderGUI-Extension10/">Unity Shader GUI 扩展二(翻译十)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/07/Unity-ShaderGUI-Extension9/">Unity Shader GUI 扩展一(翻译九)
                             
                             </a>
                         </li>

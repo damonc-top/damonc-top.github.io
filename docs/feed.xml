@@ -5,9 +5,52 @@
     <description></description>
     <link>www.damonc.top/</link>
     <atom:link href="www.damonc.top/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 18 Dec 2022 11:31:11 +0800</pubDate>
-    <lastBuildDate>Sun, 18 Dec 2022 11:31:11 +0800</lastBuildDate>
-    <generator>Jekyll v4.2.2</generator>
+    <pubDate>Mon, 19 Dec 2022 23:58:41 +0800</pubDate>
+    <lastBuildDate>Mon, 19 Dec 2022 23:58:41 +0800</lastBuildDate>
+    <generator>Jekyll v4.3.1</generator>
+    
+      <item>
+        <title>Unity 光照烘焙(翻译十六)</title>
+        <description>
+实时光照计算的开销非常昂贵。根据翻译13，延迟渲染允许程序员使用的光源可以多于Forward渲染，但阴影的开销仍然对性能有一个限制。如果我们的场景是动态的，那么没有办法来避免执行这些计算。但是如果光源和几何物体位置都是不变的，那么我们可以只计算一次光照并重复使用。这使得我们可以在场景中放置许多光源，而不必在运行的时候再渲染它们。这种方法也可以使用那些不能用作实时光源的区域光源(area lighting)。
+</description>
+        <pubDate>Fri, 19 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/19/Unity-Static-Lightting16/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/19/Unity-Static-Lightting16/</guid>
+        
+        <category>Unity3D</category>
+        
+        <category>Shader</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity Deferred Lights-延迟光照(翻译十五)</title>
+        <description>
+本篇摘要：
+&lt;ul&gt;
+  &lt;li&gt;自定义灯光渲染&lt;/li&gt;
+  &lt;li&gt;解码LDR颜色&lt;/li&gt;
+  &lt;li&gt;增加独立Pass渲染光&lt;/li&gt;
+  &lt;li&gt;支持方向光、点光源、聚光灯&lt;/li&gt;
+  &lt;li&gt;手动采样阴影纹理&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 17 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/17/Unity-Deferred-Lights15/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/17/Unity-Deferred-Lights15/</guid>
+        
+        <category>Unity3D</category>
+        
+        <category>Shader</category>
+        
+        
+        <category>翻译</category>
+        
+      </item>
     
       <item>
         <title>Unity Shader Fog(翻译十四)</title>
@@ -19,9 +62,11 @@
   &lt;li&gt;支持deferred fog&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Wed, 10 Jan 2018 20:00:00 +0800</pubDate>
-        <link>www.damonc.top/2018/01/10/UNity-Shader-Fog14/</link>
-        <guid isPermaLink="true">www.damonc.top/2018/01/10/UNity-Shader-Fog14/</guid>
+        <pubDate>Mon, 15 Jan 2018 20:00:00 +0800</pubDate>
+        <link>www.damonc.top/2018/01/15/Unity-Shader-Fog14/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/15/Unity-Shader-Fog14/</guid>
+        
+        <category>Unity3D</category>
         
         <category>Shader</category>
         
@@ -188,55 +233,6 @@
         <pubDate>Fri, 05 Jan 2018 20:00:00 +0800</pubDate>
         <link>www.damonc.top/2018/01/05/Unity-Shadows-7/</link>
         <guid isPermaLink="true">www.damonc.top/2018/01/05/Unity-Shadows-7/</guid>
-        
-        <category>Shader</category>
-        
-        <category>Unity3d</category>
-        
-        
-        <category>翻译</category>
-        
-      </item>
-    
-      <item>
-        <title>Unity 纹理高级用法(翻译六)</title>
-        <description>
-本篇摘要:
-&lt;ul&gt;
-  &lt;li&gt;扰动法线以模拟凹凸视觉&lt;/li&gt;
-  &lt;li&gt;从高度场计算法线&lt;/li&gt;
-  &lt;li&gt;采样和混合法线贴图&lt;/li&gt;
-  &lt;li&gt;从切线空间转换到世界空间&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Thu, 04 Jan 2018 20:00:00 +0800</pubDate>
-        <link>www.damonc.top/2018/01/04/Unity-Advance-Texture-6/</link>
-        <guid isPermaLink="true">www.damonc.top/2018/01/04/Unity-Advance-Texture-6/</guid>
-        
-        <category>Shader</category>
-        
-        <category>Unity3d</category>
-        
-        
-        <category>翻译</category>
-        
-      </item>
-    
-      <item>
-        <title>Unity 基础光照多光源采样(翻译五)</title>
-        <description>
-本篇摘要：
-&lt;ul&gt;
-  &lt;li&gt;使用多个光源渲染&lt;/li&gt;
-  &lt;li&gt;支持多光源类型&lt;/li&gt;
-  &lt;li&gt;使用光照信息&lt;/li&gt;
-  &lt;li&gt;计算顶点光照&lt;/li&gt;
-  &lt;li&gt;了解球谐函数&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 03 Jan 2018 09:00:00 +0800</pubDate>
-        <link>www.damonc.top/2018/01/03/Unity-Multi-Light-5/</link>
-        <guid isPermaLink="true">www.damonc.top/2018/01/03/Unity-Multi-Light-5/</guid>
         
         <category>Shader</category>
         
