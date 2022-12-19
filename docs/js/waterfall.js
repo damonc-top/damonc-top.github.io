@@ -1,5 +1,4 @@
-// 先等图片都加载完成
-// 再执行布局函数
+
 
 /**
  * 执行主函数
@@ -165,16 +164,7 @@ function contentInit(content) {
       htmlArr.push('</div>')
   }
   var htmlStr = htmlArr.join('')
-  // var htmlStr = ''
-  // for (var i = 0; i < content.length; i++) {
-  //   htmlStr += '<div class="grid-item">' + '   <a class="a-img" href="' + content[i].demo_link + '">' + '       <img src="' + content[i].img_link + '">' + '   </a>' + '   <h3 class="demo-title">' + '       <a href="' + content[i].demo_link + '">' + content[i].title + '</a>' + '   </h3>' + '   <p>主要技术：' + content[i].core_tech + '</p>' + '   <p>' + content[i].description + '       <a href="' + content[i].code_link + '">源代码 <i class="fa fa-code" aria-hidden="true"></i></a>' + '   </p>' + '</div>'
 
-  //   // htmlStr += `
-  //   //   <div class="grid-item">
-  //   //     <a class="a-img" href="${content[i].demo_link}">
-  //   //     <img src="${content[i].img_link}">
-  //   // `
-  // }
   var grid = document.querySelector('.grid')
   grid.insertAdjacentHTML('afterbegin', htmlStr)
 }
@@ -186,16 +176,13 @@ function contentInit(content) {
 function initGrid() {
   var grid = document.querySelector('.grid');
   var msnry = new Masonry(grid, {
-    // options
     itemSelector: '.grid-item',
     columnWidth: 250,
-    // percentPosition: true,
     isFitWidth: true,
     gutter: 20
   })
 
   imagesLoaded(grid).on('progress', throttle(function() {
-    // layout Masonry after each image loads
       msnry.layout();
   }, 1600, {
     leading: false,

@@ -1,314 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Unity Deferred Lights-延迟光照(翻译十五)</title>
-    <meta name="description" content="本篇摘要：  自定义灯光渲染  解码LDR颜色  增加独立Pass渲染光  支持方向光、点光源、聚光灯  手动采样阴影纹理">
-
-    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
-    <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="www.damonc.top/2018/01/17/Unity-Deferred-Lights15/">
-    <link rel="alternate" type="application/rss+xml" title="bitfeng" href="www.damonc.top/feed.xml ">
-    
-
-
-    <script>
-    // 百度统计代码
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?f7f1a5967e3927ea98597632f0a17ad9";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-    </script>
-
-
-
-
-  <!-- MathJax -->
-  <script>
-    /* see: <https://docs.mathjax.org/en/latest/options/input/tex.html#tex-options> */
-    MathJax = {
-        tex: {
-        inlineMath: [              /* start/end delimiter pairs for in-line math */
-            ['$','$'],
-            ['\\(','\\)']
-        ],
-        displayMath: [             /* start/end delimiter pairs for display math */
-            ['$$', '$$'],
-            ['\\[', '\\]']
-        ]
-        }
-    };
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
-</head>
-
-
-  <body class="custom-background">
-    
-    <header id="top">
-    <div class="wrapper">
-        <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but interesting.</small>
-        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
-        <nav id="headerNav">
-            <ul>
-                <li>
-                    
-                    <a href="/">
-                    
-                        <i class="fa fa-home"></i>Home
-                    </a>
-                </li>
-
-                
-                    
-                    <li>
-                        
-                        <a href="/archive/">
-                        
-                            <i class="fa fa-archive"></i>Archives
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/category/">
-                        
-                            <i class="fa fa-th-list"></i>Categories
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>Tags
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/collection/">
-                        
-                            <i class="fa fa-bookmark"></i>Collections
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/demo/">
-                        
-                            <i class="fa fa-play"></i>Demos
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/about/">
-                        
-                            <i class="fa fa-heart"></i>About
-                        </a>
-                    </li>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            </ul>
-        </nav>
-    </div>
-</header>
-
-
-        <div class="home-right-bar">
-    <button class="anchor"><i class="fa fa-anchor"></i></button>
-    <div class="right">
-        <div class="wrap">
-            <!-- Content -->
-            <div class="side content">
-                <div> 目录 </div>
-                <ul id="content-side" class="content-ul">
-                    
-                    <li><a href="#comments">Comments</a></li>
-                </ul>
-            </div>
-            <!-- 其他div框放到这里 -->
-            <!-- <div class="side">bbbb</div> -->
-        </div>
-    </div>
-</div>
-
-<div class="page clearfix" post>
-    <div class="left">
-        <h1>Unity Deferred Lights-延迟光照(翻译十五)</h1>
-        <div class="label">
-
-            <div class="label-card">
-                <i class="fa fa-calendar"></i>2018-01-17
-            </div>
-
-            <div class="label-card">
-                <i class="fa fa-user"></i>catlikecoding
-                
-            </div>
-
-            <div class="label-card">
-                
-            </div>
-
-            <div class="label-card">
-            
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#翻译" title="Category: 翻译" rel="category">翻译</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-            </div>
-
-            <div class="label-card">
-            
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <!--a href="/tag/#Unity3D" title="Tag: Unity3D" rel="tag">Unity3D</a-->
-        <b href="/tag/#Unity3D" title="Tag: Unity3D" rel="tag">Unity3D</b>&nbsp;
-    
-        <!--a href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</a-->
-        <b href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</b>
-    
-  
-
-</span>
-
-            </div>
-
-        </div>
-        <hr>
-        <article itemscope itemtype="http://schema.org/BlogPosting">
-        <ul id="markdown-toc">
-  <li><a href="#光照light-shader" id="markdown-toc-光照light-shader">光照Light Shader</a>    <ul>
-      <li><a href="#using-a-custom-shader" id="markdown-toc-using-a-custom-shader">Using a Custom Shader</a></li>
-      <li><a href="#第二个passa-second-pass" id="markdown-toc-第二个passa-second-pass">第二个PassA Second Pass</a></li>
-      <li><a href="#avoiding-the-sky" id="markdown-toc-avoiding-the-sky">Avoiding the Sky</a></li>
-      <li><a href="#颜色转换converting-colors" id="markdown-toc-颜色转换converting-colors">颜色转换Converting Colors</a></li>
-    </ul>
-  </li>
-  <li><a href="#directional-lights" id="markdown-toc-directional-lights">Directional Lights</a>    <ul>
-      <li><a href="#g-buffer-uv-coordinates" id="markdown-toc-g-buffer-uv-coordinates">G-Buffer UV Coordinates</a></li>
-      <li><a href="#坐标转换world-position" id="markdown-toc-坐标转换world-position">坐标转换World Position</a></li>
-      <li><a href="#读取g-buff-reading-g-buffer-data" id="markdown-toc-读取g-buff-reading-g-buffer-data">读取G-Buff Reading G-Buffer Data</a></li>
-      <li><a href="#计算brd-computing-brdf" id="markdown-toc-计算brd-computing-brdf">计算BRD Computing BRDF</a></li>
-      <li><a href="#光源配置-configuring-the-light" id="markdown-toc-光源配置-configuring-the-light">光源配置 Configuring the Light</a></li>
-      <li><a href="#阴影-shadows" id="markdown-toc-阴影-shadows">阴影 Shadows</a></li>
-      <li><a href="#fading-shadows" id="markdown-toc-fading-shadows">Fading Shadows</a></li>
-      <li><a href="#light-cookies" id="markdown-toc-light-cookies">Light Cookies</a></li>
-      <li><a href="#支持ldr-supporting-ldr" id="markdown-toc-支持ldr-supporting-ldr">支持LDR Supporting LDR</a></li>
-    </ul>
-  </li>
-  <li><a href="#聚光源-spotlights" id="markdown-toc-聚光源-spotlights">聚光源 Spotlights</a>    <ul>
-      <li><a href="#drawing-a-pyramid" id="markdown-toc-drawing-a-pyramid">Drawing a Pyramid</a></li>
-      <li><a href="#支持多光源-supporting-multiple-light-types" id="markdown-toc-支持多光源-supporting-multiple-light-types">支持多光源 Supporting Multiple Light Types</a></li>
-      <li><a href="#world-position-agin" id="markdown-toc-world-position-agin">World Position Agin</a></li>
-      <li><a href="#锥形衰减-cookie-attenuation" id="markdown-toc-锥形衰减-cookie-attenuation">锥形衰减 Cookie Attenuation</a></li>
-      <li><a href="#距离衰减-distance-attenuation" id="markdown-toc-距离衰减-distance-attenuation">距离衰减 Distance Attenuation</a></li>
-      <li><a href="#shadows" id="markdown-toc-shadows">Shadows</a></li>
-      <li><a href="#点光源-point-lights" id="markdown-toc-点光源-point-lights">点光源 Point Lights</a></li>
-      <li><a href="#shadows-1" id="markdown-toc-shadows-1">Shadows</a></li>
-      <li><a href="#cookies" id="markdown-toc-cookies">Cookies</a></li>
-      <li><a href="#skipping-shadows" id="markdown-toc-skipping-shadows">Skipping Shadows</a></li>
-    </ul>
-  </li>
-</ul>
-
-<p>本篇摘要：</p>
-<ul>
-  <li>自定义灯光渲染</li>
-  <li>解码LDR颜色</li>
-  <li>增加独立Pass渲染光</li>
-  <li>支持方向光、点光源、聚光灯</li>
-  <li>手动采样阴影纹理</li>
-</ul>
-
-<h2 id="光照light-shader">光照Light Shader</h2>
-
-<p>在G-Buffers填充完毕后，然后渲染光。本篇先介绍Unity是如何渲染光，以及实现自己的渲染光的Shader。在Edit / Project Settings / Graphics 去掉默认的Shader。</p>
-
-<h3 id="using-a-custom-shader">Using a Custom Shader</h3>
-
-<p>每个deferred光都是在一个独立的Pass修改屏幕图像(后处理Image)完成渲染。创建一个Shader然后指定到Built-In shader settings</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812390-1178609122.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>修改内置的Shader.</a></i></center>    
-        </font>
-
-<h3 id="第二个passa-second-pass">第二个PassA Second Pass</h3>
-
-<p>修改之后，编辑器大量报错.</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812964-728132925.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>least 2 passes.</a></i></center>    
-        </font>
-
-<p>先简单复制第一个Pass解决错误，结果是屏幕内除了天空盒外所有物体被渲染成黑色了。这是因为使用了stencil-buffer。</p>
-
-<p><strong>报错的原因</strong>：为什么需要第二个Pass？</p>
-<ul>
-  <li>当HDR禁用时，光照数据会被使用对数编码计算，然后在(第二个)最终的pass解码该数据。所以必须要增加Pass。<em>当禁用HDR时就能调用第二个Pass，但此时天空也变黑了。</em></li>
-</ul>
-
-<h3 id="avoiding-the-sky">Avoiding the Sky</h3>
-
-<p>当在LDR（HDR禁用）模式，天空变黑了。这是因为转换过程中没有正确使用stencil-buffer模板掩码。在<strong>第二个Pass中配置</strong>：应该只渲染不属于背景的片段，可通过_StencilNonBackground提供适当的模板值。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Pass</span>
+<!DOCTYPE html><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Unity Deferred Lights-延迟光照(翻译十五)</title><meta name="description" content="本篇摘要： 自定义灯光渲染 解码LDR颜色 增加独立Pass渲染光 支持方向光、点光源、聚光灯 手动采样阴影纹理"><link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon"><link rel="icon" href="/favicon.ico?" type="image/x-icon"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css"><link rel="stylesheet" href="/css/main.css "><link rel="canonical" href="www.damonc.top/2018/01/17/Unity-Deferred-Lights15/"><link rel="alternate" type="application/rss+xml" title="bitfeng" href="www.damonc.top/feed.xml "> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "//hm.baidu.com/hm.js?f7f1a5967e3927ea98597632f0a17ad9"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })(); </script> <script> /* see: <https://docs.mathjax.org/en/latest/options/input/tex.html#tex-options> */ MathJax = { tex: { inlineMath: [ /* start/end delimiter pairs for in-line math */ ['$','$'], ['\\(','\\)'] ], displayMath: [ /* start/end delimiter pairs for display math */ ['$$', '$$'], ['\\[', '\\]'] ] } }; </script> <script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><body class="custom-background"><header id="top"><div class="wrapper"> <a href="/" class="brand">bitfeng</a> <small>maybe useless, but interesting.</small> <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button><nav id="headerNav"><ul><li> <a href="/"> <i class="fa fa-home"></i>Home </a><li> <a href="/archive/"> <i class="fa fa-archive"></i>Archives </a><li> <a href="/category/"> <i class="fa fa-th-list"></i>Categories </a><li> <a href="/tag/"> <i class="fa fa-tags"></i>Tags </a><li> <a href="/collection/"> <i class="fa fa-bookmark"></i>Collections </a><li> <a href="/demo/"> <i class="fa fa-play"></i>Demos </a><li> <a href="/about/"> <i class="fa fa-heart"></i>About </a></ul></nav></div></header><div class="home-right-bar"> <button class="anchor"><i class="fa fa-anchor"></i></button><div class="right"><div class="wrap"><div class="side content"><div> 目录</div><ul id="content-side" class="content-ul"><li><a href="#comments">Comments</a></ul></div></div></div></div><div class="page clearfix" post><div class="left"><h1>Unity Deferred Lights-延迟光照(翻译十五)</h1><div class="label"><div class="label-card"> <i class="fa fa-calendar"></i>2018-01-17</div><div class="label-card"> <i class="fa fa-user"></i>catlikecoding</div><div class="label-card"></div><div class="label-card"> <span class="categories"> <i class="fa fa-th-list"></i> <a href="/category/#翻译" title="Category: 翻译" rel="category">翻译</a> </span></div><div class="label-card"> <span class="pageTag"> <i class="fa fa-tags"></i> <b href="/tag/#Unity3D" title="Tag: Unity3D" rel="tag">Unity3D</b>&nbsp; <b href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</b> </span></div></div><hr><article itemscope itemtype="http://schema.org/BlogPosting"><ul id="markdown-toc"><li><a href="#光照light-shader" id="markdown-toc-光照light-shader">光照Light Shader</a><ul><li><a href="#using-a-custom-shader" id="markdown-toc-using-a-custom-shader">Using a Custom Shader</a><li><a href="#第二个passa-second-pass" id="markdown-toc-第二个passa-second-pass">第二个PassA Second Pass</a><li><a href="#avoiding-the-sky" id="markdown-toc-avoiding-the-sky">Avoiding the Sky</a><li><a href="#颜色转换converting-colors" id="markdown-toc-颜色转换converting-colors">颜色转换Converting Colors</a></ul><li><a href="#directional-lights" id="markdown-toc-directional-lights">Directional Lights</a><ul><li><a href="#g-buffer-uv-coordinates" id="markdown-toc-g-buffer-uv-coordinates">G-Buffer UV Coordinates</a><li><a href="#坐标转换world-position" id="markdown-toc-坐标转换world-position">坐标转换World Position</a><li><a href="#读取g-buff-reading-g-buffer-data" id="markdown-toc-读取g-buff-reading-g-buffer-data">读取G-Buff Reading G-Buffer Data</a><li><a href="#计算brd-computing-brdf" id="markdown-toc-计算brd-computing-brdf">计算BRD Computing BRDF</a><li><a href="#光源配置-configuring-the-light" id="markdown-toc-光源配置-configuring-the-light">光源配置 Configuring the Light</a><li><a href="#阴影-shadows" id="markdown-toc-阴影-shadows">阴影 Shadows</a><li><a href="#fading-shadows" id="markdown-toc-fading-shadows">Fading Shadows</a><li><a href="#light-cookies" id="markdown-toc-light-cookies">Light Cookies</a><li><a href="#支持ldr-supporting-ldr" id="markdown-toc-支持ldr-supporting-ldr">支持LDR Supporting LDR</a></ul><li><a href="#聚光源-spotlights" id="markdown-toc-聚光源-spotlights">聚光源 Spotlights</a><ul><li><a href="#drawing-a-pyramid" id="markdown-toc-drawing-a-pyramid">Drawing a Pyramid</a><li><a href="#支持多光源-supporting-multiple-light-types" id="markdown-toc-支持多光源-supporting-multiple-light-types">支持多光源 Supporting Multiple Light Types</a><li><a href="#world-position-agin" id="markdown-toc-world-position-agin">World Position Agin</a><li><a href="#锥形衰减-cookie-attenuation" id="markdown-toc-锥形衰减-cookie-attenuation">锥形衰减 Cookie Attenuation</a><li><a href="#距离衰减-distance-attenuation" id="markdown-toc-距离衰减-distance-attenuation">距离衰减 Distance Attenuation</a><li><a href="#shadows" id="markdown-toc-shadows">Shadows</a><li><a href="#点光源-point-lights" id="markdown-toc-点光源-point-lights">点光源 Point Lights</a><li><a href="#shadows-1" id="markdown-toc-shadows-1">Shadows</a><li><a href="#cookies" id="markdown-toc-cookies">Cookies</a><li><a href="#skipping-shadows" id="markdown-toc-skipping-shadows">Skipping Shadows</a></ul></ul><p>本篇摘要：</p><ul><li>自定义灯光渲染<li>解码LDR颜色<li>增加独立Pass渲染光<li>支持方向光、点光源、聚光灯<li>手动采样阴影纹理</ul><h2 id="光照light-shader">光照Light Shader</h2><p>在G-Buffers填充完毕后，然后渲染光。本篇先介绍Unity是如何渲染光，以及实现自己的渲染光的Shader。在Edit / Project Settings / Graphics 去掉默认的Shader。</p><h3 id="using-a-custom-shader">Using a Custom Shader</h3><p>每个deferred光都是在一个独立的Pass修改屏幕图像(后处理Image)完成渲染。创建一个Shader然后指定到Built-In shader settings</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812390-1178609122.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>修改内置的Shader.</a></i></center> </font><h3 id="第二个passa-second-pass">第二个PassA Second Pass</h3><p>修改之后，编辑器大量报错.</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812964-728132925.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>least 2 passes.</a></i></center> </font><p>先简单复制第一个Pass解决错误，结果是屏幕内除了天空盒外所有物体被渲染成黑色了。这是因为使用了stencil-buffer。</p><p><strong>报错的原因</strong>：为什么需要第二个Pass？</p><ul><li>当HDR禁用时，光照数据会被使用对数编码计算，然后在(第二个)最终的pass解码该数据。所以必须要增加Pass。<em>当禁用HDR时就能调用第二个Pass，但此时天空也变黑了。</em></ul><h3 id="avoiding-the-sky">Avoiding the Sky</h3><p>当在LDR（HDR禁用）模式，天空变黑了。这是因为转换过程中没有正确使用stencil-buffer模板掩码。在<strong>第二个Pass中配置</strong>：应该只渲染不属于背景的片段，可通过_StencilNonBackground提供适当的模板值。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Pass</span>
 <span class="p">{</span>
     <span class="n">Stencil</span>
     <span class="p">{</span>
@@ -318,13 +8,7 @@
         <span class="n">CompFront</span> <span class="n">Equal</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="颜色转换converting-colors">颜色转换Converting Colors</h3>
-
-<p>在第二个Pass的light-buffer转换光照数据，方法就似Fog shader：用输入源的Image UV坐标采样buffer来绘制一个覆盖全屏的quad</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">VertexData</span> <span class="p">{</span>
+</code></pre></div></div><h3 id="颜色转换converting-colors">颜色转换Converting Colors</h3><p>在第二个Pass的light-buffer转换光照数据，方法就似Fog shader：用输入源的Image UV坐标采样buffer来绘制一个覆盖全屏的quad</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">VertexData</span> <span class="p">{</span>
     <span class="n">float4</span> <span class="n">vertex</span> <span class="o">:</span> <span class="n">POSITION</span><span class="p">;</span>
     <span class="n">float2</span> <span class="n">uv</span> <span class="o">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
 <span class="p">};</span>
@@ -338,66 +22,28 @@
     <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>该light buffer通过名为_LightBuffer变量提供给Shader</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_LightBuffer</span><span class="p">;</span>
+</code></pre></div></div><p>该light buffer通过名为_LightBuffer变量提供给Shader</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_LightBuffer</span><span class="p">;</span>
 <span class="c1">//...</span>
 <span class="n">float4</span> <span class="nf">FragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_Target</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_LightBuffer</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
 <span class="err">}</span>
-</code></pre></div></div>
-
-<p>LDR颜色使用指数编码:$2^{-C}$，使用对数解码$-log2^C$</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="o">-</span><span class="n">log2</span><span class="p">(</span><span class="n">tex2D</span><span class="p">(</span><span class="n">_LightBuffer</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">));</span>
-</code></pre></div></div>
-
-<h2 id="directional-lights">Directional Lights</h2>
-
-<p>新增一个cginc文件，引入第一个pass。要把渲染的光照增加到图像上，必须确保不能擦除已渲染的图像，因此改变混合模式要完全合并源颜色和目标颜色。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Blend</span> <span class="n">One</span> <span class="n">One</span>
-</code></pre></div></div>
-
-<p>也需要所有可能的光照配置shader variants变体，该编译指令：multi_compile_lightpass会创建所有包含的变体。然后再增加一个HDR_ON的指令。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma multi_compile_lightpass
+</code></pre></div></div><p>LDR颜色使用指数编码:$2^{-C}$，使用对数解码$-log2^C$</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="o">-</span><span class="n">log2</span><span class="p">(</span><span class="n">tex2D</span><span class="p">(</span><span class="n">_LightBuffer</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">));</span>
+</code></pre></div></div><h2 id="directional-lights">Directional Lights</h2><p>新增一个cginc文件，引入第一个pass。要把渲染的光照增加到图像上，必须确保不能擦除已渲染的图像，因此改变混合模式要完全合并源颜色和目标颜色。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Blend</span> <span class="n">One</span> <span class="n">One</span>
+</code></pre></div></div><p>也需要所有可能的光照配置shader variants变体，该编译指令：multi_compile_lightpass会创建所有包含的变体。然后再增加一个HDR_ON的指令。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma multi_compile_lightpass
 #pragma multi_compile _ UNITY_HDR_ON
-</span></code></pre></div></div>
-
-<h3 id="g-buffer-uv-coordinates">G-Buffer UV Coordinates</h3>
-
-<p>需要用UV坐标从G-buffers采样，不幸的是，该light pass通道unity不支持提供该坐标。解决办法：从clip-space传递过来，使用ComputeScreenPos函数计算，返回一个float4的齐次坐标。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">v2f</span> <span class="nf">VertexProgram</span><span class="p">(</span><span class="n">appdata</span> <span class="n">v</span><span class="p">)</span>  
+</span></code></pre></div></div><h3 id="g-buffer-uv-coordinates">G-Buffer UV Coordinates</h3><p>需要用UV坐标从G-buffers采样，不幸的是，该light pass通道unity不支持提供该坐标。解决办法：从clip-space传递过来，使用ComputeScreenPos函数计算，返回一个float4的齐次坐标。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">v2f</span> <span class="nf">VertexProgram</span><span class="p">(</span><span class="n">appdata</span> <span class="n">v</span><span class="p">)</span>  
 <span class="p">{</span>  
      <span class="n">v2f</span> <span class="n">o</span><span class="p">;</span>  
      <span class="n">o</span><span class="p">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">UnityObjectToClipPos</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">);</span>  
      <span class="n">o</span><span class="p">.</span><span class="n">uv</span> <span class="o">=</span> <span class="n">ComputeScreenPos</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">pos</span><span class="p">);</span>  
      <span class="k">return</span> <span class="n">o</span><span class="p">;</span>  
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>然后在fragment就能计算最终的2D坐标。必须在fragment计算。见翻译7</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fixed4</span> <span class="n">FragmentProgram</span><span class="p">(</span><span class="n">v2f</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_Target</span>
+</code></pre></div></div><p>然后在fragment就能计算最终的2D坐标。必须在fragment计算。见翻译7</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fixed4</span> <span class="n">FragmentProgram</span><span class="p">(</span><span class="n">v2f</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_Target</span>
 <span class="p">{</span>
     <span class="n">float2</span> <span class="n">uv</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span> <span class="o">/</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="坐标转换world-position">坐标转换World Position</h3>
-
-<p>与上篇deferred fog中相似，需要计算从相机到片元的距离：从相机原点发射射线通过片元(给定方向)到达far-plane，然后再用fragment深度缩放射线。用该方法<strong>重建片元的世界坐标</strong>。</p>
-
-<ol>
-  <li>首先。对于方向光，从quad的四顶点发出的射线作为法向量提供。所以可以通过顶点程序对射线进行插值。</li>
-</ol>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">VertexData</span> <span class="p">{</span>
+</code></pre></div></div><h3 id="坐标转换world-position">坐标转换World Position</h3><p>与上篇deferred fog中相似，需要计算从相机到片元的距离：从相机原点发射射线通过片元(给定方向)到达far-plane，然后再用fragment深度缩放射线。用该方法<strong>重建片元的世界坐标</strong>。</p><ol><li>首先。对于方向光，从quad的四顶点发出的射线作为法向量提供。所以可以通过顶点程序对射线进行插值。</ol><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">VertexData</span> <span class="p">{</span>
     <span class="n">float4</span> <span class="n">vertex</span> <span class="o">:</span> <span class="n">POSITION</span><span class="p">;</span>
     <span class="n">float3</span> <span class="n">normal</span> <span class="o">:</span> <span class="n">NORMAL</span><span class="p">;</span>
 <span class="p">};</span>
@@ -415,13 +61,7 @@
     <span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">normal</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<ol>
-  <li>其次。在fragment函数通过采样_CameraDepthTexture纹理和线性化计算可以得到depth值，类似于deferred fog计算</li>
-</ol>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Unity提供的声明函数，等于 sampler2D _CameraDepthTexture; 定义在UnityCG</span>
+</code></pre></div></div><ol><li>其次。在fragment函数通过采样_CameraDepthTexture纹理和线性化计算可以得到depth值，类似于deferred fog计算</ol><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Unity提供的声明函数，等于 sampler2D _CameraDepthTexture; 定义在UnityCG</span>
 <span class="n">UNITY_DECLARE_DEPTH_TEXTURE</span><span class="p">(</span><span class="n">_CameraDepthTexture</span><span class="p">);</span>
 
 <span class="n">float4</span> <span class="n">FragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_Target</span> <span class="p">{</span>
@@ -430,69 +70,25 @@
     <span class="n">depth</span> <span class="o">=</span> <span class="n">Linear01Depth</span><span class="p">(</span><span class="n">depth</span><span class="p">);</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<ol>
-  <li>然后。与deferred fog最大的不同：fog shader需要射线到达far plane；而本shader的射线只能到达near plane。所以必须要缩放射线以便它能达到far-plane：缩放射线使Z坐标变为1，并与远平面距离相乘。</li>
-</ol>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">depth</span> <span class="o">=</span> <span class="n">Linear01Depth</span><span class="p">(</span><span class="n">depth</span><span class="p">);</span>
+</code></pre></div></div><ol><li>然后。与deferred fog最大的不同：fog shader需要射线到达far plane；而本shader的射线只能到达near plane。所以必须要缩放射线以便它能达到far-plane：缩放射线使Z坐标变为1，并与远平面距离相乘。</ol><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">depth</span> <span class="o">=</span> <span class="n">Linear01Depth</span><span class="p">(</span><span class="n">depth</span><span class="p">);</span>
 <span class="n">float3</span> <span class="n">rayToFarPlane</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">*</span> <span class="n">_ProjectionParams</span><span class="p">.</span><span class="n">z</span> <span class="o">/</span> <span class="n">i</span><span class="p">.</span><span class="n">ray</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
-</code></pre></div></div>
-
-<ol>
-  <li>再接着。按深度值缩放射线一次得到一个坐标。该射线被定义在视图空间，它是camera的本地空间。因此，射线也以片段在视图空间中的坐标结束。</li>
-</ol>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">rayToFarPlane</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">*</span> <span class="n">_ProjectionParams</span><span class="p">.</span><span class="n">z</span> <span class="o">/</span> <span class="n">i</span><span class="p">.</span><span class="n">ray</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+</code></pre></div></div><ol><li>再接着。按深度值缩放射线一次得到一个坐标。该射线被定义在视图空间，它是camera的本地空间。因此，射线也以片段在视图空间中的坐标结束。</ol><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">rayToFarPlane</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">*</span> <span class="n">_ProjectionParams</span><span class="p">.</span><span class="n">z</span> <span class="o">/</span> <span class="n">i</span><span class="p">.</span><span class="n">ray</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
 <span class="n">float3</span> <span class="n">viewPos</span> <span class="o">=</span> <span class="n">rayToFarPlane</span> <span class="o">*</span> <span class="n">depth</span><span class="p">;</span>
-</code></pre></div></div>
-
-<ol>
-  <li>最后。再使用unity_CameraToWorld内置矩阵从view视图空间转换到world世界坐标，该矩阵定义在ShaderVariables.cginc</li>
-</ol>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">viewPos</span> <span class="o">=</span> <span class="n">rayToFarPlane</span> <span class="o">*</span> <span class="n">depth</span><span class="p">;</span>
+</code></pre></div></div><ol><li>最后。再使用unity_CameraToWorld内置矩阵从view视图空间转换到world世界坐标，该矩阵定义在ShaderVariables.cginc</ol><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">viewPos</span> <span class="o">=</span> <span class="n">rayToFarPlane</span> <span class="o">*</span> <span class="n">depth</span><span class="p">;</span>
 <span class="n">float3</span> <span class="n">worldPos</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_CameraToWorld</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">viewPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="n">xyz</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="读取g-buff-reading-g-buffer-data">读取G-Buff Reading G-Buffer Data</h3>
-
-<p>获取World Pos后。通过访问G-buffer检索properties，该buffer可从内置的_CamearGBufferTexture变量获取</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_CameraGBufferTexture0</span><span class="p">;</span>
+</code></pre></div></div><h3 id="读取g-buff-reading-g-buffer-data">读取G-Buff Reading G-Buffer Data</h3><p>获取World Pos后。通过访问G-buffer检索properties，该buffer可从内置的_CamearGBufferTexture变量获取</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_CameraGBufferTexture0</span><span class="p">;</span>
 <span class="n">sampler2D</span> <span class="n">_CameraGBufferTexture1</span><span class="p">;</span>
 <span class="n">sampler2D</span> <span class="n">_CameraGBufferTexture2</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>在上一篇Defferred Shading中也手动计算过G-buffer,这次直接读取_CameraGBufferTexture现成的albedo、specular、smoothness、normal</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">worldPos</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_CameraToWorld</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">viewPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="n">xyz</span><span class="p">;</span>
+</code></pre></div></div><p>在上一篇Defferred Shading中也手动计算过G-buffer,这次直接读取_CameraGBufferTexture现成的albedo、specular、smoothness、normal</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">worldPos</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_CameraToWorld</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">viewPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="n">xyz</span><span class="p">;</span>
 <span class="n">float3</span> <span class="n">albedo</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_CameraGBufferTexture0</span><span class="p">,</span> <span class="n">uv</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span>
 <span class="n">float3</span> <span class="n">specularTint</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_CameraGBufferTexture1</span><span class="p">,</span> <span class="n">uv</span><span class="p">).</span><span class="n">rgb</span><span class="p">;</span><span class="c1">//合并</span>
 <span class="n">float3</span> <span class="n">smoothness</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_CameraGBufferTexture1</span><span class="p">,</span> <span class="n">uv</span><span class="p">).</span><span class="n">a</span><span class="p">;</span><span class="c1">//合并</span>
 <span class="n">float3</span> <span class="n">normal</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_CameraGBufferTexture2</span><span class="p">,</span> <span class="n">uv</span><span class="p">).</span><span class="n">rgb</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="计算brd-computing-brdf">计算BRD Computing BRDF</h3>
-
-<p>引入BRDF函数，定义在UnityPBSLighting.cginc中</p>
-
-<p>首先计算视野方向</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">worldPos</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_CameraToWorld</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">viewPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="n">xyz</span><span class="p">;</span>
+</code></pre></div></div><h3 id="计算brd-computing-brdf">计算BRD Computing BRDF</h3><p>引入BRDF函数，定义在UnityPBSLighting.cginc中</p><p>首先计算视野方向</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">worldPos</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_CameraToWorld</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">viewPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="n">xyz</span><span class="p">;</span>
 <span class="n">float3</span> <span class="n">viewDir</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">_WorldSpaceCameraPos</span> <span class="o">-</span> <span class="n">worldPos</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>其次是表面反射，这可从specular颜色获取，使用SpecularStrength函数提取。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//...</span>
+</code></pre></div></div><p>其次是表面反射，这可从specular颜色获取，使用SpecularStrength函数提取。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//...</span>
 <span class="kt">float</span> <span class="n">oneMinusReflectivity</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">SpecularStrength</span><span class="p">(</span><span class="n">specularTint</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>然后传递光照数据，初始化直接光和间接光</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">oneMinusReflectivity</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">SpecularStrength</span><span class="p">(</span><span class="n">specularTint</span><span class="p">);</span>
+</code></pre></div></div><p>然后传递光照数据，初始化直接光和间接光</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">oneMinusReflectivity</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">SpecularStrength</span><span class="p">(</span><span class="n">specularTint</span><span class="p">);</span>
 <span class="c1">//...</span>
 <span class="n">UnityLight</span> <span class="n">light</span><span class="p">;</span>
 <span class="n">light</span><span class="p">.</span><span class="n">color</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -501,24 +97,14 @@
 <span class="n">UnityIndirect</span> <span class="n">indirectLight</span><span class="p">;</span>
 <span class="n">indirectLight</span><span class="p">.</span><span class="n">diffuse</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">indirectLight</span><span class="p">.</span><span class="n">specular</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>最后计算最终的颜色</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">indirectLight</span><span class="p">.</span><span class="n">specular</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div><p>最后计算最终的颜色</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">indirectLight</span><span class="p">.</span><span class="n">specular</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">UNITY_BRDF_PBS</span>
 <span class="p">(</span>
     <span class="n">albedo</span><span class="p">,</span> <span class="n">specularTint</span><span class="p">,</span> <span class="n">oneMinusReflectivity</span><span class="p">,</span> <span class="n">smoothness</span><span class="p">,</span>
     <span class="n">normal</span><span class="p">,</span> <span class="n">viewDir</span><span class="p">,</span> <span class="n">light</span><span class="p">,</span> <span class="n">indirectLight</span>
 <span class="p">);</span>
 <span class="k">return</span> <span class="n">color</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="光源配置-configuring-the-light">光源配置 Configuring the Light</h3>
-
-<p>因为间接光呈现的是黑色的，在这里不适用。但是直接光必须被配置成与当前渲染的光相匹配。对于方向光，需要它的颜色和方向。这两个变量可以通过_LightColor和_LightDir变量获得。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">_LightColor</span><span class="p">,</span> <span class="n">_LightDir</span><span class="p">;</span>
+</code></pre></div></div><h3 id="光源配置-configuring-the-light">光源配置 Configuring the Light</h3><p>因为间接光呈现的是黑色的，在这里不适用。但是直接光必须被配置成与当前渲染的光相匹配。对于方向光，需要它的颜色和方向。这两个变量可以通过_LightColor和_LightDir变量获得。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">_LightColor</span><span class="p">,</span> <span class="n">_LightDir</span><span class="p">;</span>
 
 <span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">()</span> <span class="p">{</span>
     <span class="n">UnityLight</span> <span class="n">light</span><span class="p">;</span>
@@ -530,46 +116,12 @@
     <span class="n">UnityLight</span> <span class="n">light</span> <span class="o">=</span> <span class="n">CreateLight</span><span class="p">();</span>
 <span class="c1">//    light.color = 0;</span>
 <span class="c1">//    light.dir = 0;</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011132912-1838344751.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>光照方向错误.</a></i></center>    
-        </font>
-
-<p>计算得到最终的光照，但光的方向错误了。原因：_LightDir是光到表面的方向。在CreateLight计算中需要表面到光的方向</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="o">-</span><span class="n">_LightDir</span><span class="p">;</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011133845-1557873589.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>正确，没有阴影.</a></i></center>    
-        </font>
-
-<h3 id="阴影-shadows">阴影 Shadows</h3>
-
-<p>在自己的cginc文件中，我们依靠AutoLight中的宏来确定由阴影引起的光衰减。 不幸的是，该文件在编写时并没有考虑到延迟的光线。 现在将自己进行阴影采样，可通过_ShadowMapTexture变量访问阴影贴图。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_ShadowMapTexture</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>但是，我们不能随意声明此变量。 它已经在UnityShadowLibrary中为点和聚光灯阴影定义了它。 因此，我们不应该自己定义它，除非使用方向光阴影。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined (SHADOWS_SCREEN)
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011132912-1838344751.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>光照方向错误.</a></i></center> </font><p>计算得到最终的光照，但光的方向错误了。原因：_LightDir是光到表面的方向。在CreateLight计算中需要表面到光的方向</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="o">-</span><span class="n">_LightDir</span><span class="p">;</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011133845-1557873589.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>正确，没有阴影.</a></i></center> </font><h3 id="阴影-shadows">阴影 Shadows</h3><p>在自己的cginc文件中，我们依靠AutoLight中的宏来确定由阴影引起的光衰减。 不幸的是，该文件在编写时并没有考虑到延迟的光线。 现在将自己进行阴影采样，可通过_ShadowMapTexture变量访问阴影贴图。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_ShadowMapTexture</span><span class="p">;</span>
+</code></pre></div></div><p>但是，我们不能随意声明此变量。 它已经在UnityShadowLibrary中为点和聚光灯阴影定义了它。 因此，我们不应该自己定义它，除非使用方向光阴影。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined (SHADOWS_SCREEN)
 </span>    <span class="n">sampler2D</span> <span class="n">_ShadowMapTexture</span><span class="p">;</span>
 <span class="cp">#endif
-</span></code></pre></div></div>
-
-<p>要应用方向光阴影，需要采样阴影纹理并使用它来减弱光色即可。 在CreateLight中计算就需要把UV坐标参数。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">)</span> <span class="p">{</span>
+</span></code></pre></div></div><p>要应用方向光阴影，需要采样阴影纹理并使用它来减弱光色即可。 在CreateLight中计算就需要把UV坐标参数。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">UnityLight</span> <span class="n">light</span><span class="p">;</span>
     <span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="o">-</span><span class="n">_LightDir</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_ShadowMapTexture</span><span class="p">,</span> <span class="n">uv</span><span class="p">).</span><span class="n">r</span><span class="p">;</span>
@@ -578,52 +130,12 @@
 <span class="p">}</span>
 
 <span class="n">UnityLight</span> <span class="n">light</span> <span class="o">=</span> <span class="n">CreateLight</span><span class="p">(</span><span class="n">uv</span><span class="p">);</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011134639-175464244.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>有阴影的方向光.</a></i></center>    
-        </font>
-
-<p>当然，这仅在定向光启用了阴影时才有效。 如果不是，则阴影衰减始终为1。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011134639-175464244.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>有阴影的方向光.</a></i></center> </font><p>当然，这仅在定向光启用了阴影时才有效。 如果不是，则阴影衰减始终为1。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="cp">#if defined(SHADOWS_SCREEN)
 </span>    <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_ShadowMapTexture</span><span class="p">,</span> <span class="n">uv</span><span class="p">).</span><span class="n">r</span><span class="p">;</span>
 <span class="cp">#endif
 </span><span class="n">light</span><span class="p">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">_LightColor</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span> <span class="n">shadowAttenuation</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="fading-shadows">Fading Shadows</h3>
-
-<p>阴影贴图应该是有限的，它覆盖的面积越大，阴影的分辨率越低。 Unity提供了绘制阴影的最大距离，此距离可以通过_Edit / Project Settings / Quality_进行调整。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011135350-727795272.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>阴影距离配置.</a></i></center>    
-        </font>
-
-<p>当阴影几乎快达到了该限定距离就会淡出，Unity内置的shader是这样设定并计算。由于我将手动采样该阴影纹理，当到达纹理的边缘时阴影会被截取，结果是阴影虽然消失了，但有被急剧切割的生硬画面。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136133-1319763420.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>长、短距离阴影对比.</a></i></center>    
-        </font>
-
-<p>要渐隐阴影，<strong>首先</strong>要知道的是阴影完全消失的距离。该距离又依赖于阴影投射方向。在Stable Fit模式下，以map的中心点呈球面形开始渐隐消失阴影；在Close Fit模式它是依赖于视野深度。</p>
-
-<p>UnityComputeShadowFadeDistance函数能计算出正确距离，它需要两个参数：world pos 和 view depth；<strong>然后</strong>返回距离A。 注意：该距离A是从阴影纹理的中心点位置或者未更改的视野深度开始计算的。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">,</span> <span class="n">float3</span> <span class="n">worldPos</span><span class="p">,</span> <span class="kt">float</span> <span class="n">viewZ</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div><h3 id="fading-shadows">Fading Shadows</h3><p>阴影贴图应该是有限的，它覆盖的面积越大，阴影的分辨率越低。 Unity提供了绘制阴影的最大距离，此距离可以通过_Edit / Project Settings / Quality_进行调整。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011135350-727795272.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>阴影距离配置.</a></i></center> </font><p>当阴影几乎快达到了该限定距离就会淡出，Unity内置的shader是这样设定并计算。由于我将手动采样该阴影纹理，当到达纹理的边缘时阴影会被截取，结果是阴影虽然消失了，但有被急剧切割的生硬画面。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136133-1319763420.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>长、短距离阴影对比.</a></i></center> </font><p>要渐隐阴影，<strong>首先</strong>要知道的是阴影完全消失的距离。该距离又依赖于阴影投射方向。在Stable Fit模式下，以map的中心点呈球面形开始渐隐消失阴影；在Close Fit模式它是依赖于视野深度。</p><p>UnityComputeShadowFadeDistance函数能计算出正确距离，它需要两个参数：world pos 和 view depth；<strong>然后</strong>返回距离A。 注意：该距离A是从阴影纹理的中心点位置或者未更改的视野深度开始计算的。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">,</span> <span class="n">float3</span> <span class="n">worldPos</span><span class="p">,</span> <span class="kt">float</span> <span class="n">viewZ</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">UnityLight</span> <span class="n">light</span><span class="p">;</span>
     <span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="o">-</span><span class="n">_LightDir</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -634,17 +146,9 @@
 </span>    <span class="n">light</span><span class="p">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">_LightColor</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span> <span class="n">shadowAttenuation</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">light</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>阴影应该是快要接近渐隐距离时开始消失，一旦到达就完全消失。UnityComputeShadowFade函数计算合适的消失因子。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">shadowFadeDistance</span> <span class="o">=</span> <span class="n">UnityComputeShadowFadeDistance</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="n">viewZ</span><span class="p">);</span>
+</code></pre></div></div><p>阴影应该是快要接近渐隐距离时开始消失，一旦到达就完全消失。UnityComputeShadowFade函数计算合适的消失因子。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">shadowFadeDistance</span> <span class="o">=</span> <span class="n">UnityComputeShadowFadeDistance</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="n">viewZ</span><span class="p">);</span>
 <span class="kt">float</span> <span class="n">shadowFade</span> <span class="o">=</span> <span class="n">UnityComputeShadowFade</span><span class="p">(</span><span class="n">shadowFadeDistance</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p><em>UnityComputeShadowFade</em> 定义在UnityShadowLibrary.cginc，见下：</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="nf">UnityComputeShadowFadeDistance</span> <span class="p">(</span><span class="n">float3</span> <span class="n">wpos</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div><p><em>UnityComputeShadowFade</em> 定义在UnityShadowLibrary.cginc，见下：</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="nf">UnityComputeShadowFadeDistance</span> <span class="p">(</span><span class="n">float3</span> <span class="n">wpos</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">float</span> <span class="n">sphereDist</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">wpos</span><span class="p">,</span> <span class="n">unity_ShadowFadeCenterAndType</span><span class="p">.</span><span class="n">xyz</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">lerp</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">sphereDist</span><span class="p">,</span> <span class="n">unity_ShadowFadeCenterAndType</span><span class="p">.</span><span class="n">w</span><span class="p">);</span>
 <span class="p">}</span>
@@ -652,38 +156,12 @@
 <span class="n">half</span> <span class="nf">UnityComputeShadowFade</span><span class="p">(</span><span class="kt">float</span> <span class="n">fadeDist</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">saturate</span><span class="p">(</span><span class="n">fadeDist</span> <span class="o">*</span> <span class="n">_LightShadowData</span><span class="p">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">_LightShadowData</span><span class="p">.</span><span class="n">w</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>阴影渐隐值范围是[0, 1]，该值决定了阴影要消失多少。实际的消失值可以加到阴影衰减之上并限定在[0, 1]之内</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">shadowFade</span> <span class="o">=</span> <span class="n">UnityComputeShadowFade</span><span class="p">(</span><span class="n">shadowFadeDistance</span><span class="p">);</span>
+</code></pre></div></div><p>阴影渐隐值范围是[0, 1]，该值决定了阴影要消失多少。实际的消失值可以加到阴影衰减之上并限定在[0, 1]之内</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">shadowFade</span> <span class="o">=</span> <span class="n">UnityComputeShadowFade</span><span class="p">(</span><span class="n">shadowFadeDistance</span><span class="p">);</span>
 <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="n">saturate</span><span class="p">(</span><span class="n">shadowAttenuation</span> <span class="o">+</span> <span class="n">shadowFade</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>最后，提供世界坐标和视图深度在片元程序中创建光照。视图深度是片元在视图空间中的位置的Z分量。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="n">light</span> <span class="o">=</span> <span class="n">CreateLight</span><span class="p">(</span><span class="n">uv</span><span class="p">,</span> <span class="n">worldPos</span><span class="p">,</span> <span class="n">viewPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136822-531625316.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>阴影渐隐.</a></i></center>    
-        </font>
-
-<h3 id="light-cookies">Light Cookies</h3>
-
-<p>支持Cookies纹理，使用变量__LightTexture0_访问；同时还要从world-space转换到light-space，最后采样。转换矩阵使用_unity_WorldToLight_矩阵变量</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_LightTexture0</span><span class="p">;</span>
+</code></pre></div></div><p>最后，提供世界坐标和视图深度在片元程序中创建光照。视图深度是片元在视图空间中的位置的Z分量。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="n">light</span> <span class="o">=</span> <span class="n">CreateLight</span><span class="p">(</span><span class="n">uv</span><span class="p">,</span> <span class="n">worldPos</span><span class="p">,</span> <span class="n">viewPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136822-531625316.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>阴影渐隐.</a></i></center> </font><h3 id="light-cookies">Light Cookies</h3><p>支持Cookies纹理，使用变量__LightTexture0_访问；同时还要从world-space转换到light-space，最后采样。转换矩阵使用_unity_WorldToLight_矩阵变量</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_LightTexture0</span><span class="p">;</span>
 <span class="n">float4x4</span> <span class="n">unity_WorldToLight</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>在_CreateLight_，使用上述矩阵变量转换world-space到light-space；然后使用转换后的坐标采样cookie纹理。cookie也要衰减，需要单独定义并使用。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="o">-</span><span class="n">_LightDir</span><span class="p">;</span>
+</code></pre></div></div><p>在_CreateLight_，使用上述矩阵变量转换world-space到light-space；然后使用转换后的坐标采样cookie纹理。cookie也要衰减，需要单独定义并使用。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="o">-</span><span class="n">_LightDir</span><span class="p">;</span>
 <span class="kt">float</span> <span class="n">attenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="kt">float</span> <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="cp">#if defined(DIRECTIONAL_COOKIE)
@@ -692,48 +170,8 @@
 <span class="cp">#endif
 </span>    <span class="c1">//...</span>
 <span class="n">light</span><span class="p">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">_LightColor</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span> <span class="p">(</span><span class="n">attenuation</span> <span class="o">*</span> <span class="n">shadowAttenuation</span><span class="p">);</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011137698-104613306.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>带有cookie的方向光.</a></i></center>    
-        </font>
-
-<p>整体结果似乎可以，但是观察边缘似乎有硬边</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138369-1638016260.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>硬边过渡.</a></i></center>    
-        </font>
-
-<p>相邻片元的cookie坐标的巨大差异就会导致该问题出现。在这种情况下，GPU选择的mipmap级别对于最近的表面是low level。解决办法之一就是：在采样mip映射时应用偏移。<a href="http://aras-p.info/blog/2010/01/07/screenspace-vs-mip-mapping/">大v的总结</a></p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">attenuation</span> <span class="o">*=</span> <span class="n">tex2Dbias</span><span class="p">(</span><span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">uvCookie</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)).</span><span class="n">w</span><span class="p">;</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138941-1152817269.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>偏移采样.</a></i></center>    
-        </font>
-
-<h3 id="支持ldr-supporting-ldr">支持LDR Supporting LDR</h3>
-
-<p>上述只支持HDR，现在来支持LDR。步骤如下：</p>
-
-<p>首先，编码后的LDR颜色要乘如light-buffer，而不是加法。这可以用：Blend DstColor Zero实现。<strong>注意</strong>只用该Blend mode会引起HDR的错误。所以需要灵活配置：Blend [_SrcBlend] [_DstBlend]</p>
-
-<p>然后，使用$2^{-c}$函数解码</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">UNITY_BRDF_PBS</span><span class="p">(</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011137698-104613306.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>带有cookie的方向光.</a></i></center> </font><p>整体结果似乎可以，但是观察边缘似乎有硬边</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138369-1638016260.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>硬边过渡.</a></i></center> </font><p>相邻片元的cookie坐标的巨大差异就会导致该问题出现。在这种情况下，GPU选择的mipmap级别对于最近的表面是low level。解决办法之一就是：在采样mip映射时应用偏移。<a href="http://aras-p.info/blog/2010/01/07/screenspace-vs-mip-mapping/">大v的总结</a></p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">attenuation</span> <span class="o">*=</span> <span class="n">tex2Dbias</span><span class="p">(</span><span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">uvCookie</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)).</span><span class="n">w</span><span class="p">;</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138941-1152817269.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>偏移采样.</a></i></center> </font><h3 id="支持ldr-supporting-ldr">支持LDR Supporting LDR</h3><p>上述只支持HDR，现在来支持LDR。步骤如下：</p><p>首先，编码后的LDR颜色要乘如light-buffer，而不是加法。这可以用：Blend DstColor Zero实现。<strong>注意</strong>只用该Blend mode会引起HDR的错误。所以需要灵活配置：Blend [_SrcBlend] [_DstBlend]</p><p>然后，使用$2^{-c}$函数解码</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">UNITY_BRDF_PBS</span><span class="p">(</span>
         <span class="n">albedo</span><span class="p">,</span> <span class="n">specularTint</span><span class="p">,</span> <span class="n">oneMinusReflectivity</span><span class="p">,</span> <span class="n">smoothness</span><span class="p">,</span>
         <span class="n">normal</span><span class="p">,</span> <span class="n">viewDir</span><span class="p">,</span> <span class="n">light</span><span class="p">,</span> <span class="n">indirectLight</span>
 <span class="p">);</span>
@@ -741,59 +179,11 @@
 </span>        <span class="n">color</span> <span class="o">=</span> <span class="n">exp2</span><span class="p">(</span><span class="o">-</span><span class="n">color</span><span class="p">);</span>
     <span class="cp">#endif
 </span><span class="k">return</span> <span class="n">color</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h2 id="聚光源-spotlights">聚光源 Spotlights</h2>
-
-<p>因为方向光会影响到场景内所有物体，所以被画成全屏quad。相比之下，聚光灯只会影响位于圆锥体内的部分物体。通常不需要计算整个图像的聚光灯光照，将绘制一个与聚光灯的影响范围相匹配的金字塔体。</p>
-
-<h3 id="drawing-a-pyramid">Drawing a Pyramid</h3>
-
-<p>禁用方向灯，改用聚光灯。因为着色器只对方向光正确工作，那么现在的结果会出现错误。但是它仍可以让你看到金字塔的哪些部分被渲染了。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011139705-601577612.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>渲染范围.</a></i></center>    
-        </font>
-
-<p>根据上图，金字塔是作为一个普通的3D对象呈现的。它的背面被剔除，所以我们可以看到金字塔的正面。只有当它前面没有东西的时候，它才会被画出来。除此之外，还添加了一个pass，用于设置模板缓冲区，以将绘图限制为位于金字塔卷内的片段。您可以通过frame-debugger来验证。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011140292-1380890338.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>剔除方式.</a></i></center>    
-        </font>
-
-<p>这意味着我们的着色器的culling和z-test设置被否弃了。 因此将其从着色器中删除。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Blend</span> <span class="p">[</span><span class="n">_SrcBlend</span><span class="p">]</span> <span class="p">[</span><span class="n">_DstBlend</span><span class="p">]</span>
+</code></pre></div></div><h2 id="聚光源-spotlights">聚光源 Spotlights</h2><p>因为方向光会影响到场景内所有物体，所以被画成全屏quad。相比之下，聚光灯只会影响位于圆锥体内的部分物体。通常不需要计算整个图像的聚光灯光照，将绘制一个与聚光灯的影响范围相匹配的金字塔体。</p><h3 id="drawing-a-pyramid">Drawing a Pyramid</h3><p>禁用方向灯，改用聚光灯。因为着色器只对方向光正确工作，那么现在的结果会出现错误。但是它仍可以让你看到金字塔的哪些部分被渲染了。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011139705-601577612.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>渲染范围.</a></i></center> </font><p>根据上图，金字塔是作为一个普通的3D对象呈现的。它的背面被剔除，所以我们可以看到金字塔的正面。只有当它前面没有东西的时候，它才会被画出来。除此之外，还添加了一个pass，用于设置模板缓冲区，以将绘图限制为位于金字塔卷内的片段。您可以通过frame-debugger来验证。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011140292-1380890338.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>剔除方式.</a></i></center> </font><p>这意味着我们的着色器的culling和z-test设置被否弃了。 因此将其从着色器中删除。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Blend</span> <span class="p">[</span><span class="n">_SrcBlend</span><span class="p">]</span> <span class="p">[</span><span class="n">_DstBlend</span><span class="p">]</span>
 <span class="c1">//Cull Off</span>
 <span class="c1">//ZTest Always</span>
 <span class="n">ZWrite</span> <span class="n">Off</span>
-</code></pre></div></div>
-
-<p>当聚光灯的体积距离相机足够远时，此方法适用。 但是，当聚光灯离摄像机太近时，它会失败。 发生这种情况时，相机可能会进入了该体积内。 甚至有可能将近平面的一部分置于其内部，而将其余部分置于其外部，与近平面相交了。 在这些情况下，模板缓冲区不能用于限制渲染。</p>
-
-<p>仍然渲染光照的技巧是绘制金字塔的内表面，而不是金字塔的外表面。 这是通过渲染其背面而不是其正面来完成的。 而且，仅当这些表面最终位于已渲染的表面之后时才渲染它们。 这种方法还涵盖了聚光灯体积内的所有片段。 但这最终导致渲染了太多的碎片，因为通常金字塔的通常隐藏部分也将被渲染。 因此，仅在必要时执行。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141041-480459935.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141704-455701372.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>当靠近相机时，要绘制背面才正确.</a></i></center>    
-        </font>
-
-<h3 id="支持多光源-supporting-multiple-light-types">支持多光源 Supporting Multiple Light Types</h3>
-
-<p>目前，CreateLight只能用于方向光。让我们确保特定于方向灯的代码只在适当的时候使用。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">,</span> <span class="n">float3</span> <span class="n">worldPos</span><span class="p">,</span> <span class="kt">float</span> <span class="n">viewZ</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div><p>当聚光灯的体积距离相机足够远时，此方法适用。 但是，当聚光灯离摄像机太近时，它会失败。 发生这种情况时，相机可能会进入了该体积内。 甚至有可能将近平面的一部分置于其内部，而将其余部分置于其外部，与近平面相交了。 在这些情况下，模板缓冲区不能用于限制渲染。</p><p>仍然渲染光照的技巧是绘制金字塔的内表面，而不是金字塔的外表面。 这是通过渲染其背面而不是其正面来完成的。 而且，仅当这些表面最终位于已渲染的表面之后时才渲染它们。 这种方法还涵盖了聚光灯体积内的所有片段。 但这最终导致渲染了太多的碎片，因为通常金字塔的通常隐藏部分也将被渲染。 因此，仅在必要时执行。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141041-480459935.png" width="250" alt="loading failed, need vpn." /> <img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141704-455701372.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>当靠近相机时，要绘制背面才正确.</a></i></center> </font><h3 id="支持多光源-supporting-multiple-light-types">支持多光源 Supporting Multiple Light Types</h3><p>目前，CreateLight只能用于方向光。让我们确保特定于方向灯的代码只在适当的时候使用。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">,</span> <span class="n">float3</span> <span class="n">worldPos</span><span class="p">,</span> <span class="kt">float</span> <span class="n">viewZ</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">UnityLight</span> <span class="n">light</span><span class="p">;</span>
     <span class="c1">//light.dir = -_LightDir;</span>
     <span class="kt">float</span> <span class="n">attenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -820,13 +210,7 @@
     <span class="n">light</span><span class="p">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">_LightColor</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span> <span class="p">(</span><span class="n">attenuation</span> <span class="o">*</span> <span class="n">shadowAttenuation</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">light</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>尽管阴影衰落基于方向阴影贴图，但是其他类型的阴影也应该会被渐隐。 这样可以确保所有阴影都以相同的方式渐隐，而不仅仅是某些阴影。 因此，只要有阴影，阴影淡入淡出代码便适用于所有灯光。 因此，让我们将该代码移到特定于光源的块之外。</p>
-
-<p>我们可以使用布尔值来控制是否使用阴影淡出代码。由于布尔值是一个常数值，如果它仍然为假，代码将被删除。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">,</span> <span class="n">float3</span> <span class="n">worldPos</span><span class="p">,</span> <span class="kt">float</span> <span class="n">viewZ</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div><p>尽管阴影衰落基于方向阴影贴图，但是其他类型的阴影也应该会被渐隐。 这样可以确保所有阴影都以相同的方式渐隐，而不仅仅是某些阴影。 因此，只要有阴影，阴影淡入淡出代码便适用于所有灯光。 因此，让我们将该代码移到特定于光源的块之外。</p><p>我们可以使用布尔值来控制是否使用阴影淡出代码。由于布尔值是一个常数值，如果它仍然为假，代码将被删除。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityLight</span> <span class="nf">CreateLight</span> <span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">,</span> <span class="n">float3</span> <span class="n">worldPos</span><span class="p">,</span> <span class="kt">float</span> <span class="n">viewZ</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">UnityLight</span> <span class="n">light</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">attenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -853,122 +237,40 @@
     <span class="n">light</span><span class="p">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">_LightColor</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span> <span class="p">(</span><span class="n">attenuation</span> <span class="o">*</span> <span class="n">shadowAttenuation</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">light</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>非方向灯光都有一个position变量。它通过内置的_LightPos提供。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">_LightColor</span><span class="p">,</span> <span class="n">_LightDir</span><span class="p">,</span> <span class="n">_LightPos</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>现在可以确定聚光灯的光向量得出光方向。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#else
+</code></pre></div></div><p>非方向灯光都有一个position变量。它通过内置的_LightPos提供。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">_LightColor</span><span class="p">,</span> <span class="n">_LightDir</span><span class="p">,</span> <span class="n">_LightPos</span><span class="p">;</span>
+</code></pre></div></div><p>现在可以确定聚光灯的光向量得出光方向。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#else
 </span>    <span class="n">float3</span> <span class="n">lightVec</span> <span class="o">=</span> <span class="n">_LightPos</span><span class="p">.</span><span class="n">xyz</span> <span class="o">-</span> <span class="n">worldPos</span><span class="p">;</span>
     <span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">lightVec</span><span class="p">);</span>
 <span class="cp">#endif
-</span></code></pre></div></div>
-
-<h3 id="world-position-agin">World Position Agin</h3>
-
-<p>结果为黑色，似乎光线方向不正确。 发生这种情况是因为聚光灯的世界位置计算不正确。 当我们在场景中的某个地方渲染金字塔时，不像方向光那样渲染全屏quad将光线存储在normal通道中。 而必须是经由Vertex-Program从顶点的位置发射射线，通过将顶点的pos转换到view-space完成计算，为此，我们可以使用UnityObjectToViewPos函数。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">=</span> <span class="n">UnityObjectToViewPos</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>然而，这会产生方向错误的光线。我们要消去它们的X和Y坐标。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">=</span> <span class="n">UnityObjectToViewPos</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">)</span> <span class="o">*</span> <span class="nf">float3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011142595-16646437.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>正确的世界位置.</a></i></center>    
-        </font>
-
-<p>再次看看UnityObjectToViewPos内部实现</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">inline</span> <span class="n">float3</span> <span class="nf">UnityObjectToViewPos</span> <span class="p">(</span><span class="n">in</span> <span class="n">float3</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
+</span></code></pre></div></div><h3 id="world-position-agin">World Position Agin</h3><p>结果为黑色，似乎光线方向不正确。 发生这种情况是因为聚光灯的世界位置计算不正确。 当我们在场景中的某个地方渲染金字塔时，不像方向光那样渲染全屏quad将光线存储在normal通道中。 而必须是经由Vertex-Program从顶点的位置发射射线，通过将顶点的pos转换到view-space完成计算，为此，我们可以使用UnityObjectToViewPos函数。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">=</span> <span class="n">UnityObjectToViewPos</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">);</span>
+</code></pre></div></div><p>然而，这会产生方向错误的光线。我们要消去它们的X和Y坐标。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">=</span> <span class="n">UnityObjectToViewPos</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">)</span> <span class="o">*</span> <span class="nf">float3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011142595-16646437.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>正确的世界位置.</a></i></center> </font><p>再次看看UnityObjectToViewPos内部实现</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">inline</span> <span class="n">float3</span> <span class="nf">UnityObjectToViewPos</span> <span class="p">(</span><span class="n">in</span> <span class="n">float3</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">mul</span><span class="p">(</span><span class="n">UNITY_MATRIX_V</span><span class="p">,</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_ObjectToWorld</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">))).</span><span class="n">xyz</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>当渲染方向光时，应该只使用顶点法线。当渲染非方向灯以外的光几何时，需要把顶点pos转到view-space计算。Unity通过__LightAsQuad_变量告诉我们正在处理哪种情况。</p>
-
-<p>如果__LightAsQuad_被设为1，则处理的是方向光quad并且可以使用法线。否则，我们必须使用UnityObjectToViewPos。插值好过if ==&gt; from + (to – from) * t, t为1直接使用法线，为0直接计算到view-space</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">=</span> <span class="n">lerp</span>
+</code></pre></div></div><p>当渲染方向光时，应该只使用顶点法线。当渲染非方向灯以外的光几何时，需要把顶点pos转到view-space计算。Unity通过__LightAsQuad_变量告诉我们正在处理哪种情况。</p><p>如果__LightAsQuad_被设为1，则处理的是方向光quad并且可以使用法线。否则，我们必须使用UnityObjectToViewPos。插值好过if ==&gt; from + (to – from) * t, t为1直接使用法线，为0直接计算到view-space</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">ray</span> <span class="o">=</span> <span class="n">lerp</span>
 <span class="p">(</span>
     <span class="n">UnityObjectToViewPos</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">)</span> <span class="o">*</span> <span class="nf">float3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="n">v</span><span class="p">.</span><span class="n">normal</span><span class="p">,</span>
     <span class="n">_LightAsQuad</span>
 <span class="p">);</span>
-</code></pre></div></div>
-
-<h3 id="锥形衰减-cookie-attenuation">锥形衰减 Cookie Attenuation</h3>
-
-<p>聚光灯的锥形衰减是通过cookie纹理创建的，无论是默认的圆形还是定制的cookie。我们可以从复制定向光的cookie代码，仿照着写。也是存储在_LightTexture0</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">lightVec</span> <span class="o">=</span> <span class="n">_LightPos</span><span class="p">.</span><span class="n">xyz</span> <span class="o">-</span> <span class="n">worldPos</span><span class="p">;</span>
+</code></pre></div></div><h3 id="锥形衰减-cookie-attenuation">锥形衰减 Cookie Attenuation</h3><p>聚光灯的锥形衰减是通过cookie纹理创建的，无论是默认的圆形还是定制的cookie。我们可以从复制定向光的cookie代码，仿照着写。也是存储在_LightTexture0</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">lightVec</span> <span class="o">=</span> <span class="n">_LightPos</span><span class="p">.</span><span class="n">xyz</span> <span class="o">-</span> <span class="n">worldPos</span><span class="p">;</span>
 <span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">lightVec</span><span class="p">);</span>
 <span class="n">float2</span> <span class="n">uvCookie</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_WorldToLight</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="n">xy</span><span class="p">;</span>
 <span class="n">attenuation</span> <span class="o">*=</span> <span class="n">tex2Dbias</span><span class="p">(</span><span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">uvCookie</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)).</span><span class="n">w</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>但是，聚光灯Cookie越远离灯光位置，它就会变得越大。 这是由于通过透视变换造成的。 因此，矩阵乘法会产生4D齐次坐标。 为了得到规则的2D坐标，我们必须将X和Y除以W。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">uvCookie</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_WorldToLight</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+</code></pre></div></div><p>但是，聚光灯Cookie越远离灯光位置，它就会变得越大。 这是由于通过透视变换造成的。 因此，矩阵乘法会产生4D齐次坐标。 为了得到规则的2D坐标，我们必须将X和Y除以W。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">uvCookie</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_WorldToLight</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
 <span class="n">uvCookie</span><span class="p">.</span><span class="n">xy</span> <span class="o">/=</span> <span class="n">uvCookie</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
 <span class="n">attenuation</span> <span class="o">*=</span> <span class="n">tex2Dbias</span><span class="p">(</span><span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">uvCookie</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)).</span><span class="n">w</span><span class="p">;</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527012302994-353496315.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>cookie衰减.</a></i></center>    
-        </font>
-
-<p>上图实际上产生了两个光锥，一个向前一个向后。 后向圆锥通常在渲染区域之外结束，但这并不能保证。我们只需要前向锥，它对应于负的W坐标。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">attenuation</span> <span class="o">*=</span> <span class="n">tex2Dbias</span><span class="p">(</span><span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">uvCookie</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)).</span><span class="n">w</span><span class="p">;</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527012302994-353496315.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>cookie衰减.</a></i></center> </font><p>上图实际上产生了两个光锥，一个向前一个向后。 后向圆锥通常在渲染区域之外结束，但这并不能保证。我们只需要前向锥，它对应于负的W坐标。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">attenuation</span> <span class="o">*=</span> <span class="n">tex2Dbias</span><span class="p">(</span><span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">uvCookie</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)).</span><span class="n">w</span><span class="p">;</span>
 <span class="n">attenuation</span> <span class="o">*=</span> <span class="n">uvCookie</span><span class="p">.</span><span class="n">w</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="距离衰减-distance-attenuation">距离衰减 Distance Attenuation</h3>
-
-<p>聚光灯发出的光也会根据距离衰减。此衰减存储在查找纹理中，可通过__LightTextureB0_使用该纹理。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">_LightTextureB0</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>纹理被设计成必须使用光的距离的平方，并按光的范围进行缩放，作为UV进行采样。范围存储在_LightPos的第四个分量中。采样得到的纹理应该使用哪个通道在不同的平台，由_UNITY_ATTEN_CHANNEL_宏定义。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">lightVec</span><span class="p">);</span>
+</code></pre></div></div><h3 id="距离衰减-distance-attenuation">距离衰减 Distance Attenuation</h3><p>聚光灯发出的光也会根据距离衰减。此衰减存储在查找纹理中，可通过__LightTextureB0_使用该纹理。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">_LightTextureB0</span><span class="p">;</span>
+</code></pre></div></div><p>纹理被设计成必须使用光的距离的平方，并按光的范围进行缩放，作为UV进行采样。范围存储在_LightPos的第四个分量中。采样得到的纹理应该使用哪个通道在不同的平台，由_UNITY_ATTEN_CHANNEL_宏定义。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">light</span><span class="p">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">lightVec</span><span class="p">);</span>
 <span class="n">attenuation</span> <span class="o">*=</span> <span class="n">tex2D</span>
 <span class="p">(</span>
     <span class="n">_LightTextureB0</span><span class="p">,</span>
     <span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">lightVec</span><span class="p">,</span> <span class="n">lightVec</span><span class="p">)</span> <span class="o">*</span> <span class="n">_LightPos</span><span class="p">.</span><span class="n">w</span><span class="p">).</span><span class="n">rr</span>
 <span class="p">).</span><span class="n">UNITY_ATTEN_CHANNEL</span><span class="p">;</span>
 <span class="n">float4</span> <span class="n">uvCookie</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_WorldToLight</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085923716-1558484014.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>cookie 和 distance衰减.</a></i></center>    
-        </font>
-
-<h3 id="shadows">Shadows</h3>
-
-<p>当聚光灯有阴影时，定义SHADOWS_DEPTH关键字。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//在CreateLight中</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085923716-1558484014.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>cookie 和 distance衰减.</a></i></center> </font><h3 id="shadows">Shadows</h3><p>当聚光灯有阴影时，定义SHADOWS_DEPTH关键字。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//在CreateLight中</span>
 <span class="n">float4</span> <span class="n">uvCookie</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_WorldToLight</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
 <span class="n">uvCookie</span><span class="p">.</span><span class="n">xy</span> <span class="o">/=</span> <span class="n">uvCookie</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
 <span class="n">attenuation</span> <span class="o">*=</span> <span class="n">tex2Dbias</span><span class="p">(</span><span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">uvCookie</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)).</span><span class="n">w</span><span class="p">;</span>
@@ -976,21 +278,11 @@
 <span class="cp">#if defined(SHADOWS_DEPTH)
 </span>    <span class="n">shadowed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 <span class="cp">#endif
-</span></code></pre></div></div>
-
-<p>聚光灯和方向灯使用相同的变量来采样阴影贴图。在聚光灯的情况下，可以使用内置UnitySampleShadowmap来处理采样硬阴影或软阴影的细节。参数：阴影空间中的片元位置。unity_WorldToShadow_(4x4)_矩阵中第一个数组可以用来将世界空间转换为阴影空间。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shadowed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></code></pre></div></div><p>聚光灯和方向灯使用相同的变量来采样阴影贴图。在聚光灯的情况下，可以使用内置UnitySampleShadowmap来处理采样硬阴影或软阴影的细节。参数：阴影空间中的片元位置。unity_WorldToShadow_(4x4)_矩阵中第一个数组可以用来将世界空间转换为阴影空间。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shadowed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="n">UnitySampleShadowmap</span><span class="p">(</span>
     <span class="n">mul</span><span class="p">(</span><span class="n">unity_WorldToShadow</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">float4</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 <span class="p">);</span>
-</code></pre></div></div>
-
-<h3 id="点光源-point-lights">点光源 Point Lights</h3>
-
-<p>点光源使用与聚光灯相同的光向量、方向和距离衰减。这样他们就可以共享代码。应该只在定义SPOT关键字时使用spotlight代码的其余部分。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined(DIRECTIONAL) || defined(DIRECTIONAL_COOKIE)
+</code></pre></div></div><h3 id="点光源-point-lights">点光源 Point Lights</h3><p>点光源使用与聚光灯相同的光向量、方向和距离衰减。这样他们就可以共享代码。应该只在定义SPOT关键字时使用spotlight代码的其余部分。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined(DIRECTIONAL) || defined(DIRECTIONAL_COOKIE)
 </span>    <span class="c1">//...</span>
 <span class="cp">#else
 </span>    <span class="n">float3</span> <span class="n">lightVec</span> <span class="o">=</span> <span class="n">_LightPos</span><span class="p">.</span><span class="n">xyz</span> <span class="o">-</span> <span class="n">worldPos</span><span class="p">;</span>
@@ -1016,23 +308,7 @@
         <span class="cp">#endif
 </span>    <span class="cp">#endif
 #endif
-</span></code></pre></div></div>
-
-<p>这已经足够让点光源工作了。它们被渲染成和聚光灯一样的效果，除了渲染范围使用的是球形而不是锥形。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085924576-1982519938.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>高亮.</a></i></center>    
-        </font>
-
-<h3 id="shadows-1">Shadows</h3>
-
-<p>点光源的阴影存储在一个CubeMap。内置UnitySampleShadowmap可采样。参数：光的方向。一个从光到表面的向量。它是光的相反方向。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined(SPOT)
+</span></code></pre></div></div><p>这已经足够让点光源工作了。它们被渲染成和聚光灯一样的效果，除了渲染范围使用的是球形而不是锥形。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085924576-1982519938.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>高亮.</a></i></center> </font><h3 id="shadows-1">Shadows</h3><p>点光源的阴影存储在一个CubeMap。内置UnitySampleShadowmap可采样。参数：光的方向。一个从光到表面的向量。它是光的相反方向。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined(SPOT)
 </span><span class="c1">//...</span>
 <span class="cp">#else
 </span>    <span class="cp">#if defined(SHADOWS_CUBE)
@@ -1040,21 +316,7 @@
         <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="n">UnitySampleShadowmap</span><span class="p">(</span><span class="o">-</span><span class="n">lightVec</span><span class="p">);</span>
     <span class="cp">#endif
 #endif
-</span></code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085925412-308331709.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>点光源阴影.</a></i></center>    
-        </font>
-
-<h3 id="cookies">Cookies</h3>
-
-<p>Point light cookie也可以通过_LightTexture0获得。需要的是一个cubeMap映射，而不是常规的纹理。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//sampler2D _LightTexture0, _LightTextureB0;</span>
+</span></code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085925412-308331709.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>点光源阴影.</a></i></center> </font><h3 id="cookies">Cookies</h3><p>Point light cookie也可以通过_LightTexture0获得。需要的是一个cubeMap映射，而不是常规的纹理。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//sampler2D _LightTexture0, _LightTextureB0;</span>
 <span class="cp">#if defined(POINT_COOKIE)
 </span>    <span class="n">samplerCUBE</span> <span class="n">_LightTexture0</span><span class="p">;</span>
 <span class="cp">#else
@@ -1063,11 +325,7 @@
 </span>
 <span class="n">sampler2D</span> <span class="n">_LightTextureB0</span><span class="p">;</span>
 <span class="n">float4x4</span> <span class="n">unity_WorldToLight</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>要对cookie进行采样，请将片段的world-space转换为light-space，并使用光照空间对立方体映射进行采样。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#else
+</code></pre></div></div><p>要对cookie进行采样，请将片段的world-space转换为light-space，并使用光照空间对立方体映射进行采样。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#else
 </span>    <span class="cp">#if defined(POINT_COOKIE)
 </span>        <span class="n">float3</span> <span class="n">uvCookie</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_WorldToLight</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="n">xyz</span><span class="p">;</span>
         <span class="n">attenuation</span> <span class="o">*=</span> <span class="n">texCUBEbias</span><span class="p">(</span><span class="n">_LightTexture0</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">uvCookie</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)).</span><span class="n">w</span><span class="p">;</span>
@@ -1078,21 +336,7 @@
         <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="n">UnitySampleShadowmap</span><span class="p">(</span><span class="o">-</span><span class="n">lightVec</span><span class="p">);</span>
     <span class="cp">#endif
 #endif
-</span></code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085926193-2066682458.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>点光源cookie.</a></i></center>    
-        </font>
-
-<h3 id="skipping-shadows">Skipping Shadows</h3>
-
-<p>现在，我们可以使用自己的着色器渲染所有动态光源。 尽管我们目前并未对优化进行太多关注，但仍有一项潜在的大型优化<strong>值得考虑</strong>：<strong>最终超出阴影渐隐距离的片元将不会被阴影化</strong>。 但是现在仍在采样它们的阴影，这可能很昂贵。 我们可以通过基于阴影衰落因子进行_UNITY_BRANCH_分支来避免这种情况。 它接近1，那么我们可以完全跳过阴影衰减。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">shadowed</span><span class="p">)</span> <span class="p">{</span>
+</span></code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085926193-2066682458.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>点光源cookie.</a></i></center> </font><h3 id="skipping-shadows">Skipping Shadows</h3><p>现在，我们可以使用自己的着色器渲染所有动态光源。 尽管我们目前并未对优化进行太多关注，但仍有一项潜在的大型优化<strong>值得考虑</strong>：<strong>最终超出阴影渐隐距离的片元将不会被阴影化</strong>。 但是现在仍在采样它们的阴影，这可能很昂贵。 我们可以通过基于阴影衰落因子进行_UNITY_BRANCH_分支来避免这种情况。 它接近1，那么我们可以完全跳过阴影衰减。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">shadowed</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">float</span> <span class="n">shadowFadeDistance</span> <span class="o">=</span> <span class="n">UnityComputeShadowFadeDistance</span><span class="p">(</span><span class="n">worldPos</span><span class="p">,</span> <span class="n">viewZ</span><span class="p">);</span>
     <span class="kt">float</span> <span class="n">shadowFade</span> <span class="o">=</span> <span class="n">UnityComputeShadowFade</span><span class="p">(</span><span class="n">shadowFadeDistance</span><span class="p">);</span>
     <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="n">saturate</span><span class="p">(</span><span class="n">shadowAttenuation</span> <span class="o">+</span> <span class="n">shadowFade</span><span class="p">);</span>
@@ -1101,364 +345,16 @@
         <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>但是，即使用了_UNITY_BRANCH_分支它本身也很昂贵。除了靠近阴影区域的边缘，所有碎片都落在阴影区域的内部或外部。 但这仅在GPU可以利用这一点的情况下才重要。 在这种情况下，使用HLSLSupport.cginc定义UNITY_FAST_COHERENT_DYNAMIC_BRANCHING宏。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined(UNITY_FAST_COHERENT_DYNAMIC_BRANCHING)
+</code></pre></div></div><p>但是，即使用了_UNITY_BRANCH_分支它本身也很昂贵。除了靠近阴影区域的边缘，所有碎片都落在阴影区域的内部或外部。 但这仅在GPU可以利用这一点的情况下才重要。 在这种情况下，使用HLSLSupport.cginc定义UNITY_FAST_COHERENT_DYNAMIC_BRANCHING宏。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined(UNITY_FAST_COHERENT_DYNAMIC_BRANCHING)
 </span>    <span class="n">UNITY_BRANCH</span>
     <span class="nf">if</span> <span class="p">(</span><span class="n">shadowFade</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">99</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="cp">#endif
-</span></code></pre></div></div>
-
-<p>即使这样，仅当阴影需要多个纹理样本时才值得使用。 <strong>对于柔和的聚光灯和点光源阴影，进一步使用用SHADOWS_SOFT关键字指示</strong>。 而方向光阴影始终只需要单个纹理，因此它性能很便宜。</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined(UNITY_FAST_COHERENT_DYNAMIC_BRANCHING) &amp;&amp; defined(SHADOWS_SOFT)
+</span></code></pre></div></div><p>即使这样，仅当阴影需要多个纹理样本时才值得使用。 <strong>对于柔和的聚光灯和点光源阴影，进一步使用用SHADOWS_SOFT关键字指示</strong>。 而方向光阴影始终只需要单个纹理，因此它性能很便宜。</p><div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if defined(UNITY_FAST_COHERENT_DYNAMIC_BRANCHING) &amp;&amp; defined(SHADOWS_SOFT)
 </span>    <span class="n">UNITY_BRANCH</span>
     <span class="nf">if</span> <span class="p">(</span><span class="n">shadowFade</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">99</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="cp">#endif
-</span></code></pre></div></div>
-
-        </article>
-        <hr>
-
-        
-        
-            
-            
-                
-                    
-                        
-                        <h2 id="similar_posts">Similar Posts</h2>
-                        <ul>
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/10/Unity-Deferred-Shading13/">Unity Shader 延迟渲染(翻译十三)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/09/Unity-Shader-Transparent12/">Unity 透明渲染(翻译十二)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/08/Unity-Shader-Transparent11/">Unity 透明渲染(翻译十一)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/07/Unity-ShaderGUI-Extension10/">Unity Shader GUI 扩展二(翻译十)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-        
-            </ul>
-        
-
-        <div class="post-recent">
-    <div class="pre">
-        
-        <p><strong>上一篇</strong> <a href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四)</a></p>
-        
-    </div>
-    <div class="nex">
-
-        
-        <p><strong>下一篇</strong> <a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六)</a></p>
-        
-    </div>
-</div>
-
-
-        <h2 id="comments">Comments</h2>
-        
-
-
-<div id="disqus_thread"></div>
-<script>
-    /**
-     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-     */
-    var disqus_config = function() {
-        this.page.url = 'www.damonc.top/2018/01/17/Unity-Deferred-Lights15/'; // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'www.damonc.top/2018/01/17/Unity-Deferred-Lights15/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-
-    (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document,
-            s = d.createElement('script');
-
-        s.src = '//bitfeng.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
-
-
-
-
-    </div>
-</div>
-
-<script>
-/**
- * target _blank
- */
-(function() {
-    var aTags = document.querySelectorAll('article a:not([id])')
-    for (var i = 0; i < aTags.length; i++) {
-        aTags[i].setAttribute('target', '_blank')
-    }
-}());
-</script>
-<script src="/js/pageContent.js " charset="utf-8"></script>
-
-
-    <footer class="site-footer">
-
-
-    <div class="wrapper">
-
-        <p class="description">
-             云上的日子！ 
-        </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/bitfeng" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
-            <a href="mailto:damonc@126.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>        
-        </p>
-        <p>
-            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-        </p>
-
-    </div>
-</footer>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-    <div class="back-to-top">
-    <a href="#top" data-scroll>
-        <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    </a>
-</div>
-
-    <script src=" /js/main.js " charset="utf-8"></script>
-    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
-    <script type="text/javascript">
-      smoothScroll.init({
-        speed: 500, // Integer. How fast to complete the scroll in milliseconds
-        easing: 'easeInOutCubic', // Easing pattern to use
-        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
-      });
-
-      function displayWindowSize() {
-            var w = document.documentElement.clientWidth;
-            var h = document.documentElement.clientHeight;
-            var rightDiv = document.querySelector('.right')
-            var footer = document.querySelector('.site-footer')
-            if(w <= 1700){
-                rightDiv.style.display='none';
-                footer.style.display='none';
-            }else{
-                rightDiv.style.display='block';
-                footer.style.display = "block";
-            }
-        }
-
-        // 将事件侦听器函数附加到窗口的resize事件
-        window.addEventListener("resize", displayWindowSize);
-
-        // 第一次调用该函数
-        displayWindowSize();
-    </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
-  </body>
-
-</html>
+</span></code></pre></div></div></article><hr><h2 id="similar_posts">Similar Posts</h2><ul><li class="relatedPost"> <a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六) </a><li class="relatedPost"> <a href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四) </a><li class="relatedPost"> <a href="/2018/01/10/Unity-Deferred-Shading13/">Unity Shader 延迟渲染(翻译十三) </a><li class="relatedPost"> <a href="/2018/01/09/Unity-Shader-Transparent12/">Unity 透明渲染(翻译十二) </a><li class="relatedPost"> <a href="/2018/01/08/Unity-Shader-Transparent11/">Unity 透明渲染(翻译十一) </a><li class="relatedPost"> <a href="/2018/01/07/Unity-ShaderGUI-Extension10/">Unity Shader GUI 扩展二(翻译十) </a></ul><div class="post-recent"><div class="pre"><p><strong>上一篇</strong> <a href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四)</a></p></div><div class="nex"><p><strong>下一篇</strong> <a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六)</a></p></div></div><h2 id="comments">Comments</h2><div id="disqus_thread"></div><script> /** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */ var disqus_config = function() { this.page.url = 'www.damonc.top/2018/01/17/Unity-Deferred-Lights15/'; /* Replace PAGE_URL with your page's canonical URL variable*/ this.page.identifier = 'www.damonc.top/2018/01/17/Unity-Deferred-Lights15/'; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable*/ }; (function() { /* DON'T EDIT BELOW THIS LINE*/ var d = document, s = d.createElement('script'); s.src = '//bitfeng.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></div></div><script> /** * target _blank */ (function() { var aTags = document.querySelectorAll('article a:not([id])'); for (var i = 0; i < aTags.length; i++) { aTags[i].setAttribute('target', '_blank'); } }()); </script> <script src="/js/pageContent.js " charset="utf-8"></script><footer class="site-footer"><div class="wrapper"><p class="description"> 云上的日子！</p><p class="contact"> Contact me at: <a href="https://github.com/bitfeng" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a> <a href="mailto:damonc@126.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></p><p> 本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p></div></footer><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div class="back-to-top"> <a href="#top" data-scroll> <i class="fa fa-arrow-up" aria-hidden="true"></i> </a></div><script src=" /js/main.js " charset="utf-8"></script> <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script> <script type="text/javascript"> smoothScroll.init({ speed: 500, easing: 'easeInOutCubic', offset: 20, }); function displayWindowSize() { var w = document.documentElement.clientWidth; var h = document.documentElement.clientHeight; var rightDiv = document.querySelector('.right'); var footer = document.querySelector('.site-footer'); if(!rightDiv || !footer){ return; } if(w <= 1700){ rightDiv.style.display='none'; footer.style.display='none'; }else{ rightDiv.style.display='block'; footer.style.display = "block"; } } window.addEventListener("resize", displayWindowSize); displayWindowSize(); </script>

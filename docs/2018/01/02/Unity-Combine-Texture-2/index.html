@@ -1,287 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Unity 多纹理融合(翻译三)</title>
-    <meta name="description" content="本篇摘要：  采样多个纹理  应用细节纹理  处理线性空间中的颜色  使用 splat 地图">
-
-    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
-    <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="www.damonc.top/2018/01/02/Unity-Combine-Texture-2/">
-    <link rel="alternate" type="application/rss+xml" title="bitfeng" href="www.damonc.top/feed.xml ">
-    
-
-
-    <script>
-    // 百度统计代码
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?f7f1a5967e3927ea98597632f0a17ad9";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-    </script>
-
-
-
-
-  <!-- MathJax -->
-  <script>
-    /* see: <https://docs.mathjax.org/en/latest/options/input/tex.html#tex-options> */
-    MathJax = {
-        tex: {
-        inlineMath: [              /* start/end delimiter pairs for in-line math */
-            ['$','$'],
-            ['\\(','\\)']
-        ],
-        displayMath: [             /* start/end delimiter pairs for display math */
-            ['$$', '$$'],
-            ['\\[', '\\]']
-        ]
-        }
-    };
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
-</head>
-
-
-  <body class="custom-background">
-    
-    <header id="top">
-    <div class="wrapper">
-        <a href="/" class="brand">bitfeng</a>
-        <small>maybe useless, but interesting.</small>
-        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
-        <nav id="headerNav">
-            <ul>
-                <li>
-                    
-                    <a href="/">
-                    
-                        <i class="fa fa-home"></i>Home
-                    </a>
-                </li>
-
-                
-                    
-                    <li>
-                        
-                        <a href="/archive/">
-                        
-                            <i class="fa fa-archive"></i>Archives
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/category/">
-                        
-                            <i class="fa fa-th-list"></i>Categories
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>Tags
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/collection/">
-                        
-                            <i class="fa fa-bookmark"></i>Collections
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/demo/">
-                        
-                            <i class="fa fa-play"></i>Demos
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/about/">
-                        
-                            <i class="fa fa-heart"></i>About
-                        </a>
-                    </li>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            </ul>
-        </nav>
-    </div>
-</header>
-
-
-        <div class="home-right-bar">
-    <button class="anchor"><i class="fa fa-anchor"></i></button>
-    <div class="right">
-        <div class="wrap">
-            <!-- Content -->
-            <div class="side content">
-                <div> 目录 </div>
-                <ul id="content-side" class="content-ul">
-                    
-                    <li><a href="#comments">Comments</a></li>
-                </ul>
-            </div>
-            <!-- 其他div框放到这里 -->
-            <!-- <div class="side">bbbb</div> -->
-        </div>
-    </div>
-</div>
-
-<div class="page clearfix" post>
-    <div class="left">
-        <h1>Unity 多纹理融合(翻译三)</h1>
-        <div class="label">
-
-            <div class="label-card">
-                <i class="fa fa-calendar"></i>2018-01-02
-            </div>
-
-            <div class="label-card">
-                <i class="fa fa-user"></i>catlikecoding
-                
-            </div>
-
-            <div class="label-card">
-                
-            </div>
-
-            <div class="label-card">
-            
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#翻译" title="Category: 翻译" rel="category">翻译</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-            </div>
-
-            <div class="label-card">
-            
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <!--a href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</a-->
-        <b href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</b>&nbsp;
-    
-        <!--a href="/tag/#Unity3d" title="Tag: Unity3d" rel="tag">Unity3d</a-->
-        <b href="/tag/#Unity3d" title="Tag: Unity3d" rel="tag">Unity3d</b>
-    
-  
-
-</span>
-
-            </div>
-
-        </div>
-        <hr>
-        <article itemscope itemtype="http://schema.org/BlogPosting">
-        <ul id="markdown-toc">
-  <li><a href="#纹理合并" id="markdown-toc-纹理合并">纹理合并</a>    <ul>
-      <li><a href="#细节纹理" id="markdown-toc-细节纹理">细节纹理</a></li>
-      <li><a href="#多张纹理贴图采样" id="markdown-toc-多张纹理贴图采样">多张纹理贴图采样</a></li>
-      <li><a href="#单独的细节纹理" id="markdown-toc-单独的细节纹理">单独的细节纹理</a></li>
-      <li><a href="#使用两个uv" id="markdown-toc-使用两个uv">使用两个UV</a></li>
-      <li><a href="#细节纹理渐变融合" id="markdown-toc-细节纹理渐变融合">细节纹理渐变融合</a></li>
-      <li><a href="#线性色彩空间" id="markdown-toc-线性色彩空间">线性色彩空间</a></li>
-      <li><a href="#什么是gamma色彩空间" id="markdown-toc-什么是gamma色彩空间">什么是gamma色彩空间?</a></li>
-    </ul>
-  </li>
-  <li><a href="#纹理splat过渡遮罩" id="markdown-toc-纹理splat过渡遮罩">纹理splat过渡遮罩</a>    <ul>
-      <li><a href="#增加融合纹理" id="markdown-toc-增加融合纹理">增加融合纹理</a></li>
-      <li><a href="#使用splat贴图" id="markdown-toc-使用splat贴图">使用splat贴图</a></li>
-      <li><a href="#rgb-splat贴图" id="markdown-toc-rgb-splat贴图">RGB Splat贴图</a></li>
-    </ul>
-  </li>
-</ul>
-
-<p>本篇摘要：</p>
-<ul>
-  <li>采样多个纹理</li>
-  <li>应用细节纹理</li>
-  <li>处理线性空间中的颜色</li>
-  <li>使用 splat 地图</li>
-</ul>
-
-<h2 id="纹理合并">纹理合并</h2>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/tutorial-image.jpg" width="500" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>融合多张纹理.</a></i></center>    
-        </font>
-
-<p>贴图在游戏应用广泛，但它们有局限性。无论以何种尺寸显示，它们都有固定数量的像素。如果需要被渲染到很小网格，可以使用mipmap来保持它们的部分细节。但是当渲染到很大的网格上，会变得模糊。我们也不能无中生有地渲染更多额外的细节。本文讨论了一些解决办法。</p>
-
-<h3 id="细节纹理">细节纹理</h3>
-
-<p>通常可以使用更大的纹理，意味着更多的像素和更多的细节。但是纹理的大小也是有限制的，取决于游戏包体大小和目标平台的内存，以及gpu采样能力。</p>
-
-<p>另一种增加像素密度的方法是平铺纹理。出一张尽可能小的贴图，设置为重复模式。近距离观察下重复感可能不会很明显。毕竟当你站着用鼻子接触墙壁时，你只会看到整面墙壁的一小部分。</p>
-
-<p>因此，我们能够通过拉伸与平铺纹理相结合的方式来尽可能地添加细节。为了尝试这一点，我们使用一张棱角明显的纹理。这是一个方格图，放入的工程内使用默认导入设置。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>略微扭曲的网格纹理.</a></i></center>    
-        </font>
-
-<p>新建一个纹理融合shader</p>
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Shader</span> <span class="s">"Custom/Textured With Detail"</span> <span class="p">{</span>
+<!DOCTYPE html><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Unity 多纹理融合(翻译三)</title><meta name="description" content="本篇摘要： 采样多个纹理 应用细节纹理 处理线性空间中的颜色 使用 splat 地图"><link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon"><link rel="icon" href="/favicon.ico?" type="image/x-icon"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css"><link rel="stylesheet" href="/css/main.css "><link rel="canonical" href="www.damonc.top/2018/01/02/Unity-Combine-Texture-2/"><link rel="alternate" type="application/rss+xml" title="bitfeng" href="www.damonc.top/feed.xml "> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "//hm.baidu.com/hm.js?f7f1a5967e3927ea98597632f0a17ad9"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })(); </script> <script> /* see: <https://docs.mathjax.org/en/latest/options/input/tex.html#tex-options> */ MathJax = { tex: { inlineMath: [ /* start/end delimiter pairs for in-line math */ ['$','$'], ['\\(','\\)'] ], displayMath: [ /* start/end delimiter pairs for display math */ ['$$', '$$'], ['\\[', '\\]'] ] } }; </script> <script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><body class="custom-background"><header id="top"><div class="wrapper"> <a href="/" class="brand">bitfeng</a> <small>maybe useless, but interesting.</small> <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button><nav id="headerNav"><ul><li> <a href="/"> <i class="fa fa-home"></i>Home </a><li> <a href="/archive/"> <i class="fa fa-archive"></i>Archives </a><li> <a href="/category/"> <i class="fa fa-th-list"></i>Categories </a><li> <a href="/tag/"> <i class="fa fa-tags"></i>Tags </a><li> <a href="/collection/"> <i class="fa fa-bookmark"></i>Collections </a><li> <a href="/demo/"> <i class="fa fa-play"></i>Demos </a><li> <a href="/about/"> <i class="fa fa-heart"></i>About </a></ul></nav></div></header><div class="home-right-bar"> <button class="anchor"><i class="fa fa-anchor"></i></button><div class="right"><div class="wrap"><div class="side content"><div> 目录</div><ul id="content-side" class="content-ul"><li><a href="#comments">Comments</a></ul></div></div></div></div><div class="page clearfix" post><div class="left"><h1>Unity 多纹理融合(翻译三)</h1><div class="label"><div class="label-card"> <i class="fa fa-calendar"></i>2018-01-02</div><div class="label-card"> <i class="fa fa-user"></i>catlikecoding</div><div class="label-card"></div><div class="label-card"> <span class="categories"> <i class="fa fa-th-list"></i> <a href="/category/#翻译" title="Category: 翻译" rel="category">翻译</a> </span></div><div class="label-card"> <span class="pageTag"> <i class="fa fa-tags"></i> <b href="/tag/#Shader" title="Tag: Shader" rel="tag">Shader</b>&nbsp; <b href="/tag/#Unity3d" title="Tag: Unity3d" rel="tag">Unity3d</b> </span></div></div><hr><article itemscope itemtype="http://schema.org/BlogPosting"><ul id="markdown-toc"><li><a href="#纹理合并" id="markdown-toc-纹理合并">纹理合并</a><ul><li><a href="#细节纹理" id="markdown-toc-细节纹理">细节纹理</a><li><a href="#多张纹理贴图采样" id="markdown-toc-多张纹理贴图采样">多张纹理贴图采样</a><li><a href="#单独的细节纹理" id="markdown-toc-单独的细节纹理">单独的细节纹理</a><li><a href="#使用两个uv" id="markdown-toc-使用两个uv">使用两个UV</a><li><a href="#细节纹理渐变融合" id="markdown-toc-细节纹理渐变融合">细节纹理渐变融合</a><li><a href="#线性色彩空间" id="markdown-toc-线性色彩空间">线性色彩空间</a><li><a href="#什么是gamma色彩空间" id="markdown-toc-什么是gamma色彩空间">什么是gamma色彩空间?</a></ul><li><a href="#纹理splat过渡遮罩" id="markdown-toc-纹理splat过渡遮罩">纹理splat过渡遮罩</a><ul><li><a href="#增加融合纹理" id="markdown-toc-增加融合纹理">增加融合纹理</a><li><a href="#使用splat贴图" id="markdown-toc-使用splat贴图">使用splat贴图</a><li><a href="#rgb-splat贴图" id="markdown-toc-rgb-splat贴图">RGB Splat贴图</a></ul></ul><p>本篇摘要：</p><ul><li>采样多个纹理<li>应用细节纹理<li>处理线性空间中的颜色<li>使用 splat 地图</ul><h2 id="纹理合并">纹理合并</h2><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/tutorial-image.jpg" width="500" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>融合多张纹理.</a></i></center> </font><p>贴图在游戏应用广泛，但它们有局限性。无论以何种尺寸显示，它们都有固定数量的像素。如果需要被渲染到很小网格，可以使用mipmap来保持它们的部分细节。但是当渲染到很大的网格上，会变得模糊。我们也不能无中生有地渲染更多额外的细节。本文讨论了一些解决办法。</p><h3 id="细节纹理">细节纹理</h3><p>通常可以使用更大的纹理，意味着更多的像素和更多的细节。但是纹理的大小也是有限制的，取决于游戏包体大小和目标平台的内存，以及gpu采样能力。</p><p>另一种增加像素密度的方法是平铺纹理。出一张尽可能小的贴图，设置为重复模式。近距离观察下重复感可能不会很明显。毕竟当你站着用鼻子接触墙壁时，你只会看到整面墙壁的一小部分。</p><p>因此，我们能够通过拉伸与平铺纹理相结合的方式来尽可能地添加细节。为了尝试这一点，我们使用一张棱角明显的纹理。这是一个方格图，放入的工程内使用默认导入设置。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>略微扭曲的网格纹理.</a></i></center> </font><p>新建一个纹理融合shader</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Shader</span> <span class="s">"Custom/Textured With Detail"</span> <span class="p">{</span>
     <span class="n">Properties</span> <span class="p">{</span>
         <span class="n">_Tint</span> <span class="p">(</span><span class="s">"Tint"</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">_MainTex</span> <span class="p">(</span><span class="s">"Texture"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
@@ -291,62 +8,14 @@
 
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>使用此着色器创建一个新材质，然后为其指定该shader和网格纹理。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detailed-inspector.png" width="300" alt="loading failed, need vpn." /></center>
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detailed-scene.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>网格纹理.</a></i></center>    
-        </font>
-
-<p>将材质分配给quad并查看它。从远处看效果还行。但是靠得太近看会变得模糊不清。缺失一些细节，同时纹理压缩造成的伪影也会变得很明显。
-网格特写，显示低纹素密度和 DXT1 伪影。
-多个纹理样本
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-close-up.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>带有低像素密度和DXT1伪影.</a></i></center>    
-        </font>
-
-<h3 id="多张纹理贴图采样">多张纹理贴图采样</h3>
-
-<p>现在我们只采样了单个纹理样本并将其用作片段着色器的结果，将采样的颜色存储在一个临时变量中。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+</code></pre></div></div><p>使用此着色器创建一个新材质，然后为其指定该shader和网格纹理。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detailed-inspector.png" width="300" alt="loading failed, need vpn." /></center> <center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detailed-scene.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>网格纹理.</a></i></center> </font><p>将材质分配给quad并查看它。从远处看效果还行。但是靠得太近看会变得模糊不清。缺失一些细节，同时纹理压缩造成的伪影也会变得很明显。 网格特写，显示低纹素密度和 DXT1 伪影。 多个纹理样本</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-close-up.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>带有低像素密度和DXT1伪影.</a></i></center> </font><h3 id="多张纹理贴图采样">多张纹理贴图采样</h3><p>现在我们只采样了单个纹理样本并将其用作片段着色器的结果，将采样的颜色存储在一个临时变量中。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
     <span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">_Tint</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">color</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>先假设可以通过引入平铺纹理的方式来增加像素密度。执行一次纹理采样函数，给它一个十倍采样面积，用这个结果替换临时存储的颜色原来的颜色输出到屏幕。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">_Tint</span><span class="p">;</span>
+</code></pre></div></div><p>先假设可以通过引入平铺纹理的方式来增加像素密度。执行一次纹理采样函数，给它一个十倍采样面积，用这个结果替换临时存储的颜色原来的颜色输出到屏幕。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">_Tint</span><span class="p">;</span>
 <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span>
 <span class="k">return</span> <span class="n">color</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>屏幕上会产生很多小网格。靠的很近再观察，结果不那么糟糕了。因为采样纹理用了平铺10次，所以很明显是一个重复的图案。
-硬编码平铺。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/tiling.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>平铺纹理.</a></i></center>    
-        </font>
-
-<p>请注意，此时我们正在执行两个纹理采样，但最终却只使用其中一个。这似乎很浪费。是吗？看看编译的顶点程序。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span>  <span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
+</code></pre></div></div><p>屏幕上会产生很多小网格。靠的很近再观察，结果不那么糟糕了。因为采样纹理用了平铺10次，所以很明显是一个重复的图案。 硬编码平铺。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/tiling.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>平铺纹理.</a></i></center> </font><p>请注意，此时我们正在执行两个纹理采样，但最终却只使用其中一个。这似乎很浪费。是吗？看看编译的顶点程序。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span>  <span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
 <span class="n">in</span>  <span class="n">vec2</span> <span class="n">vs_TEXCOORD0</span><span class="p">;</span>
 <span class="n">layout</span><span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">out</span> <span class="n">vec4</span> <span class="n">SV_TARGET0</span><span class="p">;</span>
 <span class="n">vec2</span> <span class="n">t0</span><span class="p">;</span>
@@ -356,9 +25,7 @@
     <span class="n">SV_TARGET0</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">t0</span><span class="p">.</span><span class="n">xy</span><span class="p">);</span>
     <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SetTexture</span> <span class="mi">0</span> <span class="p">[</span><span class="n">_MainTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">0</span>
+</code></pre></div></div><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SetTexture</span> <span class="mi">0</span> <span class="p">[</span><span class="n">_MainTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">0</span>
       <span class="n">ps_4_0</span>
       <span class="n">dcl_sampler</span> <span class="n">s0</span><span class="p">,</span> <span class="n">mode_default</span>
       <span class="n">dcl_resource_texture2d</span> <span class="p">(</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">)</span> <span class="n">t0</span>
@@ -368,20 +35,10 @@
    <span class="mi">0</span><span class="o">:</span> <span class="n">mul</span> <span class="n">r0</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="n">v0</span><span class="p">.</span><span class="n">xyxx</span><span class="p">,</span> <span class="n">l</span><span class="p">(</span><span class="mf">10.000000</span><span class="p">,</span> <span class="mf">10.000000</span><span class="p">,</span> <span class="mf">0.000000</span><span class="p">,</span> <span class="mf">0.000000</span><span class="p">)</span>
    <span class="mi">1</span><span class="o">:</span> <span class="n">sample</span> <span class="n">o0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyxx</span><span class="p">,</span> <span class="n">t0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">s0</span>
    <span class="mi">2</span><span class="o">:</span> <span class="n">ret</span>
-</code></pre></div></div>
-
-<p>是否注意到编译后的代码中只有一个纹理采样？没错，编译器为我们去掉了不必要的代码！编译器基本上会丢弃任何最终未使用的内容。</p>
-
-<p>我们不想丢弃原始采样到颜色，就要合并两次采样结果。让我们通过将它们相乘来做到这一点。再添加一个_Tint属性，叠加一层自定义颜色。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">_Tint</span><span class="p">;</span>
+</code></pre></div></div><p>是否注意到编译后的代码中只有一个纹理采样？没错，编译器为我们去掉了不必要的代码！编译器基本上会丢弃任何最终未使用的内容。</p><p>我们不想丢弃原始采样到颜色，就要合并两次采样结果。让我们通过将它们相乘来做到这一点。再添加一个_Tint属性，叠加一层自定义颜色。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">_Tint</span><span class="p">;</span>
 <span class="n">color</span> <span class="o">*=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
 <span class="k">return</span> <span class="n">color</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>着色编译器会生成什么样的代码呢，对此有何影响？</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span>  <span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
+</code></pre></div></div><p>着色编译器会生成什么样的代码呢，对此有何影响？</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span>  <span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
 <span class="n">in</span>  <span class="n">vec2</span> <span class="n">vs_TEXCOORD0</span><span class="p">;</span>
 <span class="n">layout</span><span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">out</span> <span class="n">vec4</span> <span class="n">SV_TARGET0</span><span class="p">;</span>
 <span class="n">mediump</span> <span class="n">vec4</span> <span class="n">t16_0</span><span class="p">;</span>
@@ -393,9 +50,7 @@
     <span class="n">SV_TARGET0</span> <span class="o">=</span> <span class="n">t16_0</span> <span class="o">*</span> <span class="n">_Tint</span><span class="p">;</span>
     <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SetTexture</span> <span class="mi">0</span> <span class="p">[</span><span class="n">_MainTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">0</span>
+</code></pre></div></div><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SetTexture</span> <span class="mi">0</span> <span class="p">[</span><span class="n">_MainTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">0</span>
 <span class="n">ConstBuffer</span> <span class="s">"$Globals"</span> <span class="mi">144</span>
 <span class="n">Vector</span> <span class="mi">96</span> <span class="p">[</span><span class="n">_Tint</span><span class="p">]</span>
 <span class="n">BindCB</span>  <span class="s">"$Globals"</span> <span class="mi">0</span>
@@ -410,26 +65,8 @@
    <span class="mi">1</span><span class="o">:</span> <span class="n">mul</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span>
    <span class="mi">2</span><span class="o">:</span> <span class="n">mul</span> <span class="n">o0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">cb0</span><span class="p">[</span><span class="mi">6</span><span class="p">].</span><span class="n">xyzw</span>
    <span class="mi">3</span><span class="o">:</span> <span class="n">ret</span>
-</code></pre></div></div>
-
-<p>这次的纹理采样，编译器检测到重复对_MainTex采样代码。对其进行优化后纹理只采样一次，结果存储在寄存器中并重复使用。即使使用_Tint中间变量等，编译器也足够聪明，可以检测到此类代码重复。最终将所有结果汇总后输出。</p>
-
-<p>现在再对UV坐标平铺×10次，最终看到大网格和小网格的融合在一起</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">*=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/multiplied.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>平铺纹理.</a></i></center>    
-        </font>
-
-<p>由于纹理采样时参数不再相同，编译器也必须保留两次采样。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span>  <span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
+</code></pre></div></div><p>这次的纹理采样，编译器检测到重复对_MainTex采样代码。对其进行优化后纹理只采样一次，结果存储在寄存器中并重复使用。即使使用_Tint中间变量等，编译器也足够聪明，可以检测到此类代码重复。最终将所有结果汇总后输出。</p><p>现在再对UV坐标平铺×10次，最终看到大网格和小网格的融合在一起</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">*=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/multiplied.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>平铺纹理.</a></i></center> </font><p>由于纹理采样时参数不再相同，编译器也必须保留两次采样。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span>  <span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
 <span class="n">in</span>  <span class="n">vec2</span> <span class="n">vs_TEXCOORD0</span><span class="p">;</span>
 <span class="n">layout</span><span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">out</span> <span class="n">vec4</span> <span class="n">SV_TARGET0</span><span class="p">;</span>
 <span class="n">vec4</span> <span class="n">t0</span><span class="p">;</span>
@@ -445,9 +82,7 @@
     <span class="n">SV_TARGET0</span> <span class="o">=</span> <span class="n">t0</span> <span class="o">*</span> <span class="n">t10_1</span><span class="p">;</span>
     <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SetTexture</span> <span class="mi">0</span> <span class="p">[</span><span class="n">_MainTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">0</span>
+</code></pre></div></div><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SetTexture</span> <span class="mi">0</span> <span class="p">[</span><span class="n">_MainTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">0</span>
 <span class="n">ConstBuffer</span> <span class="s">"$Globals"</span> <span class="mi">144</span>
 <span class="n">Vector</span> <span class="mi">96</span> <span class="p">[</span><span class="n">_Tint</span><span class="p">]</span>
 <span class="n">BindCB</span>  <span class="s">"$Globals"</span> <span class="mi">0</span>
@@ -464,87 +99,27 @@
    <span class="mi">3</span><span class="o">:</span> <span class="n">sample</span> <span class="n">r1</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r1</span><span class="p">.</span><span class="n">xyxx</span><span class="p">,</span> <span class="n">t0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">s0</span>
    <span class="mi">4</span><span class="o">:</span> <span class="n">mul</span> <span class="n">o0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r1</span><span class="p">.</span><span class="n">xyzw</span>
    <span class="mi">5</span><span class="o">:</span> <span class="n">ret</span>
-</code></pre></div></div>
-
-<h3 id="单独的细节纹理">单独的细节纹理</h3>
-
-<p>将两个纹理相乘时，结果会更暗。除非至少其中一种纹理是白色的。这是因为像素的每个颜色通道都有一个介于 0 和 1 之间的值。当向纹理添加细节时，可以通过该通道值来实现变暗或变亮。</p>
-
-<p>要使原始纹理变亮，给原始颜色乘2，使得每个颜色值都增大。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">*=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/doubled.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>增亮颜色.</a></i></center>    
-        </font>
-
-<p>这种直接扩大倍数的做法很粗暴。我们知道任何数乘以1不变，但是对细节纹理色加倍时，但对于1/2这个分界值就有用了。颜色区间是0-1，低于1/2的值将是结果变暗，高于1/2的值将变亮。这里引入一张特殊的灰度细节纹理来处理。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-detail.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>细节灰度图.</a></i></center>    
-        </font>
-
-<blockquote class="prompt-tip">
-  <p>灰度细节纹理？</p>
-
-  <p>一般都是用灰度细节纹理来增白或加深原始颜色做二次细节调整，不是灰度图跳出
-的颜色不是那么直观的结果。</p>
-</blockquote>
-
-<p>要使用这个单独的细节纹理，我们必须在着色器中添加第二个纹理属性。使用灰色作为默认值，因为这不会改变主纹理的外观。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span> <span class="p">{</span>
+</code></pre></div></div><h3 id="单独的细节纹理">单独的细节纹理</h3><p>将两个纹理相乘时，结果会更暗。除非至少其中一种纹理是白色的。这是因为像素的每个颜色通道都有一个介于 0 和 1 之间的值。当向纹理添加细节时，可以通过该通道值来实现变暗或变亮。</p><p>要使原始纹理变亮，给原始颜色乘2，使得每个颜色值都增大。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">*=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/doubled.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>增亮颜色.</a></i></center> </font><p>这种直接扩大倍数的做法很粗暴。我们知道任何数乘以1不变，但是对细节纹理色加倍时，但对于1/2这个分界值就有用了。颜色区间是0-1，低于1/2的值将是结果变暗，高于1/2的值将变亮。这里引入一张特殊的灰度细节纹理来处理。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-detail.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>细节灰度图.</a></i></center> </font><blockquote class="prompt-tip"><p>灰度细节纹理？</p><p>一般都是用灰度细节纹理来增白或加深原始颜色做二次细节调整，不是灰度图跳出 的颜色不是那么直观的结果。</p></blockquote><p>要使用这个单独的细节纹理，我们必须在着色器中添加第二个纹理属性。使用灰色作为默认值，因为这不会改变主纹理的外观。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span> <span class="p">{</span>
     <span class="n">_Tint</span> <span class="p">(</span><span class="s">"Tint"</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">_MainTex</span> <span class="p">(</span><span class="s">"Texture"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="n">_DetailTex</span> <span class="p">(</span><span class="s">"Detail Texture"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"gray"</span> <span class="p">{}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>将细节纹理分配给我们的材质并将其平铺设置为10。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detail-texture-inspector.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>两种纹理.</a></i></center>    
-        </font>
-
-<p>我们必须添加变量来访问细节纹理及其平铺和偏移数据</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">,</span> <span class="n">_DetailTex</span><span class="p">;</span>
+</code></pre></div></div><p>将细节纹理分配给我们的材质并将其平铺设置为10。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detail-texture-inspector.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>两种纹理.</a></i></center> </font><p>我们必须添加变量来访问细节纹理及其平铺和偏移数据</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">,</span> <span class="n">_DetailTex</span><span class="p">;</span>
 <span class="n">float4</span> <span class="n">_MainTex_ST</span><span class="p">,</span> <span class="n">_DetailTex_ST</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="使用两个uv">使用两个UV</h3>
-
-<p>我们应该使用细节纹理的平铺和偏移数据，而不是使用硬编码乘10。</p>
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Interpolators</span> <span class="p">{</span>
+</code></pre></div></div><h3 id="使用两个uv">使用两个UV</h3><p>我们应该使用细节纹理的平铺和偏移数据，而不是使用硬编码乘10。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Interpolators</span> <span class="p">{</span>
   <span class="n">float4</span> <span class="n">position</span> <span class="o">:</span> <span class="n">SV_POSITION</span><span class="p">;</span>
   <span class="n">float2</span> <span class="n">uv</span> <span class="o">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
   <span class="n">float2</span> <span class="n">uvDetail</span> <span class="o">:</span> <span class="n">TEXCOORD1</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>通过使用主纹理uv对细节纹理进行采样，得到一个新的细节纹理uv。</p>
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Interpolators</span> <span class="nf">MyVertexProgram</span> <span class="p">(</span><span class="n">VertexData</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div><p>通过使用主纹理uv对细节纹理进行采样，得到一个新的细节纹理uv。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Interpolators</span> <span class="nf">MyVertexProgram</span> <span class="p">(</span><span class="n">VertexData</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Interpolators</span> <span class="n">i</span><span class="p">;</span>
   <span class="n">i</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">UNITY_MATRIX_MVP</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
   <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="o">=</span> <span class="n">TRANSFORM_TEX</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">,</span> <span class="n">_MainTex</span><span class="p">);</span>
   <span class="n">i</span><span class="p">.</span><span class="n">uvDetail</span> <span class="o">=</span> <span class="n">TRANSFORM_TEX</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">,</span> <span class="n">_DetailTex</span><span class="p">);</span>
   <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>再一次看看汇编代码</p>
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span> 	<span class="n">vec4</span> <span class="n">_Tint</span><span class="p">;</span>
+</code></pre></div></div><p>再一次看看汇编代码</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span> 	<span class="n">vec4</span> <span class="n">_Tint</span><span class="p">;</span>
 <span class="n">uniform</span> 	<span class="n">vec4</span> <span class="n">_MainTex_ST</span><span class="p">;</span>
 <span class="n">uniform</span> 	<span class="n">vec4</span> <span class="n">_DetailTex_ST</span><span class="p">;</span>
 <span class="n">in</span>  <span class="n">vec4</span> <span class="n">in_POSITION0</span><span class="p">;</span>
@@ -562,9 +137,7 @@
     <span class="n">vs_TEXCOORD1</span><span class="p">.</span><span class="n">xy</span> <span class="o">=</span> <span class="n">in_TEXCOORD0</span><span class="p">.</span><span class="n">xy</span> <span class="o">*</span> <span class="n">_DetailTex_ST</span><span class="p">.</span><span class="n">xy</span> <span class="o">+</span> <span class="n">_DetailTex_ST</span><span class="p">.</span><span class="n">zw</span><span class="p">;</span>
     <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Vector</span> <span class="mi">112</span> <span class="p">[</span><span class="n">_MainTex_ST</span><span class="p">]</span>
+</code></pre></div></div><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Vector</span> <span class="mi">112</span> <span class="p">[</span><span class="n">_MainTex_ST</span><span class="p">]</span>
 <span class="n">Vector</span> <span class="mi">128</span> <span class="p">[</span><span class="n">_DetailTex_ST</span><span class="p">]</span>
 <span class="n">ConstBuffer</span> <span class="s">"UnityPerDraw"</span> <span class="mi">352</span>
 <span class="n">Matrix</span> <span class="mi">0</span> <span class="p">[</span><span class="n">glstate_matrix_mvp</span><span class="p">]</span>
@@ -586,37 +159,19 @@
    <span class="mi">4</span><span class="o">:</span> <span class="n">mad</span> <span class="n">o1</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="n">v1</span><span class="p">.</span><span class="n">xyxx</span><span class="p">,</span> <span class="n">cb0</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">xyxx</span><span class="p">,</span> <span class="n">cb0</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">zwzz</span>
    <span class="mi">5</span><span class="o">:</span> <span class="n">mad</span> <span class="n">o1</span><span class="p">.</span><span class="n">zw</span><span class="p">,</span> <span class="n">v1</span><span class="p">.</span><span class="n">xxxy</span><span class="p">,</span> <span class="n">cb0</span><span class="p">[</span><span class="mi">8</span><span class="p">].</span><span class="n">xxxy</span><span class="p">,</span> <span class="n">cb0</span><span class="p">[</span><span class="mi">8</span><span class="p">].</span><span class="n">zzzw</span>
    <span class="mi">6</span><span class="o">:</span> <span class="n">ret</span>
-</code></pre></div></div>
-
-<p>注意两个 UV 输出是如何在两个编译器顶点程序中定义的。OpenGLCore使用vs_TEXCOORD0和vs_TEXCOORD1输出，相反Direct3D11只使用一个输出o1.</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Output signature:</span>
+</code></pre></div></div><p>注意两个 UV 输出是如何在两个编译器顶点程序中定义的。OpenGLCore使用vs_TEXCOORD0和vs_TEXCOORD1输出，相反Direct3D11只使用一个输出o1.</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Output signature:</span>
 <span class="c1">//</span>
 <span class="c1">// Name                 Index   Mask Register SysValue  Format   Used</span>
 <span class="c1">// -- --  -- -- - </span>
 <span class="c1">// SV_POSITION              0   xyzw        0      POS   float   xyzw</span>
 <span class="c1">// TEXCOORD                 0   xy          1     NONE   float   xy  </span>
 <span class="c1">// TEXCOORD                 1     zw        1     NONE   float     zw</span>
-</code></pre></div></div>
-
-<p>上面代码意味着两个 UV 对都被打包到一个输出寄存器中。第一个在 X 和 Y 通道，第二个在 Z 和 W 通道。因为寄存器总是由四个数字组成的组。Direct3D 11 编译器利用了这一点。</p>
-
-<blockquote class="prompt-tip">
-  <p>试着手动打包输出?
-手动打包输出的常见原因是只有少数几个插值器可用。Shader Model 2硬件支持8个通用插补
-器，而Shader Model 3硬件支持10个。复杂着色器可能会遇到这个限制。</p>
-</blockquote>
-
-<p>现在我们可以在片段程序中使用额外的UV对。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+</code></pre></div></div><p>上面代码意味着两个 UV 对都被打包到一个输出寄存器中。第一个在 X 和 Y 通道，第二个在 Z 和 W 通道。因为寄存器总是由四个数字组成的组。Direct3D 11 编译器利用了这一点。</p><blockquote class="prompt-tip"><p>试着手动打包输出? 手动打包输出的常见原因是只有少数几个插值器可用。Shader Model 2硬件支持8个通用插补 器，而Shader Model 3硬件支持10个。复杂着色器可能会遇到这个限制。</p></blockquote><p>现在我们可以在片段程序中使用额外的UV对。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
 	<span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">_Tint</span><span class="p">;</span>
 	<span class="n">color</span> <span class="o">*=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_DetailTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uvDetail</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
 	<span class="k">return</span> <span class="n">color</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span> 	<span class="n">vec4</span> <span class="n">_Tint</span><span class="p">;</span>
+</code></pre></div></div><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniform</span> 	<span class="n">vec4</span> <span class="n">_Tint</span><span class="p">;</span>
 <span class="n">uniform</span> 	<span class="n">vec4</span> <span class="n">_MainTex_ST</span><span class="p">;</span>
 <span class="n">uniform</span> 	<span class="n">vec4</span> <span class="n">_DetailTex_ST</span><span class="p">;</span>
 <span class="n">uniform</span>  <span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
@@ -636,9 +191,7 @@
     <span class="n">SV_TARGET0</span> <span class="o">=</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">t0</span><span class="p">;</span>
     <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SetTexture</span> <span class="mi">0</span> <span class="p">[</span><span class="n">_MainTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">0</span>
+</code></pre></div></div><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SetTexture</span> <span class="mi">0</span> <span class="p">[</span><span class="n">_MainTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">0</span>
 <span class="n">SetTexture</span> <span class="mi">1</span> <span class="p">[</span><span class="n">_DetailTex</span><span class="p">]</span> <span class="mi">2</span><span class="n">D</span> <span class="mi">1</span>
 <span class="n">ConstBuffer</span> <span class="s">"$Globals"</span> <span class="mi">144</span>
 <span class="n">Vector</span> <span class="mi">96</span> <span class="p">[</span><span class="n">_Tint</span><span class="p">]</span>
@@ -659,142 +212,8 @@
    <span class="mi">3</span><span class="o">:</span> <span class="n">mul</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r1</span><span class="p">.</span><span class="n">xyzw</span>
    <span class="mi">4</span><span class="o">:</span> <span class="n">add</span> <span class="n">o0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">r0</span><span class="p">.</span><span class="n">xyzw</span>
    <span class="mi">5</span><span class="o">:</span> <span class="n">ret</span>
-</code></pre></div></div>
-
-<p>基于细节纹理，主纹理变得更亮和更暗。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-with-detail.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-close-up-detail.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>明暗两张纹理.</a></i></center>    
-        </font>
-
-<h3 id="细节纹理渐变融合">细节纹理渐变融合</h3>
-
-<p>添加细节的想法是它们可以在近距离或放大时改善材质的外观。它们不应该在远处可见或缩小，因为这会使平铺变得明显。所以我们需要一种方法来随着纹理显示尺寸的减小而淡化细节。我们可以通过将细节纹理淡化为灰色来做到这一点，因为这不会导致颜色变化。</p>
-
-<p>需要做的就是在细节纹理的导入设置中启用Fadeout Mip Maps属性。这也会自动将过滤器模式切换为三线性，以便渐变为灰色是渐进的。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/fading-inspector.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-fading-detail.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>纹理过渡.</a></i></center>    
-        </font>
-
-<p>网格从详细到不详细的过渡非常明显，但通常不会注意到它。例如，这里是大理石材质的主纹理和细节纹理。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-detail.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>大理石纹理.</a></i></center>    
-        </font>
-
-<p>一旦我们的材质使用了这些纹理，细节纹理的过渡痕迹就不再明显了。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-inspector.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-scene.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>大理石材质.</a></i></center>    
-        </font>
-
-<p>然而，由于细节纹理的过渡加持，大理石材质在近距离看起来要好得多。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-close.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-close-detail.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>没有细节和有细节特写.</a></i></center>    
-        </font>
-
-<h3 id="线性色彩空间">线性色彩空间</h3>
-
-<p>当我们在 gamma 颜色空间中渲染场景时，我们的着色器工作正常，但如果我们切换到线性颜色空间，它就会出错。色彩空间在项目中设置。它配置在Other Settings播放器设置面板，可以通过Edit / Project Settings / Player.
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/color-space-inspector.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>选择颜色空间.</a></i></center>    
-        </font>
-
-<h3 id="什么是gamma色彩空间">什么是gamma色彩空间?</h3>
-<p>伽玛空间是指经过伽玛校正的色彩空间。伽玛校正是对光强度的调整。最简单的方法是将原始值提高到某个幂次，即$value^gamma$。 gamma为 1 表示没有变化， 随着gamma递增光强度递增。</p>
-
-<p>这种转换最初是为了适应 CRT 显示器的非线性特性而引入的。另一个好处是它也大致对应于我们的眼睛对不同光强度的敏感程度。我们注意到深色之间的差异比明亮颜色之间的差异更大。因此，将更多的数字位分配给较暗的值而不是较浅的值是有意义的。求幂运算允许将较低的值扩展到更大的范围，同时压缩较高的值。</p>
-
-<p>最广泛使用的图像颜色格式是sRGB。它使用比简单求幂更复杂的公式，sRGB以$1\over 2.2$的平均gamma值存储颜色，正常情况下这是一个合理的近似值。要将此数据转换回其原始颜色，请2.2幂的伽马校正。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/liner-gama.png" width="400" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>gamma$1\over 2.2$encoding vs. $2.2$deconding.</a></i></center>    
-        </font>
-
-<p>假设Unity纹理的颜色存储为sRGB。在伽马空间中渲染时，着色器直接访问原始颜色和纹理数据。这是我们到目前为止所假设的。</p>
-
-<p>但是在线性空间中渲染时，就不再适用。 GPU会将采样的纹理颜色转换为线性空间。此外，Unity 也会将材质颜色属性转换为线性空间。然后着色器使用这些线性颜色进行操作。之后，片段程序的输出将被转换回伽马空间。</p>
-
-<p>使用线性颜色的优点之一是它可以实现更逼真的照明计算。这是因为光的相互作用在现实生活中是线性的，而不是指数的。不幸的是,切换到线性空间后，细节材料变得更暗。为什么会这样？
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/gamma-space.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/linear-space.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>gama vs. linear 色彩空间.</a></i></center>    
-        </font>
-
-<p>因为我们将细节纹理采样后的颜色乘了2，所以$1\over 2$的值不会导致主纹理发生任何变化。但是，转换为线性空间后，它会变为接近${1\over 2} ^{2.2} \approx 0.22$。加倍大约是0.44，远小于 1。这就解释了为什么变得更暗。</p>
-
-<p>我们可以通过在细节纹理的导入设置中启用<em>Bypass sRGB Sampling</em>来解决这个错误。这可以防止从伽玛到线性空间的转换，因此着色器将始终访问原始图像数据。但是，细节纹理是sRGB图像，所以结果仍然是错误的。</p>
-
-<p>最好的解决方案是重新对齐细节颜色，使它们再次以 1 为中心。我们可以通过${1 \over {1\over 2} ^{2.2}} \approx 4.59$而不是乘以2来做到这一点。但我们只能在线性空间中渲染时才这样计算。</p>
-
-<p><em>UnityCG.cginc</em>定义了一个统一变量，它将包含要与之相乘的正确数字。它是一个 <code class="language-plaintext highlighter-rouge">float4</code>，它的 rgb 分量有2或约4.59，这两个值视情况而定。由于伽马校正未应用于Alpha通道，因此始终为2。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">*=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_DetailTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uvDetail</span><span class="p">)</span> <span class="o">*</span> <span class="n">unity_ColorSpaceDouble</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>通过这种更改，无论我们在哪个颜色空间中渲染，我们的细节材质看起来都一样。</p>
-
-<h2 id="纹理splat过渡遮罩">纹理splat过渡遮罩</h2>
-
-<p>细节纹理的一个限制是对整个表面使用相同的细节。 这适用于均匀的表面，如大理石板。但是，如果材质没有统一的外观，不希望在任何地方都使用相同的细节。</p>
-
-<p>考虑一个大地形。它可以有草、沙、岩石、雪等。希望这些地形类型有一定的细节。但是覆盖整个地形的纹理永远不会有足够的细节。可以通过为每种表面类型使用单独的纹理并平铺这些纹理来解决该问题。但是怎么知道在哪里使用哪种纹理呢？</p>
-
-<p>假设我们有一个具有两种不同表面类型的地形，什么时候决定使用哪种表面纹理呢。不是一就是二。我们可以用一个布尔值来表示这个逻辑。如果设置为true，我们使用第一个纹理，否则使用第二个。我们可以使用灰度纹理来存储这个选择。值1表示第一个纹理，而值0表示第二个纹理。事实上，我们可以使用这些值在两个纹理之间进行线性插值。然后介于 0 和 1 之间的值表示两种纹理之间的混合，这使得平滑过渡成为可能。</p>
-
-<p>这样的纹理被称为splat贴图。就像将多个地形特征喷溅到画布上一样。由于插值，这张地图甚至不需要高分辨率。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/binary-splat-map.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>splat遮罩贴图.</a></i></center>    
-        </font>
-
-<p>将其添加到项目后，将其导入类型切换为高级。启用Bypass sRGB Sampling并指示其mipmap应在Linear Space中生成。因为该纹理不需要sRGB颜色。所以在线性空间中渲染时不应该进行转换。另外，将其 Wrap Mode 设置为clamp，因为我们不会平铺这张地图。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-binary-import.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>splat导入设置.</a></i></center>    
-        </font>
-
-<p>创建一个新的 Texture Splatting 着色器。</p>
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Shader</span> <span class="s">"Custom/Texture Splatting"</span> <span class="p">{</span>
+</code></pre></div></div><p>基于细节纹理，主纹理变得更亮和更暗。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-with-detail.png" width="250" alt="loading failed, need vpn." /> <img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-close-up-detail.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>明暗两张纹理.</a></i></center> </font><h3 id="细节纹理渐变融合">细节纹理渐变融合</h3><p>添加细节的想法是它们可以在近距离或放大时改善材质的外观。它们不应该在远处可见或缩小，因为这会使平铺变得明显。所以我们需要一种方法来随着纹理显示尺寸的减小而淡化细节。我们可以通过将细节纹理淡化为灰色来做到这一点，因为这不会导致颜色变化。</p><p>需要做的就是在细节纹理的导入设置中启用Fadeout Mip Maps属性。这也会自动将过滤器模式切换为三线性，以便渐变为灰色是渐进的。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/fading-inspector.png" width="250" alt="loading failed, need vpn." /> <img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-fading-detail.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>纹理过渡.</a></i></center> </font><p>网格从详细到不详细的过渡非常明显，但通常不会注意到它。例如，这里是大理石材质的主纹理和细节纹理。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble.png" width="250" alt="loading failed, need vpn." /> <img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-detail.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>大理石纹理.</a></i></center> </font><p>一旦我们的材质使用了这些纹理，细节纹理的过渡痕迹就不再明显了。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-inspector.png" width="250" alt="loading failed, need vpn." /> <img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-scene.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>大理石材质.</a></i></center> </font><p>然而，由于细节纹理的过渡加持，大理石材质在近距离看起来要好得多。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-close.png" width="250" alt="loading failed, need vpn." /> <img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-close-detail.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>没有细节和有细节特写.</a></i></center> </font><h3 id="线性色彩空间">线性色彩空间</h3><p>当我们在 gamma 颜色空间中渲染场景时，我们的着色器工作正常，但如果我们切换到线性颜色空间，它就会出错。色彩空间在项目中设置。它配置在Other Settings播放器设置面板，可以通过Edit / Project Settings / Player.</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/color-space-inspector.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>选择颜色空间.</a></i></center> </font><h3 id="什么是gamma色彩空间">什么是gamma色彩空间?</h3><p>伽玛空间是指经过伽玛校正的色彩空间。伽玛校正是对光强度的调整。最简单的方法是将原始值提高到某个幂次，即$value^gamma$。 gamma为 1 表示没有变化， 随着gamma递增光强度递增。</p><p>这种转换最初是为了适应 CRT 显示器的非线性特性而引入的。另一个好处是它也大致对应于我们的眼睛对不同光强度的敏感程度。我们注意到深色之间的差异比明亮颜色之间的差异更大。因此，将更多的数字位分配给较暗的值而不是较浅的值是有意义的。求幂运算允许将较低的值扩展到更大的范围，同时压缩较高的值。</p><p>最广泛使用的图像颜色格式是sRGB。它使用比简单求幂更复杂的公式，sRGB以$1\over 2.2$的平均gamma值存储颜色，正常情况下这是一个合理的近似值。要将此数据转换回其原始颜色，请2.2幂的伽马校正。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/liner-gama.png" width="400" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>gamma$1\over 2.2$encoding vs. $2.2$deconding.</a></i></center> </font><p>假设Unity纹理的颜色存储为sRGB。在伽马空间中渲染时，着色器直接访问原始颜色和纹理数据。这是我们到目前为止所假设的。</p><p>但是在线性空间中渲染时，就不再适用。 GPU会将采样的纹理颜色转换为线性空间。此外，Unity 也会将材质颜色属性转换为线性空间。然后着色器使用这些线性颜色进行操作。之后，片段程序的输出将被转换回伽马空间。</p><p>使用线性颜色的优点之一是它可以实现更逼真的照明计算。这是因为光的相互作用在现实生活中是线性的，而不是指数的。不幸的是,切换到线性空间后，细节材料变得更暗。为什么会这样？</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/gamma-space.png" width="250" alt="loading failed, need vpn." /> <img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/linear-space.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>gama vs. linear 色彩空间.</a></i></center> </font><p>因为我们将细节纹理采样后的颜色乘了2，所以$1\over 2$的值不会导致主纹理发生任何变化。但是，转换为线性空间后，它会变为接近${1\over 2} ^{2.2} \approx 0.22$。加倍大约是0.44，远小于 1。这就解释了为什么变得更暗。</p><p>我们可以通过在细节纹理的导入设置中启用<em>Bypass sRGB Sampling</em>来解决这个错误。这可以防止从伽玛到线性空间的转换，因此着色器将始终访问原始图像数据。但是，细节纹理是sRGB图像，所以结果仍然是错误的。</p><p>最好的解决方案是重新对齐细节颜色，使它们再次以 1 为中心。我们可以通过${1 \over {1\over 2} ^{2.2}} \approx 4.59$而不是乘以2来做到这一点。但我们只能在线性空间中渲染时才这样计算。</p><p><em>UnityCG.cginc</em>定义了一个统一变量，它将包含要与之相乘的正确数字。它是一个 <code class="language-plaintext highlighter-rouge">float4</code>，它的 rgb 分量有2或约4.59，这两个值视情况而定。由于伽马校正未应用于Alpha通道，因此始终为2。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">*=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_DetailTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uvDetail</span><span class="p">)</span> <span class="o">*</span> <span class="n">unity_ColorSpaceDouble</span><span class="p">;</span>
+</code></pre></div></div><p>通过这种更改，无论我们在哪个颜色空间中渲染，我们的细节材质看起来都一样。</p><h2 id="纹理splat过渡遮罩">纹理splat过渡遮罩</h2><p>细节纹理的一个限制是对整个表面使用相同的细节。 这适用于均匀的表面，如大理石板。但是，如果材质没有统一的外观，不希望在任何地方都使用相同的细节。</p><p>考虑一个大地形。它可以有草、沙、岩石、雪等。希望这些地形类型有一定的细节。但是覆盖整个地形的纹理永远不会有足够的细节。可以通过为每种表面类型使用单独的纹理并平铺这些纹理来解决该问题。但是怎么知道在哪里使用哪种纹理呢？</p><p>假设我们有一个具有两种不同表面类型的地形，什么时候决定使用哪种表面纹理呢。不是一就是二。我们可以用一个布尔值来表示这个逻辑。如果设置为true，我们使用第一个纹理，否则使用第二个。我们可以使用灰度纹理来存储这个选择。值1表示第一个纹理，而值0表示第二个纹理。事实上，我们可以使用这些值在两个纹理之间进行线性插值。然后介于 0 和 1 之间的值表示两种纹理之间的混合，这使得平滑过渡成为可能。</p><p>这样的纹理被称为splat贴图。就像将多个地形特征喷溅到画布上一样。由于插值，这张地图甚至不需要高分辨率。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/binary-splat-map.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>splat遮罩贴图.</a></i></center> </font><p>将其添加到项目后，将其导入类型切换为高级。启用Bypass sRGB Sampling并指示其mipmap应在Linear Space中生成。因为该纹理不需要sRGB颜色。所以在线性空间中渲染时不应该进行转换。另外，将其 Wrap Mode 设置为clamp，因为我们不会平铺这张地图。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-binary-import.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>splat导入设置.</a></i></center> </font><p>创建一个新的 Texture Splatting 着色器。</p><div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Shader</span> <span class="s">"Custom/Texture Splatting"</span> <span class="p">{</span>
     <span class="n">Properties</span> <span class="p">{</span>
         <span class="n">MainTex</span> <span class="p">(</span><span class="s">"Splat Map"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="p">}</span>
@@ -838,85 +257,24 @@
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>创建一个新材质并引用该shader，并将splat贴图指定为其主要纹理。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-binary-scene.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>splat图渲染.</a></i></center>    
-        </font>
-
-<h3 id="增加融合纹理">增加融合纹理</h3>
-
-<p>为了能够在两个纹理之间进行选择，作为属性添加命名为Texture1和Texture2到我们的着色器中。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span> <span class="p">{</span>
+</code></pre></div></div><p>创建一个新材质并引用该shader，并将splat贴图指定为其主要纹理。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-binary-scene.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>splat图渲染.</a></i></center> </font><h3 id="增加融合纹理">增加融合纹理</h3><p>为了能够在两个纹理之间进行选择，作为属性添加命名为Texture1和Texture2到我们的着色器中。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span> <span class="p">{</span>
     <span class="n">_MainTex</span> <span class="p">(</span><span class="s">"Splat Map"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="n">_Texture1</span> <span class="p">(</span><span class="s">"Texture 1"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="n">_Texture2</span> <span class="p">(</span><span class="s">"Texture 2"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>可以为他们使用任何你想要的纹理,这里使用网格纹理和大理石纹理。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/two-textures-inspector.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>增加的额外纹理.</a></i></center>    
-        </font>
-
-<p>为添加到着色器的每个纹理修改平铺和偏移控制值。这需要我们将更多数据从顶点传递到片段着色器，或者在片元着色器中计算UV调整。 这很好，但通常地形的所有纹理都平铺相同。并且 splat 地图根本没有平铺。所以我们只需要一个平铺和偏移控件的实例。</p>
-
-<p>可以将属性控制添加到着色器属性之前，就像在C#代码中一样。<code class="language-plaintext highlighter-rouge">NoScaleOffset</code>将禁用纹理平铺和偏移。</p>
-
-<div file="shader" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span> <span class="p">{</span>
+</code></pre></div></div><p>可以为他们使用任何你想要的纹理,这里使用网格纹理和大理石纹理。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/two-textures-inspector.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>增加的额外纹理.</a></i></center> </font><p>为添加到着色器的每个纹理修改平铺和偏移控制值。这需要我们将更多数据从顶点传递到片段着色器，或者在片元着色器中计算UV调整。 这很好，但通常地形的所有纹理都平铺相同。并且 splat 地图根本没有平铺。所以我们只需要一个平铺和偏移控件的实例。</p><p>可以将属性控制添加到着色器属性之前，就像在C#代码中一样。<code class="language-plaintext highlighter-rouge">NoScaleOffset</code>将禁用纹理平铺和偏移。</p><div file="shader" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span> <span class="p">{</span>
     <span class="n">_MainTex</span> <span class="p">(</span><span class="s">"Splat Map"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="p">[</span><span class="n">NoScaleOffset</span><span class="p">]</span> <span class="n">_Texture1</span> <span class="p">(</span><span class="s">"Texture 1"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="p">[</span><span class="n">NoScaleOffset</span><span class="p">]</span> <span class="n">_Texture2</span> <span class="p">(</span><span class="s">"Texture 2"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>同时修改splat贴图tiling为4。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/no-tiling-offset.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>不需要额外的贴图纹理.</a></i></center>    
-        </font>
-
-<p>将采样器变量添加到我们的着色器代码中，但是不必添加它们对应的 _ST 变量。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
+</code></pre></div></div><p>同时修改splat贴图tiling为4。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/no-tiling-offset.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>不需要额外的贴图纹理.</a></i></center> </font><p>将采样器变量添加到我们的着色器代码中，但是不必添加它们对应的 _ST 变量。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
 <span class="n">float4</span> <span class="n">_MainTex_ST</span><span class="p">;</span>
 
 <span class="n">sampler2D</span> <span class="n">_Texture1</span><span class="p">,</span> <span class="n">_Texture2</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>对两张纹理采样后叠加，颜色会得到加深，然后输出</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="nf">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+</code></pre></div></div><p>对两张纹理采样后叠加，颜色会得到加深，然后输出</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="nf">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_Texture1</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">+</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_Texture2</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/textures-added.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>纹理叠加.</a></i></center>    
-        </font>
-
-<h3 id="使用splat贴图">使用splat贴图</h3>
-
-<p>采样splat纹理需要顶点程序提供的UV坐标</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Interpolators</span> <span class="p">{</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/textures-added.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>纹理叠加.</a></i></center> </font><h3 id="使用splat贴图">使用splat贴图</h3><p>采样splat纹理需要顶点程序提供的UV坐标</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Interpolators</span> <span class="p">{</span>
     <span class="n">float4</span> <span class="n">position</span> <span class="o">:</span> <span class="n">SV_POSITION</span><span class="p">;</span>
     <span class="n">float2</span> <span class="n">uv</span> <span class="o">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
     <span class="n">float2</span> <span class="n">uvSplat</span> <span class="o">:</span> <span class="n">TEXCOORD1</span><span class="p">;</span>
@@ -929,471 +287,26 @@
     <span class="n">i</span><span class="p">.</span><span class="n">uvSplat</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>然后，以在对其他纹理进行采样之前对splat贴图进行采样。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="nf">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+</code></pre></div></div><p>然后，以在对其他纹理进行采样之前对splat贴图进行采样。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="nf">MyFragmentProgram</span> <span class="p">(</span><span class="n">Interpolators</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
     <span class="n">float4</span> <span class="n">splat</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uvSplat</span><span class="p">);</span>
     <span class="k">return</span>
     <span class="nf">tex2D</span><span class="p">(</span><span class="n">_Texture1</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">+</span>
     <span class="n">tex2D</span><span class="p">(</span><span class="n">_Texture2</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>因为splat本身是单通道，可以任选一个RGB通道来来存储值，这里先决定使用第一个纹理与splat贴图R通道相乘。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_Texture1</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">splat</span><span class="p">.</span><span class="n">r</span> <span class="o">+</span>
+</code></pre></div></div><p>因为splat本身是单通道，可以任选一个RGB通道来来存储值，这里先决定使用第一个纹理与splat贴图R通道相乘。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_Texture1</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">splat</span><span class="p">.</span><span class="n">r</span> <span class="o">+</span>
        <span class="n">tex2D</span><span class="p">(</span><span class="n">_Texture2</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/modulating-first-texture.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>调制第一个纹理.</a></i></center>    
-        </font>
-
-<p>第一个纹理现在由splat贴图R通道调制。为了完成插值，我们必须将另一个纹理<code class="language-plaintext highlighter-rouge">1-R</code>相乘。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_Texture1</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">splat</span><span class="p">.</span><span class="n">r</span> <span class="o">+</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/modulating-first-texture.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>调制第一个纹理.</a></i></center> </font><p>第一个纹理现在由splat贴图R通道调制。为了完成插值，我们必须将另一个纹理<code class="language-plaintext highlighter-rouge">1-R</code>相乘。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_Texture1</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">splat</span><span class="p">.</span><span class="n">r</span> <span class="o">+</span>
        <span class="n">tex2D</span><span class="p">(</span><span class="n">_Texture2</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">splat</span><span class="p">.</span><span class="n">r</span><span class="p">);</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/modulating-both-textures.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>调制两个纹理.</a></i></center>    
-        </font>
-
-<h3 id="rgb-splat贴图">RGB Splat贴图</h3>
-
-<p>我们有一个功能性的splat材质，但它只支持两种纹理。我们可以支持更多吗？我们现在只使用了R通道，那么我们添加G和B通道怎么样？那么(1,0,0)代表第一个纹理，(0,1,0)代表第二个纹理，(0,0,1)代表第三个纹理。 为了在这三个之间获得正确的插值，我们只需要确保RGB通道的总和为1即可。</p>
-
-<p>但是等等，当我们只使用一个通道时，我们可以支持两个纹理。这是因为第二个纹理的权重是通过<code class="language-plaintext highlighter-rouge">1-R</code>得出的。同样的技巧适用于任意数量的通道。因此可以通过<code class="language-plaintext highlighter-rouge">1-R-G-B</code>支持另一种纹理。</p>
-
-<p>这导致了一个具有三种颜色和黑色的splat贴图。只要三个通道加起来不超过1，它就是一个有效的贴图。这里给出一张这样的贴图，导入Unity。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/rgb-splat-map.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>RGB splat 贴图.</a></i></center>    
-        </font>
-
-<blockquote class="prompt-warning">
-  <p>当 R + G + B 超过1时会发生什么？</p>
-
-  <p>那么前三个纹理的组合会太强。 同时，第四个纹理将被减去而不是被添加。 如果错误很小，那么不会注
-意到并且结果足够好。 示例 RGB 映射实际上并不完美，但不会注意到。 纹理压缩引入了更多错误，但
-同样难以察觉。</p>
-</blockquote>
-
-<blockquote class="prompt-tip">
-  <p>可以使用alpha通道吗？</p>
-
-  <p>确实可以！ 这意味着单个 RGBA splat 贴图最多可以支持五种不同的地形类型。 但是对于本教程，四个
-就足够了。</p>
-
-  <p>如果要使用超过五个纹理，则必须使用多个splat贴图。虽然这是可能的，但最终会得到很多纹理采样
-此时可以使用更好的技术，例如纹理数组。</p>
-</blockquote>
-
-<p>为了支持 RGB splat贴图，我们必须在着色器中添加两个额外的纹理。为它们分配了大理石细节和测试纹理。</p>
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span> <span class="p">{</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/modulating-both-textures.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>调制两个纹理.</a></i></center> </font><h3 id="rgb-splat贴图">RGB Splat贴图</h3><p>我们有一个功能性的splat材质，但它只支持两种纹理。我们可以支持更多吗？我们现在只使用了R通道，那么我们添加G和B通道怎么样？那么(1,0,0)代表第一个纹理，(0,1,0)代表第二个纹理，(0,0,1)代表第三个纹理。 为了在这三个之间获得正确的插值，我们只需要确保RGB通道的总和为1即可。</p><p>但是等等，当我们只使用一个通道时，我们可以支持两个纹理。这是因为第二个纹理的权重是通过<code class="language-plaintext highlighter-rouge">1-R</code>得出的。同样的技巧适用于任意数量的通道。因此可以通过<code class="language-plaintext highlighter-rouge">1-R-G-B</code>支持另一种纹理。</p><p>这导致了一个具有三种颜色和黑色的splat贴图。只要三个通道加起来不超过1，它就是一个有效的贴图。这里给出一张这样的贴图，导入Unity。</p><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/rgb-splat-map.png" width="250" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>RGB splat 贴图.</a></i></center> </font><blockquote class="prompt-warning"><p>当 R + G + B 超过1时会发生什么？</p><p>那么前三个纹理的组合会太强。 同时，第四个纹理将被减去而不是被添加。 如果错误很小，那么不会注 意到并且结果足够好。 示例 RGB 映射实际上并不完美，但不会注意到。 纹理压缩引入了更多错误，但 同样难以察觉。</p></blockquote><blockquote class="prompt-tip"><p>可以使用alpha通道吗？</p><p>确实可以！ 这意味着单个 RGBA splat 贴图最多可以支持五种不同的地形类型。 但是对于本教程，四个 就足够了。</p><p>如果要使用超过五个纹理，则必须使用多个splat贴图。虽然这是可能的，但最终会得到很多纹理采样 此时可以使用更好的技术，例如纹理数组。</p></blockquote><p>为了支持 RGB splat贴图，我们必须在着色器中添加两个额外的纹理。为它们分配了大理石细节和测试纹理。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span> <span class="p">{</span>
     <span class="n">_MainTex</span> <span class="p">(</span><span class="s">"Splat Map"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="p">[</span><span class="n">NoScaleOffset</span><span class="p">]</span> <span class="n">_Texture1</span> <span class="p">(</span><span class="s">"Texture 1"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="p">[</span><span class="n">NoScaleOffset</span><span class="p">]</span> <span class="n">_Texture2</span> <span class="p">(</span><span class="s">"Texture 2"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="p">[</span><span class="n">NoScaleOffset</span><span class="p">]</span> <span class="n">_Texture3</span> <span class="p">(</span><span class="s">"Texture 3"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
     <span class="p">[</span><span class="n">NoScaleOffset</span><span class="p">]</span> <span class="n">_Texture4</span> <span class="p">(</span><span class="s">"Texture 4"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-rgb-inspector.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Four textures.</a></i></center>    
-        </font>
-
-<p>将所需的变量添加到着色器。 再一次，没有额外的 _ST需要的变量。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_Texture1</span><span class="p">,</span> <span class="n">_Texture2</span><span class="p">,</span> <span class="n">_Texture3</span><span class="p">,</span> <span class="n">_Texture4</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>在片段程序中，添加额外的纹理样本。第二个样本现在使用G通道，第三个使用B通道。最终样本用 (1 - R - G - B) 调制。</p>
-
-<div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">retur1n</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_Texture1</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">splat</span><span class="p">.</span><span class="n">r</span> <span class="o">+</span>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-rgb-inspector.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>Four textures.</a></i></center> </font><p>将所需的变量添加到着色器。 再一次，没有额外的 _ST需要的变量。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_Texture1</span><span class="p">,</span> <span class="n">_Texture2</span><span class="p">,</span> <span class="n">_Texture3</span><span class="p">,</span> <span class="n">_Texture4</span><span class="p">;</span>
+</code></pre></div></div><p>在片段程序中，添加额外的纹理样本。第二个样本现在使用G通道，第三个使用B通道。最终样本用 (1 - R - G - B) 调制。</p><div file="cg" class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">retur1n</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_Texture1</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">splat</span><span class="p">.</span><span class="n">r</span> <span class="o">+</span>
         <span class="n">tex2D</span><span class="p">(</span><span class="n">_Texture2</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">splat</span><span class="p">.</span><span class="n">g</span> <span class="o">+</span>
         <span class="n">tex2D</span><span class="p">(</span><span class="n">_Texture3</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="n">splat</span><span class="p">.</span><span class="n">b</span> <span class="o">+</span>
         <span class="n">tex2D</span><span class="p">(</span><span class="n">_Texture4</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">splat</span><span class="p">.</span><span class="n">r</span> <span class="o">-</span> <span class="n">splat</span><span class="p">.</span><span class="n">g</span> <span class="o">-</span> <span class="n">splat</span><span class="p">.</span><span class="n">b</span><span class="p">);</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img class="fit-picture" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/four-textures-splatted.png" width="300" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>四个纹理飞溅.</a></i></center>    
-        </font>
-
-<blockquote class="prompt-tip">
-  <p>为什么混合区域在线性色彩空间中看起来不同？</p>
-
-  <p>我们的 splat 贴图绕过了 sRGB 采样，所以混合不应该取决于我们使用的颜色空间，对吧？ splat 地图
-确实不受影响。 但是发生混合的色彩空间确实发生了变化。</p>
-
-  <p>在伽马空间渲染的情况下，样本在伽马空间中混合，仅此而已。 但是在线性空间中渲染时，它们首先转换为
-线性空间，然后混合，然后再转换回伽马空间。 结果略有不同。 在线性空间中，混合也是线性的。 但在伽
-马空间中，混合偏向较深的颜色。</p>
-</blockquote>
-
-<p>现在知道如何应用细节纹理以及如何将多个纹理与splat贴图混合。也可以组合这些方法。</p>
-
-<p>可以将四个细节纹理添加到splat着色器并使用贴图在它们之间进行混合。当然，这需要四个额外的纹理采样，性能有限。</p>
-
-<p>还可以使用贴图来控制应用细节纹理的位置以及省略的位置。在这种情况下，需要一张单色贴图，它可以用作遮罩。当单个纹理同时包含表示多个不同材质的区域但没有地形那么大的面积时，这很有用。例如，如果我们的大理石纹理还包含金属片，则不希望在此处应用大理石细节。</p>
-
-        </article>
-        <hr>
-
-        
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                        
-                        <h2 id="similar_posts">Similar Posts</h2>
-                        <ul>
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/17/Unity-Deferred-Lights15/">Unity Deferred Lights-延迟光照(翻译十五)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/10/Unity-Deferred-Shading13/">Unity Shader 延迟渲染(翻译十三)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/09/Unity-Shader-Transparent12/">Unity 透明渲染(翻译十二)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                        
-                        <li class="relatedPost">
-                            <a href="/2018/01/08/Unity-Shader-Transparent11/">Unity 透明渲染(翻译十一)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-        
-            </ul>
-        
-
-        <div class="post-recent">
-    <div class="pre">
-        
-        <p><strong>上一篇</strong> <a href="/2018/01/02/Unity-Shader-Fundamentals-3/">Unity Shader 基本语法(翻译二)</a></p>
-        
-    </div>
-    <div class="nex">
-
-        
-        <p><strong>下一篇</strong> <a href="/2018/01/03/Unity-First-light-4/">Unity 基础光照(翻译四)</a></p>
-        
-    </div>
-</div>
-
-
-        <h2 id="comments">Comments</h2>
-        
-
-
-<div id="disqus_thread"></div>
-<script>
-    /**
-     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-     */
-    var disqus_config = function() {
-        this.page.url = 'www.damonc.top/2018/01/02/Unity-Combine-Texture-2/'; // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'www.damonc.top/2018/01/02/Unity-Combine-Texture-2/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-
-    (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document,
-            s = d.createElement('script');
-
-        s.src = '//bitfeng.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
-
-
-
-
-    </div>
-</div>
-
-<script>
-/**
- * target _blank
- */
-(function() {
-    var aTags = document.querySelectorAll('article a:not([id])')
-    for (var i = 0; i < aTags.length; i++) {
-        aTags[i].setAttribute('target', '_blank')
-    }
-}());
-</script>
-<script src="/js/pageContent.js " charset="utf-8"></script>
-
-
-    <footer class="site-footer">
-
-
-    <div class="wrapper">
-
-        <p class="description">
-             云上的日子！ 
-        </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/bitfeng" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
-            <a href="mailto:damonc@126.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>        
-        </p>
-        <p>
-            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-        </p>
-
-    </div>
-</footer>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-    <div class="back-to-top">
-    <a href="#top" data-scroll>
-        <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    </a>
-</div>
-
-    <script src=" /js/main.js " charset="utf-8"></script>
-    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
-    <script type="text/javascript">
-      smoothScroll.init({
-        speed: 500, // Integer. How fast to complete the scroll in milliseconds
-        easing: 'easeInOutCubic', // Easing pattern to use
-        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
-      });
-
-      function displayWindowSize() {
-            var w = document.documentElement.clientWidth;
-            var h = document.documentElement.clientHeight;
-            var rightDiv = document.querySelector('.right')
-            var footer = document.querySelector('.site-footer')
-            if(w <= 1700){
-                rightDiv.style.display='none';
-                footer.style.display='none';
-            }else{
-                rightDiv.style.display='block';
-                footer.style.display = "block";
-            }
-        }
-
-        // 将事件侦听器函数附加到窗口的resize事件
-        window.addEventListener("resize", displayWindowSize);
-
-        // 第一次调用该函数
-        displayWindowSize();
-    </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
-  </body>
-
-</html>
+</code></pre></div></div><center class="half"><img class="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/four-textures-splatted.png" width="300" alt="loading failed, need vpn." /></center> <font size="2.5"> <center><i><a>四个纹理飞溅.</a></i></center> </font><blockquote class="prompt-tip"><p>为什么混合区域在线性色彩空间中看起来不同？</p><p>我们的 splat 贴图绕过了 sRGB 采样，所以混合不应该取决于我们使用的颜色空间，对吧？ splat 地图 确实不受影响。 但是发生混合的色彩空间确实发生了变化。</p><p>在伽马空间渲染的情况下，样本在伽马空间中混合，仅此而已。 但是在线性空间中渲染时，它们首先转换为 线性空间，然后混合，然后再转换回伽马空间。 结果略有不同。 在线性空间中，混合也是线性的。 但在伽 马空间中，混合偏向较深的颜色。</p></blockquote><p>现在知道如何应用细节纹理以及如何将多个纹理与splat贴图混合。也可以组合这些方法。</p><p>可以将四个细节纹理添加到splat着色器并使用贴图在它们之间进行混合。当然，这需要四个额外的纹理采样，性能有限。</p><p>还可以使用贴图来控制应用细节纹理的位置以及省略的位置。在这种情况下，需要一张单色贴图，它可以用作遮罩。当单个纹理同时包含表示多个不同材质的区域但没有地形那么大的面积时，这很有用。例如，如果我们的大理石纹理还包含金属片，则不希望在此处应用大理石细节。</p></article><hr><h2 id="similar_posts">Similar Posts</h2><ul><li class="relatedPost"> <a href="/2018/01/19/Unity-Static-Lightting16/">Unity 光照烘焙(翻译十六) </a><li class="relatedPost"> <a href="/2018/01/17/Unity-Deferred-Lights15/">Unity Deferred Lights-延迟光照(翻译十五) </a><li class="relatedPost"> <a href="/2018/01/15/Unity-Shader-Fog14/">Unity Shader Fog(翻译十四) </a><li class="relatedPost"> <a href="/2018/01/10/Unity-Deferred-Shading13/">Unity Shader 延迟渲染(翻译十三) </a><li class="relatedPost"> <a href="/2018/01/09/Unity-Shader-Transparent12/">Unity 透明渲染(翻译十二) </a><li class="relatedPost"> <a href="/2018/01/08/Unity-Shader-Transparent11/">Unity 透明渲染(翻译十一) </a></ul><div class="post-recent"><div class="pre"><p><strong>上一篇</strong> <a href="/2018/01/02/Unity-Shader-Fundamentals-3/">Unity Shader 基本语法(翻译二)</a></p></div><div class="nex"><p><strong>下一篇</strong> <a href="/2018/01/03/Unity-First-light-4/">Unity 基础光照(翻译四)</a></p></div></div><h2 id="comments">Comments</h2><div id="disqus_thread"></div><script> /** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */ var disqus_config = function() { this.page.url = 'www.damonc.top/2018/01/02/Unity-Combine-Texture-2/'; /* Replace PAGE_URL with your page's canonical URL variable*/ this.page.identifier = 'www.damonc.top/2018/01/02/Unity-Combine-Texture-2/'; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable*/ }; (function() { /* DON'T EDIT BELOW THIS LINE*/ var d = document, s = d.createElement('script'); s.src = '//bitfeng.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></div></div><script> /** * target _blank */ (function() { var aTags = document.querySelectorAll('article a:not([id])'); for (var i = 0; i < aTags.length; i++) { aTags[i].setAttribute('target', '_blank'); } }()); </script> <script src="/js/pageContent.js " charset="utf-8"></script><footer class="site-footer"><div class="wrapper"><p class="description"> 云上的日子！</p><p class="contact"> Contact me at: <a href="https://github.com/bitfeng" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a> <a href="mailto:damonc@126.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></p><p> 本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p></div></footer><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div class="back-to-top"> <a href="#top" data-scroll> <i class="fa fa-arrow-up" aria-hidden="true"></i> </a></div><script src=" /js/main.js " charset="utf-8"></script> <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script> <script type="text/javascript"> smoothScroll.init({ speed: 500, easing: 'easeInOutCubic', offset: 20, }); function displayWindowSize() { var w = document.documentElement.clientWidth; var h = document.documentElement.clientHeight; var rightDiv = document.querySelector('.right'); var footer = document.querySelector('.site-footer'); if(!rightDiv || !footer){ return; } if(w <= 1700){ rightDiv.style.display='none'; footer.style.display='none'; }else{ rightDiv.style.display='block'; footer.style.display = "block"; } } window.addEventListener("resize", displayWindowSize); displayWindowSize(); </script>
