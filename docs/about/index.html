@@ -14,14 +14,10 @@ function delayLoadValine() {
         tagMeta: ["博主","小伙伴","访客"],
         enableQQ: true,
         requiredFields: [],
-        serverURLs: "https://www.damonc.top",
+        serverURLs: "",
     });
 
     $(document).ready(function(){
-        
-        addPostVisitedTimes();
-        getVisitorIpAndJudge();
-
         fetch('https://v1.hitokoto.cn')
             .then(response =&gt; response.json())
             .then(data =&gt; {
@@ -29,9 +25,14 @@ function delayLoadValine() {
                     "placeholder",
                     data.hitokoto+"—"+data.from
                 );
+
+                setTimeout(() =&gt; {
+                    addPostVisitedTimes();
+                    getVisitorIpAndJudge();
+                }, 1000);
             }
         )
-        .catch(console.error)
+        .catch(console.error);
     });
 }
 
@@ -79,9 +80,6 @@ function saveOrUpdateIpRecord(ip) {
 }
 
 function addPostVisitedTimes() {
-    if(AV == null || typeof AV =="undefined"){
-        return
-    }
     var AV_Posts = AV.Object.extend("Posts");
     var url = curUrl;
     var title = "About";
@@ -213,7 +211,5 @@ function likePost(type) {
 }
 
 /*启动执行*/
-setTimeout(() =&gt; {
-    delayLoadValine();
-}, 1); &lt;/script&gt;
+delayLoadValine(); &lt;/script&gt;
 </code></pre></div></div></div><button class="anchor"><i class="fa fa-anchor"></i></button><div class="right"><div class="wrap"><div class="side content"><div> Content</div><ul id="content-side" class="content-ul"></ul></div></div></div></div><script src="/js/pageContent.js " charset="utf-8"></script><footer class="site-footer"><div class="wrapper"><p class="description"> 云上的日子！</p><p class="contact"> Contact me at: <a href="https://github.com/bitfeng" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a> <a href="mailto:damonc@126.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></p><p> 本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p></div></footer><div class="back-to-top"> <a href="#top" data-scroll> <i class="fa fa-arrow-up" aria-hidden="true"></i> </a></div><script src=" /js/main.js " charset="utf-8"></script> <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script> <script type="text/javascript"> smoothScroll.init({ speed: 500, easing: 'easeInOutCubic', offset: 20, }); function displayWindowSize() { var w = document.documentElement.clientWidth; var h = document.documentElement.clientHeight; var rightDiv = document.querySelector('.right'); var footer = document.querySelector('.site-footer'); if(!rightDiv || !footer){ return; } if(w <= 1700){ rightDiv.style.display='none'; footer.style.display='none'; }else{ rightDiv.style.display='block'; footer.style.display = "block"; } } window.addEventListener("resize", displayWindowSize); displayWindowSize(); </script>

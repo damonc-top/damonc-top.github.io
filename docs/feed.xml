@@ -5,9 +5,9 @@
     <description></description>
     <link>www.damonc.top/</link>
     <atom:link href="www.damonc.top/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 21 Dec 2022 02:25:42 +0800</pubDate>
-    <lastBuildDate>Wed, 21 Dec 2022 02:25:42 +0800</lastBuildDate>
-    <generator>Jekyll v4.3.1</generator>
+    <pubDate>Wed, 21 Dec 2022 15:35:46 +0800</pubDate>
+    <lastBuildDate>Wed, 21 Dec 2022 15:35:46 +0800</lastBuildDate>
+    <generator>Jekyll v4.2.2</generator>
     
       <item>
         <title>Unity 光照烘焙(翻译十六)</title>
@@ -63,8 +63,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Mon, 15 Jan 2018 20:00:00 +0800</pubDate>
-        <link>www.damonc.top/2018/01/15/Unity-Shader-Fog14/</link>
-        <guid isPermaLink="true">www.damonc.top/2018/01/15/Unity-Shader-Fog14/</guid>
+        <link>www.damonc.top/2018/01/15/UNity-Shader-Fog14/</link>
+        <guid isPermaLink="true">www.damonc.top/2018/01/15/UNity-Shader-Fog14/</guid>
         
         <category>Unity3D</category>
         
