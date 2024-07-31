@@ -5,8 +5,8 @@
         <description></description>
         <link>https://www.damonc.top/</link>
         <atom:link href="https://www.damonc.top/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Thu, 25 Jul 2024 17:30:50 +0800</pubDate>
-        <lastBuildDate>Thu, 25 Jul 2024 17:30:50 +0800</lastBuildDate>
+        <pubDate>Wed, 31 Jul 2024 11:41:54 +0800</pubDate>
+        <lastBuildDate>Wed, 31 Jul 2024 11:41:54 +0800</lastBuildDate>
         <generator>Jekyll v4.3.3</generator>
         
             <item>
@@ -36,8 +36,8 @@
                 <description>&lt;h2 id=&quot;addressable安装&quot;&gt;Addressable安装&lt;/h2&gt;
 &lt;p&gt;总结在使用Unity Addressable System过程中遇到的一部分问题，该篇主要记录Addressable在Unity编辑器的各种组织结构，本文Addressable后续简称AA。&lt;/p&gt;
 
-&lt;h3 id=&quot;最简单的方式&quot;&gt;最简单的方式&lt;/h3&gt;
-&lt;p&gt;打开Window - Package Manger，找到Addressable安装找一个合适的版本:
+&lt;h3 id=&quot;package安装&quot;&gt;Package安装&lt;/h3&gt;
+&lt;p&gt;打开Unity Window - Package Manger，找到Addressable安装找一个合适的版本:
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
@@ -46,7 +46,7 @@
             &lt;center&gt;&lt;i&gt;&lt;a&gt;Addressable Version Seleclt.&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;    
         &lt;/font&gt;
 
-&lt;h3 id=&quot;找一个合适的版本&quot;&gt;找一个合适的版本&lt;/h3&gt;
+&lt;h3 id=&quot;手动安装&quot;&gt;手动安装&lt;/h3&gt;
 &lt;p&gt;在Package Manager选择一个合适的Addressable版本还要结合Addressable更新log，打开&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable更新日志&lt;/code&gt;&lt;/a&gt;，版本列表展示了Address able对应的Unity版本：
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
@@ -65,7 +65,8 @@
             &lt;center&gt;&lt;i&gt;&lt;a&gt;Addressable Branch.&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;    
         &lt;/font&gt;
 
-&lt;h3 id=&quot;稍复杂的方式&quot;&gt;稍复杂的方式&lt;/h3&gt;
+&lt;p&gt;2.0以上版本也可以用在非2023版的引擎，主要还是针对2023+ Unity引擎支持新的API什么的。如果想把2.0版本合到1.21，开一Beyond Compare合并差异也行。&lt;/p&gt;
+
 &lt;p&gt;打开&lt;a href=&quot;https://packages.unity.com/com.unity.addressables&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable Package Json&lt;/code&gt;&lt;/a&gt;，这里列明了每一个Addressable版本对应的Unity版本，结合&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable更新日志&lt;/code&gt;&lt;/a&gt;找到一个Bug最少又符合对Unity版本要求的Addressable版本。&lt;/p&gt;
 
 &lt;p&gt;找到合适的Addressable版本后，打开Packages/manifest.json，新增依赖包，比如：”com.unity.addressables”: “1.21.19”。&lt;/p&gt;
@@ -157,7 +158,7 @@
 &lt;font size=&quot;2.5&quot;&gt;
             &lt;center&gt;&lt;i&gt;&lt;a&gt;Profile Window.&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;    
         &lt;/font&gt;
-&lt;p&gt;Profile主要作用是指定打包地址和加载地址。见&lt;a href=&quot;#jump1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Catalog&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Profile主要作用是指定打包地址和加载地址，我新增了BuildPath打包的保存目录和HotUpdate热更资源目录，这两个参数要在Catalog指定。见&lt;a href=&quot;#jump1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Catalog&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;span id=&quot;jump1&quot;&gt;&lt;/span&gt;&lt;/p&gt;
 
@@ -167,11 +168,11 @@
 --&gt;
 &lt;center class=&quot;half&quot;&gt;&lt;img id=&quot;fit-picture&quot; loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png&quot; width=&quot;250&quot; alt=&quot;loading failed, need vpn.&quot; /&gt;&lt;/center&gt;
 &lt;font size=&quot;2.5&quot;&gt;
-            &lt;center&gt;&lt;i&gt;&lt;a&gt;Catalog设置.&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;    
+            &lt;center&gt;&lt;i&gt;&lt;a&gt;Catalog设置面板.&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;    
         &lt;/font&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Player Version Override: 这个参数会对构建好的catalog进行重命名，unity使用时间戳，我们自己可以用自己的构建版本号，格式可以是catalog_1.2.1720684396.json。这篇对&lt;a href=&quot;&quot;&gt;catalog详解&lt;/a&gt;这里先按下不表。&lt;/li&gt;
+  &lt;li&gt;Player Version Override: 这个参数会对构建好的catalog进行重命名，unity使用时间戳，我们自己可以用自己的构建版本号，格式可以是catalog_1.2.1720684396.json。这篇是对&lt;a href=&quot;&quot;&gt;catalog&lt;/a&gt;的详解。&lt;/li&gt;
   &lt;li&gt;Compress Local Catalog: 启用会将catalog.json压缩成catalog.bundle，显著减少文件size。&lt;/li&gt;
   &lt;li&gt;Build Remote Catalog: 要热更catalog就要启用。&lt;/li&gt;
   &lt;li&gt;Build Path: 构建Assetbundle的保存地址。&lt;/li&gt;
@@ -183,17 +184,18 @@
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img id=&quot;fit-picture&quot; loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png&quot; width=&quot;250&quot; alt=&quot;loading failed, need vpn.&quot; /&gt;&lt;/center&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img id=&quot;fit-picture&quot; loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/update_download.png&quot; width=&quot;250&quot; alt=&quot;loading failed, need vpn.&quot; /&gt;&lt;/center&gt;
 &lt;font size=&quot;2.5&quot;&gt;
             &lt;center&gt;&lt;i&gt;&lt;a&gt;Update Downloads设置.&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;    
         &lt;/font&gt;
 
-&lt;p&gt;指定addressables_content_state.bin的保存地址，该文件只在本地构建时有用，有兴趣看[&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;官方workflow&lt;/code&gt;](https://docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html。简单来说就是打开Groups-Tools-Check Content Update Restrictions窗口，选择上一次保存的addressables_content_state去比对catalog，生成一个新的热更bundle。&lt;/p&gt;
+&lt;p&gt;指定addressables_content_state.bin的保存地址，该文件只在本地构建时有用，可以看看&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;官方workflow&lt;/code&gt;&lt;/a&gt;。简化描述我的理解就是打开Groups-Tools-Check Content Update Restrictions窗口，选择上一次保存的addressables_content_state去比对会生成一份catalog和一小撮热更bundle，就是增量更新这些bundle。但是如果玩家本地用户目录的bundle不小心损坏了，或则资源版本回退，直接使用这方案就不好办。&lt;/p&gt;
 
-&lt;p&gt;由于我开了手动更新catalog，同时自己维护了一套更新列表，就禁用了这条属性。&lt;/p&gt;
+&lt;p&gt;由于我开了手动更新catalog，同时自己维护了一套完整的更新列表，就禁用了这条属性。&lt;/p&gt;
 
 &lt;h4 id=&quot;downloads&quot;&gt;Downloads&lt;/h4&gt;
-&lt;p&gt;略&lt;/p&gt;
+&lt;p&gt;自定义证书、下载并发数量、超时等设置&lt;/p&gt;
+
 &lt;h4 id=&quot;builds&quot;&gt;Builds&lt;/h4&gt;
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
@@ -203,7 +205,7 @@
             &lt;center&gt;&lt;i&gt;&lt;a&gt;Build设置.&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;    
         &lt;/font&gt;
 &lt;ul&gt;
-  &lt;li&gt;Build Addressables on Player Build: 出包的时候一起出Assetbundle，我关了不需要。&lt;/li&gt;
+  &lt;li&gt;Build Addressables on Player Build: 出包的时候一起出Assetbundle，我关了不需要，我是先出Bundle资源的。&lt;/li&gt;
   &lt;li&gt;Ignore Invalid/Unsupported Files in Build: 排除无效文件。&lt;/li&gt;
   &lt;li&gt;Unique Bundle IDs: Assetbundle唯一标识符。&lt;/li&gt;
   &lt;li&gt;Contiguous Bundles: 定义的Assetbundle内容布局，启用。&lt;/li&gt;
@@ -236,7 +238,7 @@
   &lt;p&gt;直接说使用结论&lt;/p&gt;
 
   &lt;ul&gt;
-    &lt;li&gt;Group越少越好，在创建Group时非常耗时，成百上千个Group可能卡10分钟甚至更久。&lt;/li&gt;
+    &lt;li&gt;Group越少越好，在创建Group时非常耗时，成百上千个Group可能卡几十分钟甚至更久。&lt;/li&gt;
     &lt;li&gt;Group越少意味着Asset Entry越多，但是没关系，还有label标签可以用。&lt;/li&gt;
     &lt;li&gt;label标签可以做分类划分，具有相同label标签的资源打成一个bundle包。&lt;/li&gt;
   &lt;/ul&gt;
@@ -258,6 +260,16 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Content Packing &amp;amp; Loading是BundleAssetGroupSchema，定义AssetBundle构建和加载时的一些信息&lt;/p&gt;
+
+&lt;p&gt;如果采用创建N个Asset Group方式，然后对Group进行分组打包，这一个Group就要要包含热更Schema和加载Schema，和N个Asset Entry(这取决于该组有多少个address标记资源)。构建分析期间的耗时将会非常严重，截取一个增加Schema耗时图片
+&lt;!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+--&gt;&lt;/p&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img id=&quot;fit-picture&quot; loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png&quot; width=&quot;250&quot; alt=&quot;loading failed, need vpn.&quot; /&gt;&lt;/center&gt;
+&lt;font size=&quot;2.5&quot;&gt;
+            &lt;center&gt;&lt;i&gt;&lt;a&gt;schema耗时片段.&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;    
+        &lt;/font&gt;
+&lt;p&gt;每次增加Schema会触发save操作，每次修改Schema内部值后会触发Group Dirty Notify进一步触发遍历所有Group排查引用该schema的Group更新。&lt;/p&gt;
 
 &lt;p&gt;Content Update Restriction是ContentUpdateGroupSchema，定义该Asset Group内的资源构建成bundle包时是否可以热更，如果要热更一定要添加&lt;/p&gt;
 &lt;ul&gt;
