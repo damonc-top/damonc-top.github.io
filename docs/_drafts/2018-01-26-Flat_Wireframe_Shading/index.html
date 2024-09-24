@@ -1,0 +1,605 @@
+<!doctypehtml><html class=no-js lang=zh><meta charset=utf-8><meta content=on http-equiv=x-dns-prefetch-control><link href=//www.damonc.top rel=dns-prefetch><link href=//search.www.damonc.top rel=dns-prefetch><link href=//api.github.com rel=dns-prefetch><link href=//www.google-analytics.com rel=dns-prefetch><meta content=width=device-width,initial-scale=1 name=viewport><meta content=留点什么东西也挺不错的，偶尔会在这里停留。 name=description><meta content=catlikecoding name=author><link href=https://www.damonc.top/_drafts/2018-01-26-Flat_Wireframe_Shading/ rel=canonical><link href=../../favicon.ico rel=icon><meta content="mkdocs-1.4.2, mkdocs-material-8.5.11"name=generator><title>平面和线框着色(翻译二十一) - 银河揽月</title><link href=../../assets/stylesheets/main.31645160.min.css rel=stylesheet><link href=../../assets/stylesheets/palette.2505c338.min.css rel=stylesheet><link href=../../extension/css/extra.css rel=stylesheet><link crossorigin href=https://fonts.gstatic.com rel=preconnect><link href=https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,700,700i%7CFira+Mono:400,400i,700,700i&display=fallback rel=stylesheet><style>:root{--md-text-font:"Fira Sans";--md-code-font:"Fira Mono"}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:300;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:italic;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Italic'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:700;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Mono';font-style:normal;font-weight:regular;src:local('Fira Mono'),local('FiraMono-Normal'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.svg#FiraMono) format('svg')}</style><script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script>"undefined"!=typeof __md_analytics&&__md_analytics()</script></head><body data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default dir=ltr><script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script><input autocomplete=off class=md-toggle data-md-toggle=drawer id=__drawer type=checkbox><input autocomplete=off class=md-toggle data-md-toggle=search id=__search type=checkbox><label class=md-overlay for=__drawer></label><div data-md-component=skip><a class=md-skip href=#1-平面着色渲染> 跳转至 </a></div><div data-md-component=announce></div><header class=md-header data-md-component=header><nav class="md-header__inner md-grid"aria-label=页眉><a class="md-header__button md-logo"aria-label=银河揽月 data-md-component=logo href=../.. title=银河揽月> <img alt=logo src=../../images/homepage.png> </a><label class="md-header__button md-icon"for=__drawer><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg></label><div class=md-header__title data-md-component=header-title><div class=md-header__ellipsis><div class=md-header__topic><span class=md-ellipsis> 银河揽月 </span></div><div class=md-header__topic data-md-component=header-topic><span class=md-ellipsis> 平面和线框着色(翻译二十一) </span></div></div></div><form class=md-header__option data-md-component=palette><input aria-label="Switch to dark mode"data-md-color-media="(prefers-color-scheme: light)"class=md-option data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default id=__palette_1 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to dark mode"for=__palette_2 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg></label><input aria-label="Switch to light mode"data-md-color-media="(prefers-color-scheme: dark)"class=md-option data-md-color-accent=slate data-md-color-primary=slate data-md-color-scheme=slate id=__palette_2 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to light mode"for=__palette_1 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg></label></form><label class="md-header__button md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg></label><div class=md-search data-md-component=search role=dialog><label class=md-search__overlay for=__search></label><div class=md-search__inner role=search><form class=md-search__form name=search><input aria-label=搜索 autocapitalize=off autocomplete=off autocorrect=off class=md-search__input data-md-component=search-query name=query placeholder=搜索 required spellcheck=false><label class="md-search__icon md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg></label><nav aria-label=查找 class=md-search__options><button class="md-search__icon md-icon"aria-label=清空当前内容 tabindex=-1 title=清空当前内容 type=reset><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg></button></nav></form><div class=md-search__output><div class=md-search__scrollwrap data-md-scrollfix><div class=md-search-result data-md-component=search-result><div class=md-search-result__meta>正在初始化搜索引擎</div><ol class=md-search-result__list></ol></div></div></div></div></div><div class=md-header__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div></nav></header><div class=md-container data-md-component=container><nav aria-label=标签 class=md-tabs data-md-component=tabs><div class="md-tabs__inner md-grid"><ul class=md-tabs__list><li class=md-tabs__item><a class=md-tabs__link href=../..> 首页 </a></li><li class=md-tabs__item><a class=md-tabs__link href=../../posts/unity3d/il2cpp/> Unity3D引擎 </a></li></ul></div></nav><main class=md-main data-md-component=main><div class="md-main__inner md-grid"><div class="md-sidebar md-sidebar--primary"data-md-component=sidebar data-md-type=navigation><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--primary md-nav--lifted"aria-label=导航栏 data-md-level=0><label class=md-nav__title for=__drawer><a class="md-nav__button md-logo"aria-label=银河揽月 data-md-component=logo href=../.. title=银河揽月> <img alt=logo src=../../images/homepage.png> </a> 银河揽月</label><div class=md-nav__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_1 id=__nav_1 type=checkbox> <label class=md-nav__link for=__nav_1>首页 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=首页 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_1><span class="md-nav__icon md-icon"></span> 首页</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../..> 简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/home/learn/> 记录 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2 id=__nav_2 type=checkbox> <label class=md-nav__link for=__nav_2>Unity3D引擎 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Unity3D引擎 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_2><span class="md-nav__icon md-icon"></span> Unity3D引擎</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_1 id=__nav_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_1>il2cpp <span class="md-nav__icon md-icon"></span></label> <nav aria-label=il2cpp class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_1><span class="md-nav__icon md-icon"></span> il2cpp</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/il2cpp/> il2cpp简介 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_2 id=__nav_2_2 type=checkbox> <label class=md-nav__link for=__nav_2_2>Shader <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Shader class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_2><span class="md-nav__icon md-icon"></span> Shader</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_2_1 id=__nav_2_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_2_1>翻译CatlikeCoding <span class="md-nav__icon md-icon"></span></label> <nav aria-label=翻译CatlikeCoding class=md-nav data-md-level=3><label class=md-nav__title for=__nav_2_2_1><span class="md-nav__icon md-icon"></span> 翻译CatlikeCoding</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/> Catlikecoding简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/unity_matrix_transform/> 一UnityShader变换矩阵 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/unity_shader_fundamentals/> 二UnityShader基本语法 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/unity_combine_texture/> 三UnityShader纹理融合 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/unity_base_light/> 四UnityShader基础光照 </a></li></ul></nav></li></ul></nav></li></ul></nav></li></ul></nav></div></div></div><div class="md-sidebar md-sidebar--secondary"data-md-component=sidebar data-md-type=toc><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--secondary"aria-label=目录><label class=md-nav__title for=__toc><span class="md-nav__icon md-icon"></span> 目录</label><ul class=md-nav__list data-md-component=toc data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=#1-平面着色渲染> 1 平面着色渲染 </a> <nav aria-label="1 平面着色渲染"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#11-三角形法线-偏导函数方法> 1.1 三角形法线-偏导函数方法 </a></li><li class=md-nav__item><a class=md-nav__link href=#12-三角形法线-几何着色阶段处理> 1.2 三角形法线-几何着色阶段处理 </a></li><li class=md-nav__item><a class=md-nav__link href=#13-取出三角形的顶点法线> 1.3 取出三角形的顶点法线 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#2-线框渲染> 2 线框渲染 </a> <nav aria-label="2 线框渲染"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#21-重心坐标> 2.1 重心坐标 </a></li><li class=md-nav__item><a class=md-nav__link href=#22-定义额外的插值器> 2.2 定义额外的插值器 </a></li><li class=md-nav__item><a class=md-nav__link href=#23-拆分文件> 2.3 拆分文件 </a></li><li class=md-nav__item><a class=md-nav__link href=#24-重写线框的albedo> 2.4 重写线框的Albedo </a></li><li class=md-nav__item><a class=md-nav__link href=#25-creating-wires> 2.5 Creating Wires </a></li><li class=md-nav__item><a class=md-nav__link href=#26-固定宽度> 2.6 固定宽度 </a></li><li class=md-nav__item><a class=md-nav__link href=#27-可配置线框> 2.7 可配置线框 </a></li></ul></nav></li></ul></nav></div></div></div><div class=md-content data-md-component=content><article class="md-content__inner md-typeset"><a class="md-content__button md-icon"href=https://github.com/damonc-top/damonc-top.github.io/discussions/_drafts/2018-01-26-Flat_Wireframe_Shading.md title=编辑此页> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a><h1>平面和线框着色(翻译二十一)</h1><p>本篇摘要： 使用屏幕空间导数寻找三角形法线<br> 使用生成的重心坐标创建线框<br> 线框宽度可配置 .</p><p>made with Unity 2017.1.0.</p><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163950833-473035686.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163951503-838398789.png title=image></a><em>最终效果</em></p><h2 id=1-平面着色渲染>1 平面着色渲染<a title="Permanent link"class=headerlink href=#1-平面着色渲染></a></h2><p>网格由三角形组成，定义三角形是平的。使用表面法向量来增加表面弯曲的视觉效果，这使得创建光滑的表面网格成为可能。然而，有时实际上想要显示平坦的三角形，调试网格数据等等。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>平面着色：为了使三角形看起来像平坦的表面，必须使用三角形自带的表面法线，而三角形表面法线又是通过三角形的三个顶点的法向量的平均得到，表面法线使得网格具有多面外观，称为平面着色。这也间接使得三角形之间不可能共享顶点，因为那样它们会共享面法线，而共享面法线会使得多个三角处于同一平面不能达到完美的弯曲视觉效果。 因此，最终会得到非常多的网格数据。 假如可以共享顶点那就太好了，后面会探讨共享面法线。
+
+线框：显示网格的线框也可能有用，这使得网格的连接视觉效果更加直观明显。理想情况下，我们可以使用自定义材质一次对任何网格进行平面着色和线框渲染。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>Shader "Custom/Flat Wireframe" { … }
+</code></pre></div></td></tr></table></div><h3 id=11-三角形法线-偏导函数方法>1.1 三角形法线-偏导函数方法<a title="Permanent link"class=headerlink href=#11-三角形法线-偏导函数方法></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>由于三角形属于二维平面，因此在其平面上的每个点的面法线都相同。 因此，渲染三角形内的每个片段都使用相同的法线向量。 **三角形面法线向量怎么计算？** 在顶点程序vertex中，我们只能访问存储在网格的顶点数据，除了美术设计初始定义此处存储的向量就是法线向量用来表示三角形的法线，否则全部没用。 在片段程序fragment中，我们只能访问插值后的顶点法线。
+</code></pre></div></td></tr></table></div><p><strong>计算三角形面法线向量</strong>：为了确定表面法线，我们需要知道三角形在世界空间中的方向。这可以通过三角形的三个顶点的位置来确定。 假定它是nondegenerate Triangle非退化三角(不共线三点)，则其法线向量等于三角形任意两边的叉积结果的归一化值。 如果它是degenerate Triangle退化三角()，则无论如何都不会渲染。 因此，以逆时针方向给出三角形的顶点 a，b和c，其法线向量为n =（c-a）x（b-a）。 通过归一化，可以得到最终的单位法向矢量ˆn = n / | n |</p><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163951816-1548601355.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163952052-386320519.png title=image></a></p><p><em>三角形法线推导</em>.</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>实际上，我们不需要使用三角形的顶点。只要位于三角形平面内的任意三个点就可以。具体来说，我们只需要位于三角形平面内的两个向量，只要这两个向量不平行且大于零即可。  
+有一种可以使用上述讨论的算法：渲染片段时使用的世界位置坐标。 例如，当前正在渲染的片段在屏幕空间中的世界坐标，就可以得到该片段在右侧的坐标以及片段在上方的坐标。
+</code></pre></div></td></tr></table></div><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163952272-1924864325.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163952516-1939974627.png title=image></a> <br> <em>使用片段的世界位置</em></p><p>如果我们可以访问相邻片段的世界位置，那么上述算法就可以。虽然无法直接访问相邻片段的数据，但是我们可以访问此数据的<a href=https://gamedev.stackexchange.com/questions/130888/what-are-screen-space-derivatives-and-when-would-i-use-them>screen-space derivatives(屏幕空间导数详细说明)</a> 。 这是通过特殊指令完成的，该指令告诉我们屏幕空间X或Y维度中任何数据片段之间的变化率。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>简单解释屏幕空间导数：例如，我们当前片段的世界位置为P0，屏幕空间X维度的下一个片段的位置是Px。 因此，这两个片段之间的X维度上的世界位置变化率是∂p / ∂x = Px – P0。 这是屏幕空间X维度中世界位置的偏导数。 我们可以通过内置的ddx函数在片段程序fragment中获取此数据，参数是提供顶点的世界坐标。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>void InitializeFragmentNormal(inout Interpolators i) {
+    float3 dpdx = ddx(i.worldPos);
+    …
+}
+</code></pre></div></td></tr></table></div><p>我们可以对屏幕空间的Y维度执行相同的操作，通过调用带有世界位置的ddy函数来查∂p / ∂y = Py – P0</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>float3 dpdx = ddx(i.worldPos);
+float3 dpdy = ddy(i.worldPos);
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>因为这些值表示了片段世界坐标之间的差值，所以它们定义了三角形的两条边。我们实际上不知道那个三角形的确切形状，但它肯定在原来三角形的平面上，这才是最重要的。所以最终的法向量就是这些向量的标准化叉积。用这个向量覆盖原来的法向量。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>float3 dpdx = ddx(i.worldPos);
+float3 dpdy = ddy(i.worldPos);
+i.normal = normalize(cross(dpdy, dpdx));
+</code></pre></div></td></tr></table></div><p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>**ddx和ddy 是咋回事？**
+    首先，有助于了解GPU着色总是一次评估2x2像素块上的片段/像素。 （即使最终仅需要绘制其中一些像素，而其他像素
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>位于多边形之外或被遮挡-不需要的片段也会被mask掉，而不是写入到缓冲区）。
+[![image](https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163953376-1093846275.png "image")](https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163952914-2128945443.png)
+    着色器中变量（或表达式）v的屏幕空间导数是从2x2像素四边形的一侧到另一侧的v值（在代码中的该点）的差。 即ddx
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>是右像素中v的值减去左像素中v的值，垂直方向上的ddy同样。
+    这回答了“当我们在屏幕上水平（ddx）或垂直（ddy）移动时，v增加或减少的速度有多快？” -即用微积分的术语，它近
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>似于变量的偏导数（近似值，因为它在每个片段上使用离散样本，而不是用数学方法评估函数的无穷小行为）
+    对于标量，我们也可以把它看成一个梯度向量，∇v = float2(ddx(v)， ddy(v))，他们指向屏幕空间中v增长最快的
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>方向。这种类型的信息通常在内部用于选择纹理查找的适当的mipmap级别。对于大多数简单的效果，你不需要使用这些导数，
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>因为基本的2D纹理采样方法会为你处理它。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>创建一个新的材质，使用我们的平面线框着色器。任何使用这种材质的网格都应该使用平面着色来渲染。它们看起来是多面的，虽然当你也使用法线贴图时可能很难看到。在本教程的截图中，我使用了标准的胶囊网格，使用灰色材质
+</code></pre></div></td></tr></table></div><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163953664-1831811428.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163953946-1005636997.png title=image></a> <em>平滑和平面着色对比</em></p><p>从远处看，胶囊看起来像是由四边形组成的，但这些四边形都是由两个三角形组成的。</p><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163954201-1514811394.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163954447-2743931.png title=image></a></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>_由三角形组成的四边形_
+</code></pre></div></td></tr></table></div><h3 id=12-三角形法线-几何着色阶段处理>1.2 三角形法线-几何着色阶段处理<a title="Permanent link"class=headerlink href=#12-三角形法线-几何着色阶段处理></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>还有另一种方法可以确定三角形的法线。我们可以**使用实际的三角形顶点来计算法向量**，而不是使用导数指令。这需要用在每个三角形上，而不是每个顶点或片段上。这就是使用几何着色器的地方。
+
+几何着色器阶段位于顶点和片段程序阶段之间。它得到顶点程序的输出，按片元分组。在得到插值后和用于渲染片段之前，几何程序阶段可以修改这些数据。
+</code></pre></div></td></tr></table></div><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163954759-1702242755.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619163955132-1558000790.png title=image></a><em>处理每个三角形的顶点</em></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>**额外计算几何着色阶段的意义在于可以给每个元素都提供顶点**，所以在我们的例子中每个三角形都有3个顶点。在这里的三角形网格是否共享顶点并不重要，因为几何程序会输出新的顶点数据。这允许我们获得三角形的法向量，并使用它作为所有三个顶点的法向量。
+
+添加几何着色器的代码文件\[flatWireframe.cginc\], 并定义一个MyGeometryProgram函数.
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span></pre></div></td><td class=code><div><pre><span></span><code>#if !defined(FLAT\_WIREFRAME\_INCLUDED)
+#define FLAT\_WIREFRAME\_INCLUDED
+
+#include "My Lighting.cginc"
+
+void MyGeometryProgram () {}
+
+#endif
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>**注意：当shader model 4.0或更高时，几何体着色器才支持**。如果model目标被定义得很低时，Unity会自动增加到这个目标级别，但是低端手机能不能支持该model就得人为调整。同时，要真正使用几何着色器，我们必须添加#pragma geometry指令，就像顶点和片段函数一样。最后，引用flatWireframe.cginc。将这些变化应用到平面着色器的basePass、additivePass和deferredPass中。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code>#pragma target 4.0
+…
+#pragma vertex MyVertexProgram
+#pragma fragment MyFragmentProgram
+#pragma geometry MyGeometryProgram
+…
+
+//#include "My Lighting.cginc"
+#include "MyFlatWireframe.cginc"
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>**定义输出**。回到编辑器将会得到着色器编译错误，因为我们还没有正确定义我们的几何函数。我们必须声明它会输出多少顶点。这个数字可以变化，所以我们必须提供一个最大值。因为我们使用的是三角形，所以每次调用总是输出三个顶点。这是通过向函数中添加maxvertexcount属性来指定的，参数为3。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>\[maxvertexcount(3)\]
+void GeometryProgram () {}
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>**定义输入**。顶点程序的输出数据类型是插值后的顶点。所以在这种情况下
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>\[maxvertexcount(3)\]
+void MyGeometryProgram (InterpolatorsVertex i) {}
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>**声明语义**。但是类型名称在技术上是不正确的，那是我们在命名它时没有考虑到几何着色器。在我们的例子中是三角形。这必须在输入类型之前指定语义。**另外**，由于三角形每个都有三个顶点，它们可构成一个数组，也要明确地定义它。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>\[maxvertexcount(3)\]
+void MyGeometryProgram (triangle InterpolatorsVertex i\[3\]) {}
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>因为几何着色器可以输出的顶点数量是不同的，所以没有一个单一的返回类型。相反，几何着色器写入到了片元流。在我们的示例中，它是一个TriangleStream，必须将其指定为inout参数。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code>\[maxvertexcount(3)\]
+void MyGeometryProgram (
+    triangle InterpolatorsVertex i\[3\],
+    inout TriangleStream stream
+) {}
+</code></pre></div></td></tr></table></div><p>TriangleStream类似于c#中的泛型类型。它需要知道顶点类型，也就是定义的struct InterpolatorsVertex。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code>\[maxvertexcount(3)\]
+void MyGeometryProgram (
+    triangle InterpolatorsVertex i\[3\],
+    inout TriangleStream&LTInterpolatorsVertex> stream
+) {}
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>现在函数定义完全正确了，接下来必须将顶点数据放入流中。这是通过对每个顶点调用流的Append函数来完成的，按照接收它们的顺序放入。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code>\[maxvertexcount(3)\]
+void MyGeometryProgram (
+    triangle InterpolatorsVertex i\[3\],
+    inout TriangleStream&LTInterpolatorsVertex> stream
+) {
+    stream.Append(i\[0\]);
+    stream.Append(i\[1\]);
+    stream.Append(i\[2\]);
+}
+</code></pre></div></td></tr></table></div><p>一个自定义的几何程序阶段配置完成</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>**geometry program书写很怪啊！**
+Unity的着色器语法混合了CG和HLSL代码。大多数情况下它看起来像CG，但在这种情况下它像HLSL。
+</code></pre></div></td></tr></table></div><h3 id=13-取出三角形的顶点法线>1.3 取出三角形的顶点法线<a title="Permanent link"class=headerlink href=#13-取出三角形的顶点法线></a></h3><p>基于1.2方法，开始计算每个三角的顶点法线。</p><p>要找到三角形的法向量，首先要提取它的三个顶点的世界位置。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span></pre></div></td><td class=code><div><pre><span></span><code>float3 p0 = i\[0\].worldPos.xyz;
+float3 p1 = i\[1\].worldPos.xyz;
+float3 p2 = i\[2\].worldPos.xyz;
+
+stream.Append(i\[0\]);
+stream.Append(i\[1\]);
+stream.Append(i\[2\]);
+</code></pre></div></td></tr></table></div><p>每个三角形做一次标准化的叉乘</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code>float3 p0 = i\[0\].worldPos.xyz;
+float3 p1 = i\[1\].worldPos.xyz;
+float3 p2 = i\[2\].worldPos.xyz;
+
+float3 triangleNormal = normalize(cross(p1 - p0, p2 - p0));
+</code></pre></div></td></tr></table></div><p>将顶点法线替换为三角形法线.</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>float3 triangleNormal = normalize(cross(p1 - p0, p2 - p0));
+i\[0\].normal = triangleNormal;
+i\[1\].normal = triangleNormal;
+i\[2\].normal = triangleNormal;
+</code></pre></div></td></tr></table></div><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619192240314-1335631213.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619192240797-1318841853.png title=image></a></p><p>Flat shading, again.</p><p>上图得到了和以前一样的结果，使用了几何着色阶段舞台而不依赖于屏幕空间的派生指令。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>哪种方法最好?
+如果你所需要的只是平面着色，那么屏幕空间的渐变是实现这种效果最便宜的方法。然后你还可以从网格数据中去除法线——Unity可以自动做到这一点——也可以移除法线插值数据。一般来说，如果你可以不使用自定义几何舞台，那么就这样做。我们将继续使用几何方法，因为我们也需要它来进行线框渲染。
+</code></pre></div></td></tr></table></div><h2 id=2-线框渲染>2 线框渲染<a title="Permanent link"class=headerlink href=#2-线框渲染></a></h2><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>在处理完平面着色之后，我们继续渲染网格的线框。我们不会创建新的几何程序，也不会使用额外的pass来绘制线框。**我们将通过在三角形内部沿其边缘添加线条效果来创建线框视觉效果**。尽管定义形状轮廓的线看起来只有内部线的一半粗，但足以创建一个令人信服的线框。
+</code></pre></div></td></tr></table></div><p>After taking care of the flat shading, we move on to rendering the mesh's wireframe. We're not going to create new geometry, nor will we use an extra pass to draw lines. We'll create the wireframe visuals by adding a line effect on the inside of triangles, along their edges. This can create a convincing wireframe, although the lines defining a shape's silhouette will appear half as thick as the lines on the inside. This usually isn't very noticeable, so we'll accept this inconsistency.</p><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619192241055-42061925.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619192241373-1446822878.png title=image></a> <em>线框效果预览</em></p><h3 id=21-重心坐标>2.1 重心坐标<a title="Permanent link"class=headerlink href=#21-重心坐标></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>要向三角形边缘添加线框效果，我们需要知道片段到最近边缘的距离。这意味着关于三角形的信息需要在片段程序中可用。这可以通过向内插数据中添加三角形的质心坐标来实现。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>[![image](https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619192241946-964812308.png "image")](https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200619192241679-788522024.png)
+</code></pre></div></td></tr></table></div><p><em>重心坐标计算</em></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>因为网格数据不提供重心坐标，所以顶点程序不知道。为了让几何程序输出它们，我们必须定义一个新的结构。它应该包含与内插顶点相同的数据
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>struct InterpolatorsGeometry {
+    InterpolatorsVertex data;
+};
+</code></pre></div></td></tr></table></div><p>调整流数据类型，使其使用新的结构。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span></pre></div></td><td class=code><div><pre><span></span><code>void MyGeometryProgram (
+    triangle InterpolatorsVertex i\[3\],
+    inout TriangleStream&LTInterpolatorsGeometry\> stream
+) {
+    …
+
+    InterpolatorsGeometry g0, g1, g2;
+    g0.data = i\[0\];
+    g1.data = i\[1\];
+    g2.data = i\[2\];
+
+    stream.Append(g0);
+    stream.Append(g1);
+    stream.Append(g2);
+}
+</code></pre></div></td></tr></table></div><p>添加额外的数据到插值几何，增加TEXCOORD9类型重心坐标变量.</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>struct InterpolatorsGeometry {
+    InterpolatorsVertex data;
+    float3 barycentricCoordinates : TEXCOORD9;
+};
+</code></pre></div></td></tr></table></div><p>给每个顶点分配一个质心坐标。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span></pre></div></td><td class=code><div><pre><span></span><code>g0.barycentricCoordinates = float3(1, 0, 0);
+g1.barycentricCoordinates = float3(0, 1, 0);
+g2.barycentricCoordinates = float3(0, 0, 1);
+
+stream.Append(g0);
+stream.Append(g1);
+stream.Append(g2);
+</code></pre></div></td></tr></table></div><p>注意，质心坐标的总和总是1。只需要传递其中两个，通过从中减去两个坐标来得到第三个坐标。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span></pre></div></td><td class=code><div><pre><span></span><code>struct InterpolatorsGeometry {
+    InterpolatorsVertex data;
+    float2 barycentricCoordinates : TEXCOORD9;
+};
+
+    \[maxvertexcount(3)\]
+void MyGeometryProgram (
+    triangle InterpolatorsVertex i\[3\],
+    inout TriangleStream&LTInterpolatorsGeometry> stream
+) {
+    …
+
+    g0.barycentricCoordinates = float2(1, 0);
+    g1.barycentricCoordinates = float2(0, 1);
+    g2.barycentricCoordinates = float2(0, 0);
+
+    …
+}
+</code></pre></div></td></tr></table></div><h3 id=22-定义额外的插值器>2.2 定义额外的插值器<a title="Permanent link"class=headerlink href=#22-定义额外的插值器></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>将重心坐标传递给片段程序，但不能简单地使用这些数据，需在_My Lighting.cginc_文件定义宏：_CUSTOM\_GEOMETRY\_INTERPOLATORS_，来确定是否可使用。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span></pre></div></td><td class=code><div><pre><span></span><code>struct Interpolators {
+    …
+    #if defined (CUSTOM\_GEOMETRY\_INTERPOLATORS)
+        CUSTOM\_GEOMETRY\_INTERPOLATORS
+    #endif
+};
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>现在我们可以在MyFlatWireframe中定义这个宏。我们必须在引入_My Lighting_之前做这个。我们也可以在插值几何中使用它，所以我们只需要写一次代码
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span></pre></div></td><td class=code><div><pre><span></span><code>#define CUSTOM\_GEOMETRY\_INTERPOLATORS \\
+    float2 barycentricCoordinates : TEXCOORD9;
+
+#include "My Lighting.cginc"
+
+struct InterpolatorsGeometry {
+    InterpolatorsVertex data;
+//  float2 barycentricCoordinates : TEXCOORD9;
+    CUSTOM\_GEOMETRY\_INTERPOLATORS
+};
+</code></pre></div></td></tr></table></div><h3 id=23-拆分文件>2.3 拆分文件<a title="Permanent link"class=headerlink href=#23-拆分文件></a></h3><p>我们如何使用重心坐标来可视化线框？也要照明参数不应参与计算。</p><p>创建新文件myLightingInput.cginc</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span></pre></div></td><td class=code><div><pre><span></span><code>#if !defined(MY\_LIGHTING\_INPUT\_INCLUDED)
+#define MY\_LIGHTING\_INPUT\_INCLUDED
+
+#include "UnityPBSLighting.cginc"
+#include "AutoLight.cginc"
+
+#if defined(FOG\_LINEAR) || defined(FOG\_EXP) || defined(FOG\_EXP2)
+    #if !defined(FOG\_DISTANCE)
+        #define FOG\_DEPTH 1
+    #endif
+    #define FOG\_ON 1
+#endif
+
+…
+
+float3 GetEmission (Interpolators i) {
+    #if defined(FORWARD\_BASE\_PASS) || defined(DEFERRED\_PASS)
+        #if defined(\_EMISSION\_MAP)
+            return tex2D(\_EmissionMap, i.uv.xy) \* \_Emission;
+        #else
+            return \_Emission;
+        #endif
+    #else
+        return 0;
+    #endif
+}
+
+#endif
+</code></pre></div></td></tr></table></div><p>在myLighting.cginc删除重复代码</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span></pre></div></td><td class=code><div><pre><span></span><code>#if !defined(MY\_LIGHTING\_INCLUDED)
+#define MY\_LIGHTING\_INCLUDED
+
+//#include "UnityPBSLighting.cginc"
+// …
+//
+//float3 GetEmission (Interpolators i) {
+//    …
+//}
+
+#include "My Lighting Input.cginc"
+
+void ComputeVertexLightColor (inout InterpolatorsVertex i) {
+    #if defined(VERTEXLIGHT\_ON)
+        i.vertexLightColor = Shade4PointLights(
+            unity\_4LightPosX0, unity\_4LightPosY0, unity\_4LightPosZ0,
+            unity\_LightColor\[0\].rgb, unity\_LightColor\[1\].rgb,
+            unity\_LightColor\[2\].rgb, unity\_LightColor\[3\].rgb,
+            unity\_4LightAtten0, i.worldPos.xyz, i.normal
+        );
+    #endif
+}
+</code></pre></div></td></tr></table></div><p>现在就可以在线框shader_MyFlatWireframe_.分开计算了</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>#include "My Lighting Input.cginc"
+
+#include "My Lighting.cginc"
+</code></pre></div></td></tr></table></div><h3 id=24-重写线框的albedo>2.4 重写线框的Albedo<a title="Permanent link"class=headerlink href=#24-重写线框的albedo></a></h3><p>定义线框专属宏<code>ALBEDO_FUNCTION</code>.</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code>#include "My Lighting Input.cginc"
+
+#if !defined(ALBEDO\_FUNCTION)
+    #define ALBEDO\_FUNCTION GetAlbedo
+#endif
+</code></pre></div></td></tr></table></div><p>用宏指令<code>ALBEDO_FUNCTION</code>.替换掉<code>GetAlbedo</code> 函数.</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>float3 albedo = DiffuseAndSpecularFromMetallic
+(
+    ALBEDO\_FUNCTION(i), GetMetallic(i), specularTint, oneMinusReflectivity
+);
+</code></pre></div></td></tr></table></div><p>在线框shader增加线框函数GetAlbedoWithWireframe , 它首先要计算一次原始的albedo，然后再计算线框！</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span></pre></div></td><td class=code><div><pre><span></span><code>#include "My Lighting Input.cginc"
+
+float3 GetAlbedoWithWireframe (Interpolators i) {
+    float3 albedo = GetAlbedo(i);
+    return albedo;
+}
+
+#define ALBEDO\_FUNCTION GetAlbedoWithWireframe
+
+#include "My Lighting.cginc"
+</code></pre></div></td></tr></table></div><p>直接使用重心坐标作为反照率.</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span></pre></div></td><td class=code><div><pre><span></span><code>float3 GetAlbedoWithWireframe (Interpolators i) {
+    float3 albedo = GetAlbedo(i);
+    float3 barys;
+    barys.xy = i.barycentricCoordinates;
+    barys.z = 1 - barys.x - barys.y;
+    albedo = barys;
+    return albedo;
+}
+</code></pre></div></td></tr></table></div><p>[<img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111343141-2001371976.png title=image></p><p>重心坐标as albedo</p><p>](<a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111342527-351514486.png>https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111342527-351514486.png</a>)</p><h3 id=25-creating-wires>2.5 Creating Wires<a title="Permanent link"class=headerlink href=#25-creating-wires></a></h3><p>为了创建线框效果，需要知道片段离最近的三角形边缘有多近。我们可以通过取重心坐标的最小值来得到它，在重心区域内得到了到边缘的最小距离，我们直接用它来表示反照率。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span></pre></div></td><td class=code><div><pre><span></span><code>    float3 albedo = GetAlbedo(i);
+    float3 barys;
+    barys.xy = i.barycentricCoordinates;
+    barys.z = 1 - barys.x - barys.y;
+//  albedo = barys;
+    float minBary = min(barys.x, min(barys.y, barys.z));
+    return albedo \* minBary;
+</code></pre></div></td></tr></table></div><p><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111343539-1515756468.png title=image><em>最小距离</em>.</p><p>统一以最近距离会导致粗细不一致，需要使用<code>[smoothstep](http://developer.download.nvidia.com/cg/smoothstep.html)</code> 过渡</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>    float minBary = min(barys.x, min(barys.y, barys.z));
+    minBary = smoothstep(0, 0.1, minBary);
+    return albedo \* minBary;
+</code></pre></div></td></tr></table></div><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111343957-1716555827.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111344333-1576303396.png title=image></a></p><p><em>调整后的过渡</em></p><h3 id=26-固定宽度>2.6 固定宽度<a title="Permanent link"class=headerlink href=#26-固定宽度></a></h3><p>上述线框效果只适用于边长大致相同的三角形，同时有远近视角缘故，线有粗有细。两个方向的屏幕空间导数值可能有负有正，取它们的绝对值</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>float minBary = min(barys.x, min(barys.y, barys.z));
+float delta = abs(ddx(minBary)) + abs(ddy(minBary));
+minBary = smoothstep(0, delta, minBary);
+</code></pre></div></td></tr></table></div><p><code>[fwidth](http://developer.download.nvidia.com/cg/fwidth.html)</code> 函数也可以表示上述两段代码！</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>//float minBary = min(barys.x, min(barys.y, barys.z));
+//float delta = abs(ddx(minBary)) + abs(ddy(minBary));
+float delta = fwidth(minBary);
+</code></pre></div></td></tr></table></div><p>[<img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111345032-437532071.png title=image></p><p><em>固定宽度线框</em></p><p>](<a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111344690-111711099.png>https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111344690-111711099.png</a>)</p><p>如果觉得产生的线显得有点细，可以通过将过渡从边缘偏移一点来解决粗度，例如用与混合范围相同的值。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>    minBary = smoothstep(delta, 2 \* delta, minBary);
+</code></pre></div></td></tr></table></div><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111345391-1947862458.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111345778-725894459.png title=image></a></p><p><em>增厚的线框(有锯齿).</em></p><p>产生更粗更清晰的线条，但也会在三角形附近的线条中显示锯齿。这些锯齿影的出现是由于这些区域最近的边缘过渡太突然，不连续的导致的。为了解决这个问题，我们必须<strong>先计算重心坐标的导数，再混合，然后在那之后获取最小值</strong>.</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span></pre></div></td><td class=code><div><pre><span></span><code>/\*先取出一次最近距离，先计算偏导取绝对值算出过渡\*/
+barys.z = 1 - barys.x - barys.y;
+//float3 deltas = fwidth(barys);
+float minBary = min(barys.x, min(barys.y, barys.z));
+float delta = abs(ddx(minBary)) + abs(ddy(minBary));
+/\*用过渡增加重心距离\*/
+barys = smoothstep(deltas, 2 \* deltas, barys);
+/\*再取一次最小距离\*/
+float minBary = min(barys.x, min(barys.y, barys.z));
+//float delta = fwidth(minBary);
+//minBary = smoothstep(delta, 2 \* delta, minBary);
+return albedo \* minBary;
+</code></pre></div></td></tr></table></div><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111346179-1020295465.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111346515-1685351726.png title=image></a></p><p><em>高级线框</em>.</p><h3 id=27-可配置线框>2.7 可配置线框<a title="Permanent link"class=headerlink href=#27-可配置线框></a></h3><p>线框效果有了，但有可能需要使用其他线宽、混合颜色，也许想对每种材料使用不同的设置。 因此，向着色器添加三个属性。</p><p>首先是<strong>线框颜色</strong>，其次是<strong>线框平滑度</strong>，控制过渡范围。 从0到10的范围应该足够，默认值为1，代表宽度测量的倍数。 第三是<strong>线框厚度</strong>，其设置与平滑相同。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span></pre></div></td><td class=code><div><pre><span></span><code>\_WireframeColor ("Wireframe Color", Color) = (0, 0, 0)
+\_WireframeSmoothing ("Wireframe Smoothing", Range(0, 10)) = 1
+\_WireframeThickness ("Wireframe Thickness", Range(0, 10)) = 1
+...
+float3 \_WireframeColor;
+float \_WireframeSmoothing;
+float \_WireframeThickness;
+
+float3 GetAlbedoWithWireframe (Interpolators i) {
+    float3 albedo = GetAlbedo(i);
+    float3 barys;
+    barys.xy = i.barycentricCoordinates;
+    barys.z = 1 - barys.x - barys.y;
+    float3 deltas = fwidth(barys);
+    float3 smoothing = deltas \* \_WireframeSmoothing;
+    float3 thickness = deltas \* \_WireframeThickness;
+    barys = smoothstep(thickness, thickness + smoothing, barys);
+    float minBary = min(barys.x, min(barys.y, barys.z));
+//    return albedo \* minBary;
+    return lerp(\_WireframeColor, albedo, minBary);
+}
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>创建新的属性自定义着色器GUI。
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span></pre></div></td><td class=code><div><pre><span></span><code>    void DoWireframe () {
+        GUILayout.Label("Wireframe", EditorStyles.boldLabel);
+        EditorGUI.indentLevel += 2;
+        editor.ShaderProperty(
+            FindProperty("\_WireframeColor"),
+            MakeLabel("Color")
+        );
+        editor.ShaderProperty(
+            FindProperty("\_WireframeSmoothing"),
+            MakeLabel("Smoothing", "In screen space.")
+        );
+        editor.ShaderProperty(
+            FindProperty("\_WireframeThickness"),
+            MakeLabel("Thickness", "In screen space.")
+        );
+        EditorGUI.indentLevel -= 2;
+    }
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span></pre></div></td><td class=code><div><pre><span></span><code>public override void OnGUI (
+    MaterialEditor editor, MaterialProperty\[\] properties
+) {
+    this.target = editor.target as Material;
+    this.editor = editor;
+    this.properties = properties;
+    DoRenderingMode();
+    if (target.HasProperty("\_WireframeColor")) {
+        DoWireframe();
+    }
+    DoMain();
+    DoSecondary();
+    DoAdvanced();
+}
+</code></pre></div></td></tr></table></div><p><a href=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111346854-1699865782.png><img alt=image src=https://img2020.cnblogs.com/blog/1692664/202006/1692664-20200621111347129-330696446.png title=image></a></p><p>可配置线框属性.</p><p>本文转自 <a href=https://www.cnblogs.com/YASUHATI/p/13155566.html>https://www.cnblogs.com/YASUHATI/p/13155566.html</a>，如有侵权，请联系删除。</p><hr><blockquote class=page-copyright><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4Z"/></svg></i>本页面最近更新：</span><span class=facts_modified></span>，<a class=edit_history>更新历史</a><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg></i>发现错误？ <a class=page_edit_url href=https://github.com/damonc-top/damonc-top.github.io/discussions/_drafts/2018-01-26-Flat_Wireframe_Shading.md title=编辑此页>在 GitHub 评论指正！</a></span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7Z"/></svg></i>本文作者：</span><span class=page_contributors>catlikecoding</span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M10.08 10.86c.05-.33.16-.62.3-.86.3-.56.81-.85 1.5-.86.45 0 .86.2 1.15.49.28.31.47.74.47 1.17h1.8c-.02-.47-.11-.9-.3-1.3-.15-.38-.38-.72-.68-1-1.45-1.34-4.14-1.15-5.37.37-1.29 1.67-1.32 4.59-.01 6.26 1.21 1.49 3.86 1.7 5.3.37.31-.25.56-.56.76-.92.16-.36.27-.74.28-1.15H13.5c0 .21-.07.4-.16.57-.09.19-.21.34-.34.47-.33.26-.72.4-1.14.4-.36-.01-.66-.08-.89-.23a1.41 1.41 0 0 1-.59-.64c-.5-.9-.42-2.15-.3-3.14M12 2C6.5 2 2 6.5 2 12c.53 13.27 19.5 13.26 20 0 0-5.5-4.5-10-10-10m0 18c-4.41 0-8-3.59-8-8 .44-10.61 15.56-10.61 16 0 0 4.41-3.59 8-8 8Z"/></svg></i>本页面的全部内容在 <strong><a href=https://creativecommons.org/licenses/by-sa/4.0/deed.zh>CC BY-SA 4.0</a> 和 <a href=https://github.com/zTrix/sata-license>SATA</a></strong> 协议之条款下提供，附加条款亦可能应用</span></blockquote><div class=giscus data-no-instant id=__comments></div><div id=__comments_script></div><script>var comments=document.createElement("script"),commentsTheme="slate"===document.body.dataset.mdColorScheme?"dark":"light";Object.entries({async:!0,src:"https://giscus.app/client.js",crossOrigin:"anonymous","data-repo":"damonc-top/damonc-top.github.io","data-repo-id":"R_kgDOHK_iGQ","data-category":"评论","data-category-id":"DIC_kwDOHK_iGc4COonC","data-mapping":"specific","data-term":"平面和线框着色(翻译二十一)","data-strict":"1","data-reactions-enabled":"1","data-emit-metadata":"0","data-input-position":"top","data-theme":commentsTheme,"data-lang":"zh-CN","data-loading":"lazy"}).forEach(t=>comments.setAttribute(t[0],t[1])),document.getElementById("__comments_script").replaceWith(comments)</script></article></div></div></main><script>function scrollFunction(){20<document.body.scrollTop||20<document.documentElement.scrollTop?document.getElementById("myBtn").style.display="block":document.getElementById("myBtn").style.display="none"}function topFunction(){document.body.scrollTop=0,document.documentElement.scrollTop=0}window.onscroll=function(){scrollFunction()}</script><button class=data-tip-left data-tip=回到顶部 id=myBtn onclick=topFunction()><svg class="Zi Zi--BackToTop data-tip-left"viewbox="0 0 24 24"data-tip=回到顶部 fill=currentColor height=24 width=24><path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path></svg></button><footer class=md-footer><div class="md-footer-meta md-typeset"><div class="md-footer-meta__inner md-grid"><div class=md-copyright><div class=md-copyright__highlight>Copyright © 2016 - 2024 银河揽月</div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ rel=noopener target=_blank> Material for MkDocs <div id=miitbeian></div> </a></div><div class=build_date_utc style=float:right><a href=https://github.com/damonc-top/damonc-top.github.io> 最近更新：6c2a14f, 2024-09-24 </a></div></div></div></footer></div><div class=md-dialog data-md-component=dialog><div class="md-dialog__inner md-typeset"></div></div><script id=__config type=application/json>{"base": "../..", "features": ["navigation.tabs", "navigation.instant"], "search": "../../assets/javascripts/workers/search.8e7a41fd.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script><script src=../../assets/javascripts/bundle.c15c428f.min.js></script><script src=../../extension/js/math-csr.js?math-csr></script><script src=../../assets/vendor/mathjax/es5/tex-mml-chtml.js?math-csr></script><script>"use strict";"serviceWorker"in navigator&&navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).then(function(e){console.log("PWA Registration succeeded. Scope is "+e.scope)}).catch(function(e){console.log("PWA Registration failed with "+e)})</script></body></html>

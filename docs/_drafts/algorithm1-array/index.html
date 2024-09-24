@@ -1,0 +1,782 @@
+<!doctypehtml><html class=no-js lang=zh><meta charset=utf-8><meta content=on http-equiv=x-dns-prefetch-control><link href=//www.damonc.top rel=dns-prefetch><link href=//search.www.damonc.top rel=dns-prefetch><link href=//api.github.com rel=dns-prefetch><link href=//www.google-analytics.com rel=dns-prefetch><meta content=width=device-width,initial-scale=1 name=viewport><meta content=留点什么东西也挺不错的，偶尔会在这里停留。 name=description><meta content=银河揽月 name=author><link href=https://www.damonc.top/_drafts/algorithm1-array/ rel=canonical><link href=../../favicon.ico rel=icon><meta content="mkdocs-1.4.2, mkdocs-material-8.5.11"name=generator><title>算法之数组篇 - 银河揽月</title><link href=../../assets/stylesheets/main.31645160.min.css rel=stylesheet><link href=../../assets/stylesheets/palette.2505c338.min.css rel=stylesheet><link href=../../extension/css/extra.css rel=stylesheet><link crossorigin href=https://fonts.gstatic.com rel=preconnect><link href=https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,700,700i%7CFira+Mono:400,400i,700,700i&display=fallback rel=stylesheet><style>:root{--md-text-font:"Fira Sans";--md-code-font:"Fira Mono"}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:300;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:italic;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Italic'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:700;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Mono';font-style:normal;font-weight:regular;src:local('Fira Mono'),local('FiraMono-Normal'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.svg#FiraMono) format('svg')}</style><script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script>"undefined"!=typeof __md_analytics&&__md_analytics()</script></head><body data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default dir=ltr><script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script><input autocomplete=off class=md-toggle data-md-toggle=drawer id=__drawer type=checkbox><input autocomplete=off class=md-toggle data-md-toggle=search id=__search type=checkbox><label class=md-overlay for=__drawer></label><div data-md-component=skip><a class=md-skip href=#二分查找> 跳转至 </a></div><div data-md-component=announce></div><header class=md-header data-md-component=header><nav class="md-header__inner md-grid"aria-label=页眉><a class="md-header__button md-logo"aria-label=银河揽月 data-md-component=logo href=../.. title=银河揽月> <img alt=logo src=../../images/homepage.png> </a><label class="md-header__button md-icon"for=__drawer><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg></label><div class=md-header__title data-md-component=header-title><div class=md-header__ellipsis><div class=md-header__topic><span class=md-ellipsis> 银河揽月 </span></div><div class=md-header__topic data-md-component=header-topic><span class=md-ellipsis> 算法之数组篇 </span></div></div></div><form class=md-header__option data-md-component=palette><input aria-label="Switch to dark mode"data-md-color-media="(prefers-color-scheme: light)"class=md-option data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default id=__palette_1 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to dark mode"for=__palette_2 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg></label><input aria-label="Switch to light mode"data-md-color-media="(prefers-color-scheme: dark)"class=md-option data-md-color-accent=slate data-md-color-primary=slate data-md-color-scheme=slate id=__palette_2 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to light mode"for=__palette_1 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg></label></form><label class="md-header__button md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg></label><div class=md-search data-md-component=search role=dialog><label class=md-search__overlay for=__search></label><div class=md-search__inner role=search><form class=md-search__form name=search><input aria-label=搜索 autocapitalize=off autocomplete=off autocorrect=off class=md-search__input data-md-component=search-query name=query placeholder=搜索 required spellcheck=false><label class="md-search__icon md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg></label><nav aria-label=查找 class=md-search__options><button class="md-search__icon md-icon"aria-label=清空当前内容 tabindex=-1 title=清空当前内容 type=reset><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg></button></nav></form><div class=md-search__output><div class=md-search__scrollwrap data-md-scrollfix><div class=md-search-result data-md-component=search-result><div class=md-search-result__meta>正在初始化搜索引擎</div><ol class=md-search-result__list></ol></div></div></div></div></div><div class=md-header__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div></nav></header><div class=md-container data-md-component=container><nav aria-label=标签 class=md-tabs data-md-component=tabs><div class="md-tabs__inner md-grid"><ul class=md-tabs__list><li class=md-tabs__item><a class=md-tabs__link href=../..> 首页 </a></li><li class=md-tabs__item><a class=md-tabs__link href=../../posts/unity3d/il2cpp/> Unity3D引擎 </a></li></ul></div></nav><main class=md-main data-md-component=main><div class="md-main__inner md-grid"><div class="md-sidebar md-sidebar--primary"data-md-component=sidebar data-md-type=navigation><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--primary md-nav--lifted"aria-label=导航栏 data-md-level=0><label class=md-nav__title for=__drawer><a class="md-nav__button md-logo"aria-label=银河揽月 data-md-component=logo href=../.. title=银河揽月> <img alt=logo src=../../images/homepage.png> </a> 银河揽月</label><div class=md-nav__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_1 id=__nav_1 type=checkbox> <label class=md-nav__link for=__nav_1>首页 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=首页 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_1><span class="md-nav__icon md-icon"></span> 首页</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../..> 简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/home/learn/> 记录 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2 id=__nav_2 type=checkbox> <label class=md-nav__link for=__nav_2>Unity3D引擎 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Unity3D引擎 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_2><span class="md-nav__icon md-icon"></span> Unity3D引擎</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_1 id=__nav_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_1>il2cpp <span class="md-nav__icon md-icon"></span></label> <nav aria-label=il2cpp class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_1><span class="md-nav__icon md-icon"></span> il2cpp</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/il2cpp/> il2cpp简介 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_2 id=__nav_2_2 type=checkbox> <label class=md-nav__link for=__nav_2_2>Shader <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Shader class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_2><span class="md-nav__icon md-icon"></span> Shader</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_2_1 id=__nav_2_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_2_1>翻译CatlikeCoding <span class="md-nav__icon md-icon"></span></label> <nav aria-label=翻译CatlikeCoding class=md-nav data-md-level=3><label class=md-nav__title for=__nav_2_2_1><span class="md-nav__icon md-icon"></span> 翻译CatlikeCoding</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/> Catlikecoding简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/unity_matrix_transform/> 一UnityShader变换矩阵 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/unity_shader_fundamentals/> 二UnityShader基本语法 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/unity_combine_texture/> 三UnityShader纹理融合 </a></li><li class=md-nav__item><a class=md-nav__link href=../../posts/unity3d/shader/translater/catlikecoding/unity_base_light/> 四UnityShader基础光照 </a></li></ul></nav></li></ul></nav></li></ul></nav></li></ul></nav></div></div></div><div class="md-sidebar md-sidebar--secondary"data-md-component=sidebar data-md-type=toc><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--secondary"aria-label=目录><label class=md-nav__title for=__toc><span class="md-nav__icon md-icon"></span> 目录</label><ul class=md-nav__list data-md-component=toc data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=#leetcode-704-二分查找> leetCode 704 二分查找 </a> <nav aria-label="leetCode 704 二分查找"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#思路> 思路 </a></li><li class=md-nav__item><a class=md-nav__link href=#解法> 解法 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#leetcode-35-搜索插入位置> leetCode 35 搜索插入位置 </a> <nav aria-label="leetCode 35 搜索插入位置"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#思路_1> 思路 </a></li><li class=md-nav__item><a class=md-nav__link href=#解法_1> 解法 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#leetcode-34-在排序数组中查找元素的第一个和最后一个位置> leetCode 34 在排序数组中查找元素的第一个和最后一个位置 </a> <nav aria-label="leetCode 34 在排序数组中查找元素的第一个和最后一个位置"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#思路_2> 思路 </a></li><li class=md-nav__item><a class=md-nav__link href=#解法_2> 解法 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#leetcode-69-x-的平方根> leetCode 69 x 的平方根 </a> <nav aria-label="leetCode 69 x 的平方根"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#思路_3> 思路 </a></li><li class=md-nav__item><a class=md-nav__link href=#解法_3> 解法 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#leetcode-367-有效的完全平方数> leetCode 367 有效的完全平方数 </a> <nav aria-label="leetCode 367 有效的完全平方数"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#思路_4> 思路 </a></li><li class=md-nav__item><a class=md-nav__link href=#解法_4> 解法 </a></li></ul></nav></li></ul></nav></div></div></div><div class=md-content data-md-component=content><article class="md-content__inner md-typeset"><a class="md-content__button md-icon"href=https://github.com/damonc-top/damonc-top.github.io/discussions/_drafts/algorithm1-array.md title=编辑此页> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a><p>数组是存放在连续内存空间上的相同类型数据的集合。需要两点注意的是</p><ul><li>数组下标都是从 0 开始的</li><li>数组内存空间的地址是连续的</li></ul><p>正是因为数组的在内存空间的地址是连续的，所以我们在删除或者增添元素的时候，就难免要移动其他元素的地址。数组的元素是不能删的，只能覆盖。</p><h1 id=二分查找>二分查找<a title="Permanent link"class=headerlink href=#二分查找></a></h1><h2 id=leetcode-704-二分查找>leetCode 704 二分查找<a title="Permanent link"class=headerlink href=#leetcode-704-二分查找></a></h2><p>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p><p>示例 1:</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>输入: nums = [-1,0,3,5,9,12], target = 9
+输出: 4
+解释: 9 出现在 nums 中并且下标为 4
+</code></pre></div></td></tr></table></div><p>示例 2:</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>输入: nums = [-1,0,3,5,9,12], target = 2
+输出: -1
+解释: 2 不存在 nums 中因此返回 -1
+</code></pre></div></td></tr></table></div><p>提示：</p><ol><li>你可以假设 nums 中的所有元素是不重复的。</li><li>n 将在 [1, 10000]之间。</li><li>nums 的每个元素都将在 [-9999, 9999]之间。</li></ol><h3 id=思路>思路<a title="Permanent link"class=headerlink href=#思路></a></h3><p>最简单的方案，一行代码搞定</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kd>var</span><span class=w> </span><span class=nx>search</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>,</span><span class=w> </span><span class=nx>target</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>indexOf</span><span class=p>(</span><span class=nx>target</span><span class=p>)</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+47/47 cases passed (64 ms)
+Your runtime beats 63.35 % of javascript submissions
+Your memory usage beats 54.75 % of javascript submissions (43.9 MB)
+</code></pre></div></td></tr></table></div><p>但我们还是学习一下二分查找的思路。</p><p>注意这道题目的前提是数组是<strong>有序数组</strong>，这也是使用二分查找的基础条件。</p><ol><li>定义一个区间 <code>[left, right]</code>，其中 right 为数组的最后一项下标</li><li>判断如果 <code>left <= right</code> 时，获取一次 left 到 right 的中间值 middle，这里要注意 middle 要使用 <code>Math.floor</code> 取整数。</li><li>判断如果下标为 middle 的数值 < target，则 target 在 middle 的右边，将 left 赋值为 middle + 1</li><li>判断如果下标为 middle 的数值 > target，则 target 在 middle 的左边，将 right 赋值为 middle - 1</li><li>否则如果 middle === target，直接返回 middle</li><li>循环 2-5 步骤</li><li>否则返回 -1</li></ol><h3 id=解法>解法<a title="Permanent link"class=headerlink href=#解法></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number[]} nums</span>
+<span class=cm> * @param {number} target</span>
+<span class=cm> * @return {number}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>search</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>,</span><span class=w> </span><span class=nx>target</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+
+<span class=w>  </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o><=</span><span class=w> </span><span class=nx>right</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kd>const</span><span class=w> </span><span class=nx>middle</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Math</span><span class=p>.</span><span class=nx>floor</span><span class=p>((</span><span class=nx>left</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=nx>right</span><span class=p>)</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mf>2</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>middle</span><span class=p>]</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=nx>target</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>middle</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>middle</span><span class=p>]</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>target</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>middle</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=nx>middle</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=o>-</span><span class=mf>1</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+47/47 cases passed (56 ms)
+Your runtime beats 92.97 % of javascript submissions
+Your memory usage beats 89.92 % of javascript submissions (43.8 MB)
+</code></pre></div></td></tr></table></div><p>举一反三</p><h2 id=leetcode-35-搜索插入位置>leetCode 35 搜索插入位置<a title="Permanent link"class=headerlink href=#leetcode-35-搜索插入位置></a></h2><p>给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。</p><p>请必须使用时间复杂度为 O(log n) 的算法。</p><p>示例 1:</p><p>输入: nums = [1,3,5,6], target = 5 输出: 2 示例 2:</p><p>输入: nums = [1,3,5,6], target = 2 输出: 1 示例 3:</p><p>输入: nums = [1,3,5,6], target = 7 输出: 4</p><p>提示:</p><ul><li>1 <= nums.length <= 10e4</li><li>-10e4 <= nums[i] <= 10e4</li><li>nums 为 无重复元素 的 升序 排列数组</li><li>-10e4 <= target <= 10e4</li></ul><h3 id=思路_1>思路<a title="Permanent link"class=headerlink href=#思路_1></a></h3><p>注意这道题目的前提是数组是<strong>有序数组</strong>，可以考虑使用二分法。</p><p>二分法使用完成后，要注意这 4 种情况</p><ul><li>目标值在数组所有元素之前</li><li>目标值等于数组中某一个元素</li><li>目标值插入数组中的位置</li><li>目标值在数组所有元素之后的情况</li></ul><p>其中 目标值等于数组中某一个元素 和上一题完全相同</p><p>我们只需要考虑另外 3 种情况</p><ul><li>目标值在数组所有元素之前，循环跑完后，left 为 0，right 为 -1</li><li>目标值插入数组中的位置，循环跑完后，left 为 mid + 1，right 为 mid</li><li>目标值在数组所有元素之后的情况，循环跑完后，left 为 nums.length，right 为 nums.length - 1</li></ul><p>所以 <code>return right + 1</code></p><h3 id=解法_1>解法<a title="Permanent link"class=headerlink href=#解法_1></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number[]} nums</span>
+<span class=cm> * @param {number} target</span>
+<span class=cm> * @return {number}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>searchInsert</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>,</span><span class=w> </span><span class=nx>target</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=c1>// 定义开闭区间 [left, right]</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+
+<span class=w>  </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o><=</span><span class=w> </span><span class=nx>right</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>// 定义二分中间值</span><span class=w></span>
+<span class=w>    </span><span class=nx>mid</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Math</span><span class=p>.</span><span class=nx>floor</span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=p>(</span><span class=nx>right</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>left</span><span class=p>)</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mf>2</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>target</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>mid</span><span class=p>])</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>target</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>mid</span><span class=p>])</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=nx>mid</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+64/64 cases passed (60 ms)
+Your runtime beats 67.55 % of javascript submissions
+Your memory usage beats 36.2 % of javascript submissions (41.2 MB)
+</code></pre></div></td></tr></table></div><h2 id=leetcode-34-在排序数组中查找元素的第一个和最后一个位置>leetCode 34 在排序数组中查找元素的第一个和最后一个位置<a title="Permanent link"class=headerlink href=#leetcode-34-在排序数组中查找元素的第一个和最后一个位置></a></h2><p>给你一个按照非递减顺序排列的整数数组 nums，和一个目标值 target。请你找出给定目标值在数组中的开始位置和结束位置。</p><p>如果数组中不存在目标值 target，返回 [-1, -1]。</p><p>你必须设计并实现时间复杂度为 O(log n) 的算法解决此问题。</p><p>示例 1：</p><p>输入：nums = [5,7,7,8,8,10], target = 8 输出：[3,4] 示例 2：</p><p>输入：nums = [5,7,7,8,8,10], target = 6 输出：[-1,-1] 示例 3：</p><p>输入：nums = [], target = 0 输出：[-1,-1]</p><p>提示：</p><ul><li>0 <= nums.length <= 10e5</li><li>-10e9 <= nums[i] <= 10e9</li><li>nums 是一个非递减数组</li><li>-10e9 <= target <= 10e9</li></ul><h3 id=思路_2>思路<a title="Permanent link"class=headerlink href=#思路_2></a></h3><ol><li>首先使用二分法得到 target 的位置</li><li>寻找 target 左右两边是否有相等的值</li></ol><h3 id=解法_2>解法<a title="Permanent link"class=headerlink href=#解法_2></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number[]} nums</span>
+<span class=cm> * @param {number} target</span>
+<span class=cm> * @return {number[]}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>searchRange</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>,</span><span class=w> </span><span class=nx>target</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=c1>// 二分法</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+
+<span class=w>  </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o><=</span><span class=w> </span><span class=nx>right</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kd>const</span><span class=w> </span><span class=nx>middle</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Math</span><span class=p>.</span><span class=nx>floor</span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=p>(</span><span class=nx>right</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>left</span><span class=p>)</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mf>2</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>target</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>middle</span><span class=p>])</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>middle</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>target</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>middle</span><span class=p>])</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>middle</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=c1>// 最后再寻找左右边界</span><span class=w></span>
+<span class=w>      </span><span class=kd>let</span><span class=w> </span><span class=nx>leftMove</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>      </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>middle</span><span class=p>]</span><span class=w> </span><span class=o>===</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>middle</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>leftMove</span><span class=p>])</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=nx>leftMove</span><span class=o>++</span><span class=w></span>
+<span class=w>      </span><span class=p>}</span><span class=w></span>
+<span class=w>      </span><span class=kd>let</span><span class=w> </span><span class=nx>rightMove</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>      </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>middle</span><span class=p>]</span><span class=w> </span><span class=o>===</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>middle</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=nx>rightMove</span><span class=p>])</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=nx>rightMove</span><span class=o>++</span><span class=w></span>
+<span class=w>      </span><span class=p>}</span><span class=w></span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=p>[</span><span class=nx>middle</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>leftMove</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=p>,</span><span class=w> </span><span class=nx>middle</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=nx>rightMove</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=p>]</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=p>[</span><span class=o>-</span><span class=mf>1</span><span class=p>,</span><span class=w> </span><span class=o>-</span><span class=mf>1</span><span class=p>]</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+88/88 cases passed (48 ms)
+Your runtime beats 98.98 % of javascript submissions
+Your memory usage beats 79.4 % of javascript submissions (41.5 MB)
+</code></pre></div></td></tr></table></div><h2 id=leetcode-69-x-的平方根>leetCode 69 x 的平方根<a title="Permanent link"class=headerlink href=#leetcode-69-x-的平方根></a></h2><p>给你一个非负整数 x ，计算并返回 x 的 算术平方根 。</p><p>由于返回类型是整数，结果只保留 整数部分 ，小数部分将被 舍去 。</p><p>注意：不允许使用任何内置指数函数和算符，例如 pow(x, 0.5) 或者 x ** 0.5 。</p><p>示例 1：</p><p>输入：x = 4 输出：2 示例 2：</p><p>输入：x = 8 输出：2 解释：8 的算术平方根是 2.82842..., 由于返回类型是整数，小数部分将被舍去。</p><p>提示：</p><p>0 <= x <= 2^31 - 1</p><h3 id=思路_3>思路<a title="Permanent link"class=headerlink href=#思路_3></a></h3><p>我们知道大于1的数字的平方根大于这个数的一半，所以我们在定义二分法区间的时候将 right 定义为 <code>x / 2</code>，当然这里定义为 x 也是可以的，仅仅多一次循环而已</p><p>每次循环取 left 到 right 的中间值 mid，计算出 mid 的平方</p><p>如果 mid 的平方 大于 x，则 mid 过大，可以将边界 right 赋值为 mid - 1</p><p>如果 mid 的平方 小于 x，则 mid 过小，可以将边界 left 赋值为 mid + 1</p><p>最后返回 left - 1 的值，因为如果没有完全平方的话，最后一次循环会将 left + 1 再退出 while，所以这里 - 1</p><h3 id=解法_3>解法<a title="Permanent link"class=headerlink href=#解法_3></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number} x</span>
+<span class=cm> * @return {number}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>mySqrt</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>x</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>x</span><span class=w> </span><span class=o>===</span><span class=w> </span><span class=mf>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=c1>// 大于1的数字的平方根大于这个数的一半</span><span class=w></span>
+<span class=w>  </span><span class=c1>// 所以我们在定义二分法区间的时候将 right 定义为 x / 2</span><span class=w></span>
+<span class=w>  </span><span class=c1>// 当然这里定义为 x 也是可以的，仅仅多一次循环而已</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>x</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mf>2</span><span class=w></span>
+<span class=w>  </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o><=</span><span class=w> </span><span class=nx>right</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kd>const</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Math</span><span class=p>.</span><span class=nx>floor</span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=p>(</span><span class=nx>right</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>left</span><span class=p>)</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mf>2</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=kd>const</span><span class=w> </span><span class=nx>r</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=nx>mid</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=nx>x</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=c1>// 过大</span><span class=w></span>
+<span class=w>      </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>x</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=c1>// 过小</span><span class=w></span>
+<span class=w>      </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=nx>mid</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+1017/1017 cases passed (64 ms)
+Your runtime beats 89.63 % of javascript submissions
+Your memory usage beats 29.38 % of javascript submissions (42.6 MB)
+</code></pre></div></td></tr></table></div><h2 id=leetcode-367-有效的完全平方数>leetCode 367 有效的完全平方数<a title="Permanent link"class=headerlink href=#leetcode-367-有效的完全平方数></a></h2><p>给定一个 正整数 num ，编写一个函数，如果 num 是一个完全平方数，则返回 true ，否则返回 false 。</p><p>进阶：不要 使用任何内置的库函数，如 sqrt 。</p><p>示例 1：</p><p>输入：num = 16 输出：true 示例 2：</p><p>输入：num = 14 输出：false</p><p>提示：</p><p>1 <= num <= 2^31 - 1</p><h3 id=思路_4>思路<a title="Permanent link"class=headerlink href=#思路_4></a></h3><p>做过上一题，这一题就简单多了，直接二分法。</p><h3 id=解法_4>解法<a title="Permanent link"class=headerlink href=#解法_4></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number} num</span>
+<span class=cm> * @return {boolean}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>isPerfectSquare</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>num</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>num</span><span class=w> </span><span class=o>===</span><span class=w> </span><span class=mf>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=kc>true</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>num</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mf>2</span><span class=w></span>
+<span class=w>  </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o><=</span><span class=w> </span><span class=nx>right</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kd>const</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Math</span><span class=p>.</span><span class=nx>floor</span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=p>(</span><span class=nx>right</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>left</span><span class=p>)</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mf>2</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=kd>const</span><span class=w> </span><span class=nx>r</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=nx>mid</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=nx>num</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>num</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>mid</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=kc>true</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=kc>false</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+70/70 cases passed (56 ms)
+Your runtime beats 84.94 % of javascript submissions
+Your memory usage beats 69.41 % of javascript submissions (40.8 MB)
+</code></pre></div></td></tr></table></div><h1 id=移除元素双指针法>移除元素（双指针法）<a title="Permanent link"class=headerlink href=#移除元素双指针法></a></h1><h2 id=leetcode-27-移除元素>leetCode 27 移除元素<a title="Permanent link"class=headerlink href=#leetcode-27-移除元素></a></h2><p>给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。</p><p>不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。</p><p>元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</p><p>说明:</p><p>为什么返回数值是整数，但输出的答案是数组呢?</p><p>请注意，输入数组是以「引用」方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。</p><p>你可以想象内部操作如下:</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span></pre></div></td><td class=code><div><pre><span></span><code>// nums 是以“引用”方式传递的。也就是说，不对实参作任何拷贝
+int len = removeElement(nums, val);
+
+// 在函数里修改输入数组对于调用者是可见的。
+// 根据你的函数返回的长度, 它会打印出数组中 该长度范围内 的所有元素。
+for (int i = 0; i < len; i++) {
+    print(nums[i]);
+}
+</code></pre></div></td></tr></table></div><p>示例 1：</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>输入：nums = [3,2,2,3], val = 3
+输出：2, nums = [2,2]
+解释：函数应该返回新的长度 2, 并且 nums 中的前两个元素均为 2。你不需要考虑数组中超出新长度后面的元素。例如，函数返回的新长度为 2 ，而 nums = [2,2,3,3] 或 nums = [2,2,0,0]，也会被视作正确答案。
+</code></pre></div></td></tr></table></div><p>示例 2：</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code>输入：nums = [0,1,2,2,3,0,4,2], val = 2
+输出：5, nums = [0,1,4,0,3]
+解释：函数应该返回新的长度 5, 并且 nums 中的前五个元素为 0, 1, 3, 0, 4。注意这五个元素可为任意顺序。你不需要考虑数组中超出新长度后面的元素。
+</code></pre></div></td></tr></table></div><p>提示：</p><p>0 <= nums.length <= 100 0 <= nums[i] <= 50 0 <= val <= 100</p><h3 id=思路_5>思路<a title="Permanent link"class=headerlink href=#思路_5></a></h3><p>数组的元素在内存地址中是连续的，不能单独删除数组中的某个元素，只能覆盖。</p><p>双指针法（快慢指针法）在数组和链表的操作中是非常常见的，很多考察数组、链表、字符串等操作的面试题，都使用双指针法。</p><h3 id=解法_5>解法<a title="Permanent link"class=headerlink href=#解法_5></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>// @lc code=start</span><span class=w></span>
+<span class=cm>/**</span>
+<span class=cm> * @param {number[]} nums</span>
+<span class=cm> * @param {number} val</span>
+<span class=cm> * @return {number}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>removeElement</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=p>(</span><span class=nx>nums</span><span class=p>,</span><span class=w> </span><span class=nx>val</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>slow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w> </span><span class=c1>// 慢指针</span><span class=w></span>
+<span class=w>  </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=c1>// 快指针遍历</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>fast</span><span class=p>]</span><span class=w> </span><span class=o>!==</span><span class=w> </span><span class=nx>val</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=c1>// 非移除元素</span><span class=w></span>
+<span class=w>      </span><span class=nx>nums</span><span class=p>[</span><span class=nx>slow</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>fast</span><span class=p>]</span><span class=w> </span><span class=c1>// 赋值给慢指针的索引值</span><span class=w></span>
+<span class=w>      </span><span class=nx>slow</span><span class=o>++</span><span class=w> </span><span class=c1>// 慢指针右移</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>slow</span><span class=w> </span><span class=c1>// 返回慢指针，移除元素后的数组长度</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+113/113 cases passed (60 ms)
+Your runtime beats 71.31 % of javascript submissions
+Your memory usage beats 86.34 % of javascript submissions (41 MB)
+</code></pre></div></td></tr></table></div><h2 id=leetcode-283-移动零>leetCode 283 移动零<a title="Permanent link"class=headerlink href=#leetcode-283-移动零></a></h2><p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p><p>请注意 ，必须在不复制数组的情况下原地对数组进行操作。</p><p>示例 1:</p><p>输入: nums = [0,1,0,3,12] 输出: [1,3,12,0,0] 示例 2:</p><p>输入: nums = [0] 输出: [0]</p><p>提示:</p><p>1 <= nums.length <= 10^4 -2^31 <= nums[i] <= 2^31 - 1</p><h3 id=思路_6>思路<a title="Permanent link"class=headerlink href=#思路_6></a></h3><p>方法一，使用快慢指针，快指针遇到非0元素时，将元素的值赋给慢指针，慢指针 + 1，最后再对末尾的0进行操作</p><p>方法二，使用快慢指针，快指针遇到非0元素时，直接进行交换，慢指针 + 1，这样就将0直接交换到了最后，一次循环搞定</p><h3 id=解法_6>解法<a title="Permanent link"class=headerlink href=#解法_6></a></h3><p>方法一</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number[]} nums</span>
+<span class=cm> * @return {void} Do not return anything, modify nums in-place instead.</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>moveZeroes</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>slow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>fast</span><span class=p>]</span><span class=w> </span><span class=o>!==</span><span class=w> </span><span class=mf>0</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>nums</span><span class=p>[</span><span class=nx>slow</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>fast</span><span class=p>]</span><span class=w></span>
+<span class=w>      </span><span class=nx>slow</span><span class=o>++</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>slow</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=nx>nums</span><span class=p>[</span><span class=nx>i</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+74/74 cases passed (72 ms)
+Your runtime beats 98.08 % of javascript submissions
+Your memory usage beats 59.63 % of javascript submissions (45.8 MB)
+</code></pre></div></td></tr></table></div><p>方法二</p><p>也可以优化为，直接交换元素，这里用了 es2015 里的解构语法</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number[]} nums</span>
+<span class=cm> * @return {void} Do not return anything, modify nums in-place instead.</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>moveZeroes</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>slow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>fast</span><span class=p>]</span><span class=w> </span><span class=o>!==</span><span class=w> </span><span class=mf>0</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=p>[</span><span class=nx>nums</span><span class=p>[</span><span class=nx>fast</span><span class=p>],</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>slow</span><span class=p>]]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>[</span><span class=nx>nums</span><span class=p>[</span><span class=nx>slow</span><span class=p>],</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>fast</span><span class=p>]]</span><span class=w></span>
+<span class=w>      </span><span class=nx>slow</span><span class=o>++</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+74/74 cases passed (64 ms)
+Your runtime beats 99.88 % of javascript submissions
+Your memory usage beats 38.6 % of javascript submissions (45.9 MB)
+</code></pre></div></td></tr></table></div><h2 id=leetcode-844-比较含退格的字符串>leetCode 844 比较含退格的字符串<a title="Permanent link"class=headerlink href=#leetcode-844-比较含退格的字符串></a></h2><p>给定 s 和 t 两个字符串，当它们分别被输入到空白的文本编辑器后，如果两者相等，返回 true 。# 代表退格字符。</p><p>注意：如果对空文本输入退格字符，文本继续为空。</p><p>示例 1：</p><p>输入：s = "ab#c", t = "ad#c" 输出：true 解释：s 和 t 都会变成 "ac"。 示例 2：</p><p>输入：s = "ab##", t = "c#d#" 输出：true 解释：s 和 t 都会变成 ""。 示例 3：</p><p>输入：s = "a#c", t = "b" 输出：false 解释：s 会变成 "c"，但 t 仍然是 "b"。</p><p>提示：</p><p>1 <= s.length, t.length <= 200 s 和 t 只含有小写字母以及字符 '#'</p><h3 id=思路_7>思路<a title="Permanent link"class=headerlink href=#思路_7></a></h3><p>使用双指针，快指针遍历，慢指针生成最后的数组。</p><p>快指针遇到退格符号后，慢指针回退一次</p><p>需要注意不能直接操作字符串，需要将字符串先 split 为数组后操作</p><h3 id=解法_7>解法<a title="Permanent link"class=headerlink href=#解法_7></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {string} s</span>
+<span class=cm> * @param {string} t</span>
+<span class=cm> * @return {boolean}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>backspaceCompare</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>s</span><span class=p>,</span><span class=w> </span><span class=nx>t</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>processStr</span><span class=p>(</span><span class=nx>s</span><span class=p>)</span><span class=w> </span><span class=o>===</span><span class=w> </span><span class=nx>processStr</span><span class=p>(</span><span class=nx>t</span><span class=p>))</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=kc>true</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=kc>false</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kd>function</span><span class=w> </span><span class=nx>processStr</span><span class=p>(</span><span class=nx>str</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=kd>const</span><span class=w> </span><span class=nx>strArr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>str</span><span class=p>.</span><span class=nx>split</span><span class=p>(</span><span class=s1>''</span><span class=p>)</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>slow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>strArr</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>strArr</span><span class=p>[</span><span class=nx>fast</span><span class=p>]</span><span class=w> </span><span class=o>!==</span><span class=w> </span><span class=s1>'#'</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>strArr</span><span class=p>[</span><span class=nx>slow</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>strArr</span><span class=p>[</span><span class=nx>fast</span><span class=p>]</span><span class=w></span>
+<span class=w>      </span><span class=nx>slow</span><span class=o>++</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>slow</span><span class=w> </span><span class=o>!==</span><span class=w> </span><span class=mf>0</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=nx>slow</span><span class=o>--</span><span class=w></span>
+<span class=w>      </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>strArr</span><span class=p>.</span><span class=nx>slice</span><span class=p>(</span><span class=mf>0</span><span class=p>,</span><span class=w> </span><span class=nx>slow</span><span class=p>).</span><span class=nx>join</span><span class=p>(</span><span class=s1>''</span><span class=p>)</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+114/114 cases passed (60 ms)
+Your runtime beats 80.48 % of javascript submissions
+Your memory usage beats 86.45 % of javascript submissions (41.2 MB)
+</code></pre></div></td></tr></table></div><h2 id=leetcode-977-有序数组的平方>leetCode 977 有序数组的平方<a title="Permanent link"class=headerlink href=#leetcode-977-有序数组的平方></a></h2><p>给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。</p><p>示例 1：</p><p>输入：nums = [-4,-1,0,3,10] 输出：[0,1,9,16,100] 解释：平方后，数组变为 [16,1,0,9,100] 排序后，数组变为 [0,1,9,16,100] 示例 2：</p><p>输入：nums = [-7,-3,2,3,11] 输出：[4,9,9,49,121]</p><p>提示：</p><p>1 <= nums.length <= 10^4 -10^4 <= nums[i] <= 10^4 nums 已按 非递减顺序 排序</p><h3 id=思路_8>思路<a title="Permanent link"class=headerlink href=#思路_8></a></h3><p><img alt src=https://gw.alicdn.com/imgextra/i1/O1CN01ilkNrm1yIF01zYlLZ_!!6000000006555-1-tps-614-386.gif></p><p>取原数组两端，作为2个指针</p><p>使用 while 判断 left <= right 时</p><p>对比 left 和 right 大小，取大数的平方，存入一个新数组</p><h3 id=解法_8>解法<a title="Permanent link"class=headerlink href=#解法_8></a></h3><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number[]} nums</span>
+<span class=cm> * @return {number[]}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>sortedSquares</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=p>(</span><span class=nx>nums</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=c1>// 高级 api</span><span class=w></span>
+<span class=w>  </span><span class=c1>// return nums.map((item) => item * item).sort((a, b) => a - b)</span><span class=w></span>
+
+<span class=w>  </span><span class=c1>// 双指针</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>  </span><span class=kd>const</span><span class=w> </span><span class=nx>result</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>[]</span><span class=w></span>
+<span class=w>  </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>left</span><span class=w> </span><span class=o><=</span><span class=w> </span><span class=nx>right</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nb>Math</span><span class=p>.</span><span class=nx>abs</span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>left</span><span class=p>])</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nb>Math</span><span class=p>.</span><span class=nx>abs</span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>right</span><span class=p>]))</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>result</span><span class=p>.</span><span class=nx>unshift</span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>right</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>right</span><span class=p>])</span><span class=w></span>
+<span class=w>      </span><span class=nx>right</span><span class=o>--</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>result</span><span class=p>.</span><span class=nx>unshift</span><span class=p>(</span><span class=nx>nums</span><span class=p>[</span><span class=nx>left</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>left</span><span class=p>])</span><span class=w></span>
+<span class=w>      </span><span class=nx>left</span><span class=o>++</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>result</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+137/137 cases passed (152 ms)
+Your runtime beats 15.69 % of javascript submissions
+Your memory usage beats 35.91 % of javascript submissions (47.5 MB)
+</code></pre></div></td></tr></table></div><h1 id=滑动区间双指针>滑动区间（双指针）<a title="Permanent link"class=headerlink href=#滑动区间双指针></a></h1><h2 id=leetcode-209-长度最小的子数组>leetCode 209 长度最小的子数组<a title="Permanent link"class=headerlink href=#leetcode-209-长度最小的子数组></a></h2><p>给定一个含有 n 个正整数的数组和一个正整数 target 。</p><p>找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。</p><p>示例 1：</p><p>输入：target = 7, nums = [2,3,1,2,4,3] 输出：2 解释：子数组 [4,3] 是该条件下的长度最小的子数组。 示例 2：</p><p>输入：target = 4, nums = [1,4,4] 输出：1 示例 3：</p><p>输入：target = 11, nums = [1,1,1,1,1,1,1,1] 输出：0</p><p>提示：</p><p>1 <= target <= 10^9 1 <= nums.length <= 10^5 1 <= nums[i] <= 10^5</p><h2 id=思路_9>思路<a title="Permanent link"class=headerlink href=#思路_9></a></h2><p>使用双指针，滑动窗口的思路</p><p><img alt src=https://gw.alicdn.com/imgextra/i2/O1CN01bpmyGx1SdFSgBYuBB_!!6000000002269-1-tps-558-432.gif></p><ol><li>快指针正常遍历</li><li>累加快指针的值</li><li>判断累加值是否大于等于 target，获取子串的长度</li><li>累加值减去慢指针的值</li><li>慢指针 + 1</li><li>循环 3-5</li><li>循环 1-6</li></ol><h2 id=解法_9>解法<a title="Permanent link"class=headerlink href=#解法_9></a></h2><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number} target</span>
+<span class=cm> * @param {number[]} nums</span>
+<span class=cm> * @return {number}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>minSubArrayLen</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>target</span><span class=p>,</span><span class=w> </span><span class=nx>nums</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=c1>// 双指针滑动区间</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>slow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w> </span><span class=c1>// 滑动窗口的起始位置</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>sum</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w> </span><span class=c1>// 滑动窗口数值之和</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>subLength</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w> </span><span class=c1>// 滑动窗口的长度</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>result</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w> </span><span class=c1>// 最终结果</span><span class=w></span>
+<span class=w>  </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span><span class=w> </span><span class=nx>fast</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>// fast 为滑动窗口的终点位置</span><span class=w></span>
+<span class=w>    </span><span class=nx>sum</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>fast</span><span class=p>]</span><span class=w></span>
+<span class=w>    </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>sum</span><span class=w> </span><span class=o>>=</span><span class=w> </span><span class=nx>target</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=c1>// 如果满足条件，寻找最小的子序列</span><span class=w></span>
+<span class=w>      </span><span class=nx>subLength</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>fast</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>slow</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>      </span><span class=nx>result</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Math</span><span class=p>.</span><span class=nx>min</span><span class=p>(</span><span class=nx>result</span><span class=p>,</span><span class=w> </span><span class=nx>subLength</span><span class=p>)</span><span class=w></span>
+<span class=w>      </span><span class=nx>sum</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=nx>nums</span><span class=p>[</span><span class=nx>slow</span><span class=p>]</span><span class=w></span>
+<span class=w>      </span><span class=nx>slow</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>result</span><span class=w> </span><span class=o>===</span><span class=w> </span><span class=nx>nums</span><span class=p>.</span><span class=nx>length</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=mf>0</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=nx>result</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+20/20 cases passed (68 ms)
+Your runtime beats 64.23 % of javascript submissions
+Your memory usage beats 77.99 % of javascript submissions (45.1 MB)
+</code></pre></div></td></tr></table></div><h2 id=leetcode-904-水果成篮>leetCode 904 水果成篮<a title="Permanent link"class=headerlink href=#leetcode-904-水果成篮></a></h2><p>你正在探访一家农场，农场从左到右种植了一排果树。这些树用一个整数数组 fruits 表示，其中 fruits[i] 是第 i 棵树上的水果 种类 。</p><p>你想要尽可能多地收集水果。然而，农场的主人设定了一些严格的规矩，你必须按照要求采摘水果：</p><p>你只有 两个 篮子，并且每个篮子只能装 单一类型 的水果。每个篮子能够装的水果总量没有限制。 你可以选择任意一棵树开始采摘，你必须从 每棵 树（包括开始采摘的树）上 恰好摘一个水果 。采摘的水果应当符合篮子中的水果类型。每采摘一次，你将会向右移动到下一棵树，并继续采摘。 一旦你走到某棵树前，但水果不符合篮子的水果类型，那么就必须停止采摘。 给你一个整数数组 fruits ，返回你可以收集的水果的 最大 数目。</p><p>示例 1：</p><p>输入：fruits = [1,2,1] 输出：3 解释：可以采摘全部 3 棵树。 示例 2：</p><p>输入：fruits = [0,1,2,2] 输出：3 解释：可以采摘 [1,2,2] 这三棵树。 如果从第一棵树开始采摘，则只能采摘 [0,1] 这两棵树。 示例 3：</p><p>输入：fruits = [1,2,3,2,2] 输出：4 解释：可以采摘 [2,3,2,2] 这四棵树。 如果从第一棵树开始采摘，则只能采摘 [1,2] 这两棵树。 示例 4：</p><p>输入：fruits = [3,3,3,1,2,1,1,2,3,3,4] 输出：5 解释：可以采摘 [1,2,1,1,2] 这五棵树。</p><p>提示：</p><p>1 <= fruits.length <= 10^5 0 <= fruits[i] < fruits.length</p><h2 id=思路_10>思路<a title="Permanent link"class=headerlink href=#思路_10></a></h2><p>我们可以使用滑动窗口解决本题，<code>left</code> 和 <code>right</code> 分别表示满足要求的窗口的左右边界，同时我们使用哈希表存储这个窗口内的数以及出现的次数。</p><p>我们每次将 <code>right</code> 移动一个位置，并将 <code>fruits[right]</code> 加入哈希表。如果此时哈希表不满足要求（即哈希表中出现超过两个键值对），那么我们需要不断移动 <code>left</code>，并将 <code>fruits[left]</code> 从哈希表中移除，直到哈希表满足要求为止。</p><p>需要注意的是，将 <code>fruits[left]</code> 从哈希表中移除的时候，如果 <code>fruits[left]</code> 在哈希表中的出现次数减少为 <code>0</code>，需要将对应的键值对从哈希表中移除。</p><h2 id=解法_10>解法<a title="Permanent link"class=headerlink href=#解法_10></a></h2><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number[]} fruits</span>
+<span class=cm> * @return {number}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>totalFruit</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=p>(</span><span class=nx>fruits</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=c1>// 我们可以使用滑动窗口解决本题，left 和 right 分别表示满足要求的窗口的左右边界，同时我们使用哈希表存储这个窗口内的数以及出现的次数。</span><span class=w></span>
+
+<span class=w>  </span><span class=c1>// 我们每次将 right 移动一个位置，并将 fruits[right] 加入哈希表。如果此时哈希表不满足要求（即哈希表中出现超过两个键值对），那么我们需要不断移动 left，并将 fruits[left] 从哈希表中移除，直到哈希表满足要求为止。</span><span class=w></span>
+
+<span class=w>  </span><span class=c1>// 需要注意的是，将 fruits[left] 从哈希表中移除的时候，如果 fruits[left] 在哈希表中的出现次数减少为 0，需要将对应的键值对从哈希表中移除。</span><span class=w></span>
+
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>res</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+
+<span class=w>  </span><span class=kd>const</span><span class=w> </span><span class=nx>cateObj</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>{}</span><span class=w></span>
+
+<span class=w>  </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=p>;</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>fruits</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span><span class=w> </span><span class=nx>right</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=nx>cateObj</span><span class=p>[</span><span class=nx>fruits</span><span class=p>[</span><span class=nx>right</span><span class=p>]]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=nx>cateObj</span><span class=p>[</span><span class=nx>fruits</span><span class=p>[</span><span class=nx>right</span><span class=p>]]</span><span class=w> </span><span class=o>||</span><span class=w> </span><span class=mf>0</span><span class=p>)</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nb>Object</span><span class=p>.</span><span class=nx>keys</span><span class=p>(</span><span class=nx>cateObj</span><span class=p>).</span><span class=nx>length</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=mf>2</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>cateObj</span><span class=p>[</span><span class=nx>fruits</span><span class=p>[</span><span class=nx>left</span><span class=p>]]</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>      </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>cateObj</span><span class=p>[</span><span class=nx>fruits</span><span class=p>[</span><span class=nx>left</span><span class=p>]]</span><span class=w> </span><span class=o>===</span><span class=w> </span><span class=mf>0</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=ow>delete</span><span class=w> </span><span class=nx>cateObj</span><span class=p>[</span><span class=nx>fruits</span><span class=p>[</span><span class=nx>left</span><span class=p>]]</span><span class=w></span>
+<span class=w>      </span><span class=p>}</span><span class=w></span>
+<span class=w>      </span><span class=nx>left</span><span class=o>++</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=nx>res</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Math</span><span class=p>.</span><span class=nx>max</span><span class=p>(</span><span class=nx>res</span><span class=p>,</span><span class=w> </span><span class=nx>right</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>left</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>1</span><span class=p>)</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>res</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+91/91 cases passed (396 ms)
+Your runtime beats 8.35 % of javascript submissions
+Your memory usage beats 5.85 % of javascript submissions (56.7 MB)
+</code></pre></div></td></tr></table></div><h1 id=螺旋矩阵>螺旋矩阵<a title="Permanent link"class=headerlink href=#螺旋矩阵></a></h1><h2 id=leetcode>leetCode<a title="Permanent link"class=headerlink href=#leetcode></a></h2><p>给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。</p><p>示例 1：</p><p><img alt src=https://gw.alicdn.com/imgextra/i4/O1CN01HyfCt21Q222qwT65l_!!6000000001917-2-tps-242-242.png></p><p>输入：n = 3 输出：[[1,2,3],[8,9,4],[7,6,5]] 示例 2：</p><p>输入：n = 1 输出：[[1]]</p><p>提示：</p><p>1 <= n <= 20</p><h2 id=思路_11>思路<a title="Permanent link"class=headerlink href=#思路_11></a></h2><p>最外层用 while 进行圈数循环，然后沿着各个边进行循环，填写相应的值</p><h2 id=解法_11>解法<a title="Permanent link"class=headerlink href=#解法_11></a></h2><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span>
+<span class=normal>32</span>
+<span class=normal>33</span>
+<span class=normal>34</span>
+<span class=normal>35</span>
+<span class=normal>36</span>
+<span class=normal>37</span>
+<span class=normal>38</span>
+<span class=normal>39</span>
+<span class=normal>40</span>
+<span class=normal>41</span>
+<span class=normal>42</span>
+<span class=normal>43</span>
+<span class=normal>44</span>
+<span class=normal>45</span>
+<span class=normal>46</span>
+<span class=normal>47</span>
+<span class=normal>48</span>
+<span class=normal>49</span>
+<span class=normal>50</span>
+<span class=normal>51</span>
+<span class=normal>52</span>
+<span class=normal>53</span>
+<span class=normal>54</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cm>/**</span>
+<span class=cm> * @param {number} n</span>
+<span class=cm> * @return {number[][]}</span>
+<span class=cm> */</span><span class=w></span>
+<span class=kd>var</span><span class=w> </span><span class=nx>generateMatrix</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kd>function</span><span class=w> </span><span class=p>(</span><span class=nx>n</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>loop</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>startX</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>startY</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>offset</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>count</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+<span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=w></span>
+
+<span class=w>  </span><span class=c1>// 初始化二位数组</span><span class=w></span>
+<span class=w>  </span><span class=kd>const</span><span class=w> </span><span class=nx>res</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>[]</span><span class=w></span>
+<span class=w>  </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>n</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kd>const</span><span class=w> </span><span class=nx>temp</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>[]</span><span class=w></span>
+<span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kd>let</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0</span><span class=p>;</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>n</span><span class=p>;</span><span class=w> </span><span class=nx>j</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>temp</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=mf>0</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=nx>res</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=nx>temp</span><span class=p>)</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+
+<span class=w>  </span><span class=c1>// 旋转的圈数</span><span class=w></span>
+<span class=w>  </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=nx>loop</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mf>2</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>// 四条边进行循环</span><span class=w></span>
+<span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=nx>j</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>startY</span><span class=p>;</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>offset</span><span class=p>;</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>res</span><span class=p>[</span><span class=nx>startX</span><span class=p>][</span><span class=nx>j</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>count</span><span class=w></span>
+<span class=w>      </span><span class=nx>count</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=nx>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>startX</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=nx>offset</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>res</span><span class=p>[</span><span class=nx>i</span><span class=p>][</span><span class=nx>j</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>count</span><span class=w></span>
+<span class=w>      </span><span class=nx>count</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(;</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=nx>startY</span><span class=p>;</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=mf>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>res</span><span class=p>[</span><span class=nx>i</span><span class=p>][</span><span class=nx>j</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>count</span><span class=w></span>
+<span class=w>      </span><span class=nx>count</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(;</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=nx>startX</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=mf>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>      </span><span class=nx>res</span><span class=p>[</span><span class=nx>i</span><span class=p>][</span><span class=nx>j</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>count</span><span class=w></span>
+<span class=w>      </span><span class=nx>count</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=nx>startX</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=nx>startY</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=nx>offset</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>    </span><span class=nx>loop</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mf>1</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+
+<span class=w>  </span><span class=c1>// 奇数有个中心值</span><span class=w></span>
+<span class=w>  </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=nx>n</span><span class=w> </span><span class=o>%</span><span class=w> </span><span class=mf>2</span><span class=w> </span><span class=o>===</span><span class=w> </span><span class=mf>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=nx>res</span><span class=p>[</span><span class=nx>i</span><span class=p>][</span><span class=nx>j</span><span class=p>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nx>count</span><span class=w></span>
+<span class=w>  </span><span class=p>}</span><span class=w></span>
+<span class=w>  </span><span class=k>return</span><span class=w> </span><span class=nx>res</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code>Accepted
+20/20 cases passed (52 ms)
+Your runtime beats 95.38 % of javascript submissions
+Your memory usage beats 89.85 % of javascript submissions (41 MB)
+</code></pre></div></td></tr></table></div><hr><blockquote class=page-copyright><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4Z"/></svg></i>本页面最近更新：</span><span class=facts_modified></span>，<a class=edit_history>更新历史</a><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg></i>发现错误？ <a class=page_edit_url href=https://github.com/damonc-top/damonc-top.github.io/discussions/_drafts/algorithm1-array.md title=编辑此页>在 GitHub 评论指正！</a></span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7Z"/></svg></i>本文作者：</span><span class=page_contributors>银河揽月</span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M10.08 10.86c.05-.33.16-.62.3-.86.3-.56.81-.85 1.5-.86.45 0 .86.2 1.15.49.28.31.47.74.47 1.17h1.8c-.02-.47-.11-.9-.3-1.3-.15-.38-.38-.72-.68-1-1.45-1.34-4.14-1.15-5.37.37-1.29 1.67-1.32 4.59-.01 6.26 1.21 1.49 3.86 1.7 5.3.37.31-.25.56-.56.76-.92.16-.36.27-.74.28-1.15H13.5c0 .21-.07.4-.16.57-.09.19-.21.34-.34.47-.33.26-.72.4-1.14.4-.36-.01-.66-.08-.89-.23a1.41 1.41 0 0 1-.59-.64c-.5-.9-.42-2.15-.3-3.14M12 2C6.5 2 2 6.5 2 12c.53 13.27 19.5 13.26 20 0 0-5.5-4.5-10-10-10m0 18c-4.41 0-8-3.59-8-8 .44-10.61 15.56-10.61 16 0 0 4.41-3.59 8-8 8Z"/></svg></i>本页面的全部内容在 <strong><a href=https://creativecommons.org/licenses/by-sa/4.0/deed.zh>CC BY-SA 4.0</a> 和 <a href=https://github.com/zTrix/sata-license>SATA</a></strong> 协议之条款下提供，附加条款亦可能应用</span></blockquote><div class=giscus data-no-instant id=__comments></div><div id=__comments_script></div><script>var comments=document.createElement("script"),commentsTheme="slate"===document.body.dataset.mdColorScheme?"dark":"light";Object.entries({async:!0,src:"https://giscus.app/client.js",crossOrigin:"anonymous","data-repo":"damonc-top/damonc-top.github.io","data-repo-id":"R_kgDOHK_iGQ","data-category":"评论","data-category-id":"DIC_kwDOHK_iGc4COonC","data-mapping":"specific","data-term":"算法之数组篇","data-strict":"1","data-reactions-enabled":"1","data-emit-metadata":"0","data-input-position":"top","data-theme":commentsTheme,"data-lang":"zh-CN","data-loading":"lazy"}).forEach(t=>comments.setAttribute(t[0],t[1])),document.getElementById("__comments_script").replaceWith(comments)</script></article></div></div></main><script>function scrollFunction(){20<document.body.scrollTop||20<document.documentElement.scrollTop?document.getElementById("myBtn").style.display="block":document.getElementById("myBtn").style.display="none"}function topFunction(){document.body.scrollTop=0,document.documentElement.scrollTop=0}window.onscroll=function(){scrollFunction()}</script><button class=data-tip-left data-tip=回到顶部 id=myBtn onclick=topFunction()><svg class="Zi Zi--BackToTop data-tip-left"viewbox="0 0 24 24"data-tip=回到顶部 fill=currentColor height=24 width=24><path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path></svg></button><footer class=md-footer><div class="md-footer-meta md-typeset"><div class="md-footer-meta__inner md-grid"><div class=md-copyright><div class=md-copyright__highlight>Copyright © 2016 - 2024 银河揽月</div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ rel=noopener target=_blank> Material for MkDocs <div id=miitbeian></div> </a></div><div class=build_date_utc style=float:right><a href=https://github.com/damonc-top/damonc-top.github.io> 最近更新：6c2a14f, 2024-09-24 </a></div></div></div></footer></div><div class=md-dialog data-md-component=dialog><div class="md-dialog__inner md-typeset"></div></div><script id=__config type=application/json>{"base": "../..", "features": ["navigation.tabs", "navigation.instant"], "search": "../../assets/javascripts/workers/search.8e7a41fd.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script><script src=../../assets/javascripts/bundle.c15c428f.min.js></script><script src=../../extension/js/math-csr.js?math-csr></script><script src=../../assets/vendor/mathjax/es5/tex-mml-chtml.js?math-csr></script><script>"use strict";"serviceWorker"in navigator&&navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).then(function(e){console.log("PWA Registration succeeded. Scope is "+e.scope)}).catch(function(e){console.log("PWA Registration failed with "+e)})</script></body></html>

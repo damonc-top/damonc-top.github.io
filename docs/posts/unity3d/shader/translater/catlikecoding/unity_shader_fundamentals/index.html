@@ -1,0 +1,751 @@
+<!doctypehtml><html class=no-js lang=zh><meta charset=utf-8><meta content=on http-equiv=x-dns-prefetch-control><link href=//www.damonc.top rel=dns-prefetch><link href=//search.www.damonc.top rel=dns-prefetch><link href=//api.github.com rel=dns-prefetch><link href=//www.google-analytics.com rel=dns-prefetch><meta content=width=device-width,initial-scale=1 name=viewport><meta content=留点什么东西也挺不错的，偶尔会在这里停留。 name=description><meta content=银河揽月 name=author><link href=https://www.damonc.top/posts/unity3d/shader/translater/catlikecoding/unity_shader_fundamentals/ rel=canonical><link href=../../../../../../favicon.ico rel=icon><meta content="mkdocs-1.4.2, mkdocs-material-8.5.11"name=generator><title>二UnityShader基本语法 - 银河揽月</title><link href=../../../../../../assets/stylesheets/main.31645160.min.css rel=stylesheet><link href=../../../../../../assets/stylesheets/palette.2505c338.min.css rel=stylesheet><link href=../../../../../../extension/css/extra.css rel=stylesheet><link crossorigin href=https://fonts.gstatic.com rel=preconnect><link href=https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,700,700i%7CFira+Mono:400,400i,700,700i&display=fallback rel=stylesheet><style>:root{--md-text-font:"Fira Sans";--md-code-font:"Fira Mono"}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:300;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:italic;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Italic'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:700;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Mono';font-style:normal;font-weight:regular;src:local('Fira Mono'),local('FiraMono-Normal'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.svg#FiraMono) format('svg')}</style><script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script>"undefined"!=typeof __md_analytics&&__md_analytics()</script></head><body data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default dir=ltr><script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script><input autocomplete=off class=md-toggle data-md-toggle=drawer id=__drawer type=checkbox><input autocomplete=off class=md-toggle data-md-toggle=search id=__search type=checkbox><label class=md-overlay for=__drawer></label><div data-md-component=skip><a class=md-skip href=#1-场景初始化> 跳转至 </a></div><div data-md-component=announce></div><header class=md-header data-md-component=header><nav class="md-header__inner md-grid"aria-label=页眉><a class="md-header__button md-logo"aria-label=银河揽月 data-md-component=logo href=../../../../../.. title=银河揽月> <img alt=logo src=../../../../../../images/homepage.png> </a><label class="md-header__button md-icon"for=__drawer><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg></label><div class=md-header__title data-md-component=header-title><div class=md-header__ellipsis><div class=md-header__topic><span class=md-ellipsis> 银河揽月 </span></div><div class=md-header__topic data-md-component=header-topic><span class=md-ellipsis> 二UnityShader基本语法 </span></div></div></div><form class=md-header__option data-md-component=palette><input aria-label="Switch to dark mode"data-md-color-media="(prefers-color-scheme: light)"class=md-option data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default id=__palette_1 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to dark mode"for=__palette_2 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg></label><input aria-label="Switch to light mode"data-md-color-media="(prefers-color-scheme: dark)"class=md-option data-md-color-accent=slate data-md-color-primary=slate data-md-color-scheme=slate id=__palette_2 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to light mode"for=__palette_1 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg></label></form><label class="md-header__button md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg></label><div class=md-search data-md-component=search role=dialog><label class=md-search__overlay for=__search></label><div class=md-search__inner role=search><form class=md-search__form name=search><input aria-label=搜索 autocapitalize=off autocomplete=off autocorrect=off class=md-search__input data-md-component=search-query name=query placeholder=搜索 required spellcheck=false><label class="md-search__icon md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg></label><nav aria-label=查找 class=md-search__options><button class="md-search__icon md-icon"aria-label=清空当前内容 tabindex=-1 title=清空当前内容 type=reset><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg></button></nav></form><div class=md-search__output><div class=md-search__scrollwrap data-md-scrollfix><div class=md-search-result data-md-component=search-result><div class=md-search-result__meta>正在初始化搜索引擎</div><ol class=md-search-result__list></ol></div></div></div></div></div><div class=md-header__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div></nav></header><div class=md-container data-md-component=container><nav aria-label=标签 class=md-tabs data-md-component=tabs><div class="md-tabs__inner md-grid"><ul class=md-tabs__list><li class=md-tabs__item><a class=md-tabs__link href=../../../../../..> 首页 </a></li><li class=md-tabs__item><a class="md-tabs__link md-tabs__link--active"href=../../../../il2cpp/> Unity3D引擎 </a></li></ul></div></nav><main class=md-main data-md-component=main><div class="md-main__inner md-grid"><div class="md-sidebar md-sidebar--primary"data-md-component=sidebar data-md-type=navigation><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--primary md-nav--lifted"aria-label=导航栏 data-md-level=0><label class=md-nav__title for=__drawer><a class="md-nav__button md-logo"aria-label=银河揽月 data-md-component=logo href=../../../../../.. title=银河揽月> <img alt=logo src=../../../../../../images/homepage.png> </a> 银河揽月</label><div class=md-nav__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_1 id=__nav_1 type=checkbox> <label class=md-nav__link for=__nav_1>首页 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=首页 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_1><span class="md-nav__icon md-icon"></span> 首页</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../../../../..> 简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../../../../../home/learn/> 记录 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--active md-nav__item--nested"><input class="md-nav__toggle md-toggle"checked data-md-toggle=__nav_2 id=__nav_2 type=checkbox> <label class=md-nav__link for=__nav_2>Unity3D引擎 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Unity3D引擎 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_2><span class="md-nav__icon md-icon"></span> Unity3D引擎</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_1 id=__nav_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_1>il2cpp <span class="md-nav__icon md-icon"></span></label> <nav aria-label=il2cpp class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_1><span class="md-nav__icon md-icon"></span> il2cpp</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../../../il2cpp/> il2cpp简介 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--active md-nav__item--nested"><input class="md-nav__toggle md-toggle"checked data-md-toggle=__nav_2_2 id=__nav_2_2 type=checkbox> <label class=md-nav__link for=__nav_2_2>Shader <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Shader class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_2><span class="md-nav__icon md-icon"></span> Shader</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--active md-nav__item--nested"><input class="md-nav__toggle md-toggle"checked data-md-toggle=__nav_2_2_1 id=__nav_2_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_2_1>翻译CatlikeCoding <span class="md-nav__icon md-icon"></span></label> <nav aria-label=翻译CatlikeCoding class=md-nav data-md-level=3><label class=md-nav__title for=__nav_2_2_1><span class="md-nav__icon md-icon"></span> 翻译CatlikeCoding</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../> Catlikecoding简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_matrix_transform/> 一UnityShader变换矩阵 </a></li><li class="md-nav__item md-nav__item--active"><input class="md-nav__toggle md-toggle"data-md-toggle=toc id=__toc type=checkbox> <label class="md-nav__link md-nav__link--active"for=__toc>二UnityShader基本语法 <span class="md-nav__icon md-icon"></span></label> <a class="md-nav__link md-nav__link--active"href=./> 二UnityShader基本语法 </a> <nav class="md-nav md-nav--secondary"aria-label=目录><label class=md-nav__title for=__toc><span class="md-nav__icon md-icon"></span> 目录</label><ul class=md-nav__list data-md-component=toc data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=#1-场景初始化> 1. 场景初始化 </a> <nav aria-label="1. 场景初始化"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#11-剥离天空盒> 1.1. 剥离天空盒 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#2-图像渲染> 2. 图像渲染 </a> <nav aria-label="2. 图像渲染"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#21-创建一个shader> 2.1. 创建一个Shader </a></li><li class=md-nav__item><a class=md-nav__link href=#22-shader程序> 2.2. Shader程序 </a></li><li class=md-nav__item><a class=md-nav__link href=#23-shader汇编> 2.3. Shader汇编 </a></li><li class=md-nav__item><a class=md-nav__link href=#24-引入其他文件> 2.4. 引入其他文件 </a></li><li class=md-nav__item><a class=md-nav__link href=#25-输出语义> 2.5. 输出语义 </a></li><li class=md-nav__item><a class=md-nav__link href=#26-顶点变换> 2.6. 顶点变换 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#3-像素颜色> 3. 像素颜色 </a> <nav aria-label="3. 像素颜色"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#31-使用shader属性properties> 3.1. 使用Shader属性Properties </a></li><li class=md-nav__item><a class=md-nav__link href=#32-从顶点到片元> 3.2. 从顶点到片元 </a></li><li class=md-nav__item><a class=md-nav__link href=#33-结构体> 3.3. 结构体 </a></li><li class=md-nav__item><a class=md-nav__link href=#34-调整颜色> 3.4. 调整颜色 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#4-纹理> 4. 纹理 </a> <nav aria-label="4. 纹理"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#41-使用uv坐标> 4.1. 使用UV坐标 </a></li><li class=md-nav__item><a class=md-nav__link href=#42-添加纹理> 4.2. 添加纹理 </a></li><li class=md-nav__item><a class=md-nav__link href=#43-平铺和偏移> 4.3. 平铺和偏移 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#5-纹理设置> 5. 纹理设置 </a> <nav aria-label="5. 纹理设置"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#51-mipmap和filter> 5.1. Mipmap和Filter </a></li><li class=md-nav__item><a class=md-nav__link href=#52-aniso-level> 5.2. Aniso Level </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#6-结尾> 6. 结尾 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=../unity_combine_texture/> 三UnityShader纹理融合 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_base_light/> 四UnityShader基础光照 </a></li></ul></nav></li></ul></nav></li></ul></nav></li></ul></nav></div></div></div><div class="md-sidebar md-sidebar--secondary"data-md-component=sidebar data-md-type=toc><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--secondary"aria-label=目录><label class=md-nav__title for=__toc><span class="md-nav__icon md-icon"></span> 目录</label><ul class=md-nav__list data-md-component=toc data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=#1-场景初始化> 1. 场景初始化 </a> <nav aria-label="1. 场景初始化"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#11-剥离天空盒> 1.1. 剥离天空盒 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#2-图像渲染> 2. 图像渲染 </a> <nav aria-label="2. 图像渲染"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#21-创建一个shader> 2.1. 创建一个Shader </a></li><li class=md-nav__item><a class=md-nav__link href=#22-shader程序> 2.2. Shader程序 </a></li><li class=md-nav__item><a class=md-nav__link href=#23-shader汇编> 2.3. Shader汇编 </a></li><li class=md-nav__item><a class=md-nav__link href=#24-引入其他文件> 2.4. 引入其他文件 </a></li><li class=md-nav__item><a class=md-nav__link href=#25-输出语义> 2.5. 输出语义 </a></li><li class=md-nav__item><a class=md-nav__link href=#26-顶点变换> 2.6. 顶点变换 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#3-像素颜色> 3. 像素颜色 </a> <nav aria-label="3. 像素颜色"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#31-使用shader属性properties> 3.1. 使用Shader属性Properties </a></li><li class=md-nav__item><a class=md-nav__link href=#32-从顶点到片元> 3.2. 从顶点到片元 </a></li><li class=md-nav__item><a class=md-nav__link href=#33-结构体> 3.3. 结构体 </a></li><li class=md-nav__item><a class=md-nav__link href=#34-调整颜色> 3.4. 调整颜色 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#4-纹理> 4. 纹理 </a> <nav aria-label="4. 纹理"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#41-使用uv坐标> 4.1. 使用UV坐标 </a></li><li class=md-nav__item><a class=md-nav__link href=#42-添加纹理> 4.2. 添加纹理 </a></li><li class=md-nav__item><a class=md-nav__link href=#43-平铺和偏移> 4.3. 平铺和偏移 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#5-纹理设置> 5. 纹理设置 </a> <nav aria-label="5. 纹理设置"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#51-mipmap和filter> 5.1. Mipmap和Filter </a></li><li class=md-nav__item><a class=md-nav__link href=#52-aniso-level> 5.2. Aniso Level </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#6-结尾> 6. 结尾 </a></li></ul></nav></div></div></div><div class=md-content data-md-component=content><article class="md-content__inner md-typeset"><a class="md-content__button md-icon"href=https://github.com/damonc-top/damonc-top.github.io/discussions/posts/unity3d/shader/translater/catlikecoding/unity_shader_fundamentals.md title=编辑此页> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a><h1>二UnityShader基本语法</h1><h2 id=1-场景初始化>1. 场景初始化<a title="Permanent link"class=headerlink href=#1-场景初始化></a></h2><p>新建一个默认场景，新建一个圆球。这个默认场景本身进行了大量复杂的渲染，为了更容易的掌握Unity的渲染过程，我们先做一些简化设置，把默认的某些花里胡哨的东西先剥离掉。</p><h3 id=11-剥离天空盒>1.1. 剥离天空盒<a title="Permanent link"class=headerlink href=#11-剥离天空盒></a></h3><p>打开Window-Lighting，查看光照设置选项。弹出带有3个选项卡的面板，我们先关注Scene选项卡.</p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/default-lighting.png title=默认光照></p><p>第一选项卡Environment是跟环境光照相关，在这里可以设置天空盒。这个Default-Skybox当前正被用于场景的背景光、环境光、和反射光。设置为none就能关闭这些光。顺便把下面的Realtime Ligting和Mixed Lighting也关掉，现在还用不上后面会陆续介绍。</p><p>关闭了天空盒，环境颜色自动切换为了纯色，这个颜色默认是带着一丝蓝的黑灰色(说好的纯呢，外表很黑内心很蓝？)。而反射光会变成纯黑色。如下所示，设置后球体变暗了，背景变成了纯色。而这个背景深蓝色从哪里来的呢？ <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/default-spere.png title=球体简单光照></p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-skybox.png title=没有天空盒的光照></p><p>这个深蓝色被定义在摄像机，它默认使用天空盒渲染，当天空盒失效后场景会默认退回到使用相机纯色模式。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/camera.png title=默认的摄像机设置></p><p>为了进一步简化渲染，再隐藏或删除方向光对象。这将消除场景中的直接光照，以及所有它投射的阴影。剩下纯色背景和球体的轮廓。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-light.png title=未着色球体></p><h2 id=2-图像渲染>2. 图像渲染<a title="Permanent link"class=headerlink href=#2-图像渲染></a></h2><p>分两步绘制上面的场景，一是使用相机的背景色填充图像，然后再在上面画出球体的轮廓。</p><details class=question><summary>Unity如何知道该画这个球体呢?</summary> <p>我们有一个球体对象并且绑定了MeshRenderer组件，如果这个球体位于摄像机的视野内，那么它就会被渲染出来。Unity通过检测球体的边界盒是否与摄像机的视锥体相机来验证这一点。包围盒在Unity中定义为<code>Bounds结构体</code><strong>Collider.bounds, Mesh.bounds, Renderer.bounds</strong>. <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/sphere-object.png title=球体默认自带组件></p></details><p>Transform组件用于更改坐标、方向，以及网格和包围盒的尺寸。<a href=../unity3d/shader/translater/catlikecoding/unity_matrix_transform.md>上一篇</a>有对Transform矩阵结构的清晰描述。如果一个物体最终处于摄像机视野内，它就会被安排渲染。</p><p>最后，GPU负责渲染物体的mesh。这些具体的渲染指令在物体的material定义好的，这个material引用了一个shader-GPU程序。 <img title="cpu & gpu分工"alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/cpu-gpu.png></p><p>当前这个球体使用了Unity的默认材质，自带了一个标准shader。我们现在把它去掉替换成自己的shader，从头开始写。</p><h3 id=21-创建一个shader>2.1. 创建一个Shader<a title="Permanent link"class=headerlink href=#21-创建一个shader></a></h3><p>通过点击_Assets / Create / Shader / Unlit Shader创建并命名自己的shader，双击shader文件打开，并删除里面的内容从头写。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/my-first-shader.png title=第一个shader></p><p>Shader是通过<em>shader</em>关键字定义，关键字是一个字符串，在下拉界面中选择时显示的也是该关键字。它不必与文件名相同。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Shader</span><span class=w> </span><span class=s>"Unlit/MyShader"</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>//...</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>保存文件，回到编辑器会收到警告提示none of subshaders/fallbacks are suitable，因为它是空的，没有sub-shader或回调shader。尽管这个shader没有内容也有警告，我们仍能指定给material。点击_Assets / Create / Material_创建，然后通过下拉菜单指定。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/my-material.png title=给材质指定Shader></p><p>给球体指定上我们新建的Material，替换掉默认的。这时的球体会立即变成紫红色。发生这个的原因是Unity切换到了错误的shader，它故意使用这个颜色来提醒开发者这是一个错误。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/material-with-shader.png title=指定MyMaterial></p><p>shader warning中提到了没有sub-shader. 我们可以使用sub-shader操作shader变量进行分组, 这允许程序员为不同的编译平台提供不同的sub-shader.例如我们可以用一个sub-shader既支持pc又支持手机平台.定义一个SubShader块</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Shader</span><span class=w> </span><span class=s>"Unlit/MyShader"</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>SubShader</span><span class=w></span>
+<span class=w>    </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=c1>//...</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w> </span><span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>sub-shader至少包含一个以上的pass块, pass代码块是物体实际被渲染的地方，我们先写一个pass，然后在写多个pass。为了呈现多种效果，pass数量可能会超过一个以上，而则代表着物体要被渲染多次。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Shader</span><span class=w> </span><span class=s>"Unlit/MyShader"</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>     </span><span class=n>SubShader</span><span class=w></span>
+<span class=w>     </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=n>Pass</span><span class=w></span>
+<span class=w>        </span><span class=p>{</span><span class=w>        </span>
+<span class=w>            </span><span class=c1>//...</span><span class=w></span>
+<span class=w>        </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>我们的球体现在应该变成了白色，因为我们使用了一个空pass渲染，这也意味着我们的Shader没有出现任何错误了。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/sphere-with-pass.png title=空shader效果></p><h3 id=22-shader程序>2.2. Shader程序<a title="Permanent link"class=headerlink href=#22-shader程序></a></h3><p>现在我们要开始编写shader代码了，我们用的Unity着色器语言是HLSL和CG着色器语言的变体。所以必须指示<strong>CGPROGRAM</strong>关键字为代码的开始，同时要用<strong>ENDCG</strong>关键字做为结束。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Pass</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>CGPROGRAM</span><span class=w></span>
+
+<span class=w>    </span><span class=n>ENDCG</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>再次打开编辑器编译后有一个警告<em>Both vertex and fragment programs must be present</em>,表示没有顶点和片元程序。shader由这两个程序组成，vertex顶点程序负责处理网格的顶点数据，这包含了从对象空间到显示空间的转换；而fragment片元程序负责为网格的三角形内的单个像素进行着色。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/vertex-fragment-programs.png title=顶点片元函数></p><p>同时，我们必须通过pragma指令告诉编译器使用哪些程序</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>CGPROGRAM</span><span class=w></span>
+
+<span class=cp>#pragma vertex MyVertexProgram</span><span class=w></span>
+<span class=cp>#pragma fragment MyFragmentProgram</span><span class=w></span>
+
+<span class=n>ENDCG</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>编译器再次发出来错误提示，这次是因为它不能找到我们指定的程序片段，因为我们光声明没实现。首先vertex和fragment被写成方法，类似C#函数。先简单地创建两个同名的void方法。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>CGPROGRAM</span><span class=w></span>
+
+<span class=cp>#pragma vertex MyVertexProgram</span><span class=w></span>
+<span class=cp>#pragma fragment MyFragmentProgram</span><span class=w></span>
+
+<span class=kt>void</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w></span>
+
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>void</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w></span>
+
+<span class=p>}</span><span class=w></span>
+
+<span class=n>ENDCG</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>这次编译后没有报错，但是球体从屏幕上消失了。</p><h3 id=23-shader汇编>2.3. Shader汇编<a title="Permanent link"class=headerlink href=#23-shader汇编></a></h3><p>Unity的shader编译器把我们的代码根据不同target-compile成了不同程序。不同的平台需要不同的解决方案，例如Direct3D是服务于Windows平台，OpenGL针对MacOs，OpenGL ES针对手机平台。这里我们不是在处理单个编译器，而是多个编译器。</p><p>最终使用哪种编译器取决于目标平台，这些编译器也是不完全相同的，每个平台可能得到不同的结果。在这个例子中，我们的空程序在OpenGL和Direct3D 11下能很好的工作，但在Direct3D 9就会报错。</p><p>在编辑器下点选<em>MyFirstShader</em>，在inspector面板可以查看该shader的一些信息，以及编译错误。这也有一个<em>Compiled code and show</em>按钮和下拉菜单。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/shader-inspector.png title=shader检视面板信息></p><p>如果你点击该按钮，Unity将会编译该shader并打开它，接着就可以查看生成的代码。我们试着先选择OpenGL Core，然后再选择D3D11，看看底层代码是怎么回事的。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span>
+<span class=normal>32</span>
+<span class=normal>33</span>
+<span class=normal>34</span>
+<span class=normal>35</span>
+<span class=normal>36</span>
+<span class=normal>37</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Shader</span><span class=w> </span><span class=s>"Unlit/MyShader"</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=n>SubShader</span><span class=w> </span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>Pass</span><span class=w> </span>
+<span class=w>    </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=n>No</span><span class=w> </span><span class=n>keywords</span><span class=w> </span><span class=n>set</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=kr>this</span><span class=w> </span><span class=n>variant</span><span class=p>.</span><span class=w></span>
+<span class=w>        </span><span class=o>--</span><span class=w> </span><span class=n>Vertex</span><span class=w> </span><span class=n>shader</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s>"glcore"</span><span class=o>:</span><span class=w></span>
+<span class=w>        </span><span class=n>Shader</span><span class=w> </span><span class=n>Disassembly</span><span class=o>:</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>ifdef</span><span class=w> </span><span class=n>VERTEX</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>version</span><span class=w> </span><span class=mi>150</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>extension</span><span class=w> </span><span class=n>GL_ARB_explicit_attrib_location</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>require</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>extension</span><span class=w> </span><span class=n>GL_ARB_shader_bit_encoding</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>enable</span><span class=w></span>
+
+<span class=w>        </span><span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=w>        </span><span class=p>{</span><span class=w></span>
+<span class=w>            </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=p>}</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+
+<span class=w>        </span><span class=err>#</span><span class=n>ifdef</span><span class=w> </span><span class=n>FRAGMENT</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>version</span><span class=w> </span><span class=mi>150</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>extension</span><span class=w> </span><span class=n>GL_ARB_explicit_attrib_location</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>require</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>extension</span><span class=w> </span><span class=n>GL_ARB_shader_bit_encoding</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>enable</span><span class=w></span>
+
+<span class=w>        </span><span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=w>        </span><span class=p>{</span><span class=w></span>
+<span class=w>            </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=p>}</span><span class=w></span>
+
+<span class=w>        </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+
+<span class=w>        </span><span class=o>--</span><span class=w> </span><span class=n>Fragment</span><span class=w> </span><span class=n>shader</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s>"glcore"</span><span class=o>:</span><span class=w></span>
+<span class=w>        </span><span class=n>Shader</span><span class=w> </span><span class=n>Disassembly</span><span class=o>:</span><span class=w></span>
+<span class=w>        </span><span class=c1>// All GLSL source is contained within the vertex program</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>提炼出两个main函数，有vertex和fragment程序</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#ifdef VERTEX</span><span class=w></span>
+<span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+
+<span class=cp>#ifdef FRAGMENT</span><span class=w></span>
+<span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>D3D11自行查看，因为编译后的代码实在是太长了，不方便贴上来。只选取了一个片段：</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Pass</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>No</span><span class=w> </span><span class=n>keywords</span><span class=w> </span><span class=n>set</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=kr>this</span><span class=w> </span><span class=n>variant</span><span class=p>.</span><span class=w></span>
+<span class=w>    </span><span class=o>--</span><span class=w> </span><span class=n>Vertex</span><span class=w> </span><span class=n>shader</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s>"d3d11"</span><span class=o>:</span><span class=w></span>
+<span class=w>    </span><span class=n>Shader</span><span class=w> </span><span class=n>Disassembly</span><span class=o>:</span><span class=w></span>
+<span class=w>        </span><span class=n>vs_4_0</span><span class=w></span>
+<span class=w>    </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=n>ret</span><span class=w></span>
+
+
+<span class=w>    </span><span class=o>--</span><span class=w> </span><span class=n>Fragment</span><span class=w> </span><span class=n>shader</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s>"d3d11"</span><span class=o>:</span><span class=w></span>
+<span class=w>    </span><span class=n>Shader</span><span class=w> </span><span class=n>Disassembly</span><span class=o>:</span><span class=w></span>
+<span class=w>        </span><span class=n>ps_4_0</span><span class=w></span>
+<span class=w>    </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=n>ret</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=24-引入其他文件>2.4. 引入其他文件<a title="Permanent link"class=headerlink href=#24-引入其他文件></a></h3><p>编写shader代码很费劲，有时需要重复写类似的函数，为了简化书写，这里有一个类似C#程序的功能，引用其他类中的通用变量、函数等。使用<code>#include指令就能加载一个文件。先试着加载Unity内部自带的UnityCG.cginc</code></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>CGPROGRAM</span><span class=w></span>
+
+<span class=w>    </span><span class=err>#</span><span class=n>pragma</span><span class=w> </span><span class=n>vertex</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>pragma</span><span class=w> </span><span class=n>fragment</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=w></span>
+
+<span class=w>    </span><span class=err>#</span><span class=n>include</span><span class=w> </span><span class=s>"UnityCG.cginc"</span><span class=w></span>
+
+<span class=w>    </span><span class=kt>void</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w></span>
+
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+
+<span class=w>    </span><span class=kt>void</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w></span>
+
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+
+<span class=n>ENDCG</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>下面是_UnityCg.cginc_的引用层次结构 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/include-files.png title=UnityCG.cginc结构></p><p><em>UnityShaderVariables.cginc</em>定义了一大堆渲染所需的着色器变量，比如<strong>矩阵变换、相机和光照数据等等</strong>。</p><p><em>UnityInstancing.cginc</em>内置在引擎安装包内，这是一种<strong>减少绘制调用的特定呈现技术</strong>。虽然它不直接包含文件，但它依赖于UnityShaderVariables。</p><p><em>HLSLSupport.cginc</em>设置了一些无论您的目标是哪个平台都可以使用相同的代码的功能。</p><p>请注意，这些文件的内容将被复制到文件中，取代include指令。这发生在预处理步骤中，该步骤执行所有预处理指令。比如#include和#pragma。</p><h3 id=25-输出语义>2.5. 输出语义<a title="Permanent link"class=headerlink href=#25-输出语义></a></h3><p>为了渲染物体，shader必须要产生结果。</p><p><strong>Vertex顶点函数必须要返回每个顶点的最终坐标：SV_POSITION</strong>。</p><details class=question open><summary>一个顶点有几个坐标分量？</summary> <p>4个，因为我们使用了4x4变换矩阵。现在把函数类型从void改为float4,一个float4类型是一个由4个float类型简单组成。</p></details><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>()</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><strong>Fragment片元函数返回像素的最终颜色：SV_TARGET, float4。</strong></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>()</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>Vertex顶点函数的输出作为Fragment片元函数的输入。输入的参数需要匹配！</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>(</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=w></span>
+<span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>然后看看Unity的shader汇编</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span>
+<span class=normal>32</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>//--D3D11--</span><span class=w></span>
+<span class=o>--</span><span class=w> </span><span class=n>Vertex</span><span class=w> </span><span class=n>shader</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s>"d3d11"</span><span class=o>:</span><span class=w></span>
+<span class=n>Shader</span><span class=w> </span><span class=n>Disassembly</span><span class=o>:</span><span class=w></span>
+<span class=w>      </span><span class=n>vs_4_0</span><span class=w>                            </span><span class=c1>//顶点着色器版本</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output_siv</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>position</span><span class=w>  </span><span class=c1>//声明o0作为输出值，带有系统值</span><span class=w></span>
+<span class=w>   </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=n>mov</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>l</span><span class=p>(</span><span class=mo>0</span><span class=p>,</span><span class=mo>0</span><span class=p>,</span><span class=mo>0</span><span class=p>,</span><span class=mo>0</span><span class=p>)</span><span class=w>           </span><span class=c1>//把(0,0,0,0)移动到o0中</span><span class=w></span>
+<span class=w>   </span><span class=mi>1</span><span class=o>:</span><span class=w> </span><span class=n>ret</span><span class=w>                               </span><span class=c1>//返回</span><span class=w></span>
+
+<span class=o>--</span><span class=w> </span><span class=n>Fragment</span><span class=w> </span><span class=n>shader</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s>"d3d11"</span><span class=o>:</span><span class=w></span>
+<span class=n>Shader</span><span class=w> </span><span class=n>Disassembly</span><span class=o>:</span><span class=w></span>
+<span class=w>      </span><span class=n>ps_4_0</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=n>mov</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>l</span><span class=p>(</span><span class=mo>0</span><span class=p>,</span><span class=mo>0</span><span class=p>,</span><span class=mo>0</span><span class=p>,</span><span class=mo>0</span><span class=p>)</span><span class=w></span>
+<span class=w>   </span><span class=mi>1</span><span class=o>:</span><span class=w> </span><span class=n>ret</span><span class=w></span>
+
+<span class=c1>//GL CORE--</span><span class=w></span>
+<span class=cp>#ifdef VERTEX</span><span class=w></span>
+<span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>gl_Position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vec4</span><span class=p>(</span><span class=mf>0.0</span><span class=p>,</span><span class=w> </span><span class=mf>0.0</span><span class=p>,</span><span class=w> </span><span class=mf>0.0</span><span class=p>,</span><span class=w> </span><span class=mf>0.0</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+
+<span class=cp>#ifdef FRAGMENT</span><span class=w></span>
+<span class=n>layout</span><span class=p>(</span><span class=n>location</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>)</span><span class=w> </span><span class=k>out</span><span class=w> </span><span class=n>vec4</span><span class=w> </span><span class=n>SV_TARGET0</span><span class=p>;</span><span class=w></span>
+<span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>SV_TARGET0</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vec4</span><span class=p>(</span><span class=mf>0.0</span><span class=p>,</span><span class=w> </span><span class=mf>0.0</span><span class=p>,</span><span class=w> </span><span class=mf>0.0</span><span class=p>,</span><span class=w> </span><span class=mf>0.0</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=26-顶点变换>2.6. 顶点变换<a title="Permanent link"class=headerlink href=#26-顶点变换></a></h3><p>把球给我画出来！</p><p>为了得到模型空间的顶点坐标，给ertex顶点函数增加一条语义<em>POSITON</em>。而模型空间的顶点坐标是其次坐标。先直接返回这个顶点坐标，贴汇编：</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>//D3d11-</span><span class=w></span>
+<span class=w>      </span><span class=n>vs_4_0</span><span class=w>                            </span><span class=c1>//版本</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_input</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xyzw</span><span class=w>                 </span><span class=c1>//申明v0 输入系统值</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output_siv</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>position</span><span class=w>  </span><span class=c1>//申明o0 输出系统值</span><span class=w></span>
+<span class=w>   </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=n>mov</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xyzw</span><span class=w>              </span><span class=c1>//把v0值 移动到 o0</span><span class=w></span>
+<span class=w>   </span><span class=mi>1</span><span class=o>:</span><span class=w> </span><span class=n>ret</span><span class=w></span>
+
+<span class=c1>//--GL CORE</span><span class=w></span>
+<span class=cp>#ifdef VERTEX</span><span class=w></span>
+<span class=k>in</span><span class=w>  </span><span class=n>vec4</span><span class=w> </span><span class=n>in_POSITION0</span><span class=p>;</span><span class=w></span>
+<span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>gl_Position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>in_POSITION0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=cp>#endifView Code</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/raw-position.png title=扭曲的球></p><p>使用MVP：model_view_projection矩阵变换顶点坐标，该值定义在<em>UnityShaderVariables</em>文件，变量名是<code>UNITY_MATRIX_MVP。改为：</code><a href=http://developer.download.nvidia.com/cg/mul.html>mul</a>函数定义</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>return</span><span class=w> </span><span class=nb>mul</span><span class=p>(</span><span class=n>UNITY_MATRIX_MVP</span><span class=p>,</span><span class=w> </span><span class=n>position</span><span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>贴汇编看看<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span>
+<span class=normal>32</span>
+<span class=normal>33</span>
+<span class=normal>34</span>
+<span class=normal>35</span>
+<span class=normal>36</span>
+<span class=normal>37</span>
+<span class=normal>38</span>
+<span class=normal>39</span>
+<span class=normal>40</span>
+<span class=normal>41</span>
+<span class=normal>42</span>
+<span class=normal>43</span>
+<span class=normal>44</span></pre></div></td><td class=code><div><pre><span></span><code><span class=o>--</span><span class=w> </span><span class=n>Vertex</span><span class=w> </span><span class=n>shader</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s>"d3d11"</span><span class=o>:</span><span class=w></span>
+<span class=c1>// Stats: 8 math</span><span class=w></span>
+<span class=n>Uses</span><span class=w> </span><span class=n>vertex</span><span class=w> </span><span class=n>data</span><span class=w> </span><span class=n>channel</span><span class=w> </span><span class=s>"Vertex"</span><span class=w></span>
+<span class=c1>//cbuffers常量数据</span><span class=w></span>
+<span class=n>Constant</span><span class=w> </span><span class=kt>Buffer</span><span class=w> </span><span class=s>"UnityPerDraw"</span><span class=w> </span><span class=p>(</span><span class=mi>160</span><span class=w> </span><span class=n>bytes</span><span class=p>)</span><span class=w> </span><span class=n>on</span><span class=w> </span><span class=n>slot</span><span class=w> </span><span class=mo>0</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=n>Matrix4x4</span><span class=w> </span><span class=n>unity_ObjectToWorld</span><span class=w> </span><span class=n>at</span><span class=w> </span><span class=mo>0</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=n>Constant</span><span class=w> </span><span class=kt>Buffer</span><span class=w> </span><span class=s>"UnityPerFrame"</span><span class=w> </span><span class=p>(</span><span class=mi>384</span><span class=w> </span><span class=n>bytes</span><span class=p>)</span><span class=w> </span><span class=n>on</span><span class=w> </span><span class=n>slot</span><span class=w> </span><span class=mi>1</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=n>Matrix4x4</span><span class=w> </span><span class=n>unity_MatrixVP</span><span class=w> </span><span class=n>at</span><span class=w> </span><span class=mi>272</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=n>Shader</span><span class=w> </span><span class=n>Disassembly</span><span class=o>:</span><span class=w></span>
+<span class=w>      </span><span class=c1>//版本</span><span class=w></span>
+<span class=w>      </span><span class=n>vs_4_0</span><span class=w></span>
+<span class=w>      </span><span class=c1>//声明常量缓冲区cbuffers，逐字索引</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_constantbuffer</span><span class=w> </span><span class=n>CB0</span><span class=p>[</span><span class=mi>4</span><span class=p>],</span><span class=w> </span><span class=n>immediateIndexed</span><span class=w></span>
+<span class=w>      </span><span class=c1>//cbuffers</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_constantbuffer</span><span class=w> </span><span class=n>CB1</span><span class=p>[</span><span class=mi>21</span><span class=p>],</span><span class=w> </span><span class=n>immediateIndexed</span><span class=w></span>
+<span class=w>      </span><span class=c1>//声明输入v0</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_input</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xyz</span><span class=w></span>
+<span class=w>      </span><span class=c1>//声明输入o0</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output_siv</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>position</span><span class=w></span>
+<span class=w>      </span><span class=c1>//声明临时寄存器2个(r0-r1)</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_temps</span><span class=w> </span><span class=mi>2</span><span class=w></span>
+<span class=w>      </span><span class=c1>//将v0与cb0[1]相乘传递给r0</span><span class=w></span>
+<span class=w>    </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=nb>mul</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>yyyy</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>1</span><span class=p>].</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>    </span><span class=cm>/*第0行的计算步骤</span>
+<span class=cm>    dest.x = cb0[0].x * v0.x + r0.x;</span>
+<span class=cm>    dest.y = cb0[0].y * v0.x + r0.y;</span>
+<span class=cm>    dest.z = cb0[0].z * v0.x + r0.z;</span>
+<span class=cm>    dest.w = cb0[0].w * v0.x + r0.w;*/</span><span class=w></span>
+
+<span class=w>    </span><span class=c1>//r0 = cb0 * v0 + r0</span><span class=w></span>
+<span class=w>    </span><span class=mi>1</span><span class=o>:</span><span class=w> </span><span class=nb>mad</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mo>0</span><span class=p>].</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xxxx</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>    </span><span class=c1>//同理1：</span><span class=w></span>
+<span class=w>    </span><span class=mi>2</span><span class=o>:</span><span class=w> </span><span class=nb>mad</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>2</span><span class=p>].</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>zzzz</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=w>    </span>
+<span class=w>    </span><span class=c1>//r0 = r0 + cb0</span><span class=w></span>
+<span class=w>    </span><span class=mi>3</span><span class=o>:</span><span class=w> </span><span class=n>add</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>    </span><span class=c1>//r1 = r0 * cb1</span><span class=w></span>
+<span class=w>    </span><span class=mi>4</span><span class=o>:</span><span class=w> </span><span class=nb>mul</span><span class=w> </span><span class=n>r1</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>yyyy</span><span class=p>,</span><span class=w> </span><span class=n>cb1</span><span class=p>[</span><span class=mi>18</span><span class=p>].</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>    </span><span class=mi>5</span><span class=o>:</span><span class=w> </span><span class=nb>mad</span><span class=w> </span><span class=n>r1</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb1</span><span class=p>[</span><span class=mi>17</span><span class=p>].</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xxxx</span><span class=p>,</span><span class=w> </span><span class=n>r1</span><span class=p>.</span><span class=n>xyzw</span><span class=w>    </span><span class=c1>//同理1：</span><span class=w></span>
+<span class=w>    </span><span class=mi>6</span><span class=o>:</span><span class=w> </span><span class=nb>mad</span><span class=w> </span><span class=n>r1</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb1</span><span class=p>[</span><span class=mi>19</span><span class=p>].</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>zzzz</span><span class=p>,</span><span class=w> </span><span class=n>r1</span><span class=p>.</span><span class=n>xyzw</span><span class=w>    </span><span class=c1>//同理1：</span><span class=w></span>
+<span class=w>    </span><span class=mi>7</span><span class=o>:</span><span class=w> </span><span class=nb>mad</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb1</span><span class=p>[</span><span class=mi>20</span><span class=p>].</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>wwww</span><span class=p>,</span><span class=w> </span><span class=n>r1</span><span class=p>.</span><span class=n>xyzw</span><span class=w>    </span><span class=c1>//同理1：</span><span class=w></span>
+<span class=w>    </span><span class=mi>8</span><span class=o>:</span><span class=w> </span><span class=n>retView</span><span class=w> </span><span class=n>Code</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/correct-position.png title=正确的球></p><h2 id=3-像素颜色>3. 像素颜色<a title="Permanent link"class=headerlink href=#3-像素颜色></a></h2><p>先给Fragment函数返回点东西，</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>(</span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=kt>float4</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mo>0</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/yellow-sphere.png title=黄色球></p><h3 id=31-使用shader属性properties>3.1. 使用Shader属性Properties<a title="Permanent link"class=headerlink href=#31-使用shader属性properties></a></h3><p>需要在pass块内声明一个同类型的同命名变量float4 _Tint;</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>(</span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>_Tint</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>看看片元函数的汇编</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span class=o>--</span><span class=w> </span><span class=n>Fragment</span><span class=w> </span><span class=n>shader</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=s>"d3d11"</span><span class=o>:</span><span class=w></span>
+<span class=n>Constant</span><span class=w> </span><span class=kt>Buffer</span><span class=w> </span><span class=s>"Globals"</span><span class=w> </span><span class=p>(</span><span class=mi>48</span><span class=w> </span><span class=n>bytes</span><span class=p>)</span><span class=w> </span><span class=n>on</span><span class=w> </span><span class=n>slot</span><span class=w> </span><span class=mo>0</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>  </span><span class=n>Vector4</span><span class=w> </span><span class=n>_Tint</span><span class=w> </span><span class=n>at</span><span class=w> </span><span class=mi>32</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=n>Shader</span><span class=w> </span><span class=n>Disassembly</span><span class=o>:</span><span class=w></span>
+<span class=w>      </span><span class=n>ps_4_0</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_constantbuffer</span><span class=w> </span><span class=n>CB0</span><span class=p>[</span><span class=mi>3</span><span class=p>],</span><span class=w> </span><span class=n>immediateIndexed</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=n>mov</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>2</span><span class=p>].</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mi>1</span><span class=o>:</span><span class=w> </span><span class=n>retView</span><span class=w> </span><span class=n>Code</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/green-sphere.png title=纯色球></p><h3 id=32-从顶点到片元>3.2. 从顶点到片元<a title="Permanent link"class=headerlink href=#32-从顶点到片元></a></h3><p>上图纯色球，每个像素都是同一个颜色，但是美术给的效果图是五彩斑斓的，<strong>就需要GPU光栅化三角形，取三个处理过的顶点进行插值，找到三角形内所有像素并着色</strong>。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/interpolation.png title=shader程序执行流程></p><p>处理过的顶点数据不直接传递给Fragment片元函数，而在片元函数中访问插值本地数据，需要增加一个参数，并指定语义<em>TEXCOORD0</em>，它表示贴图的UV坐标。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=w></span>
+<span class=p>(</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=o>:</span><span class=w> </span><span class=n>POSITION</span><span class=p>,</span><span class=w></span>
+<span class=w>    </span><span class=k>out</span><span class=w> </span><span class=kt>float3</span><span class=w> </span><span class=n>localPosition</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD0</span><span class=w></span>
+<span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>localPosition</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>position</span><span class=p>.</span><span class=n>xyz</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>UnityObjectToClipPos</span><span class=p>(</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>float4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=w></span>
+<span class=p>(</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>,</span><span class=w></span>
+<span class=w>    </span><span class=kt>float3</span><span class=w> </span><span class=n>localPosition</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD0</span><span class=w></span>
+<span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=kt>float4</span><span class=p>(</span><span class=n>localPosition</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/local-position.png title=插值本地数据作为颜色></p><h3 id=33-结构体>3.3. 结构体<a title="Permanent link"class=headerlink href=#33-结构体></a></h3><p>简化传递Fragment函数的参数，新建一个结构体</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>struct</span><span class=w> </span><span class=n>Interpolators</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float3</span><span class=w> </span><span class=n>localPosition</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+
+<span class=n>Interpolators</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=w> </span><span class=p>(</span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=o>:</span><span class=w> </span><span class=n>POSITION</span><span class=w> </span><span class=p>){</span><span class=w></span>
+<span class=w>    </span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>localPosition</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>position</span><span class=p>.</span><span class=n>xyz</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityObjectToClipPos</span><span class=p>(</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=w>     </span><span class=k>return</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>float4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=kt>float4</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>localPosition</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><details class=info><summary>查看UnityObjectToClipPos</summary> <p>它是Unity5.6之后的优化,对应mul(UNITY_MATRIX_MVP, v.vertex)，但是该函数使用了常数1作为第四个坐标而不是 依赖网格数据，源码:<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>inline</span><span class=w> </span><span class=kt>float4</span><span class=w> </span><span class=n>UnityObjectToClipPosInstanced</span><span class=p>(</span><span class=k>in</span><span class=w> </span><span class=kt>float3</span><span class=w> </span><span class=n>pos</span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>w</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>mul</span><span class=p>(</span><span class=n>unity_ObjectToWorldArray</span><span class=p>[</span><span class=n>unity_InstanceID</span><span class=p>],</span><span class=w> </span><span class=kt>float4</span><span class=p>(</span><span class=n>pos</span><span class=p>,</span><span class=w> </span><span class=mf>1.0</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nb>mul</span><span class=p>(</span><span class=n>UNITY_MATRIX_VP</span><span class=p>,</span><span class=w> </span><span class=n>w</span><span class=p>));</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div> 因为通过网格提供的数据始终为1，但是编译器不能知晓。所幸干脆就直接写死为1.0，优化掉运行时计算这第四个数。</details><h3 id=34-调整颜色>3.4. 调整颜色<a title="Permanent link"class=headerlink href=#34-调整颜色></a></h3><p>因为负颜色被约束限制为零，我们的球体最终变得相当暗。 球体的自身半径为<span class=arithmatex>\(1\over 2\)</span>，因此颜色通道最终介于<span class=arithmatex>\([-{1\over 2},{1\over 2}]\)</span>之间。我们希望将它们移动到<span class=arithmatex>\([0,1]\)</span>范围内，我们可以通过向所有通道添加<span class=arithmatex>\(1\over 2\)</span>来实现。<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>return</span><span class=w> </span><span class=kt>float4</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>localPosition</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>0.5</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>再看看汇编代码<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>uniform</span><span class=w>     </span><span class=n>vec4</span><span class=w> </span><span class=n>_Tint</span><span class=p>;</span><span class=w></span>
+<span class=k>in</span><span class=w>  </span><span class=n>vec3</span><span class=w> </span><span class=n>vs_TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=n>layout</span><span class=p>(</span><span class=n>location</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>)</span><span class=w> </span><span class=k>out</span><span class=w> </span><span class=n>vec4</span><span class=w> </span><span class=n>SV_TARGET0</span><span class=p>;</span><span class=w></span>
+<span class=n>vec4</span><span class=w> </span><span class=n>t0</span><span class=p>;</span><span class=w></span>
+<span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>t0</span><span class=p>.</span><span class=n>xyz</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vs_TEXCOORD0</span><span class=p>.</span><span class=n>xyz</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>vec3</span><span class=p>(</span><span class=mf>0.5</span><span class=p>,</span><span class=w> </span><span class=mf>0.5</span><span class=p>,</span><span class=w> </span><span class=mf>0.5</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=n>t0</span><span class=p>.</span><span class=n>w</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>1.0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>SV_TARGET0</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>t0</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>_Tint</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>ConstBuffer</span><span class=w> </span><span class=s>"$$Globals"</span><span class=w> </span><span class=mi>128</span><span class=w></span>
+<span class=n>Vector</span><span class=w> </span><span class=mi>96</span><span class=w> </span><span class=p>[</span><span class=n>_Tint</span><span class=p>]</span><span class=w></span>
+<span class=n>BindCB</span><span class=w>  </span><span class=s>"$$Globals"</span><span class=w> </span><span class=mo>0</span><span class=w></span>
+<span class=w>      </span><span class=n>ps_4_0</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_constantbuffer</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>7</span><span class=p>],</span><span class=w> </span><span class=n>immediateIndexed</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_input_ps</span><span class=w> </span><span class=k>linear</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xyz</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_temps</span><span class=w> </span><span class=mi>1</span><span class=w></span>
+<span class=w>   </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=n>add</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyz</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xyzx</span><span class=p>,</span><span class=w> </span><span class=n>l</span><span class=p>(</span><span class=mf>0.500000</span><span class=p>,</span><span class=w> </span><span class=mf>0.500000</span><span class=p>,</span><span class=w> </span><span class=mf>0.500000</span><span class=p>,</span><span class=w> </span><span class=mf>0.000000</span><span class=p>)</span><span class=w></span>
+<span class=w>   </span><span class=mi>1</span><span class=o>:</span><span class=w> </span><span class=n>mov</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>w</span><span class=p>,</span><span class=w> </span><span class=n>l</span><span class=p>(</span><span class=mf>1.000000</span><span class=p>)</span><span class=w></span>
+<span class=w>   </span><span class=mi>2</span><span class=o>:</span><span class=w> </span><span class=nb>mul</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>6</span><span class=p>].</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mi>3</span><span class=o>:</span><span class=w> </span><span class=n>ret</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/local-position-01.png title=调整之后的颜色></p><h2 id=4-纹理>4. 纹理<a title="Permanent link"class=headerlink href=#4-纹理></a></h2><p>如果想在模型网格上不添加更多三角形面数的情况下为网格添加更多更明显的细节和多样性呈现，可以使用纹理投影到网格的三角形上。</p><p>纹理坐标用于控制投影，下图是2D坐标。不管纹理的实际纵横比如何，其水平坐标称为U，垂直坐标称为V，它们通常称为UV坐标。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-rectangle.png title=uv坐标图></p><p>U坐标从左到右递增，起始点为0终点为1。 V坐标从下到上增加，除了Direct3D它从上到下。</p><h3 id=41-使用uv坐标>4.1. 使用UV坐标<a title="Permanent link"class=headerlink href=#41-使用uv坐标></a></h3><p>Unity的默认网格具有适合纹理映射的UV坐标。顶点程序可以通过参数访问它们<em>TEXCOORD0</em>语义。然后传递给片元函数使用。<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>struct</span><span class=w> </span><span class=n>Interpolators</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float2</span><span class=w> </span><span class=n>uv</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+
+<span class=n>Interpolators</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=w> </span><span class=p>(</span><span class=n>VertedData</span><span class=w> </span><span class=n>v</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>mul</span><span class=p>(</span><span class=n>UNITY_MATRIX_MVP</span><span class=p>,</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>uv</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>float4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=kt>float4</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>再看看汇编<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>in</span><span class=w>  </span><span class=n>vec4</span><span class=w> </span><span class=n>in_POSITION0</span><span class=p>;</span><span class=w></span>
+<span class=k>in</span><span class=w>  </span><span class=n>vec2</span><span class=w> </span><span class=n>in_TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=k>out</span><span class=w> </span><span class=n>vec2</span><span class=w> </span><span class=n>vs_TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=n>vec4</span><span class=w> </span><span class=n>t0</span><span class=p>;</span><span class=w></span>
+<span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>t0</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>in_POSITION0</span><span class=p>.</span><span class=n>yyyy</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>glstate_matrix_mvp</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=w></span>
+<span class=w>    </span><span class=n>t0</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>glstate_matrix_mvp</span><span class=p>[</span><span class=mo>0</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>in_POSITION0</span><span class=p>.</span><span class=n>xxxx</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>t0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>t0</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>glstate_matrix_mvp</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>in_POSITION0</span><span class=p>.</span><span class=n>zzzz</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>t0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>gl_Position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>glstate_matrix_mvp</span><span class=p>[</span><span class=mi>3</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>in_POSITION0</span><span class=p>.</span><span class=n>wwww</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>t0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=c1>//将UV坐标从顶点数据复制到Interpolators输出</span><span class=w></span>
+<span class=w>    </span><span class=n>vs_TEXCOORD0</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>in_TEXCOORD0</span><span class=p>.</span><span class=n>xy</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Bind</span><span class=w> </span><span class=s>"vertex"</span><span class=w> </span><span class=n>Vertex</span><span class=w></span>
+<span class=n>Bind</span><span class=w> </span><span class=s>"texcoord"</span><span class=w> </span><span class=n>TexCoord0</span><span class=w></span>
+<span class=n>ConstBuffer</span><span class=w> </span><span class=s>"UnityPerDraw"</span><span class=w> </span><span class=mi>352</span><span class=w></span>
+<span class=n>Matrix</span><span class=w> </span><span class=mo>0</span><span class=w> </span><span class=p>[</span><span class=n>glstate_matrix_mvp</span><span class=p>]</span><span class=w></span>
+<span class=n>BindCB</span><span class=w>  </span><span class=s>"UnityPerDraw"</span><span class=w> </span><span class=mo>0</span><span class=w></span>
+<span class=w>      </span><span class=n>vs_4_0</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_constantbuffer</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>4</span><span class=p>],</span><span class=w> </span><span class=n>immediateIndexed</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_input</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_input</span><span class=w> </span><span class=n>v1</span><span class=p>.</span><span class=n>xy</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output_siv</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>position</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output</span><span class=w> </span><span class=n>o1</span><span class=p>.</span><span class=n>xy</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_temps</span><span class=w> </span><span class=mi>1</span><span class=w></span>
+<span class=w>   </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=nb>mul</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>yyyy</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>1</span><span class=p>].</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mi>1</span><span class=o>:</span><span class=w> </span><span class=nb>mad</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mo>0</span><span class=p>].</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xxxx</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mi>2</span><span class=o>:</span><span class=w> </span><span class=nb>mad</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>2</span><span class=p>].</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>zzzz</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mi>3</span><span class=o>:</span><span class=w> </span><span class=nb>mad</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>cb0</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>wwww</span><span class=p>,</span><span class=w> </span><span class=n>r0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mi>4</span><span class=o>:</span><span class=w> </span><span class=n>mov</span><span class=w> </span><span class=n>o1</span><span class=p>.</span><span class=n>xy</span><span class=p>,</span><span class=w> </span><span class=n>v1</span><span class=p>.</span><span class=n>xyxx</span><span class=c1>//将UV坐标从v1.xy传递到o1.xy</span><span class=w></span>
+<span class=w>   </span><span class=mi>5</span><span class=o>:</span><span class=w> </span><span class=n>ret</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>Unity将UV坐标包裹在其球体周围，在球体两极处图像的顶部和底部。图像的左侧和右侧接缝连接在一起。 沿着该接缝，UV坐标值从0到1。</p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-sphere.png title=球体UV></p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-sphere-above.png title=球体缝隙></p><h3 id=42-添加纹理>4.2. 添加纹理<a title="Permanent link"class=headerlink href=#42-添加纹理></a></h3><p>要使用纹理，必须添加另一个着色器属性。 常规纹理属性的类型是2D ，因为还有其他类型的纹理。 默认值是引用 Unity 的默认纹理之一的字符串，可以是white 、 black 或 gray 。</p><p>主纹理命名约定是<em>_MainTex</em>。 这也使您可以使用方便的 Material.mainTexture属性以通过脚本访问它。<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Properties</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>_Tint</span><span class=w> </span><span class=p>(</span><span class=s>"Tint"</span><span class=p>,</span><span class=w> </span><span class=n>Color</span><span class=p>)</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=n>_MainTex</span><span class=w> </span><span class=p>(</span><span class=s>"Texture"</span><span class=p>,</span><span class=w> </span><span class=mi>2</span><span class=n>D</span><span class=p>)</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>"white"</span><span class=w> </span><span class=p>{}</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><details class=question><summary>"white" {} 这个花括号有什么用？</summary> <p>上古时代开发的固定功能着色器曾经需要纹理设置，这些设置被放在这些括号内，但现在它们不再使用了。即使它们现在已经无用，着色编译器仍然需要它们，如果忽略它们会产生错误。</p></details><p>选中材质，查看inspector信息 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/material-inspector.png title=纹理_white显示></p><p>通过使用<em>sampler2D</em>类型为变量来访问着色器中的纹理。<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>_Tint</span><span class=p>;</span><span class=w></span>
+<span class=n>sampler2D</span><span class=w> </span><span class=n>_MainTex</span><span class=p>;</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>通过在片段程序中使用tex2D函数，完成对纹理UV坐标进行采样。<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nb>tex2D</span><span class=p>(</span><span class=n>_MainTex</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>再查看汇编后的shader代码<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>uniform</span><span class=w>  </span><span class=n>sampler2D</span><span class=w> </span><span class=n>_MainTex</span><span class=p>;</span><span class=w></span>
+<span class=k>in</span><span class=w>  </span><span class=n>vec2</span><span class=w> </span><span class=n>vs_TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=n>layout</span><span class=p>(</span><span class=n>location</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>)</span><span class=w> </span><span class=k>out</span><span class=w> </span><span class=n>vec4</span><span class=w> </span><span class=n>SV_TARGET0</span><span class=p>;</span><span class=w></span>
+<span class=kt>void</span><span class=w> </span><span class=n>main</span><span class=p>()</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>SV_TARGET0</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>texture</span><span class=p>(</span><span class=n>_MainTex</span><span class=p>,</span><span class=w> </span><span class=n>vs_TEXCOORD0</span><span class=p>.</span><span class=n>xy</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>SetTexture</span><span class=w> </span><span class=mo>0</span><span class=w> </span><span class=p>[</span><span class=n>_MainTex</span><span class=p>]</span><span class=w> </span><span class=mi>2</span><span class=n>D</span><span class=w> </span><span class=mo>0</span><span class=w></span>
+<span class=w>      </span><span class=n>ps_4_0</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_sampler</span><span class=w> </span><span class=n>s0</span><span class=p>,</span><span class=w> </span><span class=n>mode_default</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_resource_texture2d</span><span class=w> </span><span class=p>(</span><span class=kt>float</span><span class=p>,</span><span class=kt>float</span><span class=p>,</span><span class=kt>float</span><span class=p>,</span><span class=kt>float</span><span class=p>)</span><span class=w> </span><span class=n>t0</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_input_ps</span><span class=w> </span><span class=k>linear</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xy</span><span class=w></span>
+<span class=w>      </span><span class=n>dcl_output</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=w></span>
+<span class=w>   </span><span class=mo>0</span><span class=o>:</span><span class=w> </span><span class=k>sample</span><span class=w> </span><span class=n>o0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>v0</span><span class=p>.</span><span class=n>xyxx</span><span class=p>,</span><span class=w> </span><span class=n>t0</span><span class=p>.</span><span class=n>xyzw</span><span class=p>,</span><span class=w> </span><span class=n>s0</span><span class=w></span>
+<span class=w>   </span><span class=mi>1</span><span class=o>:</span><span class=w> </span><span class=n>ret</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere.png title=带纹理球体></p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere-above.png title=带纹理球体极角></p><p>球体两极附近会显得非常杂乱。 为什么会这样？ 发生纹理失真是因为插值在三角形中是线性的。 Unity 的球体在两极附近只有几个三角形，其中UV坐标失真最大。所以UV坐标在三角形与三角形的顶点之间是非线性变化，但在三角形内部的顶点之间的变化是线性的。所以球体两极纹理中的直线在三角形边界处突然改变方向。</p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere-wireframe.png title=跨三角形插值></p><p>不同的网格具有不同的 UV 坐标，从而产生不同的映射。 Unity 的默认球体使用经纬度纹理映射，而网格是低分辨率立方体球体。 这足以进行测试，但您最好使用自定义球体网格以获得更好的结果。</p><h3 id=43-平铺和偏移>4.3. 平铺和偏移<a title="Permanent link"class=headerlink href=#43-平铺和偏移></a></h3><p>为着色器添加纹理属性后，材质检查器不仅显示了纹理字段。它还显示了平铺和偏移控制。但是，更改这些 2D 向量目前没有任何效果。</p><p>这些额外的纹理数据存储在材质中，也可以由着色器访问。 可以通过与关联材料同名的变量加上<em>_ST</em> 后缀来执行此操作。这个变量的类型必须是float4.<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>sampler2D</span><span class=w> </span><span class=n>_MainTex</span><span class=p>;</span><span class=w></span>
+<span class=kt>float4</span><span class=w> </span><span class=n>_MainTex_ST</span><span class=p>;</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>平铺向量用于缩放纹理，因此默认为<span class=arithmatex>\((1, 1)\)</span>。 它存储在变量的XY部分。 要使用它只需将它与UV 坐标相乘。 这可以在顶点着色器或片段着色器中完成。 在顶点着色器中这样做是有意义的，只为每个顶点而不是每个像素执行乘法。<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Interpolators</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=w> </span><span class=p>(</span><span class=n>VertexData</span><span class=w> </span><span class=n>v</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>mul</span><span class=p>(</span><span class=n>UNITY_MATRIX_MVP</span><span class=p>,</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>uv</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>_MainTex_ST</span><span class=p>.</span><span class=n>xy</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>偏移向量用于移动纹理，并存储在变量的ZW部分中。<div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>i.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
+</code></pre></div></td></tr></table></div><p>UnityCG.cginc包含一个方便的宏:<em>TRANSFORM_TEX</em><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code>i.uv = TRANSFORM_TEX(v.uv, _MainTex);
+</code></pre></div></td></tr></table></div><h2 id=5-纹理设置>5. 纹理设置<a title="Permanent link"class=headerlink href=#5-纹理设置></a></h2><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/texture-inspector.png title=默认的纹理设置> Wrap Mode决定了在使用0-1范围之外的UV坐标进行采样时的输出。 - 设置为clamped时，UV被限制在 0–1 范围内。 这意味着超出边缘的像素与位于边缘的像素相同。 - 设置为repeat时，UV从0-1循环。这意味着超出边缘的像素与纹理另一侧的像素相同。</p><p>Wrap Mode默认模式是重复纹理，这会导致它平铺。 <img title="在(2, 2)开始平铺"alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/clamp.png></p><h3 id=51-mipmap和filter>5.1. Mipmap和Filter<a title="Permanent link"class=headerlink href=#51-mipmap和filter></a></h3><p>当纹理的像素与它们投影到网格的像素不完全匹配时会发生什么？ 存在不匹配，必须以某种方式解决。这是由Filter Mode完成如何控制。 - Point (no filter) 。这意味着当在某些 UV 坐标处对纹理进行采样时，将使用最近的像素。 这将使纹理呈现块状外观，除非像素精确映射到显示像素。 因此，它通常用于像素完美的渲染，或者需要块状样式时。 - bilinear filtering双线性过滤。 当纹理在两个像素之间的某处被采样时，这两个像素被插值。 由于纹理是 2D 的，这发生在 U 轴和 V 轴上。 因此是双线性过滤。</p><p>双线性过滤方法在像素密度小于显示像素密度时有效，因此当放大纹理时。结果会看起来很模糊。 当缩小纹理时，几乎不起作用。 相邻的显示像素最终会得到相距超过一个像素的样本。 这意味着将跳过部分纹理，这将导致粗糙的过渡，就像图像被锐化一样。</p><p>双线性过滤问题的解决方案是在像素密度变得太高时使用较小的纹理。 显示屏上出现的纹理越小，应使用的版本越小。 这些较小的版本称为 mipmap，unity会自动为您生成。 每个连续的 mipmap 的宽度和高度都是上一层的一半。 所以当原始纹理大小为 512x512 时，mip 贴图为 256x256、128x128、64x64、32x32、16x16、8x8、4x4 和 2x2。</p><details class=question><summary>mipmap 是什么？</summary> <p>mipmap这个词是MIP map的缩写，字母 MIP 代表拉丁短语 multum in parvo。 它是由Lance Williams首次在描述mipmap技术时创造的。</p></details><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/bilinear-mips.png title=mipmap有></p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/no-mips.png title=mipmap无></p><p>那么在何时使用哪个mipmap级别，它们看起来有什么不同呢？ 先通过在高级纹理设置中启用Fadeout Mip Maps。启用一个淡入淡出范围后，inspector将显示滑块。它定义了一个mipmap范围，在该范围内 mipmap 将转换为纯灰色。 越向右滑动过渡级别越小。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-3.png title=mipmap过渡3级别></p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-4.png title=mipmap过渡4级别></p><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-5.png title=mipmap过渡5级别></p><p>mipmap过渡之间呈现出模糊到锐利的快速，过渡不自然。这可以通过将过滤器模式切换为Trilinear三线性。 这与双线性过滤的工作方式相同，但它是<strong>在相邻的mipmap级别之间进行插值，这使得采样成本更高</strong>，但它平滑了 mipmap 级别之间的转换。</p><p>另一种有用的技术是各向异性过滤。 当把Aniso Level设置为 0 时，纹理变得更加模糊。这与mipmap 级别的选择有关。</p><details class=question><summary>各向异性是什么意思？</summary> <p>粗略地说，当某物在不同方向上看起来相似时，它就是各向同性的。 例如，一个无特征的立方体。 如果不是这种情况，则它是各向异性的。 例如，一个三角体，因为它的纹理朝着一个方向而不是另一个方向。</p></details><p>当纹理以某个角度投影时，由于透视关系，通常最终会发现其中一个维度比另一个维度扭曲得更多。一个很好的例子是带纹理的地面。在远处，纹理的前后维度会显得比左右维度小得多。</p><h3 id=52-aniso-level>5.2. Aniso Level<a title="Permanent link"class=headerlink href=#52-aniso-level></a></h3><p>选择哪个 mipmap 级别基于最差维度。 如果差异很大，那么会得到一个在一维上非常模糊的结果。各向异性过滤通过解耦维度来缓解这种情况。除了统一缩小纹理外，它还提供在任一维度上缩放不同数量的版本。 因此，您不仅有 256x256 的 mipmap，而且还有 256x128、256x64 等的 mipmap。 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-aniso.png title=没有Aniso></p><p><img title="有Aniso Level"alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/with-aniso.png></p><details class=warning open><summary>Warning</summary> <p>请注意，这些额外的 mipmap 不像常规 mipmap 那样预先生成。 相反，它们是通过执行额外的纹理样本来模拟的。 因此它们不需要更多空间，但采样成本更高。</p></details><p><img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/aniso-mip.png title=各向异性双线性过滤></p><p>各向异性过滤的深度由 Aniso Level 控制。 为 0 时，它被禁用。 为 1 时，它变为启用并提供最小的效果。 16达到最大值。 但是，这些设置会受到项目质量设置的影响。 可以通过 Edit / Project Settings / Quality 访问质量设置。 找到 各向异性纹理 项目设置 <img alt src=https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/rendering-quality.png title=渲染质量设置></p><p>项目设置禁用各向异性纹理时，无论纹理设置如何，都不会发生各向异性过滤。当它设置为 Per Texture时，它​​完全由纹理自身设置控制。也可以设置为 Forced On ，强制把每个纹理都开启Ansio Level，但是若纹理设置Aniso Level为0，仍然不会使用各向异性过滤。</p><h2 id=6-结尾>6. 结尾<a title="Permanent link"class=headerlink href=#6-结尾></a></h2><p>该篇内容的<a href=https://github.com/damonc-top/UnityRender/blob/master/UnityRender/Assets/2Fundamentals3Texture>完整代码</a>，该篇内容的<a href=https://catlikecoding.com/unity/tutorials/rendering/part-2/>原文出处</a>，该篇文章的<a href=https://www.damonc.top/posts/unity3d/shader/translater/catlikecoding/unity_shader_fundamentals>原始地址</a>。</p><hr><blockquote class=page-copyright><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4Z"/></svg></i>本页面最近更新：</span><span class=facts_modified></span>，<a class=edit_history>更新历史</a><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg></i>发现错误？ <a class=page_edit_url href=https://github.com/damonc-top/damonc-top.github.io/discussions/posts/unity3d/shader/translater/catlikecoding/unity_shader_fundamentals.md title=编辑此页>在 GitHub 评论指正！</a></span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7Z"/></svg></i>本文作者：</span><span class=page_contributors>银河揽月</span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M10.08 10.86c.05-.33.16-.62.3-.86.3-.56.81-.85 1.5-.86.45 0 .86.2 1.15.49.28.31.47.74.47 1.17h1.8c-.02-.47-.11-.9-.3-1.3-.15-.38-.38-.72-.68-1-1.45-1.34-4.14-1.15-5.37.37-1.29 1.67-1.32 4.59-.01 6.26 1.21 1.49 3.86 1.7 5.3.37.31-.25.56-.56.76-.92.16-.36.27-.74.28-1.15H13.5c0 .21-.07.4-.16.57-.09.19-.21.34-.34.47-.33.26-.72.4-1.14.4-.36-.01-.66-.08-.89-.23a1.41 1.41 0 0 1-.59-.64c-.5-.9-.42-2.15-.3-3.14M12 2C6.5 2 2 6.5 2 12c.53 13.27 19.5 13.26 20 0 0-5.5-4.5-10-10-10m0 18c-4.41 0-8-3.59-8-8 .44-10.61 15.56-10.61 16 0 0 4.41-3.59 8-8 8Z"/></svg></i>本页面的全部内容在 <strong><a href=https://creativecommons.org/licenses/by-sa/4.0/deed.zh>CC BY-SA 4.0</a> 和 <a href=https://github.com/zTrix/sata-license>SATA</a></strong> 协议之条款下提供，附加条款亦可能应用</span></blockquote><div class=giscus data-no-instant id=__comments></div><div id=__comments_script></div><script>var comments=document.createElement("script"),commentsTheme="slate"===document.body.dataset.mdColorScheme?"dark":"light";Object.entries({async:!0,src:"https://giscus.app/client.js",crossOrigin:"anonymous","data-repo":"damonc-top/damonc-top.github.io","data-repo-id":"R_kgDOHK_iGQ","data-category":"评论","data-category-id":"DIC_kwDOHK_iGc4COonC","data-mapping":"specific","data-term":"二UnityShader基本语法","data-strict":"1","data-reactions-enabled":"1","data-emit-metadata":"0","data-input-position":"top","data-theme":commentsTheme,"data-lang":"zh-CN","data-loading":"lazy"}).forEach(t=>comments.setAttribute(t[0],t[1])),document.getElementById("__comments_script").replaceWith(comments)</script></article></div></div></main><script>function scrollFunction(){20<document.body.scrollTop||20<document.documentElement.scrollTop?document.getElementById("myBtn").style.display="block":document.getElementById("myBtn").style.display="none"}function topFunction(){document.body.scrollTop=0,document.documentElement.scrollTop=0}window.onscroll=function(){scrollFunction()}</script><button class=data-tip-left data-tip=回到顶部 id=myBtn onclick=topFunction()><svg class="Zi Zi--BackToTop data-tip-left"viewbox="0 0 24 24"data-tip=回到顶部 fill=currentColor height=24 width=24><path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path></svg></button><footer class=md-footer><nav class="md-footer__inner md-grid"aria-label=页脚><a aria-label="上一页: 一UnityShader变换矩阵"class="md-footer__link md-footer__link--prev"href=../unity_matrix_transform/ rel=prev> <div class="md-footer__button md-icon"><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg></div> <div class=md-footer__title><div class=md-ellipsis><span class=md-footer__direction> 上一页 </span> 一UnityShader变换矩阵</div></div> </a><a aria-label="下一页: 三UnityShader纹理融合"class="md-footer__link md-footer__link--next"href=../unity_combine_texture/ rel=next> <div class=md-footer__title><div class=md-ellipsis><span class=md-footer__direction> 下一页 </span> 三UnityShader纹理融合</div></div> <div class="md-footer__button md-icon"><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg></div> </a></nav><div class="md-footer-meta md-typeset"><div class="md-footer-meta__inner md-grid"><div class=md-copyright><div class=md-copyright__highlight>Copyright © 2016 - 2024 银河揽月</div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ rel=noopener target=_blank> Material for MkDocs <div id=miitbeian></div> </a></div><div class=build_date_utc style=float:right><a href=https://github.com/damonc-top/damonc-top.github.io> 最近更新：6c2a14f, 2024-09-24 </a></div></div></div></footer></div><div class=md-dialog data-md-component=dialog><div class="md-dialog__inner md-typeset"></div></div><script id=__config type=application/json>{"base": "../../../../../..", "features": ["navigation.tabs", "navigation.instant"], "search": "../../../../../../assets/javascripts/workers/search.8e7a41fd.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script><script src=../../../../../../assets/javascripts/bundle.c15c428f.min.js></script><script src=../../../../../../extension/js/math-csr.js?math-csr></script><script src=../../../../../../assets/vendor/mathjax/es5/tex-mml-chtml.js?math-csr></script><script>"use strict";"serviceWorker"in navigator&&navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).then(function(e){console.log("PWA Registration succeeded. Scope is "+e.scope)}).catch(function(e){console.log("PWA Registration failed with "+e)})</script></body></html>

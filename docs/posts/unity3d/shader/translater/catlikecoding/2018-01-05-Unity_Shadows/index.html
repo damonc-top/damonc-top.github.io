@@ -1,0 +1,610 @@
+<!doctypehtml><html class=no-js lang=zh><meta charset=utf-8><meta content=on http-equiv=x-dns-prefetch-control><link href=//www.damonc.top rel=dns-prefetch><link href=//search.www.damonc.top rel=dns-prefetch><link href=//api.github.com rel=dns-prefetch><link href=//www.google-analytics.com rel=dns-prefetch><meta content=width=device-width,initial-scale=1 name=viewport><meta content=当一个物体位于光源和另一个物体之间时，它可能会阻止部分或全部光线到达另一个物体。这些光线照亮了第一个物体就不再可能照亮第二个物体。因此，第二个物体有一部不发光，而不发光的区域位于第一个物体的阴影下。我们通常是这样描述：第一个物体投射了一个阴影到第二个物体。 name=description><meta content=catlikecoding name=author><link href=https://www.damonc.top/posts/unity3d/shader/translater/catlikecoding/2018-01-05-Unity_Shadows/ rel=canonical><link href=../../../../../../favicon.ico rel=icon><meta content="mkdocs-1.4.2, mkdocs-material-8.5.11"name=generator><title>Unity Shadow 阴影(翻译七) - 银河揽月</title><link href=../../../../../../assets/stylesheets/main.31645160.min.css rel=stylesheet><link href=../../../../../../assets/stylesheets/palette.2505c338.min.css rel=stylesheet><link href=../../../../../../extension/css/extra.css rel=stylesheet><link crossorigin href=https://fonts.gstatic.com rel=preconnect><link href=https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,700,700i%7CFira+Mono:400,400i,700,700i&display=fallback rel=stylesheet><style>:root{--md-text-font:"Fira Sans";--md-code-font:"Fira Mono"}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:300;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:italic;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Italic'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:700;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Mono';font-style:normal;font-weight:regular;src:local('Fira Mono'),local('FiraMono-Normal'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.svg#FiraMono) format('svg')}</style><script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script>"undefined"!=typeof __md_analytics&&__md_analytics()</script></head><body data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default dir=ltr><script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script><input autocomplete=off class=md-toggle data-md-toggle=drawer id=__drawer type=checkbox><input autocomplete=off class=md-toggle data-md-toggle=search id=__search type=checkbox><label class=md-overlay for=__drawer></label><div data-md-component=skip><a class=md-skip href=#方向光阴影-direction> 跳转至 </a></div><div data-md-component=announce></div><header class=md-header data-md-component=header><nav class="md-header__inner md-grid"aria-label=页眉><a class="md-header__button md-logo"aria-label=银河揽月 data-md-component=logo href=../../../../../.. title=银河揽月> <img alt=logo src=../../../../../../images/homepage.png> </a><label class="md-header__button md-icon"for=__drawer><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg></label><div class=md-header__title data-md-component=header-title><div class=md-header__ellipsis><div class=md-header__topic><span class=md-ellipsis> 银河揽月 </span></div><div class=md-header__topic data-md-component=header-topic><span class=md-ellipsis> Unity Shadow 阴影(翻译七) </span></div></div></div><form class=md-header__option data-md-component=palette><input aria-label="Switch to dark mode"data-md-color-media="(prefers-color-scheme: light)"class=md-option data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default id=__palette_1 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to dark mode"for=__palette_2 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg></label><input aria-label="Switch to light mode"data-md-color-media="(prefers-color-scheme: dark)"class=md-option data-md-color-accent=slate data-md-color-primary=slate data-md-color-scheme=slate id=__palette_2 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to light mode"for=__palette_1 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg></label></form><label class="md-header__button md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg></label><div class=md-search data-md-component=search role=dialog><label class=md-search__overlay for=__search></label><div class=md-search__inner role=search><form class=md-search__form name=search><input aria-label=搜索 autocapitalize=off autocomplete=off autocorrect=off class=md-search__input data-md-component=search-query name=query placeholder=搜索 required spellcheck=false><label class="md-search__icon md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg></label><nav aria-label=查找 class=md-search__options><button class="md-search__icon md-icon"aria-label=清空当前内容 tabindex=-1 title=清空当前内容 type=reset><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg></button></nav></form><div class=md-search__output><div class=md-search__scrollwrap data-md-scrollfix><div class=md-search-result data-md-component=search-result><div class=md-search-result__meta>正在初始化搜索引擎</div><ol class=md-search-result__list></ol></div></div></div></div></div><div class=md-header__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div></nav></header><div class=md-container data-md-component=container><nav aria-label=标签 class=md-tabs data-md-component=tabs><div class="md-tabs__inner md-grid"><ul class=md-tabs__list><li class=md-tabs__item><a class=md-tabs__link href=../../../../../..> 首页 </a></li><li class=md-tabs__item><a class=md-tabs__link href=../../../../il2cpp/> Unity3D引擎 </a></li></ul></div></nav><main class=md-main data-md-component=main><div class="md-main__inner md-grid"><div class="md-sidebar md-sidebar--primary"data-md-component=sidebar data-md-type=navigation><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--primary md-nav--lifted"aria-label=导航栏 data-md-level=0><label class=md-nav__title for=__drawer><a class="md-nav__button md-logo"aria-label=银河揽月 data-md-component=logo href=../../../../../.. title=银河揽月> <img alt=logo src=../../../../../../images/homepage.png> </a> 银河揽月</label><div class=md-nav__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_1 id=__nav_1 type=checkbox> <label class=md-nav__link for=__nav_1>首页 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=首页 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_1><span class="md-nav__icon md-icon"></span> 首页</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../../../../..> 简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../../../../../home/learn/> 记录 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2 id=__nav_2 type=checkbox> <label class=md-nav__link for=__nav_2>Unity3D引擎 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Unity3D引擎 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_2><span class="md-nav__icon md-icon"></span> Unity3D引擎</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_1 id=__nav_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_1>il2cpp <span class="md-nav__icon md-icon"></span></label> <nav aria-label=il2cpp class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_1><span class="md-nav__icon md-icon"></span> il2cpp</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../../../il2cpp/> il2cpp简介 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_2 id=__nav_2_2 type=checkbox> <label class=md-nav__link for=__nav_2_2>Shader <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Shader class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_2><span class="md-nav__icon md-icon"></span> Shader</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_2_1 id=__nav_2_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_2_1>翻译CatlikeCoding <span class="md-nav__icon md-icon"></span></label> <nav aria-label=翻译CatlikeCoding class=md-nav data-md-level=3><label class=md-nav__title for=__nav_2_2_1><span class="md-nav__icon md-icon"></span> 翻译CatlikeCoding</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../> Catlikecoding简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_matrix_transform/> 一UnityShader变换矩阵 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_shader_fundamentals/> 二UnityShader基本语法 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_combine_texture/> 三UnityShader纹理融合 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_base_light/> 四UnityShader基础光照 </a></li></ul></nav></li></ul></nav></li></ul></nav></li></ul></nav></div></div></div><div class="md-sidebar md-sidebar--secondary"data-md-component=sidebar data-md-type=toc><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--secondary"aria-label=目录><label class=md-nav__title for=__toc><span class="md-nav__icon md-icon"></span> 目录</label><ul class=md-nav__list data-md-component=toc data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=#方向光阴影-direction> 方向光阴影-Direction </a> <nav aria-label=方向光阴影-Direction class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#启用阴影-enable-shadow> 启用阴影-Enable Shadow </a></li><li class=md-nav__item><a class=md-nav__link href=#阴影贴图-shadow-map> 阴影贴图-Shadow map </a></li><li class=md-nav__item><a class=md-nav__link href=#渲染深度纹理-rendering-to-the-depth-texture> 渲染深度纹理-Rendering to the Depth Texture </a></li><li class=md-nav__item><a class=md-nav__link href=#渲染阴影贴图-rendering-to-shadow-maps> 渲染阴影贴图-Rendering to Shadow Maps </a></li><li class=md-nav__item><a class=md-nav__link href=#收集阴影-collecting-shadows> 收集阴影-Collecting Shadows </a></li><li class=md-nav__item><a class=md-nav__link href=#采样阴影贴图-sampling-the-shadow-maps> 采样阴影贴图-Sampling the Shadow Maps </a></li><li class=md-nav__item><a class=md-nav__link href=#阴影质量-shadow-quality> 阴影质量-Shadow Quality </a></li><li class=md-nav__item><a class=md-nav__link href=#阴影痤疮0什么鬼> 阴影“痤疮”(0!什么鬼) </a></li><li class=md-nav__item><a class=md-nav__link href=#抗锯齿> 抗锯齿 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#投射阴影> 投射阴影 </a> <nav aria-label=投射阴影 class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#偏差-bias> 偏差-Bias </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#接收阴影> 接收阴影 </a> <nav aria-label=接收阴影 class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#采样阴影> 采样阴影 </a></li><li class=md-nav__item><a class=md-nav__link href=#内置函数使用> 内置函数使用 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#聚光灯阴影> 聚光灯阴影 </a> <nav aria-label=聚光灯阴影 class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#采样阴影纹理> 采样阴影纹理 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#点光源阴影> 点光源阴影 </a> <nav aria-label=点光源阴影 class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#投射阴影_1> 投射阴影 </a></li><li class=md-nav__item><a class=md-nav__link href=#采样阴影纹理_1> 采样阴影纹理 </a></li></ul></nav></li></ul></nav></div></div></div><div class=md-content data-md-component=content><article class="md-content__inner md-typeset"><a class="md-content__button md-icon"href=https://github.com/damonc-top/damonc-top.github.io/discussions/posts/unity3d/shader/translater/catlikecoding/2018-01-05-Unity_Shadows.md title=编辑此页> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a><h1>Unity Shadow 阴影(翻译七)</h1><p>本篇摘要: * 探索Unity中的阴影渲染<br> <em> 投射一个方向光阴影<br> </em> 接收一个方向光阴影<br> * 支持对聚光源和点光源阴影</p><h2 id=方向光阴影-direction>方向光阴影-Direction<a title="Permanent link"class=headerlink href=#方向光阴影-direction></a></h2><p>前面写的光照shader产生了相当真实的效果，可它假设着来自每个光源的光线最终都会击中它的片元，但是这只有在那些光线没有被遮挡才成立。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20191218085818298-1814779079.png" des="方向光投射阴影的草图" width="250" %}</p><p>当一个物体位于光源和另一个物体之间时，它可能会阻止部分或全部光线到达另一个物体。这些光线照亮了第一个物体就不再可能照亮第二个物体。因此，第二个物体有一部不发光，而不发光的区域位于第一个物体的阴影下。我们通常是这样描述：第一个物体投射了一个阴影到第二个物体。</p><p>实际上，在全光照和全阴影的存在过渡区，被称为半阴影。这是因为所有光源都有一个体积，因此，这些区域只有部分光源是可见的，意味着它是部分阴影。光源远大，表面距离阴影投射器越远，半影区域也就越大。</p><p>但是Unity不支持半影，只支持软阴影soft shadow，但它是阴影过滤算法。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004113666-17566508.png" des="半阴影或是soft shadow" width="250" %}</p><h3 id=启用阴影-enable-shadow>启用阴影-Enable Shadow<a title="Permanent link"class=headerlink href=#启用阴影-enable-shadow></a></h3><p>先关闭环境光，这样会更容易看见阴影。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004114401-1156490901.png" des="没有投射阴影" width="250" %}</p><p>没有阴影，物体间的空间视觉感不太强。在QualitySetting可以打开或关闭阴影。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004114977-1581119995.png" des="阴影参数" width="250" %}</p><p>同时确保光源开启投射阴影，分辨率依赖于上面的quality设置 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004115441-758263297.png" des="阴影类型" width="250" %} {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004116185-479542116.png" des="阴影投射" width="250" %}</p><h3 id=阴影贴图-shadow-map>阴影贴图-Shadow map<a title="Permanent link"class=headerlink href=#阴影贴图-shadow-map></a></h3><p>Unity是如何把阴影添加到屏幕？上面所有物体使用的standard着色器，有一些方法确定光线是否被阻挡。</p><p>要搞清楚一个点是否在阴影中，可以通过在场景中从光线到表面片元投射光线，如果光线在到达表面之前击中某些东西，说明它就被阻挡了。这些事是物理引擎做的，但是要计算每个片元与每个光是不实际的，而且还要把结果传递给GPU。</p><p>现在有许多支持实时阴影的技术，它们各有优劣。而<strong>Unity采用了最常用的技术：Shadow Mapping</strong>。这意味着unity把阴影数据存储至纹理中。现在来看看它是如何工作的。</p><p>打开frame Debugger，Window/Frame Debugger。点击Enable，按顺序查看面板信息。注意看看每帧在gameScene视图中的不同，以及阴影的开启。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004116813-251352475.png" des="frame debugger调试" width="250" %}</p><p>当启用阴影绘制时，这个绘制过程变得非常复杂：有更多的渲染阶段，和更多的draw call。阴影绘制非常昂贵！</p><h3 id=渲染深度纹理-rendering-to-the-depth-texture>渲染深度纹理-Rendering to the Depth Texture<a title="Permanent link"class=headerlink href=#渲染深度纹理-rendering-to-the-depth-texture></a></h3><p>当方向阴影激活后，Unity在渲染过程开启一个<strong>depth pass</strong>通道计算。结果存储在与屏幕分辨率相匹配的纹理，这个pass通道会渲染整个屏幕，但是<strong>只收集每个片元的深度信息</strong>。这些信息与GPU用于确定一个片段渲染结束时在先前渲染的片段之上(前)还是之下(后)的信息<strong>相同</strong>。</p><p>这个数据对应在裁剪空间(clip space)坐标的z分量值。而裁剪空间是定义摄像机能看见的区域，<strong>深度信息最终存储为0-1范围内的值</strong>。在debugger查看该纹理时，近裁切面附近的纹理显示趋近为(白)浅色，远裁切面附近的纹素texel，颜色趋近黑(暗)色。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004117380-1866548771.png" des="depth texture, 摄像机近裁切面为5" width="250" %} {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004117917-92987945.png" des="与屏幕分辨率一致" width="250" %}</p><p>这些信息实际上与阴影没有太多直接关系，但Unity在后面的pass通道使用了它。</p><h3 id=渲染阴影贴图-rendering-to-shadow-maps>渲染阴影贴图-Rendering to Shadow Maps<a title="Permanent link"class=headerlink href=#渲染阴影贴图-rendering-to-shadow-maps></a></h3><p>这步主要工作：先渲染第一个光源的阴影贴图，然后就会渲染第二个光源的阴影贴图。</p><p>再一次渲染整个屏幕，并再次把深度信息存储在纹理中。但是，这此的屏幕渲染是从光源位置角度进行的，<strong>实际上是把光源作为摄像机</strong>。这意味着用深度值告诉了我们<strong>光线击中物体之前走了多远距离</strong>，<strong>这可以用来确定什么东西被遮蔽了!</strong></p><blockquote><p>阴影贴图记录了实际的几何图形的深度信息。而法线贴图是为了添加粗糙表面的一种错觉， 阴影贴图会忽略它们。因此，阴影不受法线贴图的影响。 {: .prompt-tip}</p></blockquote><p>由于我们使用方向光，这些光模拟的摄像机是正交投影，没有透视投影。因此它们模拟的相机的位置精确性就不那么重要。Unity将定位常规相机使其能够看见视野内所有物体。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004118495-150954892.png" url2="posts/2018/month1/catRender7/1692664-20200219004119056-187327811.png" des="左第一个光源，右第二个光源" width="250" %}</p><blockquote><p>事实上，原来Unity渲染整个场景不是每个光只渲染一次，而是每个光要渲染四次！</p><p>这个阴影纹理被分成四个象限，每个象限从不同的角度呈现。这是因为我们选择使用 <em>Four Cascades</em>(QualitySetting)。如果我们设置为Two Cascades，就是每个光渲染两次； 如果设置没有，只会渲染一次。我们接下来要探查阴影质量与该项设置的关系。Unity为什么渲染这么 多次。 {: .prompt-tip}</p></blockquote><h3 id=收集阴影-collecting-shadows>收集阴影-Collecting Shadows<a title="Permanent link"class=headerlink href=#收集阴影-collecting-shadows></a></h3><p>我们已经从摄像机的角度得到场景的深度信息，也有了从每个光模拟的相机视角得到的深度信息，这些数据存在不同的裁剪空间。但是我们知道这些空间的相对位置和方向，因此能从一个空间转换到另一个空间。这允许我们从两个视角比较深度测量。理论上讲，我们有两个向量应该在同一点交会结束，这样相机和光源都能看见该点，说明它被点亮了。如果光的向量在到达该点之前结束，则光被挡住，这意味着该点被阴影化。</p><blockquote><p>当摄像机看不到一个点时？ 看不到的这些点被隐藏在距离相机更近的其他点后面。 场景深度纹理仅包含最接近的点。 因此没有时间浪费在评估隐藏点。 {: .prompt-tip} {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004119634-36088154.png" url2="posts/2018/month1/catRender7/1692664-20200219004120273-1411206867.png" des="每个光的屏幕空间阴影" width="250" %}</p></blockquote><p>Unity通过渲染一个单独的覆盖整个视野的面片来创建这些纹理，它使用了Hidden/Internal-ScreenSpaceShadows shader的通道，每个片元从场景和光源的深度纹理采样，进行比较，渲染最终阴影值到屏幕空间的阴影纹理。亮的纹素值设为1，阴影纹素值设为0。此时Unity能执行过滤，创建柔和的阴影。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004120767-1471511920.png" des="shader 通道0" width="250" %}</p><blockquote><p>为什么Unity在渲染和收集间交替？</p><p>每个光需要它自己的屏幕空间阴影贴图，然而从光源位置视野渲染的阴影贴图能被重复使用。 {: .prompt-tip}</p></blockquote><h3 id=采样阴影贴图-sampling-the-shadow-maps>采样阴影贴图-Sampling the Shadow Maps<a title="Permanent link"class=headerlink href=#采样阴影贴图-sampling-the-shadow-maps></a></h3><p>最后，Unity完成了阴影渲染。现在屏幕是常规渲染，只有一个更改：光照颜色与它的阴影贴图的值相乘。这就消除了被遮挡的光线。渲染的每个片元都要采样阴影贴图，每个最终隐藏在其他对象之后的片元会最后绘制。因此这些片元最后能接收到最终能遮挡它们的对象的阴影。当在frame debugger步进调试观察时，您还可以看到阴影在实际投射它的对象之前出现。当然这些错误只在渲染帧时很明显，一旦完成渲染就是正确的了 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219004121539-766772112.png" des="部分渲染帧" width="250" %}</p><h3 id=阴影质量-shadow-quality>阴影质量-Shadow Quality<a title="Permanent link"class=headerlink href=#阴影质量-shadow-quality></a></h3><p>虽然场景是从光源的方向进行渲染，但是该方向与场景内摄像机视野方向不匹配。因此阴影贴图的纹素与最终呈现图像的纹素是没有对齐的，会出现锯齿。阴影贴图的分辨率也会不同，最终图像的分辨率是由显示设置决定的，而阴影贴图的分辨率由阴影质量设置决定。</p><p>当阴影贴图的纹素最后渲染的比最终图像大时，将很明显：阴影的边缘出现叠加，在使用硬阴影时非常明显。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219104536520-1647041130.png" url2="posts/2018/month1/catRender7/1692664-20200219104537010-710024064.png" des="硬阴影 vs 软阴影" width="250" %}</p><p>在质量设置面板修改使用hard shadow、lowest resolution、no cascades。就会看见满屏的锯齿。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219104537807-1725277269.png" des="低质量阴影" width="250" %}</p><blockquote><p>“阴影是一张纹理”</p><p>现在就非常明显了。但是上图有些阴影出现在了不该出现的地方。 {: .prompt-danger}</p></blockquote><p>距离摄像机越近的阴影，它们的纹素变得越大。这是由于阴影贴图当前覆盖了场景相机的整个可视区域。在QualitySetting面板通过降低阴影覆盖的区域，来提升靠近相机区域的阴影质量。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219104538524-1008907954.png" des="Shadow Distance降至25，其他参数一致" width="250" %}</p><p>通过限制靠近屏幕相机的阴影区域，我们能使用相同的阴影纹理去覆盖更多小区域。结果是能得到更好的阴影。但是会丢失更远区域的阴影细节，因为当阴影接近最大距离时会逐渐消失。</p><p>理想情况是，既要获得近距离高质量阴影，同时也要保留远处的阴影。因为远处的阴影最后渲染在较小的屏幕区域，就可以用作低分辨率阴影纹理。这就是<strong>Shadow Cascades的工作</strong>。当启用该选项，多个阴影贴图渲染进同一张纹理，每张贴图对应某些距离来使用。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219104539269-790456352.png" des="fourCascades,100Distance,hardShodw,LowResolution" width="250" %}</p><p>当使用FourCascades，上图结果看起来比之前的要好，尽管我们使用了同一张纹理分辨率，我们更有效的使用了纹理。不过缺点就是我们现在至少要渲染场景3次以上。当渲染屏幕空间阴影纹理时，Unity关注从正确Cascade采样，如下图CascadeSplits：一个cascade结束是下一个的开始。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219104539767-1296197985.png" des="Cascade Splits" width="250" %}</p><p>可以控制cascade的范围，作为阴影距离的一部分。也能通过改变_Shading Mode/Miscellaneous/Shadow Cascades_观察scene视图的变化。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219104540599-1094570005.png" des="Cascade范围：StableFit" width="250" %}</p><p>上图显示的cascade形状(覆盖区域)是可以通过_Shadow Projection_调整，默认是_Stable Fit_：这个模式cascade条带选择的区域基于距离摄像机位置的远近。其他模式是_Close Fit_：使用相机的深度信息替代，在相机可视方向产生一条规则的条带。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200219104541528-964824910.png" des="Close Fit" width="250" %}</p><p>Close Fit模式可以更高效的利用阴影纹理，绘制更高质量的阴影。然而，该阴影投射模式(ShadowProjection)取决于阴影产生后位置和方向以及相机参数。结果是，当移动或旋转相机，阴影贴图也会跟着移动。这就是著名的<strong>阴影抖动</strong>。所以Stale Fit是引擎默认的选项。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011549767-631714908.gif" des="Close Fit: swimming" width="250" %}</p><p>Stable Fit模式下，在相机位置改变时Unity能够对齐纹理，纹素看起来好像没动。实际上cascade移动了，只是在cascade相互过渡时阴影会发生改变。如果没有注意到cascade改变，就不容易察觉到。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011551635-334469142.gif" des="Stable Fit: edge transition" width="250" %}</p><h3 id=阴影痤疮0什么鬼>阴影“痤疮”(0!什么鬼)<a title="Permanent link"class=headerlink href=#阴影痤疮0什么鬼></a></h3><p>当我们使用低质量的硬阴影时，我们看见一些阴影出现在不正确的地方。不幸的是，不管如何设置_Quality Setting_都会发生。</p><blockquote><p>Shadow Acne</p><p>阴影贴图中每个纹素表示光线击中表面的点。然而，这些纹素不是单独点。它们最后要覆盖很大的区域并且与光的方向对 齐，而不是与表面一致。结果时，它们会像黑色瓦片最终黏在、穿过、伸出表面；当阴影纹理的一部分从投射出阴影的表面 伸出时，表面看起来也会产生阴影。 {: .prompt-warning}</p></blockquote><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011552772-162435124.png" des="凸起" width="250" %}</p><p>阴影凸起的另一个来源是数字精度的限制，当使用非常小的距离时这些限制会导致不正确的结果。默认是0.05. {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011553241-1223925943.png" width="500" %} {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011554194-2082319886.png" des="light组件中设置没有biases" width="500" %}</p><p>避免该问题的一个方法是：当渲染阴影纹理时增加深度偏移。这个_偏差系数_目的是增加‘光投射到表面距离’，把阴影‘推进’表面内。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011554763-238944472.png" des="Biases系数控制粉刺" width="250" %}</p><p>较低的Bias系数会产生粉刺，而较高的偏差系数就会有另一个问题：当投射阴影的对象逐渐远离光源时，阴影也会逐渐飘离原对象。使用较小的值问题还可接受，但太大的值会导致物体与该物体的阴影不再相连接了，好像飞起来了。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011555603-1490654705.png" des="太大的Bias导致阴影飘移" width="500" %}</p><p>除了距离bias偏差，还有法线偏差。该系数辅助调整阴影投射：沿着法线，将投射的阴影顶点向内‘推’。该值也会改善“阴影粉刺”，但是越大的值越会使阴影变得更小并且有可能使阴影中间出现洞。</p><p><strong>best bias settings</strong>？没有最优的默认值，必须不停的实验调整 。</p><h3 id=抗锯齿>抗锯齿<a title="Permanent link"class=headerlink href=#抗锯齿></a></h3><p>Anti-Aliasing:图形边缘锯齿缓和。在Unity开启了4倍抗锯齿，感觉并没有达到想要的抗锯齿效果。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011555867-728275342.png" width="250" %}</p><p><strong>Unity采用的多重采样抗锯齿方案：MSAA，通过沿三角形边缘执行超级采样以消除边缘锯齿，更重要的是Unity渲染屏幕空间阴影时，它使用了一个单独四方面片覆盖整个可视区域。结果是，这就没有了三角形边缘，因此MSAA对屏幕空间阴影纹理采样就没有效果了。MSAA对最终图像有效，但阴影值是取之屏幕空间阴影纹理，当亮表面紧挨着暗表面被阴影覆盖时就非常明显。明暗之间的边缘是反锯齿的，而阴影边缘则不是</strong>。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011556603-1672887107.png" des="no AA" width="500" %}</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200220011557407-1382894965.png" des="4倍MSAA" width="500" %}</p><p>当然也有FXAA，是<strong>屏幕后处理抗锯齿</strong>，效果挺好！</p><h2 id=投射阴影>投射阴影<a title="Permanent link"class=headerlink href=#投射阴影></a></h2><p>通过上面我们知道了Unity如何创建方向光阴影，是时候写自己的Shader来支持阴影了。当前光照shader既不支持投射阴影也不支持接收阴影。</p><p>首先来处理投射阴影：我们知道对于方向光阴影Unity会渲染多次屏幕。对每个阴影纹理一次是深度pass渲染，一次是每个光源渲染。而屏幕空间阴影纹理是屏幕效果暂时与我们无关。阴影渲染Pass标签是_ShadowCaster。_因为我们只对深度值感兴趣，它与别的Pass相比应该会简单。增加一个pass</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Pass</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>Tags</span><span class=p>{</span><span class=s>"LightMode"</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>"ShadowCaster"</span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=n>CGPROGRAM</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>pragma</span><span class=w> </span><span class=n>target</span><span class=w> </span><span class=mf>3.0</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>pragma</span><span class=w> </span><span class=n>vertex</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>pragma</span><span class=w> </span><span class=n>fragment</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>include</span><span class=w> </span><span class=s>"MyShadow.cginc"</span><span class=w></span>
+<span class=w>    </span><span class=n>ENDCG</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>创建一个_MyShadow.cginc_文件</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#if !defined(MY_SHADOW_INCLUDE)</span><span class=w></span>
+<span class=cp>#define MY_SHADOW_INCLUDE</span><span class=w></span>
+<span class=cp>#include “UnityCG.cginc”</span><span class=w></span>
+<span class=k>struct</span><span class=w> </span><span class=n>InputData</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>POSITION</span><span class=p>;</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+
+<span class=kt>float4</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>(</span><span class=n>InputData</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>UnityObjectToClipPos</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>half4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>()</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>上面写完就嫩产生方向光阴影了。下面开始用代码调优阴影质量。</p><h3 id=偏差-bias>偏差-Bias<a title="Permanent link"class=headerlink href=#偏差-bias></a></h3><p>我们要支持阴影的偏移。在渲染深度Pass时该值是0，但当渲染阴影纹理时，偏差值取光照组件设置。我们要做的就是：<strong>在顶点函数中在裁切空间下，对顶点坐标应用深度偏差</strong>。UnityCG函数_UnityApplyLinerShadowBias：_</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>(</span><span class=n>InputData</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityObjectToClipPos</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w>  </span><span class=n>UnityApplyLinearShadowBias</span><span class=p>(</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><em>在裁剪空间增加Z分量，复杂的是在其次坐标空间下，必须补偿透视投影，这样偏移不会随着与相机距离改变而改变，也必须确保结果不会越界。</em></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>UnityApplyLinearShadowBias</span><span class=p>(</span><span class=kt>float4</span><span class=w> </span><span class=n>clipPos</span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=cp>#if defined(UNITY_REVERSED_Z)</span><span class=w></span>
+<span class=w>    </span><span class=c1>// We use max/min instead of clamp to ensure proper handling of the rare case</span><span class=w></span>
+<span class=w>    </span><span class=c1>// where both numerator and denominator are zero and the fraction becomes NaN.</span><span class=w></span>
+<span class=w>    </span><span class=n>clipPos</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=nb>max</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=nb>min</span><span class=p>(</span><span class=n>unity_LightShadowBias</span><span class=p>.</span><span class=n>x</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>clipPos</span><span class=p>.</span><span class=n>w</span><span class=p>,</span><span class=w> </span><span class=mo>0</span><span class=p>));</span><span class=w></span>
+<span class=w>    </span><span class=kt>float</span><span class=w> </span><span class=n>clamped</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>min</span><span class=p>(</span><span class=n>clipPos</span><span class=p>.</span><span class=n>z</span><span class=p>,</span><span class=w> </span><span class=n>clipPos</span><span class=p>.</span><span class=n>w</span><span class=o>*</span><span class=n>UNITY_NEAR_CLIP_VALUE</span><span class=p>);</span><span class=w></span>
+<span class=cp>#else</span><span class=w></span>
+<span class=w>    </span><span class=n>clipPos</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=nb>saturate</span><span class=p>(</span><span class=n>unity_LightShadowBias</span><span class=p>.</span><span class=n>x</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>clipPos</span><span class=p>.</span><span class=n>w</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=kt>float</span><span class=w> </span><span class=n>clamped</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>max</span><span class=p>(</span><span class=n>clipPos</span><span class=p>.</span><span class=n>z</span><span class=p>,</span><span class=w> </span><span class=n>clipPos</span><span class=p>.</span><span class=n>w</span><span class=o>*</span><span class=n>UNITY_NEAR_CLIP_VALUE</span><span class=p>);</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+<span class=w>    </span><span class=n>clipPos</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>lerp</span><span class=p>(</span><span class=n>clipPos</span><span class=p>.</span><span class=n>z</span><span class=p>,</span><span class=w> </span><span class=n>clamped</span><span class=p>,</span><span class=w> </span><span class=n>unity_LightShadowBias</span><span class=p>.</span><span class=n>y</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>clipPos</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>同时支持Normal Bias，必须根据法向量移动顶点坐标。因此，添加一个normal变量。然后可以使用UnityCG定义的UnityClipSpaceShadowCasterPos函数</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>(</span><span class=n>InputData</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>//float4 position = UnityObjectToClipPos(i.position);</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityClipSpaceShadowCasterPos</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>normal</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w>    </span><span class=n>UnityApplyLinearShadowBias</span><span class=p>(</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><em>先将顶点坐标转换到世界空间，然后转换到裁剪空间。计算光的方向，计算法线和光的角度，取正弦值，最后转与观察投影矩阵相乘转到裁剪空间。</em></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>UnityClipSpaceShadowCasterPos</span><span class=p>(</span><span class=kt>float4</span><span class=w> </span><span class=n>vertex</span><span class=p>,</span><span class=w> </span><span class=kt>float3</span><span class=w> </span><span class=n>normal</span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>wPos</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>mul</span><span class=p>(</span><span class=n>unity_ObjectToWorld</span><span class=p>,</span><span class=w> </span><span class=n>vertex</span><span class=p>);</span><span class=w></span>
+
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>unity_LightShadowBias</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=mf>0.0</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=kt>float3</span><span class=w> </span><span class=n>wNormal</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityObjectToWorldNormal</span><span class=p>(</span><span class=n>normal</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=kt>float3</span><span class=w> </span><span class=n>wLight</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>normalize</span><span class=p>(</span><span class=n>UnityWorldSpaceLightDir</span><span class=p>(</span><span class=n>wPos</span><span class=p>.</span><span class=n>xyz</span><span class=p>));</span><span class=w></span>
+
+<span class=w>        </span><span class=c1>// apply normal offset bias (inset position along the normal)</span><span class=w></span>
+<span class=w>        </span><span class=c1>// bias needs to be scaled by sine between normal and light direction</span><span class=w></span>
+<span class=w>        </span><span class=c1>// (http://the-witness.net/news/2013/09/shadow-mapping-summary-part-1/)</span><span class=w></span>
+<span class=w>        </span><span class=c1>//</span><span class=w></span>
+<span class=w>        </span><span class=c1>// unity_LightShadowBias.z contains user-specified normal offset amount</span><span class=w></span>
+<span class=w>        </span><span class=c1>// scaled by world space texel size.</span><span class=w></span>
+
+<span class=w>        </span><span class=kt>float</span><span class=w> </span><span class=n>shadowCos</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>dot</span><span class=p>(</span><span class=n>wNormal</span><span class=p>,</span><span class=w> </span><span class=n>wLight</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=kt>float</span><span class=w> </span><span class=n>shadowSine</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>sqrt</span><span class=p>(</span><span class=mi>1</span><span class=o>-</span><span class=n>shadowCos</span><span class=o>*</span><span class=n>shadowCos</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=kt>float</span><span class=w> </span><span class=n>normalBias</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>unity_LightShadowBias</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>shadowSine</span><span class=p>;</span><span class=w></span>
+
+<span class=w>        </span><span class=n>wPos</span><span class=p>.</span><span class=n>xyz</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=n>wNormal</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>normalBias</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nb>mul</span><span class=p>(</span><span class=n>UNITY_MATRIX_VP</span><span class=p>,</span><span class=w> </span><span class=n>wPos</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>写完就具备了完全的阴影投射</p><h2 id=接收阴影>接收阴影<a title="Permanent link"class=headerlink href=#接收阴影></a></h2><p>First,我们先关注主方向光的阴影，因为该光源属于BasePass，必须要先适配。<strong>当主方向光投射阴影，Unity会找一个启用了SHADOWS_SCREEN关键字的shader变体</strong>。所以我们要在Base Pass创建两个变体，同之前使用顶点光关键字类似：一个无，一个是该关键字。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#pragma multi_compile _ VERTEXLIGHT_ON</span><span class=w></span>
+<span class=cp>#pragma multi_compile _ SHADOWS_SCREEN</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>该basePass有两个multi_compile指令，每个都是单关键字。因此编译后这里会有4个变体：</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>// Total snippets: 3</span><span class=w></span>
+<span class=c1>// --</span><span class=w></span>
+<span class=c1>// Snippet #0 platforms ffffffff:</span><span class=w></span>
+<span class=n>SHADOWS_SCREEN</span><span class=w> </span><span class=n>VERTEXLIGHT_ON</span><span class=w></span>
+
+<span class=mi>4</span><span class=w> </span><span class=n>keyword</span><span class=w> </span><span class=n>variants</span><span class=w> </span><span class=n>used</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>scene</span><span class=o>:</span><span class=w></span>
+
+<span class=o><</span><span class=n>no</span><span class=w> </span><span class=n>keywords</span><span class=w> </span><span class=o>defined></span><span class=w></span>
+<span class=n>SHADOWS_SCREEN</span><span class=w></span>
+<span class=n>VERTEXLIGHT_ON</span><span class=w></span>
+<span class=n>SHADOWS_SCREEN</span><span class=w> </span><span class=n>VERTEXLIGHT_ON</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>(老版本Unity有可能出现)当增加了multi_compile指令后，shader编译器会提示关于__ShadowCoord_不存在。这是因为_UNITY_LIGHT_ATTENUATION_宏在使用阴影时的行为不同导致。在MyLighting_shadow.cginc顶点函数快速修复</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#if defined(UNITY_SCREEN) float attenuation = 1;</span><span class=w></span>
+<span class=cp>#else</span><span class=w></span>
+<span class=w>    </span><span class=n>UNITY_LIGHT_ATTENUATION</span><span class=p>(</span><span class=n>attenuation</span><span class=p>,</span><span class=w> </span><span class=mo>0</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>worldPos</span><span class=p>);</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=采样阴影>采样阴影<a title="Permanent link"class=headerlink href=#采样阴影></a></h3><p>Secend,采样屏幕空间阴影纹理。<br> Third,需要获取屏幕空间纹理坐标，从顶点函数传递给片元函数。在插值器Interpolator添加一个float4 变量以支持传递阴影纹理坐标。从裁剪空间开始(裁剪空间顶点坐标)。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>struct</span><span class=w> </span><span class=n>Interpolator</span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>SHADOWS_SCREEN</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=kt>float4</span><span class=w> </span><span class=n>shadowCoordinate</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD6</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=n>Interpolators</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>(</span><span class=n>VertexData</span><span class=w> </span><span class=n>v</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>//。。。</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>SHADOWS_SCREE</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=n>i</span><span class=p>.</span><span class=n>shadowCoordinate</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=w>    </span><span class=c1>//。。。</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222015552159-153113228.png" des="错误的纹理坐标映射" width="250" %}</p><p>AutoLignt.cginc定义了Sampler2D _ShadowMapTexture，可以通过它访问屏幕阴影纹理。但是要覆盖整个屏幕，就需要屏幕空间坐标。在裁剪空间，XY坐标范围是[-1, 1]，而屏幕空间下是[0,1]；然后偏移坐标与屏幕左小脚等于0对齐。因为我们处理的使透视变换，偏移坐标值取决于距离，这里的偏移值等于加上齐次坐标的w分量之后的一半。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#if defined(SHADOWS_SCREEN)</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>shadowCoordinate</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=p>.</span><span class=n>w</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=mf>0.5</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>shadowCoordinate</span><span class=p>.</span><span class=n>zw</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=p>.</span><span class=n>zw</span><span class=p>;</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222015552728-1203950638.png" des="错误的左下角映射" width="250" %}</p><p>上图的投影错误，还需要通过x和y除以齐次坐标进一步转换</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222015553704-577419973.png" des="错误投影" width="250" %}</p><p>上图结果仍然是错误的，影子被拉伸了。这是由于在顶点函数计算导致，不应该在传递给片元函数时提前修改原始数据，需要保持它们的独立性。在片元函数再次除以w.</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222015555540-1368845680.png" des="颠倒的投影" width="250" %}</p><p>此时，影子是上下颠倒的。如果它们被翻转，这意味着你的图形Direct3D屏幕空间Y坐标从0向下到1，而不是向上。要与此同步，翻转顶点的Y坐标。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#if defined(SHADOWS_SCREEN)</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>shadowCoordinate</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=kt>float2</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>pos</span><span class=p>.</span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=o>-</span><span class=n>i</span><span class=p>.</span><span class=n>pos</span><span class=p>.</span><span class=n>y</span><span class=p>)</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>pos</span><span class=p>.</span><span class=n>w</span><span class=p>);</span><span class=c1>// (i.pos.xy + i.pos.w) * 0.5;</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>shadowCoordinate</span><span class=p>.</span><span class=n>zw</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>pos</span><span class=p>.</span><span class=n>zw</span><span class=p>;</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222015556220-1277984238.png" des="继续错误" width="250" %}</p><h3 id=内置函数使用>内置函数使用<a title="Permanent link"class=headerlink href=#内置函数使用></a></h3><p>SHADOW_COORDS宏定义纹理坐标</p><p>TRANSFRE_SHADOW宏获取阴影纹理坐标(转换)</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#define TRANSFER_SHADOW(a) a._ShadowCoord = ComputeScreenPos(a.pos);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>SHADOW_ATTENUATION宏阴影纹理明暗衰减</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#define SHADOW_COORDS</span><span class=w></span>
+<span class=p>(</span><span class=n>idx1</span><span class=p>)</span><span class=w> </span><span class=n>unityShadowCoord4</span><span class=w> </span><span class=n>_ShadowCoord</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD</span><span class=err>##</span><span class=n>idx1</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>define</span><span class=w> </span><span class=n>SHADOW_ATTENUATION</span><span class=p>(</span><span class=n>a</span><span class=p>)</span><span class=w> </span><span class=n>unitySampleShadow</span><span class=p>(</span><span class=n>a</span><span class=p>.</span><span class=n>_ShadowCoord</span><span class=p>)</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>UNITY_LIGHT_ATTENUATION宏包含了SHADOW_ATTENUATION宏使用，可替换之</p><p>当启用SHADOWS_SCREEN指令时，会自动计算，不启用不计算，没有任何损失。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>struct</span><span class=w> </span><span class=n>Interpolators</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>//...</span><span class=w></span>
+<span class=w>    </span><span class=c1>// #if defined(SHADOWS_SCREEN)</span><span class=w></span>
+<span class=w>    </span><span class=c1>//    float4 shadowCoordinates : TEXCOORD5;</span><span class=w></span>
+<span class=w>    </span><span class=c1>// #endif</span><span class=w></span>
+<span class=w>    </span><span class=n>SHADOW_COORDS</span><span class=p>(</span><span class=mi>5</span><span class=p>)</span><span class=w></span>
+<span class=w>    </span><span class=c1>//...</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+
+<span class=n>Interpolators</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=w> </span><span class=p>(</span><span class=n>VertexData</span><span class=w> </span><span class=n>v</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>//...</span><span class=w></span>
+<span class=w>    </span><span class=c1>// #if defined(SHADOWS_SCREEN)</span><span class=w></span>
+<span class=w>    </span><span class=c1>//   i.shadowCoordinates = i.position;</span><span class=w></span>
+<span class=w>    </span><span class=c1>// #endif</span><span class=w></span>
+<span class=w>    </span><span class=n>TRANSFER_SHADOW</span><span class=p>(</span><span class=n>i</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=c1>//...</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=n>UnityLight</span><span class=w> </span><span class=n>CreateLight</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>//...</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>SHADOWS_SCREEN</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=kt>float</span><span class=w> </span><span class=n>attenuation</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SHADOW_ATTENUATION</span><span class=p>(</span><span class=n>i</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>        </span><span class=n>UNITY_LIGHT_ATTENUATION</span><span class=p>(</span><span class=n>attenuation</span><span class=p>,</span><span class=w> </span><span class=mo>0</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>worldPos</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=w>    </span><span class=n>UNITY_LIGHT_ATTENUATION</span><span class=p>(</span><span class=n>attenuation</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>worldPos</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=c1>//...</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222015557055-486911408.png" des="正确了" width="250" %}</p><p>ComputeScreenPos函数</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>inline</span><span class=w> </span><span class=kt>float4</span><span class=w> </span><span class=n>ComputeNonStereoScreenPos</span><span class=p>(</span><span class=kt>float4</span><span class=w> </span><span class=n>pos</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>o</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>pos</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=mf>0.5f</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>o</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kt>float2</span><span class=p>(</span><span class=n>o</span><span class=p>.</span><span class=n>x</span><span class=p>,</span><span class=w> </span><span class=n>o</span><span class=p>.</span><span class=n>y</span><span class=o>*</span><span class=n>_ProjectionParams</span><span class=p>.</span><span class=n>x</span><span class=p>)</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>o</span><span class=p>.</span><span class=n>w</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>o</span><span class=p>.</span><span class=n>zw</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>pos</span><span class=p>.</span><span class=n>zw</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>o</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=k>inline</span><span class=w> </span><span class=kt>float4</span><span class=w> </span><span class=n>ComputeScreenPos</span><span class=p>(</span><span class=kt>float4</span><span class=w> </span><span class=n>pos</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>o</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>ComputeNonStereoScreenPos</span><span class=p>(</span><span class=n>pos</span><span class=p>);</span><span class=w></span>
+<span class=cp>#if defined(UNITY_SINGLE_PASS_STEREO)</span><span class=w></span>
+<span class=w>    </span><span class=n>o</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>TransformStereoScreenSpaceTex</span><span class=p>(</span><span class=n>o</span><span class=p>.</span><span class=n>xy</span><span class=p>,</span><span class=w> </span><span class=n>pos</span><span class=p>.</span><span class=n>w</span><span class=p>);</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>o</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h2 id=聚光灯阴影>聚光灯阴影<a title="Permanent link"class=headerlink href=#聚光灯阴影></a></h2><p>关闭方向光，增加聚光灯后，竟然直接有阴影了。这是Unity宏带来的便利。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222151429610-436331942.png" des="点光源阴影" width="250" %}</p><p>再看帧调试器</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222151430321-98573745.png" des="SpotLight Debugger" width="250" %}</p><p>上图对于聚光灯源阴影的渲染工作量很少</p><p><strong>不同之处</strong>： 1. 没有方向光独立的深度pass和屏幕空间阴影pass，而是直接渲染阴影纹理；<br> 2. 与方向光渲染阴影还有很大的差别之处：聚光灯光线不是平行的，因此用光的位置模拟相机视角会得到一个透视视角，结果就是不支持阴影分段渲染(cascades)； 3. normal bias(法线偏差)<strong>只</strong>支持方向光阴影，对于<strong>其他</strong>光源类型简单的置为0；<br> 4. 采样代码不同。</p><p><strong>相同之处</strong>： 1. 投射阴影的这段代码通用。</p><h3 id=采样阴影纹理>采样阴影纹理<a title="Permanent link"class=headerlink href=#采样阴影纹理></a></h3><p>由于聚光灯不使用屏幕空间的阴影，这段采样纹理代码就有点不一样。因此，如果我们想要使用软阴影，我们必须在fragment程序中进行<strong>过滤</strong>。而Unity宏已经做了过滤计算UnitySampleShadowmap。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>//阴影坐标把顶点坐标从模型空间转到世界空间再转到光的阴影空间得到。</span><span class=w></span>
+
+<span class=c1>// - Spot light shadows</span><span class=w></span>
+<span class=cp>#if defined (SHADOWS_DEPTH) && defined (SPOT)</span><span class=w></span>
+
+<span class=cp>#define SHADOW_COORDS(idx1) unityShadowCoord4 _ShadowCoord : TEXCOORD##idx1;</span><span class=w></span>
+<span class=cp>#define TRANSFER_SHADOW(a) a._ShadowCoord = mul(unity_WorldToShadow[0], mul(unity_ObjectToWorld,v.vertex));</span><span class=w></span>
+<span class=cp>#define SHADOW_ATTENUATION(a) UnitySampleShadowmap(a._ShadowCoord)</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>然后<code>SHADOW_ATTENUATION</code>宏使用<code>UnitySampleShadowmap</code>函数采样阴影映射。这个函数定义在_UnityShadowLibrary_，_AutoLight_文件引用了它。当使用硬阴影时，该函数对阴影纹理采样一次。当使用软阴影时，它对纹理采样四次并对结果取平均值。这个结果没有用于屏幕空间阴影的过滤效果好，但是速度快得多。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222151431024-1101864231.png" url2="posts/2018/month1/catRender7/1692664-20200222151431654-1775286822.png" des="hard vs. soft SpotLight Shadow" width="250" %}</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span>
+<span class=normal>32</span>
+<span class=normal>33</span>
+<span class=normal>34</span>
+<span class=normal>35</span>
+<span class=normal>36</span>
+<span class=normal>37</span>
+<span class=normal>38</span>
+<span class=normal>39</span>
+<span class=normal>40</span>
+<span class=normal>41</span>
+<span class=normal>42</span>
+<span class=normal>43</span>
+<span class=normal>44</span>
+<span class=normal>45</span>
+<span class=normal>46</span>
+<span class=normal>47</span>
+<span class=normal>48</span>
+<span class=normal>49</span>
+<span class=normal>50</span>
+<span class=normal>51</span>
+<span class=normal>52</span>
+<span class=normal>53</span>
+<span class=normal>54</span>
+<span class=normal>55</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>// Spot light shadows</span><span class=w></span>
+<span class=k>inline</span><span class=w> </span><span class=n>fixed</span><span class=w> </span>
+
+<span class=n>UnitySampleShadowmap</span><span class=w> </span><span class=p>(</span><span class=kt>float4</span><span class=w> </span><span class=n>shadowCoord</span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>// DX11 feature level 9.x shader compiler (d3dcompiler_47 at least)</span><span class=w></span>
+<span class=w>    </span><span class=c1>// has a bug where trying to do more than one shadowmap sample fails compilation</span><span class=w></span>
+<span class=w>    </span><span class=c1>// with "inconsistent sampler usage". Until that is fixed, just never compile</span><span class=w></span>
+<span class=w>    </span><span class=c1>// multi-tap shadow variant on d3d11_9x.</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=w> </span><span class=p>(</span><span class=n>SHADOWS_SOFT</span><span class=p>)</span><span class=w> </span><span class=o>&&</span><span class=w> </span><span class=o>!defined</span><span class=w> </span><span class=p>(</span><span class=n>SHADER_API_D3D11_9X</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=c1>// 4-tap shadows</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=w> </span><span class=p>(</span><span class=n>SHADOWS_NATIVE</span><span class=p>)</span><span class=w></span>
+<span class=w>            </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=w> </span><span class=p>(</span><span class=n>SHADER_API_D3D9</span><span class=p>)</span><span class=w></span>
+<span class=w>                </span><span class=c1>// HLSL for D3D9, when modifying the shadow UV coordinate, really wants to do</span><span class=w></span>
+<span class=w>                </span><span class=c1>// some funky swizzles, assuming that Z coordinate is unused in texture sampling.</span><span class=w></span>
+<span class=w>                </span><span class=c1>// So force it to do projective texture reads here, with .w being one.</span><span class=w></span>
+<span class=w>                </span><span class=kt>float4</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>shadowCoord</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>shadowCoord</span><span class=p>.</span><span class=n>w</span><span class=p>;</span><span class=w></span>
+<span class=w>                </span><span class=kt>half4</span><span class=w> </span><span class=n>shadows</span><span class=p>;</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=p>.</span><span class=n>x</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW_PROJ</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mo>0</span><span class=p>]);</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=p>.</span><span class=n>y</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW_PROJ</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>1</span><span class=p>]);</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW_PROJ</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>2</span><span class=p>]);</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=p>.</span><span class=n>w</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW_PROJ</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>3</span><span class=p>]);</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>rrrr</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>shadows</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=p>(</span><span class=mi>1</span><span class=o>-</span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>rrrr</span><span class=p>);</span><span class=w></span>
+<span class=w>            </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>                </span><span class=c1>// On other platforms, no need to do projective texture reads.</span><span class=w></span>
+<span class=w>                </span><span class=kt>float3</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>shadowCoord</span><span class=p>.</span><span class=n>xyz</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>shadowCoord</span><span class=p>.</span><span class=n>w</span><span class=p>;</span><span class=w></span>
+<span class=w>                </span><span class=kt>half4</span><span class=w> </span><span class=n>shadows</span><span class=p>;</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=p>.</span><span class=n>x</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mo>0</span><span class=p>]);</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=p>.</span><span class=n>y</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>1</span><span class=p>]);</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>2</span><span class=p>]);</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=p>.</span><span class=n>w</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>3</span><span class=p>]);</span><span class=w></span>
+<span class=w>                </span><span class=n>shadows</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>rrrr</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>shadows</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=p>(</span><span class=mi>1</span><span class=o>-</span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>rrrr</span><span class=p>);</span><span class=w></span>
+<span class=w>            </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>            </span><span class=kt>float3</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>shadowCoord</span><span class=p>.</span><span class=n>xyz</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>shadowCoord</span><span class=p>.</span><span class=n>w</span><span class=p>;</span><span class=w></span>
+<span class=w>            </span><span class=kt>float4</span><span class=w> </span><span class=n>shadowVals</span><span class=p>;</span><span class=w></span>
+<span class=w>            </span><span class=n>shadowVals</span><span class=p>.</span><span class=n>x</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SAMPLE_DEPTH_TEXTURE</span><span class=w> </span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mo>0</span><span class=p>].</span><span class=n>xy</span><span class=p>);</span><span class=w></span>
+<span class=w>            </span><span class=n>shadowVals</span><span class=p>.</span><span class=n>y</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SAMPLE_DEPTH_TEXTURE</span><span class=w> </span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>1</span><span class=p>].</span><span class=n>xy</span><span class=p>);</span><span class=w></span>
+<span class=w>            </span><span class=n>shadowVals</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SAMPLE_DEPTH_TEXTURE</span><span class=w> </span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>2</span><span class=p>].</span><span class=n>xy</span><span class=p>);</span><span class=w></span>
+<span class=w>            </span><span class=n>shadowVals</span><span class=p>.</span><span class=n>w</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SAMPLE_DEPTH_TEXTURE</span><span class=w> </span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>coord</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>_ShadowOffsets</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>xy</span><span class=p>);</span><span class=w></span>
+<span class=w>            </span><span class=kt>half4</span><span class=w> </span><span class=n>shadows</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>shadowVals</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=n>coord</span><span class=p>.</span><span class=n>zzzz</span><span class=p>)</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>rrrr</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=mf>1.0f</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=w>        </span><span class=c1>// average-4 PCF</span><span class=w></span>
+<span class=w>        </span><span class=kt>half</span><span class=w> </span><span class=n>shadow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>dot</span><span class=w> </span><span class=p>(</span><span class=n>shadows</span><span class=p>,</span><span class=w> </span><span class=mf>0.25f</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>        </span><span class=c1>// 1-tap shadows</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=w> </span><span class=p>(</span><span class=n>SHADOWS_NATIVE</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=kt>half</span><span class=w> </span><span class=n>shadow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_SHADOW_PROJ</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>shadowCoord</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=n>shadow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>r</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>shadow</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=p>(</span><span class=mi>1</span><span class=o>-</span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>r</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>        </span><span class=kt>half</span><span class=w> </span><span class=n>shadow</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SAMPLE_DEPTH_TEXTURE_PROJ</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>UNITY_PROJ_COORD</span><span class=p>(</span><span class=n>shadowCoord</span><span class=p>))</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=p>(</span><span class=n>shadowCoord</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>shadowCoord</span><span class=p>.</span><span class=n>w</span><span class=p>)</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>r</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=mf>1.0</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>shadow</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h2 id=点光源阴影>点光源阴影<a title="Permanent link"class=headerlink href=#点光源阴影></a></h2><p>如果直接使用点光源，会有编译报错：undeclared identifier 'UnityDecodeCubeShadowDepth'。该函数在_UnityCG.cginc_文件。 {% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222151432459-1922680396.png" des="UnityPBSLighting文件引用；AutoLight文件引用" width="250" %}</p><p>所以根据引用结构，需要把UnityPBSLighing文件放在第一位引用。就不会报错了。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222151433321-1428961084.png" url2="posts/2018/month1/catRender7/1692664-20200222151434107-2064323872.png" des="左：render six times per light" width="250" %}</p><h3 id=投射阴影_1>投射阴影<a title="Permanent link"class=headerlink href=#投射阴影_1></a></h3><p>从帧调试器查看，左边一个光要渲染6次，两盏光就是12次了。有很多个RenderJobPoint渲染了。结果是，点光源的阴影纹理是一个立方体贴图，而立方体贴图是通过相机在6个不同方向观察场景，每个方向渲染一面组成六面体，前面1.4讲过把光源模拟相机对屏幕渲染。所以点光源阴影计算很费，尤其是实时点光源阴影。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222151434750-920356967.png" des="错误的阴影纹理" width="250" %}</p><p>当渲染点光源阴影纹理时，Unity引擎会找shader变体关键字<code>SHADOWS_CUBE，而SHADOWS_DEPTH关键字只适用于方向光和聚光灯。为了支持点光源阴影，Unity提供了一个特殊编译指令</code></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#pragma multi_compile_shadowcaster</span><span class=w></span>
+
+<span class=c1>// --</span><span class=w></span>
+<span class=c1>// Snippet #2 platforms ffffffff:</span><span class=w></span>
+<span class=n>SHADOWS_CUBE</span><span class=w> </span><span class=n>SHADOWS_DEPTH</span><span class=w></span>
+
+<span class=mi>2</span><span class=w> </span><span class=n>keyword</span><span class=w> </span><span class=n>variants</span><span class=w> </span><span class=n>used</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>scene</span><span class=o>:</span><span class=w></span>
+<span class=n>SHADOWS_DEPTH</span><span class=w></span>
+<span class=n>SHADOWS_CUBE</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>所以，需要创建一个独立的处理程序。这里首先要计算光到表面的距离，但得知道光到表面的方向。在顶点函数先转换顶点坐标所在世界空间，再计算光的方向。然后在片元函数计算该方向向量长度再与bias偏差相加。然后再除以点光源的范围映射到[0.1]再与长度相乘，最后解码。而_LightPositionRange.w = 1/range已经计算好了隐射范围，直接用。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#if defined(SHADOWS_CUBE)</span><span class=w></span>
+<span class=w>    </span><span class=k>struct</span><span class=w> </span><span class=n>Interplotars</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=kt>float3</span><span class=w> </span><span class=n>lightVec</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=p>};</span><span class=w></span>
+<span class=w>    </span><span class=n>Interplotars</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>(</span><span class=n>InputData</span><span class=w> </span><span class=n>v</span><span class=p>){</span><span class=w></span>
+<span class=w>        </span><span class=n>Interplotars</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityObjectToClipPos</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=n>i</span><span class=p>.</span><span class=n>lightVec</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>mul</span><span class=p>(</span><span class=n>unity_ObjectToWorld</span><span class=p>,</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>position</span><span class=p>).</span><span class=n>xyz</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>_LightPositionRange</span><span class=p>.</span><span class=n>xyz</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=c1>//float4 position = UnityClipSpaceShadowCasterPos(i.position, i.normal);//方向光源：简单的裁剪空间顶点坐标</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w>  </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=kt>half4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>(</span><span class=n>Interplotars</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=kt>float</span><span class=w> </span><span class=n>depth</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>length</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>lightVec</span><span class=p>)</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>unity_LightShadowBias</span><span class=p>.</span><span class=n>x</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=n>depth</span><span class=w> </span><span class=o>*=</span><span class=w> </span><span class=n>_LightPositionRange</span><span class=p>.</span><span class=n>w</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>UnityEncodeCubeShadowDepth</span><span class=p>(</span><span class=n>depth</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=cp>#else</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=p>(</span><span class=n>InputData</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=c1>//float4 position = UnityObjectToClipPos(i.position);</span><span class=w></span>
+<span class=w>        </span><span class=kt>float4</span><span class=w> </span><span class=n>position</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityClipSpaceShadowCasterPos</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>position</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>normal</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w>  </span><span class=n>UnityApplyLinearShadowBias</span><span class=p>(</span><span class=n>position</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=kt>half4</span><span class=w> </span><span class=n>MyFragmentProgram</span><span class=p>()</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222151435367-1088891603.png" des="正确的阴影纹理" width="250" %}</p><p>UnityEncodeCubeShadowDepth函数：</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>// Shadow caster pass helpers</span><span class=w></span>
+<span class=kt>float4</span><span class=w> </span><span class=n>UnityEncodeCubeShadowDepth</span><span class=w> </span><span class=p>(</span><span class=kt>float</span><span class=w> </span><span class=n>z</span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>ifdef</span><span class=w> </span><span class=n>UNITY_USE_RGBA_FOR_POINT_SHADOWS</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>EncodeFloatRGBA</span><span class=w> </span><span class=p>(</span><span class=nb>min</span><span class=p>(</span><span class=n>z</span><span class=p>,</span><span class=w> </span><span class=mf>0.999</span><span class=p>));</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>z</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>// 使用浮点类型cube——map,存储再8位RGBA纹理</span><span class=w></span>
+<span class=k>inline</span><span class=w> </span><span class=kt>float4</span><span class=w> </span><span class=n>EncodeFloatRGBA</span><span class=p>(</span><span class=w> </span><span class=kt>float</span><span class=w> </span><span class=n>v</span><span class=w> </span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>kEncodeMul</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kt>float4</span><span class=p>(</span><span class=mf>1.0</span><span class=p>,</span><span class=w> </span><span class=mf>255.0</span><span class=p>,</span><span class=w> </span><span class=mf>65025.0</span><span class=p>,</span><span class=w> </span><span class=mf>16581375.0</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=kt>float</span><span class=w> </span><span class=n>kEncodeBit</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>1.0</span><span class=o>/</span><span class=mf>255.0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>enc</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>kEncodeMul</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>v</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>enc</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>frac</span><span class=w> </span><span class=p>(</span><span class=n>enc</span><span class=p>);</span><span class=c1>//返回小数部分</span><span class=w></span>
+<span class=w>    </span><span class=n>enc</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=n>enc</span><span class=p>.</span><span class=n>yzww</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>kEncodeBit</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>enc</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=采样阴影纹理_1>采样阴影纹理<a title="Permanent link"class=headerlink href=#采样阴影纹理_1></a></h3><p>在additional pass的编译指令，Unity宏已经做了。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span>
+<span class=normal>32</span>
+<span class=normal>33</span>
+<span class=normal>34</span>
+<span class=normal>35</span>
+<span class=normal>36</span>
+<span class=normal>37</span>
+<span class=normal>38</span>
+<span class=normal>39</span>
+<span class=normal>40</span>
+<span class=normal>41</span>
+<span class=normal>42</span>
+<span class=normal>43</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>//同样计算光的方向，然后采样cubeMap。区别是float3类型而不是float4，不需要齐次坐标。</span><span class=w></span>
+<span class=c1>// - Point light shadows</span><span class=w></span>
+<span class=cp>#if defined (SHADOWS_CUBE)</span><span class=w></span>
+<span class=cp>#define SHADOW_COORDS(idx1) unityShadowCoord3 _ShadowCoord : TEXCOORD##idx1;</span><span class=w></span>
+<span class=cp>#define TRANSFER_SHADOW(a) a._ShadowCoord = mul(unity_ObjectToWorld, v.vertex).xyz - _LightPositionRange.xyz;</span><span class=w></span>
+<span class=cp>#define SHADOW_ATTENUATION(a) UnitySampleShadowmap(a._ShadowCoord)</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+
+<span class=c1>// </span><span class=w></span>
+<span class=c1>// Point light shadows</span><span class=w></span>
+<span class=c1>//在这种情况下，UnitySampleShadowmap采样一个立方体地图，而不是2D纹理。</span><span class=w></span>
+<span class=cp>#if defined (SHADOWS_CUBE)</span><span class=w></span>
+
+<span class=n>samplerCUBE_float</span><span class=w> </span><span class=n>_ShadowMapTexture</span><span class=p>;</span><span class=w></span>
+<span class=k>inline</span><span class=w> </span><span class=kt>float</span><span class=w> </span><span class=n>SampleCubeDistance</span><span class=w> </span><span class=p>(</span><span class=kt>float3</span><span class=w> </span><span class=n>vec</span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>ifdef</span><span class=w> </span><span class=n>UNITY_FAST_COHERENT_DYNAMIC_BRANCHING</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>UnityDecodeCubeShadowDepth</span><span class=p>(</span><span class=nb>texCUBElod</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=kt>float4</span><span class=p>(</span><span class=n>vec</span><span class=p>,</span><span class=w> </span><span class=mo>0</span><span class=p>)));</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>UnityDecodeCubeShadowDepth</span><span class=p>(</span><span class=nb>texCUBE</span><span class=p>(</span><span class=n>_ShadowMapTexture</span><span class=p>,</span><span class=w> </span><span class=n>vec</span><span class=p>));</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+<span class=k>inline</span><span class=w> </span><span class=kt>half</span><span class=w> </span><span class=n>UnitySampleShadowmap</span><span class=w> </span><span class=p>(</span><span class=kt>float3</span><span class=w> </span><span class=n>vec</span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float</span><span class=w> </span><span class=n>mydist</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>length</span><span class=p>(</span><span class=n>vec</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>_LightPositionRange</span><span class=p>.</span><span class=n>w</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>mydist</span><span class=w> </span><span class=o>*=</span><span class=w> </span><span class=mf>0.97</span><span class=p>;</span><span class=w> </span><span class=c1>// bias</span><span class=w></span>
+
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=w> </span><span class=p>(</span><span class=n>SHADOWS_SOFT</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=kt>float</span><span class=w> </span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>1.0</span><span class=o>/</span><span class=mf>128.0</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=kt>float4</span><span class=w> </span><span class=n>shadowVals</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=n>shadowVals</span><span class=p>.</span><span class=n>x</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SampleCubeDistance</span><span class=w> </span><span class=p>(</span><span class=n>vec</span><span class=o>+</span><span class=kt>float3</span><span class=p>(</span><span class=w> </span><span class=n>z</span><span class=p>,</span><span class=w> </span><span class=n>z</span><span class=p>,</span><span class=w> </span><span class=n>z</span><span class=p>));</span><span class=w></span>
+<span class=w>        </span><span class=n>shadowVals</span><span class=p>.</span><span class=n>y</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SampleCubeDistance</span><span class=w> </span><span class=p>(</span><span class=n>vec</span><span class=o>+</span><span class=kt>float3</span><span class=p>(</span><span class=o>-</span><span class=n>z</span><span class=p>,</span><span class=o>-</span><span class=n>z</span><span class=p>,</span><span class=w> </span><span class=n>z</span><span class=p>));</span><span class=w></span>
+<span class=w>        </span><span class=n>shadowVals</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SampleCubeDistance</span><span class=w> </span><span class=p>(</span><span class=n>vec</span><span class=o>+</span><span class=kt>float3</span><span class=p>(</span><span class=o>-</span><span class=n>z</span><span class=p>,</span><span class=w> </span><span class=n>z</span><span class=p>,</span><span class=o>-</span><span class=n>z</span><span class=p>));</span><span class=w></span>
+<span class=w>        </span><span class=n>shadowVals</span><span class=p>.</span><span class=n>w</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SampleCubeDistance</span><span class=w> </span><span class=p>(</span><span class=n>vec</span><span class=o>+</span><span class=kt>float3</span><span class=p>(</span><span class=w> </span><span class=n>z</span><span class=p>,</span><span class=o>-</span><span class=n>z</span><span class=p>,</span><span class=o>-</span><span class=n>z</span><span class=p>));</span><span class=w></span>
+<span class=w>        </span><span class=kt>half4</span><span class=w> </span><span class=n>shadows</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>shadowVals</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=n>mydist</span><span class=p>.</span><span class=n>xxxx</span><span class=p>)</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>rrrr</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=mf>1.0f</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w> </span><span class=nb>dot</span><span class=p>(</span><span class=n>shadows</span><span class=p>,</span><span class=mf>0.25</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>        </span><span class=kt>float</span><span class=w> </span><span class=n>dist</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SampleCubeDistance</span><span class=w> </span><span class=p>(</span><span class=n>vec</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>dist</span><span class=w> </span><span class=o><</span><span class=w> </span><span class=n>mydist</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=n>_LightShadowData</span><span class=p>.</span><span class=n>r</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=mf>1.0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=cp>#endif // #if defined (SHADOWS_CUBE)</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>同样，如果使用软阴影会采样四次并取平均值，硬阴影采样一次。同时没有进行过滤计算，计算昂贵且效果很粗糙！</p><p>{% include img-picture.html url1="posts/2018/month1/catRender7/1692664-20200222151435824-1969485390.png" url2="posts/2018/month1/catRender7/1692664-20200222151436465-1258622662.png" des="hard vs soft pointLight Shadows" width="250" %}</p><p>对于点光源阴影实在不能用于手机平台，替代方式就是用无阴影点光+cookie投射，模拟阴影。或者用较少的聚光灯阴影代替。</p><hr><blockquote class=page-copyright><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4Z"/></svg></i>本页面最近更新：</span><span class=facts_modified></span>，<a class=edit_history>更新历史</a><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg></i>发现错误？ <a class=page_edit_url href=https://github.com/damonc-top/damonc-top.github.io/discussions/posts/unity3d/shader/translater/catlikecoding/2018-01-05-Unity_Shadows.md title=编辑此页>在 GitHub 评论指正！</a></span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7Z"/></svg></i>本文作者：</span><span class=page_contributors>catlikecoding</span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M10.08 10.86c.05-.33.16-.62.3-.86.3-.56.81-.85 1.5-.86.45 0 .86.2 1.15.49.28.31.47.74.47 1.17h1.8c-.02-.47-.11-.9-.3-1.3-.15-.38-.38-.72-.68-1-1.45-1.34-4.14-1.15-5.37.37-1.29 1.67-1.32 4.59-.01 6.26 1.21 1.49 3.86 1.7 5.3.37.31-.25.56-.56.76-.92.16-.36.27-.74.28-1.15H13.5c0 .21-.07.4-.16.57-.09.19-.21.34-.34.47-.33.26-.72.4-1.14.4-.36-.01-.66-.08-.89-.23a1.41 1.41 0 0 1-.59-.64c-.5-.9-.42-2.15-.3-3.14M12 2C6.5 2 2 6.5 2 12c.53 13.27 19.5 13.26 20 0 0-5.5-4.5-10-10-10m0 18c-4.41 0-8-3.59-8-8 .44-10.61 15.56-10.61 16 0 0 4.41-3.59 8-8 8Z"/></svg></i>本页面的全部内容在 <strong><a href=https://creativecommons.org/licenses/by-sa/4.0/deed.zh>CC BY-SA 4.0</a> 和 <a href=https://github.com/zTrix/sata-license>SATA</a></strong> 协议之条款下提供，附加条款亦可能应用</span></blockquote><div class=giscus data-no-instant id=__comments></div><div id=__comments_script></div><script>var comments=document.createElement("script"),commentsTheme="slate"===document.body.dataset.mdColorScheme?"dark":"light";Object.entries({async:!0,src:"https://giscus.app/client.js",crossOrigin:"anonymous","data-repo":"damonc-top/damonc-top.github.io","data-repo-id":"R_kgDOHK_iGQ","data-category":"评论","data-category-id":"DIC_kwDOHK_iGc4COonC","data-mapping":"specific","data-term":"Unity Shadow 阴影(翻译七)","data-strict":"1","data-reactions-enabled":"1","data-emit-metadata":"0","data-input-position":"top","data-theme":commentsTheme,"data-lang":"zh-CN","data-loading":"lazy"}).forEach(t=>comments.setAttribute(t[0],t[1])),document.getElementById("__comments_script").replaceWith(comments)</script></article></div></div></main><script>function scrollFunction(){20<document.body.scrollTop||20<document.documentElement.scrollTop?document.getElementById("myBtn").style.display="block":document.getElementById("myBtn").style.display="none"}function topFunction(){document.body.scrollTop=0,document.documentElement.scrollTop=0}window.onscroll=function(){scrollFunction()}</script><button class=data-tip-left data-tip=回到顶部 id=myBtn onclick=topFunction()><svg class="Zi Zi--BackToTop data-tip-left"viewbox="0 0 24 24"data-tip=回到顶部 fill=currentColor height=24 width=24><path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path></svg></button><footer class=md-footer><div class="md-footer-meta md-typeset"><div class="md-footer-meta__inner md-grid"><div class=md-copyright><div class=md-copyright__highlight>Copyright © 2016 - 2024 银河揽月</div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ rel=noopener target=_blank> Material for MkDocs <div id=miitbeian></div> </a></div><div class=build_date_utc style=float:right><a href=https://github.com/damonc-top/damonc-top.github.io> 最近更新：6c2a14f, 2024-09-24 </a></div></div></div></footer></div><div class=md-dialog data-md-component=dialog><div class="md-dialog__inner md-typeset"></div></div><script id=__config type=application/json>{"base": "../../../../../..", "features": ["navigation.tabs", "navigation.instant"], "search": "../../../../../../assets/javascripts/workers/search.8e7a41fd.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script><script src=../../../../../../assets/javascripts/bundle.c15c428f.min.js></script><script src=../../../../../../extension/js/math-csr.js?math-csr></script><script src=../../../../../../assets/vendor/mathjax/es5/tex-mml-chtml.js?math-csr></script><script>"use strict";"serviceWorker"in navigator&&navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).then(function(e){console.log("PWA Registration succeeded. Scope is "+e.scope)}).catch(function(e){console.log("PWA Registration failed with "+e)})</script></body></html>

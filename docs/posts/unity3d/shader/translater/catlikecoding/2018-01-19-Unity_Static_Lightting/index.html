@@ -1,0 +1,540 @@
+<!doctypehtml><html class=no-js lang=zh><meta charset=utf-8><meta content=on http-equiv=x-dns-prefetch-control><link href=//www.damonc.top rel=dns-prefetch><link href=//search.www.damonc.top rel=dns-prefetch><link href=//api.github.com rel=dns-prefetch><link href=//www.google-analytics.com rel=dns-prefetch><meta content=width=device-width,initial-scale=1 name=viewport><meta content="为什么没有立即得到烘焙光源？为了确保在需要的时候光照贴图可以实际生成和更新，请在光照窗口的底部启用“自动生成（Auto Generate）”。 否则，你必须手动生成新的光照贴图。"name=description><meta content=catlikecoding name=author><link href=https://www.damonc.top/posts/unity3d/shader/translater/catlikecoding/2018-01-19-Unity_Static_Lightting/ rel=canonical><link href=../../../../../../favicon.ico rel=icon><meta content="mkdocs-1.4.2, mkdocs-material-8.5.11"name=generator><title>Unity 光照烘焙(翻译十六) - 银河揽月</title><link href=../../../../../../assets/stylesheets/main.31645160.min.css rel=stylesheet><link href=../../../../../../assets/stylesheets/palette.2505c338.min.css rel=stylesheet><link href=../../../../../../extension/css/extra.css rel=stylesheet><link crossorigin href=https://fonts.gstatic.com rel=preconnect><link href=https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,700,700i%7CFira+Mono:400,400i,700,700i&display=fallback rel=stylesheet><style>:root{--md-text-font:"Fira Sans";--md-code-font:"Fira Mono"}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:300;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-300.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-regular.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:italic;font-weight:regular;src:local('Fira Sans'),local('FiraSans-Italic'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-italic.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Sans';font-style:normal;font-weight:700;src:local('Fira Sans'),local('FiraSans-Normal'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-sans/fira-sans-700.svg#FiraSans) format('svg')}@font-face {font-family:'Fira Mono';font-style:normal;font-weight:regular;src:local('Fira Mono'),local('FiraMono-Normal'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.eot?#iefix) format('embedded-opentype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff2) format('woff2'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.woff) format('woff'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.ttf) format('truetype'),url(//lib.baomitu.com/fonts/fira-mono/fira-mono-regular.svg#FiraMono) format('svg')}</style><script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script>"undefined"!=typeof __md_analytics&&__md_analytics()</script></head><body data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default dir=ltr><script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script><input autocomplete=off class=md-toggle data-md-toggle=drawer id=__drawer type=checkbox><input autocomplete=off class=md-toggle data-md-toggle=search id=__search type=checkbox><label class=md-overlay for=__drawer></label><div data-md-component=skip><a class=md-skip href=#光照贴图-lightingmapping> 跳转至 </a></div><div data-md-component=announce></div><header class=md-header data-md-component=header><nav class="md-header__inner md-grid"aria-label=页眉><a class="md-header__button md-logo"aria-label=银河揽月 data-md-component=logo href=../../../../../.. title=银河揽月> <img alt=logo src=../../../../../../images/homepage.png> </a><label class="md-header__button md-icon"for=__drawer><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg></label><div class=md-header__title data-md-component=header-title><div class=md-header__ellipsis><div class=md-header__topic><span class=md-ellipsis> 银河揽月 </span></div><div class=md-header__topic data-md-component=header-topic><span class=md-ellipsis> Unity 光照烘焙(翻译十六) </span></div></div></div><form class=md-header__option data-md-component=palette><input aria-label="Switch to dark mode"data-md-color-media="(prefers-color-scheme: light)"class=md-option data-md-color-accent=red data-md-color-primary=white data-md-color-scheme=default id=__palette_1 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to dark mode"for=__palette_2 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg></label><input aria-label="Switch to light mode"data-md-color-media="(prefers-color-scheme: dark)"class=md-option data-md-color-accent=slate data-md-color-primary=slate data-md-color-scheme=slate id=__palette_2 name=__palette type=radio><label class="md-header__button md-icon"title="Switch to light mode"for=__palette_1 hidden><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg></label></form><label class="md-header__button md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg></label><div class=md-search data-md-component=search role=dialog><label class=md-search__overlay for=__search></label><div class=md-search__inner role=search><form class=md-search__form name=search><input aria-label=搜索 autocapitalize=off autocomplete=off autocorrect=off class=md-search__input data-md-component=search-query name=query placeholder=搜索 required spellcheck=false><label class="md-search__icon md-icon"for=__search><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg></label><nav aria-label=查找 class=md-search__options><button class="md-search__icon md-icon"aria-label=清空当前内容 tabindex=-1 title=清空当前内容 type=reset><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg></button></nav></form><div class=md-search__output><div class=md-search__scrollwrap data-md-scrollfix><div class=md-search-result data-md-component=search-result><div class=md-search-result__meta>正在初始化搜索引擎</div><ol class=md-search-result__list></ol></div></div></div></div></div><div class=md-header__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div></nav></header><div class=md-container data-md-component=container><nav aria-label=标签 class=md-tabs data-md-component=tabs><div class="md-tabs__inner md-grid"><ul class=md-tabs__list><li class=md-tabs__item><a class=md-tabs__link href=../../../../../..> 首页 </a></li><li class=md-tabs__item><a class=md-tabs__link href=../../../../il2cpp/> Unity3D引擎 </a></li></ul></div></nav><main class=md-main data-md-component=main><div class="md-main__inner md-grid"><div class="md-sidebar md-sidebar--primary"data-md-component=sidebar data-md-type=navigation><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--primary md-nav--lifted"aria-label=导航栏 data-md-level=0><label class=md-nav__title for=__drawer><a class="md-nav__button md-logo"aria-label=银河揽月 data-md-component=logo href=../../../../../.. title=银河揽月> <img alt=logo src=../../../../../../images/homepage.png> </a> 银河揽月</label><div class=md-nav__source><a class=md-source data-md-component=source href=https://github.com/damonc-top/damonc-top.github.io title=前往仓库> <div class="md-source__icon md-icon"><svg viewbox="0 0 448 512"xmlns=http://www.w3.org/2000/svg><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></div> <div class=md-source__repository>damonc-top</div> </a></div><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_1 id=__nav_1 type=checkbox> <label class=md-nav__link for=__nav_1>首页 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=首页 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_1><span class="md-nav__icon md-icon"></span> 首页</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../../../../..> 简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../../../../../home/learn/> 记录 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2 id=__nav_2 type=checkbox> <label class=md-nav__link for=__nav_2>Unity3D引擎 <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Unity3D引擎 class=md-nav data-md-level=1><label class=md-nav__title for=__nav_2><span class="md-nav__icon md-icon"></span> Unity3D引擎</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_1 id=__nav_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_1>il2cpp <span class="md-nav__icon md-icon"></span></label> <nav aria-label=il2cpp class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_1><span class="md-nav__icon md-icon"></span> il2cpp</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../../../../il2cpp/> il2cpp简介 </a></li></ul></nav></li><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_2 id=__nav_2_2 type=checkbox> <label class=md-nav__link for=__nav_2_2>Shader <span class="md-nav__icon md-icon"></span></label> <nav aria-label=Shader class=md-nav data-md-level=2><label class=md-nav__title for=__nav_2_2><span class="md-nav__icon md-icon"></span> Shader</label><ul class=md-nav__list data-md-scrollfix><li class="md-nav__item md-nav__item--nested"><input class="md-nav__toggle md-toggle"data-md-toggle=__nav_2_2_1 id=__nav_2_2_1 type=checkbox> <label class=md-nav__link for=__nav_2_2_1>翻译CatlikeCoding <span class="md-nav__icon md-icon"></span></label> <nav aria-label=翻译CatlikeCoding class=md-nav data-md-level=3><label class=md-nav__title for=__nav_2_2_1><span class="md-nav__icon md-icon"></span> 翻译CatlikeCoding</label><ul class=md-nav__list data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=../> Catlikecoding简介 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_matrix_transform/> 一UnityShader变换矩阵 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_shader_fundamentals/> 二UnityShader基本语法 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_combine_texture/> 三UnityShader纹理融合 </a></li><li class=md-nav__item><a class=md-nav__link href=../unity_base_light/> 四UnityShader基础光照 </a></li></ul></nav></li></ul></nav></li></ul></nav></li></ul></nav></div></div></div><div class="md-sidebar md-sidebar--secondary"data-md-component=sidebar data-md-type=toc><div class=md-sidebar__scrollwrap><div class=md-sidebar__inner><nav class="md-nav md-nav--secondary"aria-label=目录><label class=md-nav__title for=__toc><span class="md-nav__icon md-icon"></span> 目录</label><ul class=md-nav__list data-md-component=toc data-md-scrollfix><li class=md-nav__item><a class=md-nav__link href=#光照贴图-lightingmapping> 光照贴图-Lightingmapping </a> <nav aria-label=光照贴图-Lightingmapping class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#烘焙光源-baked-lights> 烘焙光源-Baked Lights </a></li><li class=md-nav__item><a class=md-nav__link href=#静态几何体> 静态几何体 </a></li><li class=md-nav__item><a class=md-nav__link href=#光照贴图设置-lightingmapping-setting> 光照贴图设置-Lightingmapping Setting </a></li><li class=md-nav__item><a class=md-nav__link href=#间接光源> 间接光源 </a></li><li class=md-nav__item><a class=md-nav__link href=#透明度-transparency> 透明度-Transparency </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#使用光照贴图> 使用光照贴图 </a> <nav aria-label=使用光照贴图 class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#光照贴图的着色器变体> 光照贴图的着色器变体 </a></li><li class=md-nav__item><a class=md-nav__link href=#光照贴图的坐标> 光照贴图的坐标 </a></li><li class=md-nav__item><a class=md-nav__link href=#对光照贴图进行采样-sampling-lightmap> 对光照贴图进行采样-Sampling Lightmap </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#创建光照贴图> 创建光照贴图 </a> <nav aria-label=创建光照贴图 class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#半透明的阴影-semitransparent-shadow> 半透明的阴影-Semitransparent Shadow </a></li><li class=md-nav__item><a class=md-nav__link href=#镂空部分的阴影-cutout-shadow> 镂空部分的阴影-Cutout Shadow </a></li><li class=md-nav__item><a class=md-nav__link href=#添加一个meta渲染通道-add-meta-pass> 添加一个Meta渲染通道-Add Meta Pass </a></li><li class=md-nav__item><a class=md-nav__link href=#顶点程序-vertex-program> 顶点程序-Vertex Program </a></li><li class=md-nav__item><a class=md-nav__link href=#片段程序-fragment-program> 片段程序-Fragment Program </a></li><li class=md-nav__item><a class=md-nav__link href=#粗糙的金属-rough-metals> 粗糙的金属-Rough Metals </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#方向光照贴图-directinal-lightmap> 方向光照贴图-Directinal Lightmap </a> <nav aria-label="方向光照贴图-Directinal Lightmap"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#方向性-directionality> 方向性-Directionality </a></li><li class=md-nav__item><a class=md-nav__link href=#对方向进行采样> 对方向进行采样 </a></li><li class=md-nav__item><a class=md-nav__link href=#使用方向贴图> 使用方向贴图 </a></li></ul></nav></li><li class=md-nav__item><a class=md-nav__link href=#光照探针-light-probes> 光照探针-Light Probes </a> <nav aria-label="光照探针-Light Probes"class=md-nav><ul class=md-nav__list><li class=md-nav__item><a class=md-nav__link href=#创建光照探针组> 创建光照探针组 </a></li><li class=md-nav__item><a class=md-nav__link href=#放置光照探针> 放置光照探针 </a></li></ul></nav></li></ul></nav></div></div></div><div class=md-content data-md-component=content><article class="md-content__inner md-typeset"><a class="md-content__button md-icon"href=https://github.com/damonc-top/damonc-top.github.io/discussions/posts/unity3d/shader/translater/catlikecoding/2018-01-19-Unity_Static_Lightting.md title=编辑此页> <svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a><h1>Unity 光照烘焙(翻译十六)</h1><p>实时光照计算的开销非常昂贵。根据翻译13，延迟渲染允许程序员使用的光源可以多于Forward渲染，但阴影的开销仍然对性能有一个限制。如果我们的场景是动态的，那么没有办法来避免执行这些计算。但是如果光源和几何物体位置都是不变的，那么我们可以只计算一次光照并重复使用。这使得我们可以在场景中放置许多光源，而不必在运行的时候再渲染它们。这种方法也可以使用那些不能用作实时光源的区域光源(area lighting)。</p><h2 id=光照贴图-lightingmapping>光照贴图-Lightingmapping<a title="Permanent link"class=headerlink href=#光照贴图-lightingmapping></a></h2><p>为了尝试光照贴图，我创建了一个简单的测试场景，它具有一个简单的结构，可以提供阴影，还有一些放置在其内部的球体。一切物体都使用默认的Unity材质。 {% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png" des="针对光照贴图的一个测试场景" width="250" %}</p><h3 id=烘焙光源-baked-lights>烘焙光源-Baked Lights<a title="Permanent link"class=headerlink href=#烘焙光源-baked-lights></a></h3><p>要开始使用光照贴图，将唯一的光源对象的模式改为“Baked（烘焙）”而不是“Realtime（实时）”。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png" des="使用烘焙模式的主方向光源" width="250" %}</p><p><strong>将主方向光源变成烘培光源后，就不被纳入动态光照计算。从动态对象的角度来看，光源是不存在的。 唯一仍然不变的是环境光照，它仍然是基于主方向光源的。</strong></p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png" des="没有直接光照的效果" width="250" %}</p><p>要实际启用光照贴图，请在lighting窗口的“混合光照（<em>Mixed Lighting</em>）”中打开“烘培全局光照(<em>BakedGlobal Illumination</em>)”。 然后<strong>将光照模式设置为“烘培间接光照（<em>BakedIndirect</em>）”。 尽管它的名字说的是烘培间接光照，但是它也包括了直接光照</strong>。 它通常用于向场景添加间接光照。另外，确保实时全局光照（<em>Realtime Global Illumination</em>）被禁用，因为我们还没有支持到这一点。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png" des="烘培间接光照模式" width="250" %}</p><h3 id=静态几何体>静态几何体<a title="Permanent link"class=headerlink href=#静态几何体></a></h3><p>场景的对象都应该是固定的：它们位置永远不会移动。要将这一个信息传达给Unity，请将这些对象标记为静态。你可以通过启用检视器窗口右上角的“静态”切换键来做到这一点。</p><p><strong>光源也必须被标记为静态吗？</strong> * 不需要。光源只需要设置为适当的模式。</p><p>有各种子系统关心物体是否是静态的。“静态（static）”还有一个下拉菜单，你可以使用它来微调哪些系统会将这个对象视为静态的。现在我们只关心光照贴图，但最简单的做法是使一切都完全是静态的。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png" des="静态标签设定" width="250" %}</p><p>一个物体对于光照贴图来说是否是静态的，也可以通过其网格渲染器的检视器来进行查看和编辑。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png" des="对于光照贴图来说是静态的物体" width="250" %}</p><p>现在，所有的物体都是静态的，它们将被包含在光照贴图的处理过程中。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png" des="使用烘焙光照的场景" width="250" %}</p><p><strong>必须注意</strong>，使用光照贴图得到的结果不如使用实时照明得到的结果亮度那么高。这是因为缺失了镜面高光，只剩下了漫反射光照。镜面高光取决于视角，因此取决于相机的角度。正是由于相机是移动的，因此它不能包含在光照贴图中。(使用场景推荐)这种限制意味着光照贴图可以用于微弱的光线和暗淡的表面，但不能用于强直射光或有光泽的表面。如果你想要镜面高光，你将不得不使用实时光源。所以你经常会使用烘烤光源和实时光源的混合。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code>为什么没有立即得到烘焙光源？
+为了确保在需要的时候光照贴图可以实际生成和更新，请在光照窗口的底部启用“自动生成（Auto Generate）”。 否则，你必须手动生成新的光照贴图。
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png" des="自动烘焙" width="250" %}</p><h3 id=光照贴图设置-lightingmapping-setting>光照贴图设置-Lightingmapping Setting<a title="Permanent link"class=headerlink href=#光照贴图设置-lightingmapping-setting></a></h3><p>光照烘焙窗口包含专门用于光照贴图设置的部分。在这里，你可以在<strong>质量</strong>、<strong>尺寸</strong>和<strong>烘烤时间</strong>之间取得平衡。你还可以在光照贴图烘焙算法引擎：Enlighten和Progressive lightmapper之间进行切换。后者会增量地生成光照贴图，优先考虑场景视图中可见的内容，这在编辑的时候很方便。本教程中使用的是Enlighten光照贴图引擎。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png" des="默认的光照贴图设置" width="250" %}</p><p>在做任何事情之前，请将“DirectionalMode“设置为”Non-Direction“。 稍后我们会处理其他模式。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png" des="使用“Non-directional”模式的光照贴图" width="250" %}</p><p>烘烤的光照存储在纹理中。 你可以通过将光照窗口从“场景（Scene）“切换到”全局地图（<em>Global Maps</em>）“模式来进行查看。 使用默认设置，我的测试场景很容易与一张1024×1024贴图相匹配。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png" des="得到光照贴图" width="250" %}</p><p>Unity自带的Objects物体都有用于光照贴图的UV坐标。对于手动导入的模型，可以自己提供UV坐标，也可以让Unity生成。烘烤后可以在光照贴图中看到展开的纹理。它们需要多少空间取决于场景中物体的大小和光照贴图的分辨率设置。 如果质量要求高分辨率太大，一张贴图涨不下，Unity会创建额外的贴图存储，直至完成。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png" url2="posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png" des="光照贴图的分辨率的不同会带来很大的差异" width="250" %}</p><p>对于每个项目来说，最佳设置都是不同。 你必须不断的调整烘焙参数，直到达成很好的效果及平衡。需要注意的是，视觉质量也很大程度上取决于用于光照贴图的纹理展开的质量。不存在纹理接缝可能会产生明显的瑕疵。Unity的默认球体就是一个很好的例子。它不适用于光照贴图。</p><h3 id=间接光源>间接光源<a title="Permanent link"class=headerlink href=#间接光源></a></h3><p>烘焙光照会失去镜面高光，只能获得的是间接光照，它是在到达人眼之前会在多个表面反射的光。烘焙光会在拐角周围区域反射，那些本来会被遮挡的区域仍然会被照亮。我们不能实时计算镜面高光这个信息(本节1.2有说明)，但是我们可以在烘焙的时候包括反射光。</p><p>要清楚地看到实时光照和烘培光照之间的差异：将环境光照的强度设置为零，去掉天空盒的影响，所有的光都只是来自方向光。比对</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png" url2="posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png" des="没有环境光照，realtime vs. lightmapped" width="250" %}</p><p>每次光子反射的时候，它都会失去一些能量，它会被一些需要的材质采样着色。Unity在烘焙间接光照的时候，物体会根据附近的颜色进行着色。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png" url2="posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png" des="绿色的地面，realtime vs. lightmapped" width="250" %}</p><p>自发光表面也会影响烘焙光照。它们会成为间接光源。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png" url2="posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png" des="自发光的地面，realtime vs. lightmapped" width="250" %}</p><p>间接光照的一个特殊设置是AO环境遮挡：这是指在角落和转折中发生的间接光照造成的阴影。这是一种人为的提升，可以增强深度方面的视觉。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png" url2="posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png" des="使用环境遮挡的效果" width="250" %}</p><p>环境遮挡效果完全基于物体表面。它不考虑光线实际来自哪里。烘焙时并不总是正确，举个简单的例子：当与自发光表面组合的时候就会产生一些错误的结果。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png" des="显然是错误的环境遮挡效果" width="250" %}</p><h3 id=透明度-transparency>透明度-Transparency<a title="Permanent link"class=headerlink href=#透明度-transparency></a></h3><p>光照贴图在一定程度上可以处理半透明表面。 光将通过它们，尽管光的颜色不会被它们所过滤。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png" des="半透明的屋顶" width="250" %}</p><p>镂空材质也可以在光照贴图中正常工作。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png" des="镂空的屋顶" width="250" %}</p><p>但 这仅在使用封闭曲面的时候有效。当使用像是quad这样的单面几何，光线将在不存在的一面损坏。<em>当另外一面没有任何东西的时候，这是很好的，但是当使用单面透明表面的时候会导致问题</em>。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png" des="四边形上有一个错误" width="250" %}</p><p>为了处理这个问题，必须告诉光照贴图系统将这些表面视为透明的。 这可以通过自定义光照贴图设置完成</p><ol><li>通过Asset / Create / Lightmap参数来创建这些数据。这些资源允许你自定义每个对象的光照贴图计算。在这种情况下，我们只想表明我们正在处理一个透明的对象。所以启用“它是透明的（<em>Is Transparent</em>）“。 下面它是一个全局作用预计算实时全局光照（<em>Precomputed Realtime GI</em>）部分中的一部分，它会影响所有烘烤光照。</li></ol><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png" des="指示这是透明的" width="250" %}</p><ol><li>单独设置：通过物体的网格渲染器检视器来选择它们。你的资源名字将显示在Lightmap参数的下拉列表中。</li></ol><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png" url2="posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png" des="为透明四边形使用自定义参数" width="250" %}</p><p>将物体标记为透明也会改变它对间接光照的贡献。透明物体让间接光通过，而不透明物体则会阻挡间接光。</p><h2 id=使用光照贴图>使用光照贴图<a title="Permanent link"class=headerlink href=#使用光照贴图></a></h2><p>现在我们知道光照贴图是如何工作的，我们可以为Shader着色器添加对光照贴图的支持。第一步是对光照贴图进行采样。调整场景中的球体，以便我们的着色器使用白色材质。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png" des="使用我们的白色材质的球体" width="250" %}</p><h3 id=光照贴图的着色器变体>光照贴图的着色器变体<a title="Permanent link"class=headerlink href=#光照贴图的着色器变体></a></h3><p>当一个着色器被认为应该使用光照贴图的时候，Unity会寻找与LIGHTMAP_ON关键字关联的变体。 所以我们必须为这个关键字添加一个多编译指令。 当使用forward-render-path的时候，仅在base-pass中采样光照贴图。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#pragma multi_compile _ SHADOWS_SCREEN</span><span class=w></span>
+<span class=cp>#pragma multi_compile _ VERTEXLIGHT_ON</span><span class=w></span>
+<span class=cp>#pragma multi_compile _ LIGHTMAP_ON</span><span class=w></span>
+<span class=cp>#pragma multi_compile_fog</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>当使用光照贴图的时候，Unity不会包含顶点光源。他们的关键字是_相互排斥_的。所以我们不需要一个会同时使用_VERTEXLIGHT_ON_和_LIGHTMAP_ON_的变体。（互斥）</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#pragma multi_compile _ SHADOWS_SCREEN</span><span class=w></span>
+<span class=c1>//#pragma multi_compile _ VERTEXLIGHT_ON</span><span class=w></span>
+<span class=c1>//#pragma multi_compile _ LIGHTMAP_ON</span><span class=w></span>
+<span class=cp>#pragma multi_compile _ LIGHTMAP_ON VERTEXLIGHT_ON</span><span class=w></span>
+<span class=cp>#pragma multi_compile_fog</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>延迟渲染路径中也支持光照贴图，因此也可以将这个关键字添加到延迟渲染通道中。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#pragma multi_compile _ UNITY_HDR_ON</span><span class=w></span>
+<span class=cp>#pragma multi_compile _ LIGHTMAP_ON</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=光照贴图的坐标>光照贴图的坐标<a title="Permanent link"class=headerlink href=#光照贴图的坐标></a></h3><p>用于采样光照贴图的坐标存储在TEXCOORD1。 所以将此通道添加到shader中的VertexData结构体中。Unity给出了uv使用说明表：Shader中是uv0、uv1、uv2、uv3；C#中是UV、UV2、UV3、UV4</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>struct</span><span class=w> </span><span class=n>VertexData</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>vertex</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>POSITION</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float3</span><span class=w> </span><span class=n>normal</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>NORMAL</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>tangent</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TANGENT</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float2</span><span class=w> </span><span class=n>uv</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float2</span><span class=w> </span><span class=n>uv1</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD1</span><span class=p>;</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>光照贴图坐标也必须进行插值。因为它们与顶点光源互斥，所以都可以使用TEXCOORD6。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>struct</span><span class=w> </span><span class=n>Interpolators</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>…</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>VERTEXLIGHT_ON</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=kt>float3</span><span class=w> </span><span class=n>vertexLightColor</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD6</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>LIGHTMAP_ON</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=kt>float2</span><span class=w> </span><span class=n>lightmapUV</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD6</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>来自模型顶点数据的坐标定义了用于光照贴图的纹理展开(第二套uv)。但是它并没有告诉我们这个展开位置在哪里，展开尺寸大小。我们必须缩放和偏移坐标才能得到最终的光照贴图坐标。这种方法类似于常规纹理坐标的转换，除了转换是特定于对象的，而这里的方法是特定于材质的。在_UnityShaderVariables_中将光照贴图的纹理定义为_unity_Lightmap_。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Interpolators</span><span class=w> </span><span class=n>MyVertexProgram</span><span class=w> </span><span class=p>(</span><span class=n>VertexData</span><span class=w> </span><span class=n>v</span><span class=p>)</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>TRANSFORM_TEX</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>uv</span><span class=p>,</span><span class=w> </span><span class=n>_MainTex</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=p>.</span><span class=n>zw</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>TRANSFORM_TEX</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>uv</span><span class=p>,</span><span class=w> </span><span class=n>_DetailTex</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>LIGHTMAP_ON</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=n>i</span><span class=p>.</span><span class=n>lightmapUV</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>TRANSFORM_TEX</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>uv1</span><span class=p>,</span><span class=w> </span><span class=n>unity_Lightmap</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>不幸的是，我们不能使用方便的_TRANSFORM_TEX_宏，因为它假定光照贴图的变换被被定义为_unity_Lightmap_ST_，而实际上是被定义为_unity_LightmapST_。由于这种不一致，我们必须手动进行这个变换。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>i</span><span class=p>.</span><span class=n>lightmapUV</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>uv1</span><span class=w> </span><span class=o>*</span><span class=n>unity_LightmapST</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>unity_LightmapST</span><span class=p>.</span><span class=n>zw</span><span class=p>;</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=对光照贴图进行采样-sampling-lightmap>对光照贴图进行采样-Sampling Lightmap<a title="Permanent link"class=headerlink href=#对光照贴图进行采样-sampling-lightmap></a></h3><p>因为光照贴图的数据被认为是间接光照，我们将在CreateIndirectLight函数中进行采样。当光照贴图可用的时候，必须将它们用作间接光而不是球面谐波。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>UnityIndirect</span><span class=w> </span><span class=n>CreateIndirectLight</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>,</span><span class=w> </span><span class=kt>float3</span><span class=w> </span><span class=n>viewDir</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>VERTEXLIGHT_ON</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>vertexLightColor</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>FORWARD_BASE_PASS</span><span class=p>)</span><span class=w> </span><span class=o>||</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>DEFERRED_PASS</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>LIGHTMAP_ON</span><span class=p>)</span><span class=w></span>
+<span class=w>            </span><span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>            </span><span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=nb>max</span><span class=p>(</span><span class=mo>0</span><span class=p>,</span><span class=w> </span><span class=n>ShadeSH9</span><span class=p>(</span><span class=kt>float4</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>normal</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>)));</span><span class=w></span>
+<span class=w>        </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=w>        </span><span class=kt>float3</span><span class=w> </span><span class=n>reflectionDir</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>reflect</span><span class=p>(</span><span class=o>-</span><span class=n>viewDir</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>normal</span><span class=p>);</span><span class=w></span>
+
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>indirectLight</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><em>为什么indirectLight.diffuse的值被赋值而不是加起来？光照贴图从来没有与顶点光源组合起来。</em></p><p>unity_Lightmap的确切形式取决于目标平台。 它被定义为UNITY_DECLARE_TEX2D（unity_Lightmap）。要对它进行采样，我们将使用UNITY_SAMPLE_TEX2D宏而不是tex2D。这是根据不同平台决定。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_TEX2D</span><span class=p>(</span><span class=n>unity_Lightmap</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>lightmapUV</span><span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png" des="使用原始光照图数据的效果" width="250" %}</p><p>我们现在得到了烘焙的间接光照，但效果看起来不对。这是因为光照贴图数据已被编码。颜色以RGBM格式或是半强度格式进行存储，以支持高强度的光。UnityCG的DecodeLightmap函数负责为我们解码。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DecodeLightmap</span><span class=w></span>
+<span class=p>(</span><span class=w></span>
+<span class=w>    </span><span class=n>UNITY_SAMPLE_TEX2D</span><span class=p>(</span><span class=n>unity_Lightmap</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>lightmapUV</span><span class=p>)</span><span class=w></span>
+<span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png" des="使用解码后光照图数据的效果" width="250" %}</p><h2 id=创建光照贴图>创建光照贴图<a title="Permanent link"class=headerlink href=#创建光照贴图></a></h2><p><em>目前，光照贴图会将场景对象总是视为不透明和纯白色的物体。我们必须对我们的着色器进行一些调整，添加一个渲染通道来完全支持光照贴图。</em></p><p><em>从现在开始，对场景中的所有对象使用我们自己的着色器。也不再使用默认的材质。</em></p><h3 id=半透明的阴影-semitransparent-shadow>半透明的阴影-Semitransparent Shadow<a title="Permanent link"class=headerlink href=#半透明的阴影-semitransparent-shadow></a></h3><p>光照贴图不使用实时渲染管道，因此现有自写的shader不能支持。 当尝试使用半透明阴影的时候，这是最明显的。通过设置屋顶立方体材质的色调alpha分量小于1来赋予屋顶立方体半透明度。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png" des="半透明的屋顶，效果不正确" width="250" %}</p><p><strong>光照贴图</strong>仍然把屋顶看成是实心物体，这是不正确的。它<strong>使用材质的渲染类型来确定如何处理表面</strong>，这应该告诉光照贴图我们的对象是半透明的。事实上，它确实知道屋顶是半透明的，它只是把它看作是完全不透明的而已。这是因为<strong>它</strong>采用Unity的命名约定<strong>_Color材质属性的alpha组件以及主纹理来设置不透明度</strong>。</p><p>用_Color替换_Tint。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Properties</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>// _Tint ("Tint", Color) = (1, 1, 1, 1)</span><span class=w></span>
+<span class=w>    </span><span class=n>_Color</span><span class=w> </span><span class=p>(</span><span class=s>"Tint"</span><span class=p>,</span><span class=w> </span><span class=n>Color</span><span class=p>)</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>)</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>然后，为了保证我们的着色器的功能，我们还必须在shader文件、cg文件替换，而且我们还要调整GUI拓展。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png" des="半透明的屋顶，正确的效果" width="250" %}</p><h3 id=镂空部分的阴影-cutout-shadow>镂空部分的阴影-Cutout Shadow<a title="Permanent link"class=headerlink href=#镂空部分的阴影-cutout-shadow></a></h3><p>镂空部分的阴影也有类似的问题。光照贴图程序期望透明度的阈值存储在_Cutoff属性中，但是我们使用的是_AlphaCutoff。 因此，它使用默认阈值1。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png" des="镂空的屋顶，效果不正确" width="250" %}</p><p>解决方案是再次<strong>采用Unity的命名约定_Cutoff材质属性</strong>。所以替换shader、cg文件、GUI拓展。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png" des="镂空的屋顶，正确的效果" width="250" %}</p><h3 id=添加一个meta渲染通道-add-meta-pass>添加一个Meta渲染通道-Add Meta Pass<a title="Permanent link"class=headerlink href=#添加一个meta渲染通道-add-meta-pass></a></h3><p><strong>渲染光照贴图正确的表面反照率和自发光</strong>。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png" des="绿色的地板，效果不正确" width="250" %}</p><p>要采样物体的表面颜色，光照贴图程序会将它的光照模式设置为Meta来寻找一个着色器渲染通道。这个渲染通道仅由光照贴图程序使用，不使用剔除。所以让我们在我们的着色器上添加一个渲染通道。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Pass</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>Tags</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=s>"LightMode"</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>"Meta"</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=n>Cull</span><span class=w> </span><span class=n>Off</span><span class=w></span>
+
+<span class=w>    </span><span class=n>CGPROGRAM</span><span class=w></span>
+
+<span class=w>    </span><span class=err>#</span><span class=n>pragma</span><span class=w> </span><span class=n>vertex</span><span class=w> </span><span class=n>MyLightmappingVertexProgram</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>pragma</span><span class=w> </span><span class=n>fragment</span><span class=w> </span><span class=n>MyLightmappingFragmentProgram</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>include</span><span class=w> </span><span class=s>"My Lightmapping.cginc"</span><span class=w></span>
+
+<span class=w>    </span><span class=n>ENDCG</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>现在我们<strong>需要确定反照率、镜面高光颜色、平滑度、自发光</strong>。只需要顶点的位置和uv坐标，以及需要vertexProgram中的光照贴图坐标。不使用法线和切线。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span>
+<span class=normal>32</span>
+<span class=normal>33</span>
+<span class=normal>34</span>
+<span class=normal>35</span>
+<span class=normal>36</span>
+<span class=normal>37</span>
+<span class=normal>38</span>
+<span class=normal>39</span>
+<span class=normal>40</span>
+<span class=normal>41</span>
+<span class=normal>42</span>
+<span class=normal>43</span>
+<span class=normal>44</span>
+<span class=normal>45</span>
+<span class=normal>46</span>
+<span class=normal>47</span>
+<span class=normal>48</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#if !defined(MY_LIGHTMAPPING_INCLUDED)</span><span class=w></span>
+<span class=cp>#define MY_LIGHTMAPPING_INCLUDED</span><span class=w></span>
+
+<span class=cp>#include "UnityPBSLighting.cginc"</span><span class=w></span>
+
+<span class=kt>float4</span><span class=w> </span><span class=n>_Color</span><span class=p>;</span><span class=w></span>
+<span class=n>sampler2D</span><span class=w> </span><span class=n>_MainTex</span><span class=p>,</span><span class=w> </span><span class=n>_DetailTex</span><span class=p>,</span><span class=w> </span><span class=n>_DetailMask</span><span class=p>;</span><span class=w></span>
+<span class=kt>float4</span><span class=w> </span><span class=n>_MainTex_ST</span><span class=p>,</span><span class=w> </span><span class=n>_DetailTex_ST</span><span class=p>;</span><span class=w></span>
+
+<span class=n>sampler2D</span><span class=w> </span><span class=n>_MetallicMap</span><span class=p>;</span><span class=w></span>
+<span class=kt>float</span><span class=w> </span><span class=n>_Metallic</span><span class=p>;</span><span class=w></span>
+<span class=kt>float</span><span class=w> </span><span class=n>_Smoothness</span><span class=p>;</span><span class=w></span>
+
+<span class=n>sampler2D</span><span class=w> </span><span class=n>_EmissionMap</span><span class=p>;</span><span class=w></span>
+<span class=kt>float3</span><span class=w> </span><span class=n>_Emission</span><span class=p>;</span><span class=w></span>
+
+<span class=k>struct</span><span class=w> </span><span class=n>VertexData</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>vertex</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>POSITION</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float2</span><span class=w> </span><span class=n>uv</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float2</span><span class=w> </span><span class=n>uv1</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD1</span><span class=p>;</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+
+<span class=k>struct</span><span class=w> </span><span class=n>Interpolators</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>pos</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_POSITION</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=kt>float4</span><span class=w> </span><span class=n>uv</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>TEXCOORD0</span><span class=p>;</span><span class=w></span>
+<span class=p>};</span><span class=w></span>
+
+<span class=kt>float</span><span class=w> </span><span class=n>GetDetailMask</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>…</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>float3</span><span class=w> </span><span class=n>GetAlbedo</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>…</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>float</span><span class=w> </span><span class=n>GetMetallic</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>…</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>float</span><span class=w> </span><span class=n>GetSmoothness</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>…</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=kt>float3</span><span class=w> </span><span class=n>GetEmission</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>…</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>GetEmission函数去除_FORWARD_BASE_PASS_和_DEFERRED_PASS_限制。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float3</span><span class=w> </span><span class=n>GetEmission</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=c1>//    #if defined(FORWARD_BASE_PASS) || defined(DEFERRED_PASS)</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>_EMISSION_MAP</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w> </span><span class=nb>tex2D</span><span class=p>(</span><span class=n>_EmissionMap</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=p>.</span><span class=n>xy</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=n>_Emission</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>else</span><span class=w></span>
+<span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>_Emission</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=c1>//    #else</span><span class=w></span>
+<span class=c1>//        return 0;</span><span class=w></span>
+<span class=c1>//    #endif</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>这些函数只有在定义了适当的关键字时才会起作用，因此可以在渲染通道中为其添加着色功能。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#pragma vertex MyLightmappingVertexProgram</span><span class=w></span>
+<span class=cp>#pragma fragment MyLightmappingFragmentProgram</span><span class=w></span>
+
+<span class=cp>#pragma shader_feature _METALLIC_MAP</span><span class=w></span>
+<span class=cp>#pragma shader_feature _ _SMOOTHNESS_ALBEDO _SMOOTHNESS_METALLIC</span><span class=w></span>
+<span class=cp>#pragma shader_feature _EMISSION_MAP</span><span class=w></span>
+<span class=cp>#pragma shader_feature _DETAIL_MASK</span><span class=w></span>
+<span class=cp>#pragma shader_feature _DETAIL_ALBEDO_MAP</span><span class=w></span>
+
+<span class=cp>#include "My Lightmapping.cginc"</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=顶点程序-vertex-program>顶点程序-Vertex Program<a title="Permanent link"class=headerlink href=#顶点程序-vertex-program></a></h3><p>这个pass的vertex 程序很简单。只是转换位置、转换纹理坐标。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Interpolators</span><span class=w> </span><span class=n>MyLightmappingVertexProgram</span><span class=w> </span><span class=p>(</span><span class=n>VertexData</span><span class=w> </span><span class=n>v</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>pos</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityObjectToClipPos</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>vertex</span><span class=p>);</span><span class=w></span>
+
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>TRANSFORM_TEX</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>uv</span><span class=p>,</span><span class=w> </span><span class=n>_MainTex</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=n>i</span><span class=p>.</span><span class=n>uv</span><span class=p>.</span><span class=n>zw</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>TRANSFORM_TEX</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>uv</span><span class=p>,</span><span class=w> </span><span class=n>_DetailTex</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>计算2.2提到的映射偏移，我们必须使用光照贴图uv坐标而不是顶点位置，然后进行适当的转换把纹理uv坐标作为模型顶点的屏幕位置，模型的UV映射必须要正确：纹理上的每个点必须映射为模型上的唯一点。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=n>v</span><span class=p>.</span><span class=n>vertex</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>uv1</span><span class=w> </span><span class=o>*</span><span class=n>unity_LightmapST</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>unity_LightmapST</span><span class=p>.</span><span class=n>zw</span><span class=p>;</span><span class=w></span>
+<span class=n>v</span><span class=p>.</span><span class=n>vertex</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=n>i</span><span class=p>.</span><span class=n>pos</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityObjectToClipPos</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>vertex</span><span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>v.vertex.z = 0，不是所有机器上都能支持，顶点位置的Z坐标必须以某种方式使用，即使我们不使用它也是如此。Unity的着色器为此使用虚拟值，所以我们将简单地做同样的事情。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>;</span><span class=w></span>
+<span class=n>v</span><span class=p>.</span><span class=n>vertex</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>uv1</span><span class=w> </span><span class=o>*</span><span class=n>unity_LightmapST</span><span class=p>.</span><span class=n>xy</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>unity_LightmapST</span><span class=p>.</span><span class=n>zw</span><span class=p>;</span><span class=w></span>
+<span class=n>v</span><span class=p>.</span><span class=n>vertex</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>vertex</span><span class=p>.</span><span class=n>z</span><span class=w> </span><span class=o>></span><span class=w> </span><span class=mo>0</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=mf>0.0001</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=n>i</span><span class=p>.</span><span class=n>pos</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityObjectToClipPos</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>vertex</span><span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=片段程序-fragment-program>片段程序-Fragment Program<a title="Permanent link"class=headerlink href=#片段程序-fragment-program></a></h3><p>在<strong>片段程序中</strong>，计算<strong>输出反照率和自发光颜色</strong>。光照贴图程序将通过<strong>执行两次渲染</strong>来做到这一点，<strong>每次</strong>执行<strong>有一个输出</strong>。为了使这个过程更容易，我们可以使用_UnityMetaPass.cginc文_件中定义的_UnityMetaFragment_函数。它使用_<strong>UnityMetaInput</strong>_结构<strong>作为参数</strong>，其中<strong>包含反照率和自发光颜色</strong>。 该函数将决定要输出反照率和自发光颜色中的哪一个以及如何编码输出结果。</p><p>UnityMetaInput也包含镜面高光颜色，即使它不存储在光照贴图中。它用于一些编辑器可视化，我们先忽略它。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#include "UnityPBSLighting.cginc"</span><span class=w></span>
+<span class=cp>#include "UnityMetaPass.cginc"</span><span class=w></span>
+<span class=err>…</span><span class=w></span>
+<span class=kt>float4</span><span class=w> </span><span class=n>MyLightmappingFragmentProgram</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>UnityMetaInput</span><span class=w> </span><span class=n>surfaceData</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>surfaceData</span><span class=p>.</span><span class=n>Emission</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>surfaceData</span><span class=p>.</span><span class=n>Albedo</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>surfaceData</span><span class=p>.</span><span class=n>SpecularColor</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>UnityMetaFragment</span><span class=p>(</span><span class=n>surfaceData</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><em>UnityMetaFragment是什么样子的？</em></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>//unity_MetaFragmentControl变量包含一个标记，这个标记会告诉函数是否输出反照率或是自发光颜色。还有一段有关</span><span class=w></span>
+<span class=c1>//编辑器可视化变体的代码，但是我把它删掉了，因为与这里的内容不相关。</span><span class=w></span>
+<span class=kt>half4</span><span class=w> </span><span class=n>UnityMetaFragment</span><span class=w> </span><span class=p>(</span><span class=n>UnityMetaInput</span><span class=w> </span><span class=n>IN</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=kt>half4</span><span class=w> </span><span class=n>res</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mo>0</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>unity_MetaFragmentControl</span><span class=p>.</span><span class=n>x</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=n>res</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kt>half4</span><span class=p>(</span><span class=n>IN</span><span class=p>.</span><span class=n>Albedo</span><span class=p>,</span><span class=mi>1</span><span class=p>);</span><span class=w></span>
+
+<span class=w>        </span><span class=c1>// d3d9 shader compiler doesn't like NaNs and infinity.</span><span class=w></span>
+<span class=w>        </span><span class=n>unity_OneOverOutputBoost</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>saturate</span><span class=p>(</span><span class=n>unity_OneOverOutputBoost</span><span class=p>);</span><span class=w></span>
+
+<span class=w>        </span><span class=c1>// Apply Albedo Boost from LightmapSettings.</span><span class=w></span>
+<span class=w>        </span><span class=n>res</span><span class=p>.</span><span class=n>rgb</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>clamp</span><span class=p>(</span><span class=w></span>
+<span class=w>            </span><span class=nb>pow</span><span class=p>(</span><span class=n>res</span><span class=p>.</span><span class=n>rgb</span><span class=p>,</span><span class=w> </span><span class=n>unity_OneOverOutputBoost</span><span class=p>),</span><span class=w> </span><span class=mo>0</span><span class=p>,</span><span class=w> </span><span class=n>unity_MaxOutputValue</span><span class=w></span>
+<span class=w>        </span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>unity_MetaFragmentControl</span><span class=p>.</span><span class=n>y</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=kt>half3</span><span class=w> </span><span class=n>emission</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>unity_UseLinearSpace</span><span class=p>)</span><span class=w></span>
+<span class=w>            </span><span class=n>emission</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>IN</span><span class=p>.</span><span class=n>Emission</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=k>else</span><span class=w></span>
+<span class=w>            </span><span class=n>emission</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>GammaToLinearSpace</span><span class=w> </span><span class=p>(</span><span class=n>IN</span><span class=p>.</span><span class=n>Emission</span><span class=p>);</span><span class=w></span>
+
+<span class=w>        </span><span class=n>res</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UnityEncodeRGBM</span><span class=p>(</span><span class=n>emission</span><span class=p>,</span><span class=w> </span><span class=n>EMISSIVE_RGBM_SCALE</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>res</span><span class=p>;</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png" des="间接光照设置为0的效果" width="250" %}</p><p>要<strong>获得自发光颜色</strong>，我们可以简单的<strong>使用GetEmission函数</strong>。要<strong>获得反照率</strong>，我们必须再次<strong>使用_DiffuseAndSpecularFromMetallic_函数</strong>。 该函数具有镜面高光颜色和反射率作为输出参数，即使我们现在不使用它们，我们也必须提供这些参数。我们可以使用<strong>surfaceData.SpecularColor来捕获镜面高光颜色</strong>。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>MyLightmappingFragmentProgram</span><span class=w> </span><span class=p>(</span><span class=n>Interpolators</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=n>SV_TARGET</span><span class=w></span>
+<span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=n>UnityMetaInput</span><span class=w> </span><span class=n>surfaceData</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>surfaceData</span><span class=p>.</span><span class=n>Emission</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>GetEmission</span><span class=p>(</span><span class=n>i</span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=kt>float</span><span class=w> </span><span class=n>oneMinusReflectivity</span><span class=p>;</span><span class=w></span>
+<span class=w>    </span><span class=n>surfaceData</span><span class=p>.</span><span class=n>Albedo</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DiffuseAndSpecularFromMetallic</span><span class=w></span>
+<span class=w>    </span><span class=p>(</span><span class=w></span>
+<span class=w>        </span><span class=n>GetAlbedo</span><span class=p>(</span><span class=n>i</span><span class=p>),</span><span class=w> </span><span class=n>GetMetallic</span><span class=p>(</span><span class=n>i</span><span class=p>),</span><span class=w></span>
+<span class=w>        </span><span class=n>surfaceData</span><span class=p>.</span><span class=n>SpecularColor</span><span class=p>,</span><span class=w> </span><span class=n>oneMinusReflectivity</span><span class=w></span>
+<span class=w>    </span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=c1>//surfaceData.SpecularColor = 0;</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>UnityMetaFragment</span><span class=p>(</span><span class=n>surfaceData</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png" des="间接光照着色的效果" width="250" %}</p><p>但自发光光照可能还没有出现在光照贴图中。这是因为光照贴图程序并不总是包含一个自发光光照的渲染通道。<strong>材质必须表明它们具有自发光光照属性，</strong>以对烘焙过程做出贡献。这是<strong>通过Material.globalIlluminationFlags属性</strong>完成的。扩展GUI设置：当自发光光照编辑的时候，它应该被烘焙进光照贴图。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>void</span><span class=w> </span><span class=n>DoEmission</span><span class=w> </span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=err>…</span><span class=w></span>
+<span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>EditorGUI</span><span class=p>.</span><span class=n>EndChangeCheck</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>tex</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=n>map</span><span class=p>.</span><span class=n>textureValue</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>            </span><span class=n>SetKeyword</span><span class=p>(</span><span class=s>"_EMISSION_MAP"</span><span class=p>,</span><span class=w> </span><span class=n>map</span><span class=p>.</span><span class=n>textureValue</span><span class=p>);</span><span class=w></span>
+<span class=w>        </span><span class=p>}</span><span class=w></span>
+<span class=w>        </span><span class=n>foreach</span><span class=w> </span><span class=p>(</span><span class=n>Material</span><span class=w> </span><span class=n>m</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>editor</span><span class=p>.</span><span class=n>targets</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>            </span><span class=n>m</span><span class=p>.</span><span class=n>globalIlluminationFlags</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>MaterialGlobalIlluminationFlags</span><span class=p>.</span><span class=n>BakedEmissive</span><span class=p>;</span><span class=w></span>
+<span class=w>        </span><span class=p>}</span><span class=w></span>
+<span class=w>    </span><span class=p>}</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=粗糙的金属-rough-metals>粗糙的金属-Rough Metals<a title="Permanent link"class=headerlink href=#粗糙的金属-rough-metals></a></h3><p>我们的shader现在看起来可以正常工作了，但它与标准着色器的结果不完全匹配。 <strong>当使用平滑度非常低的有色金属的时候，物体表面不太明亮</strong>。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png" url2="posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png" des="粗糙的绿色金属，standard vs. our" width="250" %}</p><p>标准着色器通过<strong>将反射率的一部分加到镜面高光颜色</strong>进行补偿（高亮）。它使用_UnityStandardBRDF.cginc_的_SmoothnessToRoughness函数_来确定基于平滑度的粗糙度值，将其缩小一半，并使用它来缩放镜面高光颜色。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float</span><span class=w> </span><span class=n>roughness</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>SmoothnessToRoughness</span><span class=p>(</span><span class=n>GetSmoothness</span><span class=p>(</span><span class=n>i</span><span class=p>))</span><span class=w> </span><span class=o>*</span><span class=mf>0.5</span><span class=p>;</span><span class=w></span>
+<span class=n>surfaceData</span><span class=p>.</span><span class=n>Albedo</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=n>surfaceData</span><span class=p>.</span><span class=n>SpecularColor</span><span class=w> </span><span class=o>*</span><span class=n>roughness</span><span class=p>;</span><span class=w></span>
+
+<span class=k>return</span><span class=w> </span><span class=n>UnityMetaFragment</span><span class=p>(</span><span class=n>surfaceData</span><span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><em>SmoothnessToRoughness计算了什么东西？</em></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>//转换：减去平滑度值，然后平方。 从平滑度到粗糙度的平方映射最终会产生比仅仅做线性转换更好的结果。</span><span class=w></span>
+<span class=c1>// Smoothness is the user facing name</span><span class=w></span>
+<span class=c1>// it should be perceptualSmoothness</span><span class=w></span>
+<span class=c1>// but we don't want the user to have to deal with this name</span><span class=w></span>
+<span class=kt>half</span><span class=w> </span><span class=n>SmoothnessToRoughness</span><span class=p>(</span><span class=kt>half</span><span class=w> </span><span class=n>smoothness</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=k>return</span><span class=p>(</span><span class=mi>1</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>smoothness</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=p>(</span><span class=mi>1</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>smoothness</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png" des="调整反照率后的效果" width="250" %}</p><h2 id=方向光照贴图-directinal-lightmap>方向光照贴图-Directinal Lightmap<a title="Permanent link"class=headerlink href=#方向光照贴图-directinal-lightmap></a></h2><p>光照贴图程序只使用物体的顶点数据，不考虑物体的法线贴图。光照贴图的分辨率太低，无法捕获由典型法线贴图提供的细节。这意味着静态光照将是平坦的。当使用具有法线贴图的材质的时候，这变得非常明显。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png" url2="posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png" des="使用了法线贴图，standard vs. our" width="250" %}</p><p>当从实时光照切换到烘焙光时，法线贴图的影响几乎完全消失。这是因为它要求环境反射才能看到它们。</p><h3 id=方向性-directionality>方向性-Directionality<a title="Permanent link"class=headerlink href=#方向性-directionality></a></h3><p>通过将“<em>DirectionalMode</em>”改回“<em>Directional</em>”，可以让法线贴图与烘焙光照一起工作。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png" des="再次启用定向光照贴图" width="250" %}</p><p>当使用方向光照贴图的时候，Unity将创建两个贴图。第一张贴图包含通常的光照信息，称为强度图。 第二张贴图被称为方向图。 它包含大部分烘烤光来自的方向。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png" des="强度图和方向图" width="250" %}</p><p>当方向图可用的时候，用它来对烘焙光进行简单的<strong>漫反射阴影计算</strong>。这使得它可用于法线贴图之上。注意，只有一个光方向是已知的，所以阴影将是一个近似。至少有一个主方向光照的时候，结果就会很好。</p><h3 id=对方向进行采样>对方向进行采样<a title="Permanent link"class=headerlink href=#对方向进行采样></a></h3><p>当方向光照贴图可用的时候，Unity将使用_LIGHTMAP_ON_和_DIRLIGHTMAP_COMBINED_关键字查找着色器变体。我们可以在forward-base-pass通道中使用#pragma multi_compile_fwdbase，而不是为手动添加多编译指令。它会负责解决所有的光照贴图关键字，以及VERTEXLIGHT_ON关键字。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>//#pragma multi_compile _ SHADOWS_SCREEN</span><span class=w></span>
+<span class=c1>//#pragma multi_compile _ LIGHTMAP_ON VERTEXLIGHT_ON</span><span class=w></span>
+
+<span class=cp>#pragma multi_compile_fwdbase</span><span class=w></span>
+<span class=cp>#pragma multi_compile_fog</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>我们可以为deferred-pass必须使用#pragma multi_compile_prepassfinal指令。 它解决了光照贴图和高动态光照渲染的关键字。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code><span class=c1>//#pragma multi_compile _ UNITY_HDR_ON</span><span class=w></span>
+<span class=c1>//#pragma multi_compile _ LIGHTMAP_ON</span><span class=w></span>
+<span class=cp>#pragma multi_compile_prepassfinal</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><em>prepassfinal是什么东西?</em><br> Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 5中，它被称为传统延迟光照。 这种方法有更多的渲染通道。Prepass决定是当时的术语。不需要引入新的指令，#pragma multi_compile_prepassfinal也用于当前的延迟渲染通道。</p><p>在CreateIndirectLight函数中，在检索烘焙光源本身后，需要直接获得烘焙光的方向。方向贴图可以通过unity_LightmapInd获得。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span class=cp>#if defined(LIGHTMAP_ON)</span><span class=w></span>
+<span class=w>    </span><span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DecodeLightmap</span><span class=p>(</span><span class=n>UNITY_SAMPLE_TEX2D</span><span class=p>(</span><span class=n>unity_Lightmap</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>lightmapUV</span><span class=p>));</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=k>if</span><span class=w> </span><span class=o>defined</span><span class=p>(</span><span class=n>DIRLIGHTMAP_COMBINED</span><span class=p>)</span><span class=w></span>
+<span class=w>        </span><span class=kt>float4</span><span class=w> </span><span class=n>lightmapDirection</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_TEX2D</span><span class=w></span>
+<span class=w>        </span><span class=p>(</span><span class=w></span>
+<span class=w>            </span><span class=n>unity_LightmapInd</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>lightmapUV</span><span class=w></span>
+<span class=w>        </span><span class=p>);</span><span class=w></span>
+<span class=w>    </span><span class=err>#</span><span class=n>endif</span><span class=w></span>
+<span class=cp>#else</span><span class=w></span>
+<span class=w>    </span><span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=nb>max</span><span class=p>(</span><span class=mo>0</span><span class=p>,</span><span class=w> </span><span class=n>ShadeSH9</span><span class=p>(</span><span class=kt>float4</span><span class=p>(</span><span class=n>i</span><span class=p>.</span><span class=n>normal</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>)));</span><span class=w></span>
+<span class=cp>#endif</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>但是，这将导致编译错误。这是因为一个纹理变量实际上由两部分组成。 有纹理资源，还有采样器状态。采样器状态决定纹理的采样方式，包括滤波器和截取模式。 通常，每个纹理都定义了这两个部分，但这并不是所有平台都需要的。 也可以将这两个部分分开，这允许我们为多个纹理定义单个采样器状态。</p><p>因为强度和方向贴图总是以相同的方式进行采样，所以在可能的情况下，Unity使用单个采样器状态。 这就是为什么我们在采样强度贴图的时候必须使用UNITY_SAMPLE_TEX2D宏。方向贴图已经定义，没有采样器。 要对其进行采样，我们必须使用UNITY_SAMPLE_TEX2D_SAMPLER宏来明确地告诉它要使用哪个采样器。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>lightmapDirection</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_TEX2D_SAMPLER</span><span class=w></span>
+<span class=p>(</span><span class=w></span>
+<span class=w>    </span><span class=n>unity_LightmapInd</span><span class=p>,</span><span class=w> </span><span class=n>unity_Lightmap</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>lightmapUV</span><span class=w></span>
+<span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><h3 id=使用方向贴图>使用方向贴图<a title="Permanent link"class=headerlink href=#使用方向贴图></a></h3><p>要使用方向：1、解码 2、对法向量执行点积，找到漫反射因子并将其应用于颜色。</p><p>但是方向贴图并没有包含单位长度的方向，而是比单位长度的方向会大一些。 幸运的是可以使用UnityCG的DecodeDirectionLightmap函数来解码方向数据。</p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code><span class=kt>float4</span><span class=w> </span><span class=n>lightmapDirection</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>UNITY_SAMPLE_TEX2D_SAMPLER</span><span class=w></span>
+<span class=p>(</span><span class=w></span>
+<span class=w>    </span><span class=n>unity_LightmapInd</span><span class=p>,</span><span class=w> </span><span class=n>unity_Lightmap</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>lightmapUV</span><span class=w></span>
+<span class=p>);</span><span class=w></span>
+
+<span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DecodeDirectionalLightmap</span><span class=w></span>
+<span class=p>(</span><span class=w></span>
+<span class=w>    </span><span class=n>indirectLight</span><span class=p>.</span><span class=n>diffuse</span><span class=p>,</span><span class=w> </span><span class=n>lightmapDirection</span><span class=p>,</span><span class=w> </span><span class=n>i</span><span class=p>.</span><span class=n>normal</span><span class=w></span>
+<span class=p>);</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png" des="使用带有方向的光照贴图的效果" width="250" %}</p><p><em>DecodeDirectionLightmap内部做了什么？</em></p><p><code>DecodeDirectionLightmap实际上并不计算正确的漫射照明因子。 相反，它使用的是半Lambert。 这种方法可以有效地将光照射在表面周围，照亮阴影的区域会更多。这么做是有必要的，这是因为烘烤的光照不是来自于单个方向.</code></p><div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>inline</span><span class=w> </span><span class=kt>half3</span><span class=w> </span><span class=n>DecodeDirectionalLightmap</span><span class=w> </span><span class=p>(</span><span class=w></span>
+<span class=w>    </span><span class=kt>half3</span><span class=w> </span><span class=n>color</span><span class=p>,</span><span class=w> </span><span class=n>fixed4</span><span class=w> </span><span class=n>dirTex</span><span class=p>,</span><span class=w> </span><span class=kt>half3</span><span class=w> </span><span class=n>normalWorld</span><span class=w></span>
+<span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
+<span class=w>    </span><span class=c1>// In directional (non-specular) mode Enlighten bakes dominant light</span><span class=w></span>
+<span class=w>    </span><span class=c1>// direction in a way, that using it for half Lambert and then dividing</span><span class=w></span>
+<span class=w>    </span><span class=c1>// by a "rebalancing coefficient" gives a result close to plain diffuse</span><span class=w></span>
+<span class=w>    </span><span class=c1>// response lightmaps, but normalmapped.</span><span class=w></span>
+
+<span class=w>    </span><span class=c1>// Note that dir is not unit length on purpose. Its length is</span><span class=w></span>
+<span class=w>    </span><span class=c1>// "directionality", like for the directional specular lightmaps.</span><span class=w></span>
+
+<span class=w>    </span><span class=kt>half</span><span class=w> </span><span class=n>halfLambert</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>dot</span><span class=p>(</span><span class=n>normalWorld</span><span class=p>,</span><span class=w> </span><span class=n>dirTex</span><span class=p>.</span><span class=n>xyz</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mf>0.5</span><span class=p>)</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mf>0.5</span><span class=p>;</span><span class=w></span>
+
+<span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>color</span><span class=w> </span><span class=o>*</span><span class=n>halfLambert</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=nb>max</span><span class=p>(</span><span class=mi>1</span><span class=n>e</span><span class=o>-</span><span class=mi>4</span><span class=n>h</span><span class=p>,</span><span class=w> </span><span class=n>dirTex</span><span class=p>.</span><span class=n>w</span><span class=p>);</span><span class=w></span>
+<span class=p>}</span><span class=w></span>
+</code></pre></div></td></tr></table></div><p><em>代码的注释中提到镜面高光。 这些是支持镜面高光的光照贴图，但需要更多的纹理，使用起来也更昂贵，并且在大多数情况下没有产生良好的效果。自Unity 5.6起，它们已被删除了。</em></p><h2 id=光照探针-light-probes>光照探针-Light Probes<a title="Permanent link"class=headerlink href=#光照探针-light-probes></a></h2><p>光照贴图仅适用于静态对象，而不适用于动态对象。 因此，动态对象不适合带有烘烤光照的场景。当没有实时光源的时候，这是非常明显的。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png" width="250" %}</p><p>为了更好地混合静态和动态对象，我们必须以某种方式将烘焙的光照应用于动态对象。为了解决这个问题，Unity有光照探针。 光照探针是对空间中的一个点包含该位置的光照信息。 它是用球面谐波来存储这些信息而不是用纹理。 如果可用的话，这些光照探针将用于动态对象，而不是全局环境数据。所以我们要做的就是创建一些探针，等到烘焙的时候，我们的着色器就会自动使用它们。</p><h3 id=创建光照探针组>创建光照探针组<a title="Permanent link"class=headerlink href=#创建光照探针组></a></h3><p>通过GameObject / Light /Light Probe Group将一组光探测器添加到场景中。 这将创建一个新的游戏对象，在立方体的形状中共有八个光探测器。 它们将在渲染动态对象的时候立即使用。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png" des="一个新的光探测器组" width="250" %}</p><p>通过检视器，可以在启用“编辑探针”模式后编辑光探测器组。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png" width="250" %}</p><h3 id=放置光照探针>放置光照探针<a title="Permanent link"class=headerlink href=#放置光照探针></a></h3><p>光照探针组将其包围的体积分成四个区域。四个探测器定义了四面体的角。 这些探测器被进行插值以确定用于动态物体的最终球谐函数，这取决于其在四面体内的位置。这意味着动态对象被视为一个单一的点，因此这种方法只对相当小的对象有效。在编辑探测器的时候，会自动生成四面体。 你不需要知道他们的配置，但它们的可视化信息可以帮助你查看探测器的相对位置。放置光照探针需要你去调整他们的位置，直到你得到一个你可以接受的结果，就像光照贴图的设置一样。首先封装将要包含动态对象的区域。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png" des="封装区域" width="250" %}</p><p>然后根据光照条件如何变化来添加更多的探针。你不必将它们放置在静态几何中。 也不要把它们放在不透明的单面几何体错误的那一面。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png" des="放置更多的探测器" width="250" %}</p><p>继续添加和移动探测器，直到你在所有区域都有了合理的光照条件，并且在它们之间发生的转换是可以接受的。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png" des="调整探测器的位置" width="250" %}</p><p>可以通过移动动态对象来测试探针。当选择一个动态对象的时候，也会显示当前正在发挥作用的探针。探针将显示其光照，而不仅仅是黄色球体。你还可以看到用于动态对象的内插数据。</p><p>{% include img-picture.html url1="posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif" des="移动动态对象" width="250" %}</p><p>通过不同的光照探头，物体的明暗变化明显。</p><hr><blockquote class=page-copyright><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4Z"/></svg></i>本页面最近更新：</span><span class=facts_modified></span>，<a class=edit_history>更新历史</a><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg></i>发现错误？ <a class=page_edit_url href=https://github.com/damonc-top/damonc-top.github.io/discussions/posts/unity3d/shader/translater/catlikecoding/2018-01-19-Unity_Static_Lightting.md title=编辑此页>在 GitHub 评论指正！</a></span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7Z"/></svg></i>本文作者：</span><span class=page_contributors>catlikecoding</span><br><span><i class=md-icon><svg viewbox="0 0 24 24"xmlns=http://www.w3.org/2000/svg><path d="M10.08 10.86c.05-.33.16-.62.3-.86.3-.56.81-.85 1.5-.86.45 0 .86.2 1.15.49.28.31.47.74.47 1.17h1.8c-.02-.47-.11-.9-.3-1.3-.15-.38-.38-.72-.68-1-1.45-1.34-4.14-1.15-5.37.37-1.29 1.67-1.32 4.59-.01 6.26 1.21 1.49 3.86 1.7 5.3.37.31-.25.56-.56.76-.92.16-.36.27-.74.28-1.15H13.5c0 .21-.07.4-.16.57-.09.19-.21.34-.34.47-.33.26-.72.4-1.14.4-.36-.01-.66-.08-.89-.23a1.41 1.41 0 0 1-.59-.64c-.5-.9-.42-2.15-.3-3.14M12 2C6.5 2 2 6.5 2 12c.53 13.27 19.5 13.26 20 0 0-5.5-4.5-10-10-10m0 18c-4.41 0-8-3.59-8-8 .44-10.61 15.56-10.61 16 0 0 4.41-3.59 8-8 8Z"/></svg></i>本页面的全部内容在 <strong><a href=https://creativecommons.org/licenses/by-sa/4.0/deed.zh>CC BY-SA 4.0</a> 和 <a href=https://github.com/zTrix/sata-license>SATA</a></strong> 协议之条款下提供，附加条款亦可能应用</span></blockquote><div class=giscus data-no-instant id=__comments></div><div id=__comments_script></div><script>var comments=document.createElement("script"),commentsTheme="slate"===document.body.dataset.mdColorScheme?"dark":"light";Object.entries({async:!0,src:"https://giscus.app/client.js",crossOrigin:"anonymous","data-repo":"damonc-top/damonc-top.github.io","data-repo-id":"R_kgDOHK_iGQ","data-category":"评论","data-category-id":"DIC_kwDOHK_iGc4COonC","data-mapping":"specific","data-term":"Unity 光照烘焙(翻译十六)","data-strict":"1","data-reactions-enabled":"1","data-emit-metadata":"0","data-input-position":"top","data-theme":commentsTheme,"data-lang":"zh-CN","data-loading":"lazy"}).forEach(t=>comments.setAttribute(t[0],t[1])),document.getElementById("__comments_script").replaceWith(comments)</script></article></div></div></main><script>function scrollFunction(){20<document.body.scrollTop||20<document.documentElement.scrollTop?document.getElementById("myBtn").style.display="block":document.getElementById("myBtn").style.display="none"}function topFunction(){document.body.scrollTop=0,document.documentElement.scrollTop=0}window.onscroll=function(){scrollFunction()}</script><button class=data-tip-left data-tip=回到顶部 id=myBtn onclick=topFunction()><svg class="Zi Zi--BackToTop data-tip-left"viewbox="0 0 24 24"data-tip=回到顶部 fill=currentColor height=24 width=24><path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path></svg></button><footer class=md-footer><div class="md-footer-meta md-typeset"><div class="md-footer-meta__inner md-grid"><div class=md-copyright><div class=md-copyright__highlight>Copyright © 2016 - 2024 银河揽月</div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ rel=noopener target=_blank> Material for MkDocs <div id=miitbeian></div> </a></div><div class=build_date_utc style=float:right><a href=https://github.com/damonc-top/damonc-top.github.io> 最近更新：6c2a14f, 2024-09-24 </a></div></div></div></footer></div><div class=md-dialog data-md-component=dialog><div class="md-dialog__inner md-typeset"></div></div><script id=__config type=application/json>{"base": "../../../../../..", "features": ["navigation.tabs", "navigation.instant"], "search": "../../../../../../assets/javascripts/workers/search.8e7a41fd.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script><script src=../../../../../../assets/javascripts/bundle.c15c428f.min.js></script><script src=../../../../../../extension/js/math-csr.js?math-csr></script><script src=../../../../../../assets/vendor/mathjax/es5/tex-mml-chtml.js?math-csr></script><script>"use strict";"serviceWorker"in navigator&&navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).then(function(e){console.log("PWA Registration succeeded. Scope is "+e.scope)}).catch(function(e){console.log("PWA Registration failed with "+e)})</script></body></html>
