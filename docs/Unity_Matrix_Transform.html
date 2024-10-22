@@ -1,295 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="zh-Hans">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity 基本矩阵(翻译一) - 银河揽月</title>
-    <meta name="author" content="damonc">
-    
-    <meta name="description" content="Unity 基本矩阵(翻译一)">
-    <meta name="keywords"
-        content="Shader">
-    
-    <meta property="og:previous_url" content="/Unity_Shader_Fundamentals.html">
-    
-    
-    <meta property="og:next_url" content="/CG_Function_Library.html">
-    
-    
-    <meta property="post-date-format" content="0">
-    
-    <meta property="post-date" content="2018-01-01 09:00:00 +0800" />
-    
-    
-    <meta property="calendar-scale" content="year" />
-    <meta property="calendar-scheme" content="null" />
-    <meta property="calendar-color" content="null" />
-    
-    <!-- Open Graph -->
-    <meta property="og:title"
-        content="Unity 基本矩阵(翻译一) - 银河揽月">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.damonc.top/Unity_Matrix_Transform.html">
-    <meta property="og:baseurl" content="">
-    <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="银河揽月">
-    <meta property="og:gray" content="false">
-    <meta property="og:lang" content="zh-Hans">
-    
-    <meta name="alivestart" content="12/23/2020">
-    
-    
-    <meta name="theme-color" content="#81BBFF" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/assets/img/touch/apple-touch-icon.png" />
-    <link rel="Shortcut Icon" href="/favicon.ico">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="bookmark" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.min.css" async>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
-
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.min.css" />
-    
-    
-
-
-<link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-one-light.min.css" />
-
-
-<link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/line-numbers/prism-line-numbers.min.css">
-
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.css" />
-
-
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
-
-    <link rel="stylesheet" href="/assets/css/app.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-</head>
-    
-    <body class="line-numbers" ontouchstart="">
-    
-    <!--[if lt IE 10]>
-    <div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
-    <![endif]-->
-        
-        
-        <div id="all" class="post" data-theme="default">
-        
-            
-            
-            <div class="alert-tip" id="no-previous">已经是最新一篇文章了！</div>
-            <div class="alert-tip" id="no-next">已经是最后一篇文章了！</div>
-        
-            <input id="nm-switch" type="hidden" value="false">
-            <header class="g-header" data-theme="default">
-    <div class="g-logo">
-      <a href="/" aria-label="logo"></a>
-    </div>
-    <!-- <i id="menu-toggle" class="iconfont icon-menu"></i> -->
-    
-        <div id="search-toggle"></div>
-    
-    
-    <div id="travelling-toggle">
-        <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank">
-            <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-train-subway"></use>
-            </svg>
-        </a>
-    </div>
-    
-    <div id="mode-toggle">
-        <svg class="icon icon-day" aria-hidden="true">
-            <use xlink:href="#icon-day"></use>
-        </svg>
-        <svg class="icon icon-night" aria-hidden="true">
-            <use xlink:href="#icon-night"></use>
-        </svg>
-    </div>
-    <svg id="menu-toggle" class="icon-menu" aria-hidden="true">
-        <use xlink:href="#icon-menu"></use>
-    </svg>
-    <nav class="g-nav">
-        <ul>
-            
-                
-                <li>
-                    <a href="/" aria-label="home">
-                        home
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/blog/index.html" aria-label="blog">
-                        blog
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/archives.html" aria-label="archives">
-                        archives
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/tags.html" aria-label="tags">
-                        tags
-                    </a>
-                </li>
-                
-            
-                
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#"> about </a>
-                    <ul class="dropdown-menu">
-                    
-                        <li>
-                            <a href="/feed.xml" aria-label="RSS">
-                                RSS
-                            </a>
-                        </li>
-                    
-                    </ul> 
-                </li>
-                
-            
-            
-            <li class="travelling">
-                <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-train-subway"></use>
-                    </svg>
-                </a>
-            </li>
-            
-            <li class="mode">
-                <svg class="icon day" aria-hidden="true">
-                    <use xlink:href="#icon-day"></use>
-                </svg>
-                <svg class="icon night" aria-hidden="true">
-                    <use xlink:href="#icon-night"></use>
-                </svg>
-            </li>
-            
-            <li id="search"></li>
-            
-        </ul>
-    </nav>
-</header>
-
-            
-
-
-<div class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover"
-    data-theme="default">
-    <div class="post-wrapper">
-        <div class="post-tags">
-            
-            
-            <a href="/%20/tags.html#Shader" class="post-tag">Shader</a>
-            
-            
-        </div>
-        <h1>Unity 基本矩阵(翻译一)</h1>
-        <div class="post-meta">
-            <span class="post-meta-item">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-user"></use>
-                </svg>
-                catlikecoding
-            </span>
-            <time class="post-meta-item" datetime=" 18-01-01">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-calendar"></use>
-                </svg>
-                <span class="create-at"></span>
-            </time>
-            <time class="post-meta-item" datetime=" 18-01-01">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-update"></use>
-                </svg>
-                <span class="update-at"></span>
-            </time>
-            <span class="post-meta-item">
-                <svg class="icon words" aria-hidden="true">
-                    <use xlink:href="#icon-words"></use>
-                </svg>
-                
-                本文总共  17.2k  字 </span>
-                    <span class="post-meta-item">
-                        <svg class="icon time" aria-hidden="true">
-                            <use xlink:href="#icon-time"></use>
-                        </svg>
-                        阅读全文大约需要 50 分钟
-                    </span>
-                    
-                    <span class="post-meta-item">
-                        <svg class="icon pv" aria-hidden="true">
-                            <use xlink:href="#icon-pv"></use>
-                        </svg>
-                        本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
-                    </span>
-                    
-                    
-        </div>
-    </div>
-    
-</div>
-
-<main class="post-content visible">
-    
-
-    
-
-    <div class="container">
-        
-<div class="submenu hidden">
-
-</div>
-        <div class="contents">
-            <article class="markdown-body post">
-                
-
-
-                <p>本篇摘要信息</p>
-<ul>
-  <li>matrix介绍</li>
-  <li>matrix推导</li>
-  <li>模拟transform缩放 旋转 位移功能</li>
-</ul>
-
-<h2 id="可视空间">可视空间</h2>
-
-<p>Unity Shader是怎么知道一个像素该画在哪个位置？下面是先展示一组Cube，一步步分析下去</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/cubearray.png" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>cube数组.</a></i></center>    
-        
-
-<h3 id="操控一组3维坐标">操控一组3维坐标</h3>
-
-<p>创建一组10<em>10</em>10的3维Cube数组，并作为<strong>UnityMatrices对象</strong>的成员变量，接下来显示这些Cube在空间中的位置</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">InitCubeArray</span><span class="p">()</span>
+<!DOCTYPE html><html lang="zh-Hans"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Unity 基本矩阵(翻译一) - 银河揽月</title><meta name="author" content="damonc"><meta name="description" content="Unity 基本矩阵(翻译一)"><meta name="keywords" content="Shader"><meta property="og:previous_url" content="/Unity_Shader_Fundamentals.html"><meta property="og:next_url" content="/CG_Function_Library.html"><meta property="post-date-format" content="0"><meta property="post-date" content="2018-01-01 09:00:00 +0800" /><meta property="calendar-scale" content="year" /><meta property="calendar-scheme" content="null" /><meta property="calendar-color" content="null" /><meta property="og:title" content="Unity 基本矩阵(翻译一) - 银河揽月"><meta property="og:type" content="website"><meta property="og:url" content="https://www.damonc.top/Unity_Matrix_Transform.html"><meta property="og:baseurl" content=""><meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。"><meta property="og:site_name" content="银河揽月"><meta property="og:gray" content="false"><meta property="og:lang" content="zh-Hans"><meta name="alivestart" content="12/23/2020"><meta name="theme-color" content="#81BBFF" /><link rel="manifest" href="/manifest.json" /><link rel="apple-touch-icon" href="/assets/img/touch/apple-touch-icon.png" /><link rel="Shortcut Icon" href="/favicon.ico"><link rel="icon" href="/favicon.ico" type="image/x-icon" /><link rel="bookmark" href="/favicon.ico" type="image/x-icon" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.min.css" async><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-one-light.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/line-numbers/prism-line-numbers.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" /><link rel="stylesheet" href="/assets/css/app.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><body class="line-numbers" ontouchstart=""> <!--[if lt IE 10]><div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div><![endif]--><div id="all" class="post" data-theme="default"><div class="alert-tip" id="no-previous">已经是最新一篇文章了！</div><div class="alert-tip" id="no-next">已经是最后一篇文章了！</div><input id="nm-switch" type="hidden" value="false"><header class="g-header" data-theme="default"><div class="g-logo"> <a href="/" aria-label="logo"></a></div><div id="search-toggle"></div><div id="travelling-toggle"> <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-train-subway"></use> </svg> </a></div><div id="mode-toggle"> <svg class="icon icon-day" aria-hidden="true"> <use xlink:href="#icon-day"></use> </svg> <svg class="icon icon-night" aria-hidden="true"> <use xlink:href="#icon-night"></use> </svg></div><svg id="menu-toggle" class="icon-menu" aria-hidden="true"> <use xlink:href="#icon-menu"></use> </svg><nav class="g-nav"><ul><li> <a href="/" aria-label="home"> home </a><li> <a href="/blog/index.html" aria-label="blog"> blog </a><li> <a href="/archives.html" aria-label="archives"> archives </a><li> <a href="/tags.html" aria-label="tags"> tags </a><li class="dropdown"> <a class="dropdown-toggle" href="#"> about </a><ul class="dropdown-menu"><li> <a href="/feed.xml" aria-label="RSS"> RSS </a></ul><li class="travelling"> <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-train-subway"></use> </svg> </a><li class="mode"> <svg class="icon day" aria-hidden="true"> <use xlink:href="#icon-day"></use> </svg> <svg class="icon night" aria-hidden="true"> <use xlink:href="#icon-night"></use> </svg><li id="search"></ul></nav></header><div class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default"><div class="post-wrapper"><div class="post-tags"> <a href="/%20/tags.html#Shader" class="post-tag">Shader</a></div><h1>Unity 基本矩阵(翻译一)</h1><div class="post-meta"> <span class="post-meta-item"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-user"></use> </svg> catlikecoding </span> <time class="post-meta-item" datetime=" 18-01-01"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-calendar"></use> </svg> <span class="create-at"></span> </time> <time class="post-meta-item" datetime=" 18-01-01"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-update"></use> </svg> <span class="update-at"></span> </time> <span class="post-meta-item"> <svg class="icon words" aria-hidden="true"> <use xlink:href="#icon-words"></use> </svg> 本文总共 17.2k 字 </span> <span class="post-meta-item"> <svg class="icon time" aria-hidden="true"> <use xlink:href="#icon-time"></use> </svg> 阅读全文大约需要 50 分钟 </span> <span class="post-meta-item"> <svg class="icon pv" aria-hidden="true"> <use xlink:href="#icon-pv"></use> </svg> 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次 </span></div></div></div><main class="post-content visible"><div class="container"><div class="submenu hidden"></div><div class="contents"><article class="markdown-body post"><p>本篇摘要信息</p><ul><li>matrix介绍<li>matrix推导<li>模拟transform缩放 旋转 位移功能</ul><h2 id="可视空间">可视空间</h2><p>Unity Shader是怎么知道一个像素该画在哪个位置？下面是先展示一组Cube，一步步分析下去</p><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/cubearray.png" width="" alt="loading failed, need vpn."></center> <font size="2.5"> </font><center><i><a>cube数组.</a></i></center><h3 id="操控一组3维坐标">操控一组3维坐标</h3><p>创建一组10<em>10</em>10的3维Cube数组，并作为<strong>UnityMatrices对象</strong>的成员变量，接下来显示这些Cube在空间中的位置</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">InitCubeArray</span><span class="p">()</span>
 <span class="p">{</span> 
     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span><span class="m">0</span> <span class="p">,</span> <span class="n">z</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">z</span> <span class="p">&lt;</span> <span class="n">generalCount</span><span class="p">;</span> <span class="n">z</span><span class="p">++)</span>
     <span class="p">{</span> 
@@ -311,11 +20,7 @@
     <span class="n">cube</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MeshRenderer</span><span class="p">&gt;().</span><span class="n">material</span><span class="p">.</span><span class="n">color</span> <span class="p">=</span> <span class="nf">CreateColor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">cube</span><span class="p">.</span><span class="n">transform</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>设置每个Cube的位置，都以(0,0,0)为原点，(10-1)*0.5为Center左右两边对称</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Vector3</span> <span class="nf">CreateCoordinate</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
+</code></pre></div></div><p>设置每个Cube的位置，都以(0,0,0)为原点，(10-1)*0.5为Center左右两边对称</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Vector3</span> <span class="nf">CreateCoordinate</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
 <span class="p">{</span> 
     <span class="k">return</span> <span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span>
         <span class="n">x</span> <span class="p">-</span> <span class="n">center</span><span class="p">,</span>
@@ -323,11 +28,7 @@
         <span class="n">z</span> <span class="p">-</span> <span class="n">center</span>
     <span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>然后再用自身坐标xyz分量与center的比率初始化颜色rgb。效果如上图</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Color</span> <span class="nf">CreateColor</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
+</code></pre></div></div><p>然后再用自身坐标xyz分量与center的比率初始化颜色rgb。效果如上图</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Color</span> <span class="nf">CreateColor</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
 <span class="p">{</span> 
     <span class="k">return</span> <span class="k">new</span> <span class="nf">Color</span><span class="p">(</span>
         <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">x</span> <span class="p">/</span> <span class="n">generalCount</span><span class="p">,</span>
@@ -335,23 +36,11 @@
         <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">z</span> <span class="p">/</span> <span class="n">generalCount</span>
     <span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="空间变换">空间变换</h2>
-
-<p><em>positionning, rotating, and scaling</em></p>
-
-<p>Cube数组中每个元素在空间中的变换有可能会有差异，虽然每个Cube变换的细节不同，但它们都需要经过某个方法来变换到空间中的某个坐标点。为此我们可以为所有变换创建一个abstract 基类，包含一个抽象的_Applay()_成员方法，由具体的变换组件去实现这个方法。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">Transformation</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</code></pre></div></div><h2 id="空间变换">空间变换</h2><p><em>positionning, rotating, and scaling</em></p><p>Cube数组中每个元素在空间中的变换有可能会有差异，虽然每个Cube变换的细节不同，但它们都需要经过某个方法来变换到空间中的某个坐标点。为此我们可以为所有变换创建一个abstract 基类，包含一个抽象的_Applay()_成员方法，由具体的变换组件去实现这个方法。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">Transformation</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
 <span class="p">{</span> 
     <span class="k">public</span> <span class="k">abstract</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>我们给这个<strong>UnityMatrices对象</strong>添加<em>Transformation</em>组件，同时检索Cube数组每个对象，将其坐标传入这个组件的_Apply()_方法进行计算得到新坐标并应用，这里始终以(0，0，0)作为每个Cube对象的原点坐标，而不能依赖其实际坐标，因为会每帧实时计算并改变。最后我们用泛型列表存储这种一系列变换组件方便统一计算。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+</code></pre></div></div><p>我们给这个<strong>UnityMatrices对象</strong>添加<em>Transformation</em>组件，同时检索Cube数组每个对象，将其坐标传入这个组件的_Apply()_方法进行计算得到新坐标并应用，这里始终以(0，0，0)作为每个Cube对象的原点坐标，而不能依赖其实际坐标，因为会每帧实时计算并改变。最后我们用泛型列表存储这种一系列变换组件方便统一计算。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="n">GetComponents</span><span class="p">&lt;</span><span class="n">Transformation</span><span class="p">&gt;(</span><span class="n">transformations</span><span class="p">);</span> 
     <span class="c1">// for (int i = 0; i &lt; cubes.Length; i++) </span>
@@ -379,36 +68,14 @@
     <span class="p">}</span> 
     <span class="k">return</span> <span class="n">coordinates</span><span class="p">;</span>
  <span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="位移">位移</h3>
-
-<p>现在来做第一种变换：translation位移，这很简单。首先创建一个继承自Transformation组件子类，并定义一个表示自身位置属性的变量，并实现基类的抽象方法。然后添加给Cube数组对象</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">PositionTransformation</span> <span class="p">:</span> <span class="n">Transformation</span>
+</code></pre></div></div><h3 id="位移">位移</h3><p>现在来做第一种变换：translation位移，这很简单。首先创建一个继承自Transformation组件子类，并定义一个表示自身位置属性的变量，并实现基类的抽象方法。然后添加给Cube数组对象</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">PositionTransformation</span> <span class="p">:</span> <span class="n">Transformation</span>
 <span class="p">{</span> 
     <span class="k">public</span> <span class="n">Vector3</span> <span class="n">position</span><span class="p">;</span> <span class="k">public</span> <span class="k">override</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span>
     <span class="p">{</span> 
         <span class="k">return</span> <span class="n">point</span> <span class="p">+</span> <span class="n">position</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>现在可以向<strong>UnityMatrices对象</strong>添加<em>PositionTransformation</em>组件。这允许我们在不移动<strong>UnityMatrices对象</strong>的情况下移动数组中每个对象的坐标，所有的变换都发生在cube的局部空间。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/move.gif" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>位移.</a></i></center>    
-        
-
-<h3 id="缩放">缩放</h3>
-
-<p>接下来做第二种变换：Scaling缩放。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">ScaleTransformation</span> <span class="p">:</span> <span class="n">Transformation</span>
+</code></pre></div></div><p>现在可以向<strong>UnityMatrices对象</strong>添加<em>PositionTransformation</em>组件。这允许我们在不移动<strong>UnityMatrices对象</strong>的情况下移动数组中每个对象的坐标，所有的变换都发生在cube的局部空间。</p><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/move.gif" width="" alt="loading failed, need vpn."></center> <font size="2.5"> </font><center><i><a>位移.</a></i></center><h3 id="缩放">缩放</h3><p>接下来做第二种变换：Scaling缩放。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">ScaleTransformation</span> <span class="p">:</span> <span class="n">Transformation</span>
 <span class="p">{</span> 
     <span class="k">public</span> <span class="n">Vector3</span> <span class="n">scale</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span> 
     <span class="k">public</span> <span class="k">override</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span>
@@ -418,23 +85,7 @@
         <span class="n">point</span><span class="p">.</span><span class="n">z</span> <span class="p">*=</span> <span class="n">scale</span><span class="p">.</span><span class="n">z</span><span class="p">;</span> <span class="k">return</span> <span class="n">point</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/scale.gif" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>缩放.</a></i></center>    
-        
-
-<p>这里有一个问题：当进行缩放时，缩放会改变每个Cube对象的position。这是因为我们先计算了空间坐标，然后才缩放的它。而Unity中Transform组件是先缩放后位移。所以正确的计算顺序是：先缩放后位移。</p>
-
-<h3 id="旋转二维">旋转(二维)</h3>
-
-<p>第三种变换：Rotation旋转。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">RotationTransform</span> <span class="p">:</span> <span class="n">Transformation</span>
+</code></pre></div></div><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/scale.gif" width="" alt="loading failed, need vpn."></center> <font size="2.5"> </font><center><i><a>缩放.</a></i></center><p>这里有一个问题：当进行缩放时，缩放会改变每个Cube对象的position。这是因为我们先计算了空间坐标，然后才缩放的它。而Unity中Transform组件是先缩放后位移。所以正确的计算顺序是：先缩放后位移。</p><h3 id="旋转二维">旋转(二维)</h3><p>第三种变换：Rotation旋转。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">RotationTransform</span> <span class="p">:</span> <span class="n">Transformation</span>
 <span class="p">{</span> 
     <span class="k">public</span> <span class="n">Vector3</span> <span class="n">rotation</span><span class="p">;</span> 
     <span class="k">public</span> <span class="k">override</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span>
@@ -442,57 +93,14 @@
         <span class="k">return</span> <span class="n">point</span><span class="p">;</span><span class="c1">//先占位</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p><strong>旋转该如何工作呢</strong>？现在先假定在2维空间下一点P，绕Z轴旋转。Unity使用了左手坐标系，正向旋转是逆时针方向，如下图：</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/rotation1.png" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>2维空间下绕Z轴旋转.</a></i></center>    
-        
-
-<p><strong>旋转一个点坐标后会发什么吗</strong>？先简单的考虑一个以原点为中心的单位圆上的一点P，设p初始位置为(1,0)，然后再以每90°增量进行一次旋转，如下图：</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/rotation2.png" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>0°旋转到90°和180°变化.</a></i></center>    
-        
-
-<p>由上图可知，点p(1,0)旋转一次(90°)变为了(0,1)，再旋转一次(180°)变为了(-1,0)，再往下旋转会变为(0,-1)，最后回到原位置(1,0). 那如果用点(0,1)作为初始位置，其变换顺序(0,1)\(\rightarrow\)(-1,0)\(\rightarrow\)(0,-1)\(\rightarrow\)(1,0)\(\rightarrow\)(0,1). 因此这个点坐标始终围绕0，1，0，-1进行循环，唯一得区别是起始点位置不同。</p>
-
-<p><strong>那如果以45°增量进行旋转呢</strong>?它会在XY平面对角线上产生一点，其坐标为(\(\pm \sqrt{1 \over 2},\pm \sqrt{1 \over 2}\))，这些点到原点的距离始终是一致的。而这个循环顺序也类似上面，是\(0, \sqrt{1 \over 2}, 1, \sqrt{1 \over 2}, 0, −\sqrt{1 \over 2}, −1, −\sqrt{1 \over 2}\)。如果继续减小增量值，我们就可以得到一个Sine曲线。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/trangle%20math.png" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Sine 和 Cosine曲线.</a></i></center>    
-        
-
-<p>结合上面两张图，Sine曲线代表了Y分量，Cosine曲线代表了X分量，坐标用曲线表示就是\((\cos z, \sin z)\)，若起始点为(1,0)则结果为\((cosz,sinz)\)，<strong>逆时针旋转90°</strong>后(根据\(sin(-z) = –sin z, cos(-z) = cos z\)的<strong>对称性质</strong>)则结果为\((−sin z,cos z)\)。因此我们可以用绕Z轴计算sine和cosine曲线，由于提供的是角度，但实际上sin及cos只能作用于弧度，所以我们需要转化它:</p>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span>
+</code></pre></div></div><p><strong>旋转该如何工作呢</strong>？现在先假定在2维空间下一点P，绕Z轴旋转。Unity使用了左手坐标系，正向旋转是逆时针方向，如下图：</p><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/rotation1.png" width="" alt="loading failed, need vpn."></center> <font size="2.5"> </font><center><i><a>2维空间下绕Z轴旋转.</a></i></center><p><strong>旋转一个点坐标后会发什么吗</strong>？先简单的考虑一个以原点为中心的单位圆上的一点P，设p初始位置为(1,0)，然后再以每90°增量进行一次旋转，如下图：</p><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/rotation2.png" width="" alt="loading failed, need vpn."></center> <font size="2.5"> </font><center><i><a>0°旋转到90°和180°变化.</a></i></center><p>由上图可知，点p(1,0)旋转一次(90°)变为了(0,1)，再旋转一次(180°)变为了(-1,0)，再往下旋转会变为(0,-1)，最后回到原位置(1,0). 那如果用点(0,1)作为初始位置，其变换顺序(0,1)\(\rightarrow\)(-1,0)\(\rightarrow\)(0,-1)\(\rightarrow\)(1,0)\(\rightarrow\)(0,1). 因此这个点坐标始终围绕0，1，0，-1进行循环，唯一得区别是起始点位置不同。</p><p><strong>那如果以45°增量进行旋转呢</strong>?它会在XY平面对角线上产生一点，其坐标为(\(\pm \sqrt{1 \over 2},\pm \sqrt{1 \over 2}\))，这些点到原点的距离始终是一致的。而这个循环顺序也类似上面，是\(0, \sqrt{1 \over 2}, 1, \sqrt{1 \over 2}, 0, −\sqrt{1 \over 2}, −1, −\sqrt{1 \over 2}\)。如果继续减小增量值，我们就可以得到一个Sine曲线。</p><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/trangle%20math.png" width="" alt="loading failed, need vpn."></center> <font size="2.5"> </font><center><i><a>Sine 和 Cosine曲线.</a></i></center><p>结合上面两张图，Sine曲线代表了Y分量，Cosine曲线代表了X分量，坐标用曲线表示就是\((\cos z, \sin z)\)，若起始点为(1,0)则结果为\((cosz,sinz)\)，<strong>逆时针旋转90°</strong>后(根据\(sin(-z) = –sin z, cos(-z) = cos z\)的<strong>对称性质</strong>)则结果为\((−sin z,cos z)\)。因此我们可以用绕Z轴计算sine和cosine曲线，由于提供的是角度，但实际上sin及cos只能作用于弧度，所以我们需要转化它:</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span>
 <span class="p">{</span> 
     <span class="kt">float</span> <span class="n">radz</span> <span class="p">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">z</span> <span class="p">*</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Deg2Rad</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">sinz</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="nf">Sin</span><span class="p">(</span><span class="n">radz</span><span class="p">);</span>
     <span class="kt">float</span> <span class="n">cosz</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="nf">Cos</span><span class="p">(</span><span class="n">radz</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">point</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<blockquote class="prompt-tip">
-  <p>什么是弧度? 像度数一样，可以用作旋转的度量。使用单位圆时，弧度与圆周行进的距离相等。由于圆周的长度等于2π乘以圆的半径，因此1度等于2π/360 = π/180弧度。π 是圆的周长与其直径之间的比率。</p>
-</blockquote>
-
-<p><strong>上述方法对于旋转(1,0)或(0,1)或许很好，那有米有旋转任意点的方式呢</strong>？ 这些点都是由X和Y定义的，我们可以把2维点(x,y)拆分为一个公式\(xX+yY\)，那么\(x(1,0)+y(0,1)=(x, y)\)是成立的。当旋转之后，可以用\(x(cos z, sin z)+y(-sin z, cos z)\)来得到经过正确旋转后的点。组合为坐标就变成了\((xcosZ−ysinZ,xsinZ+ycosZ)\).</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span>
+</code></pre></div></div><blockquote class="prompt-tip"><p>什么是弧度? 像度数一样，可以用作旋转的度量。使用单位圆时，弧度与圆周行进的距离相等。由于圆周的长度等于2π乘以圆的半径，因此1度等于2π/360 = π/180弧度。π 是圆的周长与其直径之间的比率。</p></blockquote><p><strong>上述方法对于旋转(1,0)或(0,1)或许很好，那有米有旋转任意点的方式呢</strong>？ 这些点都是由X和Y定义的，我们可以把2维点(x,y)拆分为一个公式\(xX+yY\)，那么\(x(1,0)+y(0,1)=(x, y)\)是成立的。当旋转之后，可以用\(x(cos z, sin z)+y(-sin z, cos z)\)来得到经过正确旋转后的点。组合为坐标就变成了\((xcosZ−ysinZ,xsinZ+ycosZ)\).</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span>
 <span class="p">{</span> 
     <span class="kt">float</span> <span class="n">radz</span> <span class="p">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">z</span> <span class="p">*</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Deg2Rad</span><span class="p">;</span> 
     <span class="kt">float</span> <span class="n">sinz</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="nf">Sin</span><span class="p">(</span><span class="n">radz</span><span class="p">);</span>
@@ -503,265 +111,14 @@
         <span class="n">point</span><span class="p">.</span><span class="n">z</span>
     <span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>按照上述分析的缩放、旋转、位移的先后计算顺序，再在Unity内对比Transform的拖动旋转缩放的显示，二者的效果是一致的。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Start</span> <span class="p">()</span>
+</code></pre></div></div><p>按照上述分析的缩放、旋转、位移的先后计算顺序，再在Unity内对比Transform的拖动旋转缩放的显示，二者的效果是一致的。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Start</span> <span class="p">()</span>
 <span class="p">{</span> 
     <span class="c1">//...</span>
     <span class="n">gameObject</span><span class="p">.</span><span class="n">AddComponent</span><span class="p">&lt;</span><span class="n">ScaleTransformation</span><span class="p">&gt;();</span>
     <span class="n">gameObject</span><span class="p">.</span><span class="n">AddComponent</span><span class="p">&lt;</span><span class="n">RotationTransform</span><span class="p">&gt;();</span>
     <span class="n">gameObject</span><span class="p">.</span><span class="n">AddComponent</span><span class="p">&lt;</span><span class="n">PositionTransformation</span><span class="p">&gt;();</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/move%20scale%20rotation.gif" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>最终变换效果.</a></i></center>    
-        
-
-<h2 id="旋转完全体">旋转完全体</h2>
-<p>-</p>
-
-<p>现在我们只能绕Z轴旋转，但是为了能够复刻Unity的Transform组件那样的旋转，现在就得要支持绕X轴和绕Y轴旋转。虽然分别绕这些轴旋转与绕Z轴旋转的方法相似，但是当一次同时绕多个轴旋转时这就很复杂了。目标：一次同时绕多个轴旋转，迎难而上。</p>
-
-<h3 id="2d矩阵">2D矩阵</h3>
-
-<p>现在开始，我们要把坐标书写格式由水平式替代为垂直式。把(x,y)被改写为
-\(\begin{bmatrix}
-    x\\
-    y\\
-\end{bmatrix}\)
-把\((xcosZ−ysinZ,xsinZ+ycosZ)\)也同样被拆分为
-\(\begin{bmatrix}
-    xcosZ-ysinZ\\
-    xsinZ+ycosZ\\
-\end{bmatrix}\)
-，再把这个表达式进一步拆分：
-\(\begin{bmatrix}
-    cosZ&amp;-sinZ\\
-    sinZ&amp;cosZ\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-\end{bmatrix}\)
-这就是矩阵乘法，
-2x2矩阵的第一列值代表X轴，第二列值代表了Y轴，计算公式如下：
-\(\begin{bmatrix}
-    Xx&amp;Yx\\
-    Xy&amp;Yy\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    a\\
-    b\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    aXx + bYx\\
-    aXy + bYy\\
-\end{bmatrix}\)</p>
-
-<blockquote class="prompt-tip">
-  <p>由于Unity是采用左手法则，在上文中单位圆上一点绕Z轴旋转的增量度不同，cos代表X轴，sin代表Y轴，在结合本文的矩阵可得
-\(\begin{bmatrix}
-    cos\theta&amp;-sin\theta\\
-    sin\theta&amp;cos\theta\\
-\end{bmatrix}\)
-\(=cos\theta\)
-\(\begin{bmatrix}
-    1&amp;0\\
-    0&amp;1\\
-\end{bmatrix}\)
-\(+sin\theta\)
-\(\begin{bmatrix}
-    0&amp;-1\\
-    1&amp;0\\
-\end{bmatrix}\)</p>
-</blockquote>
-
-<p>数学上定义，当两个矩阵相乘时，只有在第一个矩阵的列数（column）和第二个矩阵的行数（row）相同时才有意义。结果矩阵的每项元素等于第一个矩阵行元素与第二个矩阵列元素的乘积之和
-\(\begin{bmatrix}
-    1&amp;2\\
-    3&amp;4\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    a&amp;c\\
-    b&amp;d\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    1a+2b&amp;1c+2d\\
-    3a+4b&amp;3c+4d\\
-\end{bmatrix}\)</p>
-
-<blockquote class="prompt-danger">
-  <p>A矩阵 * B矩阵 = A矩阵的行 * B矩阵的列；只有当A矩阵列数 = B矩阵行数时，矩阵相乘才有效。因此结果矩阵的行数等于第一个矩阵的行，列数等于第二个矩阵的列相同。</p>
-</blockquote>
-
-<h3 id="3d矩阵">3D矩阵</h3>
-<p>到目前为止，我们有了一个2x2阶矩阵，可以用这个矩阵来绕Z轴旋转一个2D点。但我们实际上使用的是3D坐标。若试图用这个矩阵乘法
-\(\begin{bmatrix}
-    cosZ&amp;-sinZ\\
-    sinZ&amp;cosZ\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-\end{bmatrix}\)
-就是错误的，因为这两个矩阵的行与列的个数不匹配。为确保满足矩阵相乘，我们就需要填充这个第三维Z轴，先用0填充第一个矩阵第三行：
-\(\begin{bmatrix}
-    cosZ&amp;-sinZ&amp;0\\
-    sinZ&amp;cosZ&amp;0\\
-    0&amp;0&amp;0\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    xcosZ-ysinZ+0z\\
-    xsinZ+ycosZ+0z\\
-    0x+0y+0z\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    xcosZ-ysinZ\\
-    xsinZ+ycosZ\\
-    0\\
-\end{bmatrix}\)</p>
-
-<p>得到的结果中X轴和Y轴是正确的，但是Z轴结果总是为0。为了确保绕Z旋转而不改变Z轴的值，我们先插入一个数字1在旋转矩阵的右下角位置。简化理解，这个第三列值就是代表了Z轴：
-\(\begin{bmatrix}
-    cosZ&amp;-sinZ&amp;0\\
-    sinZ&amp;cosZ&amp;0\\
-    0&amp;0&amp;1\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    xcosZ-ysinZ\\
-    xsinZ+ycosZ\\
-    z\\
-\end{bmatrix}\)</p>
-
-<blockquote class="prompt-tip">
-  <p>由数学上定义，任何矩阵与单位矩阵相乘都等于本身，单位矩阵如同乘法中的1<br>
-\(\begin{bmatrix}
-    1&amp;0&amp;0\\
-    0&amp;1&amp;0\\
-    0&amp;0&amp;1\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-\end{bmatrix}\)</p>
-</blockquote>
-
-<h3 id="绕x轴和y轴的旋转矩阵推导">绕X轴和Y轴的旋转矩阵推导</h3>
-
-<p>根据绕Z轴旋转的方式推理可以得出绕X轴和Y轴的旋转矩阵。</p>
-
-<p>以绕Y轴为例，首先，X轴是以
-\(\begin{bmatrix}
-    1\\
-    0\\
-    0\\
-\end{bmatrix}\)
-开始，经过<strong>逆时针旋转90°</strong>后以
-\(\begin{bmatrix}
-    0\\
-    0\\
-    -1\\
-\end{bmatrix}\)
-结束。那么经过旋转后的X轴可以表示为
-\(\begin{bmatrix}
-    cosY\\
-    0\\
-    -sinY\\
-\end{bmatrix}\)
-而Z轴与X轴垂直，所以Z轴就是
-\(\begin{bmatrix}
-    sinY\\
-    0\\
-    cosY\\
-\end{bmatrix}\)
-而Y轴始终保持不变，最后绕Y轴的旋转矩阵：
-\(\begin{bmatrix}
-    cosY&amp;0&amp;sinY\\
-    0&amp;1&amp;0\\
-    -sinY&amp;0&amp;cosY\\
-\end{bmatrix}\)
-同理绕X轴的旋转矩阵， X轴不变：
-\(\begin{bmatrix}
-    1&amp;0&amp;0\\
-    0&amp;cosX&amp;-sinX\\
-    0&amp;sinX&amp;cosX\\
-\end{bmatrix}\)</p>
-
-<p>那么就此可以得出三个矩阵：</p>
-<ul>
-  <li>绕X轴旋转矩阵
-\(\begin{bmatrix}
-  1&amp;0&amp;0\\
-  0&amp;cos\alpha&amp;sin\alpha\\
-  0&amp;-sin\alpha&amp;cos\alpha\\
-\end{bmatrix}\)</li>
-  <li>绕Y轴旋转矩阵
-\(\begin{bmatrix}
-  cos\theta&amp;0&amp;-sin\theta\\
-  0&amp;1&amp;0\\
-  sin\theta&amp;0&amp;cos\theta\\
-\end{bmatrix}\)</li>
-  <li>绕Z轴旋转矩阵
-\(\begin{bmatrix}
-  cos\theta&amp;sin\theta&amp;0\\
-  -sin\theta&amp;cos\theta&amp;0\\
-  0&amp;0&amp;1\\
-\end{bmatrix}\)</li>
-</ul>
-
-<h3 id="统一的旋转矩阵">统一的旋转矩阵</h3>
-
-<p>通过上文我们分别得到了单独绕某个轴的旋转矩阵，现在开始我们要组合起来使用。这里的同时旋转本质上也是分步进行的，先绕Z轴旋转，然后绕Y轴，最后是绕X轴。</p>
-
-<p>这里有两种算法：</p>
-
-<p>第一种：先计算坐标点绕Z旋转，得出的结果坐标再计算绕Y轴旋转，再得出的结果坐标计算绕X轴旋转，最后得到最终的旋转坐标。</p>
-
-<p>第二种：把每个旋转矩阵相乘得到一个最终的新的旋转矩阵，这将同时作用与三个轴旋转。首先计算Y乘Z，这个结果矩阵的第一项的值是\(cosYcosZ−0sinZ−0sinY=cosYcosZ\)，最终矩阵
-\(\begin{bmatrix}
-    cosYcosZ&amp;-cosYsinZ&amp;sinY\\
-    sinZ&amp;cosZ&amp;0\\
-    -sinYcosZ&amp;sinYsinZ&amp;cosY\\
-\end{bmatrix}\)</p>
-
-<p>最后计算X × (Y × Z)得出最终矩阵：
-\(\begin{bmatrix}
-    cosYcosZ&amp;-cosYsinZ&amp;sinY\\
-    cosXsinZ+sinXsinYcosZ&amp;cosXcosZ-sinXsinYsinZ&amp;-sinXcosY\\
-    sinXsinZ-cosXsinYcosZ&amp;sinXcosZ+cosXsinYsinZ&amp;cosXcosY\\
-\end{bmatrix}\)</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Vector3</span> <span class="n">rotation</span><span class="p">;</span><span class="c1">//每个分量表示角度</span>
+</code></pre></div></div><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/move%20scale%20rotation.gif" width="" alt="loading failed, need vpn."></center> <font size="2.5"> </font><center><i><a>最终变换效果.</a></i></center><h2 id="旋转完全体">旋转完全体</h2><p>-</p><p>现在我们只能绕Z轴旋转，但是为了能够复刻Unity的Transform组件那样的旋转，现在就得要支持绕X轴和绕Y轴旋转。虽然分别绕这些轴旋转与绕Z轴旋转的方法相似，但是当一次同时绕多个轴旋转时这就很复杂了。目标：一次同时绕多个轴旋转，迎难而上。</p><h3 id="2d矩阵">2D矩阵</h3><p>现在开始，我们要把坐标书写格式由水平式替代为垂直式。把(x,y)被改写为 \(\begin{bmatrix} x\\ y\\ \end{bmatrix}\) 把\((xcosZ−ysinZ,xsinZ+ycosZ)\)也同样被拆分为 \(\begin{bmatrix} xcosZ-ysinZ\\ xsinZ+ycosZ\\ \end{bmatrix}\) ，再把这个表达式进一步拆分： \(\begin{bmatrix} cosZ&amp;-sinZ\\ sinZ&amp;cosZ\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ \end{bmatrix}\) 这就是矩阵乘法， 2x2矩阵的第一列值代表X轴，第二列值代表了Y轴，计算公式如下： \(\begin{bmatrix} Xx&amp;Yx\\ Xy&amp;Yy\\ \end{bmatrix}\) \(\begin{bmatrix} a\\ b\\ \end{bmatrix}\) = \(\begin{bmatrix} aXx + bYx\\ aXy + bYy\\ \end{bmatrix}\)</p><blockquote class="prompt-tip"><p>由于Unity是采用左手法则，在上文中单位圆上一点绕Z轴旋转的增量度不同，cos代表X轴，sin代表Y轴，在结合本文的矩阵可得 \(\begin{bmatrix} cos\theta&amp;-sin\theta\\ sin\theta&amp;cos\theta\\ \end{bmatrix}\) \(=cos\theta\) \(\begin{bmatrix} 1&amp;0\\ 0&amp;1\\ \end{bmatrix}\) \(+sin\theta\) \(\begin{bmatrix} 0&amp;-1\\ 1&amp;0\\ \end{bmatrix}\)</p></blockquote><p>数学上定义，当两个矩阵相乘时，只有在第一个矩阵的列数（column）和第二个矩阵的行数（row）相同时才有意义。结果矩阵的每项元素等于第一个矩阵行元素与第二个矩阵列元素的乘积之和 \(\begin{bmatrix} 1&amp;2\\ 3&amp;4\\ \end{bmatrix}\) \(\begin{bmatrix} a&amp;c\\ b&amp;d\\ \end{bmatrix}\) = \(\begin{bmatrix} 1a+2b&amp;1c+2d\\ 3a+4b&amp;3c+4d\\ \end{bmatrix}\)</p><blockquote class="prompt-danger"><p>A矩阵 * B矩阵 = A矩阵的行 * B矩阵的列；只有当A矩阵列数 = B矩阵行数时，矩阵相乘才有效。因此结果矩阵的行数等于第一个矩阵的行，列数等于第二个矩阵的列相同。</p></blockquote><h3 id="3d矩阵">3D矩阵</h3><p>到目前为止，我们有了一个2x2阶矩阵，可以用这个矩阵来绕Z轴旋转一个2D点。但我们实际上使用的是3D坐标。若试图用这个矩阵乘法 \(\begin{bmatrix} cosZ&amp;-sinZ\\ sinZ&amp;cosZ\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ \end{bmatrix}\) 就是错误的，因为这两个矩阵的行与列的个数不匹配。为确保满足矩阵相乘，我们就需要填充这个第三维Z轴，先用0填充第一个矩阵第三行： \(\begin{bmatrix} cosZ&amp;-sinZ&amp;0\\ sinZ&amp;cosZ&amp;0\\ 0&amp;0&amp;0\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ \end{bmatrix}\) = \(\begin{bmatrix} xcosZ-ysinZ+0z\\ xsinZ+ycosZ+0z\\ 0x+0y+0z\\ \end{bmatrix}\) = \(\begin{bmatrix} xcosZ-ysinZ\\ xsinZ+ycosZ\\ 0\\ \end{bmatrix}\)</p><p>得到的结果中X轴和Y轴是正确的，但是Z轴结果总是为0。为了确保绕Z旋转而不改变Z轴的值，我们先插入一个数字1在旋转矩阵的右下角位置。简化理解，这个第三列值就是代表了Z轴： \(\begin{bmatrix} cosZ&amp;-sinZ&amp;0\\ sinZ&amp;cosZ&amp;0\\ 0&amp;0&amp;1\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ \end{bmatrix}\) = \(\begin{bmatrix} xcosZ-ysinZ\\ xsinZ+ycosZ\\ z\\ \end{bmatrix}\)</p><blockquote class="prompt-tip"><p>由数学上定义，任何矩阵与单位矩阵相乘都等于本身，单位矩阵如同乘法中的1<br> \(\begin{bmatrix} 1&amp;0&amp;0\\ 0&amp;1&amp;0\\ 0&amp;0&amp;1\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ \end{bmatrix}\) = \(\begin{bmatrix} x\\ y\\ z\\ \end{bmatrix}\)</p></blockquote><h3 id="绕x轴和y轴的旋转矩阵推导">绕X轴和Y轴的旋转矩阵推导</h3><p>根据绕Z轴旋转的方式推理可以得出绕X轴和Y轴的旋转矩阵。</p><p>以绕Y轴为例，首先，X轴是以 \(\begin{bmatrix} 1\\ 0\\ 0\\ \end{bmatrix}\) 开始，经过<strong>逆时针旋转90°</strong>后以 \(\begin{bmatrix} 0\\ 0\\ -1\\ \end{bmatrix}\) 结束。那么经过旋转后的X轴可以表示为 \(\begin{bmatrix} cosY\\ 0\\ -sinY\\ \end{bmatrix}\) 而Z轴与X轴垂直，所以Z轴就是 \(\begin{bmatrix} sinY\\ 0\\ cosY\\ \end{bmatrix}\) 而Y轴始终保持不变，最后绕Y轴的旋转矩阵： \(\begin{bmatrix} cosY&amp;0&amp;sinY\\ 0&amp;1&amp;0\\ -sinY&amp;0&amp;cosY\\ \end{bmatrix}\) 同理绕X轴的旋转矩阵， X轴不变： \(\begin{bmatrix} 1&amp;0&amp;0\\ 0&amp;cosX&amp;-sinX\\ 0&amp;sinX&amp;cosX\\ \end{bmatrix}\)</p><p>那么就此可以得出三个矩阵：</p><ul><li>绕X轴旋转矩阵 \(\begin{bmatrix} 1&amp;0&amp;0\\ 0&amp;cos\alpha&amp;sin\alpha\\ 0&amp;-sin\alpha&amp;cos\alpha\\ \end{bmatrix}\)<li>绕Y轴旋转矩阵 \(\begin{bmatrix} cos\theta&amp;0&amp;-sin\theta\\ 0&amp;1&amp;0\\ sin\theta&amp;0&amp;cos\theta\\ \end{bmatrix}\)<li>绕Z轴旋转矩阵 \(\begin{bmatrix} cos\theta&amp;sin\theta&amp;0\\ -sin\theta&amp;cos\theta&amp;0\\ 0&amp;0&amp;1\\ \end{bmatrix}\)</ul><h3 id="统一的旋转矩阵">统一的旋转矩阵</h3><p>通过上文我们分别得到了单独绕某个轴的旋转矩阵，现在开始我们要组合起来使用。这里的同时旋转本质上也是分步进行的，先绕Z轴旋转，然后绕Y轴，最后是绕X轴。</p><p>这里有两种算法：</p><p>第一种：先计算坐标点绕Z旋转，得出的结果坐标再计算绕Y轴旋转，再得出的结果坐标计算绕X轴旋转，最后得到最终的旋转坐标。</p><p>第二种：把每个旋转矩阵相乘得到一个最终的新的旋转矩阵，这将同时作用与三个轴旋转。首先计算Y乘Z，这个结果矩阵的第一项的值是\(cosYcosZ−0sinZ−0sinY=cosYcosZ\)，最终矩阵 \(\begin{bmatrix} cosYcosZ&amp;-cosYsinZ&amp;sinY\\ sinZ&amp;cosZ&amp;0\\ -sinYcosZ&amp;sinYsinZ&amp;cosY\\ \end{bmatrix}\)</p><p>最后计算X × (Y × Z)得出最终矩阵： \(\begin{bmatrix} cosYcosZ&amp;-cosYsinZ&amp;sinY\\ cosXsinZ+sinXsinYcosZ&amp;cosXcosZ-sinXsinYsinZ&amp;-sinXcosY\\ sinXsinZ-cosXsinYcosZ&amp;sinXcosZ+cosXsinYsinZ&amp;cosXcosY\\ \end{bmatrix}\)</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Vector3</span> <span class="n">rotation</span><span class="p">;</span><span class="c1">//每个分量表示角度</span>
 <span class="k">public</span> <span class="kt">int</span> <span class="n">rotDelta</span><span class="p">;</span> <span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
 <span class="p">{</span>
      <span class="n">rotation</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="n">rotDelta</span><span class="p">,</span> <span class="n">rotDelta</span><span class="p">,</span> <span class="n">rotDelta</span><span class="p">);</span>
@@ -793,182 +150,11 @@
      <span class="p">);</span>
      <span class="k">return</span> <span class="n">xRot</span> <span class="p">*</span> <span class="n">point</span><span class="p">.</span><span class="n">x</span> <span class="p">+</span> <span class="n">yRot</span> <span class="p">*</span> <span class="n">point</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="n">zRot</span> <span class="p">*</span> <span class="n">point</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="矩阵变换">矩阵变换</h2>
-
-<p><em>实现一个矩阵完成缩放、旋转、位移的计算</em></p>
-
-<p>为了实现这个目标，所以借鉴3.4旋转矩阵组合的方式，先对缩放和位移组合，即位移 x 缩放。</p>
-
-<p><strong>缩放</strong>，根据单位矩阵的性质，任何矩阵与单位矩阵相乘的结果都是本身。那么对单位矩阵进行缩放即可：
-\(\begin{bmatrix}
-    2&amp;0&amp;0\\
-    0&amp;3&amp;0\\
-    0&amp;0&amp;4\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    2x\\
-    3y\\
-    4z\\
-\end{bmatrix}\)</p>
-
-<p><strong>位移</strong>，不是对三个分量完全重新计算，而是在现有的坐标之上进行偏移。因此现在不能简单的重新表示为3x3阶矩阵，而是需要额外增加一列表示偏移。
-\(\begin{bmatrix}
-    1&amp;0&amp;0&amp;2\\
-    0&amp;1&amp;0&amp;3\\
-    0&amp;0&amp;1&amp;4\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    x+2\\
-    y+3\\
-    z+4\\
-\end{bmatrix}\)</p>
-
-<p>但是，又由于矩阵乘法规定，第一个矩阵的列数等于第二个矩阵的行数才有意义。上图就是错误的。所以我们需要给坐标矩阵增加第四个元素，偏移矩阵增加一行。当它们增加的这个分量进行矩阵相乘时，其结果为1(我们先保留下这个数字1，以备后续使用).那就变成了4x4阶矩阵样式和一个4D点。
-\(\begin{bmatrix}
-    1&amp;0&amp;0&amp;2\\
-    0&amp;1&amp;0&amp;3\\
-    0&amp;0&amp;1&amp;4\\
-    0&amp;0&amp;0&amp;0\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-    1\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    x+2\\
-    y+3\\
-    z+4\\
-    1\\
-\end{bmatrix}\)</p>
-
-<p>根据位移矩阵，所以我们要统一用4×4的变换矩阵。缩放和旋转矩阵会额外增加一行一列，其右下角是1。所有的点都带有一个第四维坐标分量，它总是1——其次坐标。</p>
-
-<h3 id="其次坐标homogeneous-coordinates">其次坐标(Homogeneous Coordinates)</h3>
-
-<p>不知道就问：</p>
-
-<ul>
-  <li><em>这个坐标的第四分量坐标是个啥？</em></li>
-  <li><em>它有啥用啊？</em></li>
-  <li><em>我们只知道上文提到位移时有用，那么缩放、旋转有用吗？</em></li>
-  <li><em>当它的值为0，1，-1时会发生什么呢？</em></li>
-</ul>
-
-<p>有这样一个东西不叫坐标而叫向量，它可以被缩放和旋转，但不能被移动。向量描述了相对于某个点的偏移，具有方向和长度属性，没有位置属性。</p>
-
-<p>它
-\(\begin{bmatrix}
-x\\
-y\\
-z\\
-1\\
-\end{bmatrix}\)
-表示为一个点，而它
-\(\begin{bmatrix}
-x\\
-y\\
-z\\
-0\\
-\end{bmatrix}\)
-表示为一个向量。这样区分非常有用，因为我们可以使用相同的矩阵来变换一个点的位置、法线和切线。</p>
-
-<p>当第四个坐标值是0或1或其他数值时会发生什么？答案是什么也不会，准确的说是没有差异。<strong>这个坐标的术语叫做其次坐标</strong>，它的意思是空间中每个点都可以用一个无穷数量坐标集和来表示。而现在普遍做法的形式是使用1作为第四个坐标值，所有其他的数字都能通过使用整个集合乘以任意数来找到</p>
-
-<p>\(\begin{bmatrix}
-x\\
-y\\
-z\\
-1\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-2x\\
-2y\\
-2z\\
-2\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-3x\\
-3y\\
-3z\\
-3\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-wx\\
-wy\\
-wz\\
-w\\
-\end{bmatrix}\)
-=
-\(w\)
-\(\begin{bmatrix}
-x\\
-y\\
-z\\
-1\\
-\end{bmatrix}\)</p>
-
-<p>当我们知道了一个其次坐标时，需要转为3D坐标，只需要把第四个坐标化为1，怎么做呢？没错，就是把每个坐标除以第四个坐标，然后再舍弃第四个坐标
-\(\begin{bmatrix}
-x\\
-y\\
-z\\
-w\\
-\end{bmatrix}\)
-=\(1 \over w\)
-\(\begin{bmatrix}
-x\\
-y\\
-z\\
-w\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-x \over w\\
-y \over w\\
-z \over w\\
-1\\
-\end{bmatrix}\)
-\(\rightarrow\)
-\(\begin{bmatrix}
-x \over w\\
-y \over w\\
-z \over w\\
-\end{bmatrix}\)</p>
-
-<p>所以当第四个坐标为0时是不能做上面的除法的，因此当第四个坐标值为0时，表示为向量，这就是为什么它们像方向一样。</p>
-
-<h3 id="使用矩阵">使用矩阵</h3>
-
-<p>我们能用Unity的Matrix4x4结构体来完成矩阵乘法。从现在开始，我们将用它来代替上面的3D旋转方法。</p>
-
-<p>在Transformation增加一个抽象只读属性以检索变换矩阵。</p>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">abstract</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div></div>
-<p>Transformation组件的Apply方法不再需要设为抽象，它将获取到矩阵并执行乘法运算。</p>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Vector3</span> <span class="nf">Apply</span> <span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div><h2 id="矩阵变换">矩阵变换</h2><p><em>实现一个矩阵完成缩放、旋转、位移的计算</em></p><p>为了实现这个目标，所以借鉴3.4旋转矩阵组合的方式，先对缩放和位移组合，即位移 x 缩放。</p><p><strong>缩放</strong>，根据单位矩阵的性质，任何矩阵与单位矩阵相乘的结果都是本身。那么对单位矩阵进行缩放即可： \(\begin{bmatrix} 2&amp;0&amp;0\\ 0&amp;3&amp;0\\ 0&amp;0&amp;4\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ \end{bmatrix}\) = \(\begin{bmatrix} 2x\\ 3y\\ 4z\\ \end{bmatrix}\)</p><p><strong>位移</strong>，不是对三个分量完全重新计算，而是在现有的坐标之上进行偏移。因此现在不能简单的重新表示为3x3阶矩阵，而是需要额外增加一列表示偏移。 \(\begin{bmatrix} 1&amp;0&amp;0&amp;2\\ 0&amp;1&amp;0&amp;3\\ 0&amp;0&amp;1&amp;4\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ \end{bmatrix}\) = \(\begin{bmatrix} x+2\\ y+3\\ z+4\\ \end{bmatrix}\)</p><p>但是，又由于矩阵乘法规定，第一个矩阵的列数等于第二个矩阵的行数才有意义。上图就是错误的。所以我们需要给坐标矩阵增加第四个元素，偏移矩阵增加一行。当它们增加的这个分量进行矩阵相乘时，其结果为1(我们先保留下这个数字1，以备后续使用).那就变成了4x4阶矩阵样式和一个4D点。 \(\begin{bmatrix} 1&amp;0&amp;0&amp;2\\ 0&amp;1&amp;0&amp;3\\ 0&amp;0&amp;1&amp;4\\ 0&amp;0&amp;0&amp;0\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ 1\\ \end{bmatrix}\) = \(\begin{bmatrix} x+2\\ y+3\\ z+4\\ 1\\ \end{bmatrix}\)</p><p>根据位移矩阵，所以我们要统一用4×4的变换矩阵。缩放和旋转矩阵会额外增加一行一列，其右下角是1。所有的点都带有一个第四维坐标分量，它总是1——其次坐标。</p><h3 id="其次坐标homogeneous-coordinates">其次坐标(Homogeneous Coordinates)</h3><p>不知道就问：</p><ul><li><em>这个坐标的第四分量坐标是个啥？</em><li><em>它有啥用啊？</em><li><em>我们只知道上文提到位移时有用，那么缩放、旋转有用吗？</em><li><em>当它的值为0，1，-1时会发生什么呢？</em></ul><p>有这样一个东西不叫坐标而叫向量，它可以被缩放和旋转，但不能被移动。向量描述了相对于某个点的偏移，具有方向和长度属性，没有位置属性。</p><p>它 \(\begin{bmatrix} x\\ y\\ z\\ 1\\ \end{bmatrix}\) 表示为一个点，而它 \(\begin{bmatrix} x\\ y\\ z\\ 0\\ \end{bmatrix}\) 表示为一个向量。这样区分非常有用，因为我们可以使用相同的矩阵来变换一个点的位置、法线和切线。</p><p>当第四个坐标值是0或1或其他数值时会发生什么？答案是什么也不会，准确的说是没有差异。<strong>这个坐标的术语叫做其次坐标</strong>，它的意思是空间中每个点都可以用一个无穷数量坐标集和来表示。而现在普遍做法的形式是使用1作为第四个坐标值，所有其他的数字都能通过使用整个集合乘以任意数来找到</p><p>\(\begin{bmatrix} x\\ y\\ z\\ 1\\ \end{bmatrix}\) \(\begin{bmatrix} 2x\\ 2y\\ 2z\\ 2\\ \end{bmatrix}\) \(\begin{bmatrix} 3x\\ 3y\\ 3z\\ 3\\ \end{bmatrix}\) \(\begin{bmatrix} wx\\ wy\\ wz\\ w\\ \end{bmatrix}\) = \(w\) \(\begin{bmatrix} x\\ y\\ z\\ 1\\ \end{bmatrix}\)</p><p>当我们知道了一个其次坐标时，需要转为3D坐标，只需要把第四个坐标化为1，怎么做呢？没错，就是把每个坐标除以第四个坐标，然后再舍弃第四个坐标 \(\begin{bmatrix} x\\ y\\ z\\ w\\ \end{bmatrix}\) =\(1 \over w\) \(\begin{bmatrix} x\\ y\\ z\\ w\\ \end{bmatrix}\) = \(\begin{bmatrix} x \over w\\ y \over w\\ z \over w\\ 1\\ \end{bmatrix}\) \(\rightarrow\) \(\begin{bmatrix} x \over w\\ y \over w\\ z \over w\\ \end{bmatrix}\)</p><p>所以当第四个坐标为0时是不能做上面的除法的，因此当第四个坐标值为0时，表示为向量，这就是为什么它们像方向一样。</p><h3 id="使用矩阵">使用矩阵</h3><p>我们能用Unity的Matrix4x4结构体来完成矩阵乘法。从现在开始，我们将用它来代替上面的3D旋转方法。</p><p>在Transformation增加一个抽象只读属性以检索变换矩阵。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">abstract</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div></div><p>Transformation组件的Apply方法不再需要设为抽象，它将获取到矩阵并执行乘法运算。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Vector3</span> <span class="nf">Apply</span> <span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">Matrix</span><span class="p">.</span><span class="nf">MultiplyPoint</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-<p>注意这个<a href="http://docs.unity3d.com/Documentation/ScriptReference/Matrix4x4.html" rel="nofollow" target="_blank" class="extlinks">Matrix4x4.MultiplyPoint</a>需要一个3D坐标参数，坐标参数假定了第四个值为1.该方法会负责把得到的其次坐标转为3D坐标，若只想计算方向向量可以使用<a href="http://docs.unity3d.com/Documentation/ScriptReference/Matrix4x4.html" rel="nofollow" target="_blank" class="extlinks">Matrix4x4.MultiplyVector</a>.该方法会忽略第四个坐标。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Vector3</span> <span class="nf">MultiplyPoint</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div></div><p>注意这个<a href="http://docs.unity3d.com/Documentation/ScriptReference/Matrix4x4.html" rel="nofollow" target="_blank" class="extlinks">Matrix4x4.MultiplyPoint</a>需要一个3D坐标参数，坐标参数假定了第四个值为1.该方法会负责把得到的其次坐标转为3D坐标，若只想计算方向向量可以使用<a href="http://docs.unity3d.com/Documentation/ScriptReference/Matrix4x4.html" rel="nofollow" target="_blank" class="extlinks">Matrix4x4.MultiplyVector</a>.该方法会忽略第四个坐标。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Vector3</span> <span class="nf">MultiplyPoint</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">v</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">Vector3</span> <span class="n">vector</span><span class="p">;</span>
     <span class="n">vector</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="p">(((</span><span class="k">this</span><span class="p">.</span><span class="n">m00</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m01</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">))</span> <span class="p">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m02</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">))</span> <span class="p">+</span> <span class="k">this</span><span class="p">.</span><span class="n">m03</span><span class="p">;</span>
@@ -989,13 +175,7 @@ z \over w\\
     <span class="n">vector</span><span class="p">.</span><span class="n">z</span> <span class="p">=</span> <span class="p">((</span><span class="k">this</span><span class="p">.</span><span class="n">m20</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m21</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">))</span> <span class="p">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m22</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">);</span> 
     <span class="k">return</span> <span class="n">vector</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>具体的Transformation类现在必须将其<em>Apply()</em>方法更改为<em>Matrix</em>属性。</p>
-
-<p>首先是PositionTransformation组件，<a href="http://docs.unity3d.com/Documentation/ScriptReference/Matrix4x4.html" rel="nofollow" target="_blank" class="extlinks">Matrix4x4.SetRow</a>接口能很简易地填充这个矩阵。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
+</code></pre></div></div><p>具体的Transformation类现在必须将其<em>Apply()</em>方法更改为<em>Matrix</em>属性。</p><p>首先是PositionTransformation组件，<a href="http://docs.unity3d.com/Documentation/ScriptReference/Matrix4x4.html" rel="nofollow" target="_blank" class="extlinks">Matrix4x4.SetRow</a>接口能很简易地填充这个矩阵。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
     <span class="k">get</span> <span class="p">{</span>
         <span class="n">Matrix4x4</span> <span class="n">matrix</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Matrix4x4</span><span class="p">();</span>
         <span class="n">matrix</span><span class="p">.</span><span class="nf">SetRow</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector4</span><span class="p">(</span><span class="m">1f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">));</span>
@@ -1005,11 +185,7 @@ z \over w\\
         <span class="k">return</span> <span class="n">matrix</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>其次是<strong>ScaleTransformation</strong>.</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> <span class="k">get</span> <span class="p">{</span>
+</code></pre></div></div><p>其次是<strong>ScaleTransformation</strong>.</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> <span class="k">get</span> <span class="p">{</span>
         <span class="n">Matrix4x4</span> <span class="n">matrix</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Matrix4x4</span><span class="p">();</span>
         <span class="n">matrix</span><span class="p">.</span><span class="nf">SetRow</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector4</span><span class="p">(</span><span class="n">scale</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">));</span>
         <span class="n">matrix</span><span class="p">.</span><span class="nf">SetRow</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector4</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="n">scale</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">));</span>
@@ -1017,11 +193,7 @@ z \over w\\
         <span class="n">matrix</span><span class="p">.</span><span class="nf">SetRow</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector4</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">1f</span><span class="p">));</span> <span class="k">return</span> <span class="n">matrix</span><span class="p">;</span>
      <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>最后是<strong>RotationTransformation</strong>, 它设置行与列就更简单了，把之前的方法改改就能用。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
+</code></pre></div></div><p>最后是<strong>RotationTransformation</strong>, 它设置行与列就更简单了，把之前的方法改改就能用。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
     <span class="k">get</span> <span class="p">{</span> 
         <span class="kt">float</span> <span class="n">radx</span> <span class="p">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">x</span> <span class="p">*</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Deg2Rad</span><span class="p">;</span>
         <span class="kt">float</span> <span class="n">rady</span> <span class="p">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">y</span> <span class="p">*</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Deg2Rad</span><span class="p">;</span>
@@ -1053,13 +225,7 @@ z \over w\\
         <span class="k">return</span> <span class="n">matrix</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="合并矩阵">合并矩阵</h3>
-
-<p>现在我们把上述所有变换矩阵合并为一个矩阵。 为此先在UnityMatrices类增加一个矩阵类型字段transformation。我们将在Update函数每帧更新该变量值，该步骤为先获取到第一个Transformation组件的矩阵，并依次与其他矩阵相乘，需要确保这块正确的相乘顺序。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span> 
+</code></pre></div></div><h3 id="合并矩阵">合并矩阵</h3><p>现在我们把上述所有变换矩阵合并为一个矩阵。 为此先在UnityMatrices类增加一个矩阵类型字段transformation。我们将在Update函数每帧更新该变量值，该步骤为先获取到第一个Transformation组件的矩阵，并依次与其他矩阵相乘，需要确保这块正确的相乘顺序。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span> 
     <span class="nf">UpdateTransformation</span><span class="p">();</span> <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span><span class="m">0</span> <span class="p">,</span> <span class="n">z</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">z</span> <span class="p">&lt;</span> <span class="n">generalCount</span><span class="p">;</span> <span class="n">z</span><span class="p">++)</span>
     <span class="p">{</span>
         <span class="c1">//... </span>
@@ -1075,11 +241,7 @@ z \over w\\
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>最后不再执行Apply方法，而改用矩阵乘法代替：</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Vector3</span> <span class="nf">TransformPoint</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
+</code></pre></div></div><p>最后不再执行Apply方法，而改用矩阵乘法代替：</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Vector3</span> <span class="nf">TransformPoint</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">Vector3</span> <span class="n">coordinates</span> <span class="p">=</span> <span class="nf">CreateCoordinate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
     <span class="c1">// for (int i = 0; i &lt; transformations.Count; i++)</span>
@@ -1088,13 +250,7 @@ z \over w\\
     <span class="c1">// }</span>
     <span class="k">return</span> <span class="n">transformation</span><span class="p">.</span><span class="nf">MultiplyPoint</span><span class="p">(</span><span class="n">coordinates</span><span class="p">);;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>这个新方法是非常有效的，因为我们之前使用的方法是分别给每个点乘一个变换矩阵。而现在我们只需要一次创建一个统一的变换矩阵作用与所有点。Unity使用类似的方案将每个对象的变换层次结构简化为单个变换矩阵。</p>
-
-<p>在这个例子中，我们可以使它更有效。所有的变换矩阵都有一个相同的行——[0 0 0 1]。知道了这一点，我们可以忽略这一行，跳过所有0的计算和最后的除法转换。Matrix4x4.MultiplayPoint3x4方法就是这样做的。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Vector3</span> <span class="nf">MultiplyPoint3x4</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div></div><p>这个新方法是非常有效的，因为我们之前使用的方法是分别给每个点乘一个变换矩阵。而现在我们只需要一次创建一个统一的变换矩阵作用与所有点。Unity使用类似的方案将每个对象的变换层次结构简化为单个变换矩阵。</p><p>在这个例子中，我们可以使它更有效。所有的变换矩阵都有一个相同的行——[0 0 0 1]。知道了这一点，我们可以忽略这一行，跳过所有0的计算和最后的除法转换。Matrix4x4.MultiplayPoint3x4方法就是这样做的。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Vector3</span> <span class="nf">MultiplyPoint3x4</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">v</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">Vector3</span> <span class="n">vector</span><span class="p">;</span>
     <span class="n">vector</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="p">(((</span><span class="k">this</span><span class="p">.</span><span class="n">m00</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m01</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">))</span> <span class="p">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m02</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">))</span> <span class="p">+</span> <span class="k">this</span><span class="p">.</span><span class="n">m03</span><span class="p">;</span>
@@ -1102,19 +258,7 @@ z \over w\\
     <span class="n">vector</span><span class="p">.</span><span class="n">z</span> <span class="p">=</span> <span class="p">(((</span><span class="k">this</span><span class="p">.</span><span class="n">m20</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m21</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">))</span> <span class="p">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m22</span> <span class="p">*</span> <span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">))</span> <span class="p">+</span> <span class="k">this</span><span class="p">.</span><span class="n">m23</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">vector</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>这个方法有时候有用，有时候不能用。因为有时我们需要的一些变换矩阵会改变这最后一行。</p>
-
-<p>到目前为止只有位移变换需要第四行。所以缩放、旋转使用Matrix4x4.MultiplayPoint3x4计算速度会更快。现在就把Apply()方法改为虚方法，再由旋转、缩放组件重写，代码就不贴了。</p>
-
-<h2 id="3d到2d投影矩阵">3D到2D投影矩阵</h2>
-
-<p><em>到目前为止，我们能够把一个点的坐标从一个3D空间变换到另一个3D空间。但是这些点又如何展示到2D空间呢？这肯定需要一个从3D到2D的变换矩阵。那么我们开始寻找这个矩阵吧！</em></p>
-
-<p>先构造一个新的继承自Transformation的实体变换组件作用于摄像机的投影，默认值为单位矩阵。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">CameraTransformation</span> <span class="p">:</span> <span class="n">Transformation</span>
+</code></pre></div></div><p>这个方法有时候有用，有时候不能用。因为有时我们需要的一些变换矩阵会改变这最后一行。</p><p>到目前为止只有位移变换需要第四行。所以缩放、旋转使用Matrix4x4.MultiplayPoint3x4计算速度会更快。现在就把Apply()方法改为虚方法，再由旋转、缩放组件重写，代码就不贴了。</p><h2 id="3d到2d投影矩阵">3D到2D投影矩阵</h2><p><em>到目前为止，我们能够把一个点的坐标从一个3D空间变换到另一个3D空间。但是这些点又如何展示到2D空间呢？这肯定需要一个从3D到2D的变换矩阵。那么我们开始寻找这个矩阵吧！</em></p><p>先构造一个新的继承自Transformation的实体变换组件作用于摄像机的投影，默认值为单位矩阵。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">CameraTransformation</span> <span class="p">:</span> <span class="n">Transformation</span>
 <span class="p">{</span> 
     <span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
         <span class="k">get</span> <span class="p">{</span>
@@ -1127,21 +271,7 @@ z \over w\\
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="正交相机orthographic-camera">正交相机Orthographic Camera</h3>
-
-<p>从3D变换到2D空间最直接粗暴的方式是丢弃一个维度数据。就好像把3维空间压缩到2维平面，这个平面就像一个画布，用来渲染屏幕。现在我们把Z轴丢弃，试试看会发生什么</p>
-
-\[\begin{bmatrix}
-    1&amp;0&amp;0&amp;0\\
-    0&amp;1&amp;0&amp;0\\
-    0&amp;0&amp;0&amp;0\\
-    0&amp;0&amp;0&amp;1\\
-\end{bmatrix}\]
-
-<p>把代码修改为</p>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">CameraTransformation</span> <span class="p">:</span> <span class="n">Transformation</span>
+</code></pre></div></div><h3 id="正交相机orthographic-camera">正交相机Orthographic Camera</h3><p>从3D变换到2D空间最直接粗暴的方式是丢弃一个维度数据。就好像把3维空间压缩到2维平面，这个平面就像一个画布，用来渲染屏幕。现在我们把Z轴丢弃，试试看会发生什么</p>\[\begin{bmatrix} 1&amp;0&amp;0&amp;0\\ 0&amp;1&amp;0&amp;0\\ 0&amp;0&amp;0&amp;0\\ 0&amp;0&amp;0&amp;1\\ \end{bmatrix}\]<p>把代码修改为</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">CameraTransformation</span> <span class="p">:</span> <span class="n">Transformation</span>
 <span class="p">{</span> 
     <span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
         <span class="k">get</span> <span class="p">{</span>
@@ -1154,54 +284,7 @@ z \over w\\
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half">
-<img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/3d%20view.png" width="" alt="loading failed, need vpn.">
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/2d%20view.png" width="" alt="loading failed, need vpn.">
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/plane.png" width="" alt="loading failed, need vpn.">
-</center>
-<font size="2.5">
-            </font><center><i><a>3d转换到2d.</a></i></center>    
-        
-
-<p>实际上，这种粗暴的方法还蛮像那么回事，确实变成了2D了。其他的X、Y轴同理，就不演示了。这就是正交投影。不管相机如何缩放、旋转、位移，始终呈现的2D效果。移动相机的视觉效果和移动世界的相反方向是一致的，也就是3个变换组件的变量与摄像机的缩放、旋转、位移变量是互为正负关系。</p>
-
-<h3 id="透视相机perspective-camera">透视相机Perspective Camera</h3>
-
-<p>正交相机不能模拟3D世界就很尴尬。所以我们需要一个透视相机，由于视角的原因，呈现一个原小近大的视觉。那么基于此，我们可以根据点到摄像机的距离重建这个视觉效果。</p>
-
-<p>以Z轴为例，<strong>把单位矩阵代表Z轴的列元素全部置0，再把单位矩阵最后一行改为[0,0,1,0]，这步改变将确保结果坐标的第四个值等于Z坐标，最后所有坐标都除以Z</strong>
-\(\begin{bmatrix}
-    1&amp;0&amp;0&amp;0\\
-    0&amp;1&amp;0&amp;0\\
-    0&amp;0&amp;0&amp;0\\
-    0&amp;0&amp;1&amp;0\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-    1\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    x\\
-    y\\
-    0\\
-    z\\
-\end{bmatrix}\)
-\(\rightarrow\)
-\(\begin{bmatrix}
-    x \over z\\
-    y \over z\\
-    0\\
-\end{bmatrix}\)</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
+</code></pre></div></div><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"> <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/3d%20view.png" width="" alt="loading failed, need vpn."> <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/2d%20view.png" width="" alt="loading failed, need vpn."> <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/plane.png" width="" alt="loading failed, need vpn."> </center> <font size="2.5"> </font><center><i><a>3d转换到2d.</a></i></center><p>实际上，这种粗暴的方法还蛮像那么回事，确实变成了2D了。其他的X、Y轴同理，就不演示了。这就是正交投影。不管相机如何缩放、旋转、位移，始终呈现的2D效果。移动相机的视觉效果和移动世界的相反方向是一致的，也就是3个变换组件的变量与摄像机的缩放、旋转、位移变量是互为正负关系。</p><h3 id="透视相机perspective-camera">透视相机Perspective Camera</h3><p>正交相机不能模拟3D世界就很尴尬。所以我们需要一个透视相机，由于视角的原因，呈现一个原小近大的视觉。那么基于此，我们可以根据点到摄像机的距离重建这个视觉效果。</p><p>以Z轴为例，<strong>把单位矩阵代表Z轴的列元素全部置0，再把单位矩阵最后一行改为[0,0,1,0]，这步改变将确保结果坐标的第四个值等于Z坐标，最后所有坐标都除以Z</strong> \(\begin{bmatrix} 1&amp;0&amp;0&amp;0\\ 0&amp;1&amp;0&amp;0\\ 0&amp;0&amp;0&amp;0\\ 0&amp;0&amp;1&amp;0\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ 1\\ \end{bmatrix}\) = \(\begin{bmatrix} x\\ y\\ 0\\ z\\ \end{bmatrix}\) \(\rightarrow\) \(\begin{bmatrix} x \over z\\ y \over z\\ 0\\ \end{bmatrix}\)</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
     <span class="k">get</span> <span class="p">{</span>
         <span class="n">Matrix4x4</span> <span class="n">matrix</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Matrix4x4</span><span class="p">();</span>
         <span class="n">matrix</span><span class="p">.</span><span class="nf">SetRow</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector4</span><span class="p">(</span><span class="m">1f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">));</span>
@@ -1211,54 +294,8 @@ z \over w\\
         <span class="k">return</span> <span class="n">matrix</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>与正交投影最大的不同是这些点不会直接移向到平面，而是他们会移向摄像机的位置，当然这只对位于摄像机前面的点有效，而在摄像机后面的点就不会正确的投影。先确保所有点都能位于摄像机的前方，把摄像机的Unity.Transform组件Position.Z值调好，保证所有点都先可见。</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half">
-<img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/3d%20view2.png" width="" alt="loading failed, need vpn.">
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/plane2.png" width="" alt="loading failed, need vpn.">
-</center>
-<font size="2.5">
-            </font><center><i><a>透视投影.</a></i></center>    
-        
-
-<p>设置一个点到平面的投影距离，它也会影响投影视觉效果。它就像相机的焦距，值越大视野就越小。现在我们先定义一个变量<em>focalLength</em>值默认为1，这能产生90°的视野。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="kt">float</span> <span class="n">focalLength</span> <span class="p">=</span> <span class="m">1f</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>当这个focalLength值越大就像相机在进行聚焦，这有效地增加了所有点的比例(想象一下相机变焦)。当我们压缩Z轴时，是不必进行缩放的
-\(\begin{bmatrix}
-    fl&amp;0&amp;0&amp;0\\
-    0&amp;fl&amp;0&amp;0\\
-    0&amp;0&amp;0&amp;0\\
-    0&amp;0&amp;1&amp;0\\
-\end{bmatrix}\)
-\(\begin{bmatrix}
-    x\\
-    y\\
-    z\\
-    1\\
-\end{bmatrix}\)
-=
-\(\begin{bmatrix}
-    xfl\\
-    yfl\\
-    0\\
-    z\\
-\end{bmatrix}\)
-\(\rightarrow\)
-\(\begin{bmatrix}
-    xfl \over z\\
-    yfl \over z\\
-    0\\
-\end{bmatrix}\)</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
+</code></pre></div></div><p>与正交投影最大的不同是这些点不会直接移向到平面，而是他们会移向摄像机的位置，当然这只对位于摄像机前面的点有效，而在摄像机后面的点就不会正确的投影。先确保所有点都能位于摄像机的前方，把摄像机的Unity.Transform组件Position.Z值调好，保证所有点都先可见。</p><!--url1 url2 url3 url4 url5 代表一次加载多少张图 --> <center class="half"> <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/3d%20view2.png" width="" alt="loading failed, need vpn."> <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/plane2.png" width="" alt="loading failed, need vpn."> </center> <font size="2.5"> </font><center><i><a>透视投影.</a></i></center><p>设置一个点到平面的投影距离，它也会影响投影视觉效果。它就像相机的焦距，值越大视野就越小。现在我们先定义一个变量<em>focalLength</em>值默认为1，这能产生90°的视野。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="kt">float</span> <span class="n">focalLength</span> <span class="p">=</span> <span class="m">1f</span><span class="p">;</span>
+</code></pre></div></div><p>当这个focalLength值越大就像相机在进行聚焦，这有效地增加了所有点的比例(想象一下相机变焦)。当我们压缩Z轴时，是不必进行缩放的 \(\begin{bmatrix} fl&amp;0&amp;0&amp;0\\ 0&amp;fl&amp;0&amp;0\\ 0&amp;0&amp;0&amp;0\\ 0&amp;0&amp;1&amp;0\\ \end{bmatrix}\) \(\begin{bmatrix} x\\ y\\ z\\ 1\\ \end{bmatrix}\) = \(\begin{bmatrix} xfl\\ yfl\\ 0\\ z\\ \end{bmatrix}\) \(\rightarrow\) \(\begin{bmatrix} xfl \over z\\ yfl \over z\\ 0\\ \end{bmatrix}\)</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Matrix4x4</span> <span class="n">Matrix</span> <span class="p">{</span> 
     <span class="k">get</span> <span class="p">{</span>
         <span class="n">Matrix4x4</span> <span class="n">matrix</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Matrix4x4</span><span class="p">();</span>
         <span class="n">matrix</span><span class="p">.</span><span class="nf">SetRow</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector4</span><span class="p">(</span><span class="n">focalLength</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">));</span>
@@ -1268,517 +305,4 @@ z \over w\\
         <span class="k">return</span> <span class="n">matrix</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>现在有了一个简单的透视相机，如果要完全模拟Unity的透视相机，我们还必须处理近平面和远平面。这将需要处理投影到一个立方体而不是一个平面，因此需要保留深度信息。然后还有视野裁切方面的问题。此外，Unity的摄像头是在负Z方向上拍摄的，这需要对一些数字进行求负。</p>
-
-<p>矩阵不可怕。</p>
-
-                <div class="post-copyright">
-                    <p>
-                        <span>版权声明：</span>
-                        如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">银河揽月</a>
-                        所有，转载请注明本文链接。
-                    </p>
-                    
-                    <p>
-                        （采用 
-                        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="extlinks">CC
-                            BY-NC-SA 4.0</a>
-                        许可协议进行授权）
-                    </p>
-                    
-                    <p><span>本文标题：</span>《 Unity 基本矩阵(翻译一) 》</p>
-                    <p><span>本文链接：</span><a href="https://www.damonc.top/Unity_Matrix_Transform.html" class="cplink">https://www.damonc.top/Unity_Matrix_Transform.html</a></p>
-                    <p class="tips">本文最后一次更新为 <span></span> 天前，文章中的某些内容可能已过时！
-                    </p>
-                </div>
-            </article>
-        </div>
-        
-            <div class="table-of-contents">
-                <div class="toc-header"><h2>目录</h2></div>
-                <div class="toc-body">
-                    <ul><li><a onclick="scrollToAdjust('可视空间')">可视空间</a><ul><li><a onclick="scrollToAdjust('操控一组3维坐标')">操控一组3维坐标</a></li></ul></li><li><a onclick="scrollToAdjust('空间变换')">空间变换</a><ul><li><a onclick="scrollToAdjust('位移')">位移</a></li><li><a onclick="scrollToAdjust('缩放')">缩放</a></li><li><a onclick="scrollToAdjust('旋转(二维)')">旋转(二维)</a></li></ul></li><li><a onclick="scrollToAdjust('旋转完全体')">旋转完全体</a><ul><li><a onclick="scrollToAdjust('2d矩阵')">2D矩阵</a></li><li><a onclick="scrollToAdjust('3d矩阵')">3D矩阵</a></li><li><a onclick="scrollToAdjust('绕x轴和y轴的旋转矩阵推导')">绕X轴和Y轴的旋转矩阵推导</a></li><li><a onclick="scrollToAdjust('统一的旋转矩阵')">统一的旋转矩阵</a></li></ul></li><li><a onclick="scrollToAdjust('矩阵变换')">矩阵变换</a><ul><li><a onclick="scrollToAdjust('其次坐标(homogeneous-coordinates)')">其次坐标(Homogeneous Coordinates)</a></li><li><a onclick="scrollToAdjust('使用矩阵')">使用矩阵</a></li><li><a onclick="scrollToAdjust('合并矩阵')">合并矩阵</a></li></ul></li><li><a onclick="scrollToAdjust('3d到2d投影矩阵')">3D到2D投影矩阵</a><ul><li><a onclick="scrollToAdjust('正交相机orthographic-camera')">正交相机Orthographic Camera</a></li><li><a onclick="scrollToAdjust('透视相机perspective-camera')">透视相机Perspective Camera</a></li></ul></li></ul>
-                </div>
-        
-            </div>
-        </div>
-        
-<div class="social-share-wrapper">
-    <div class="social-share"></div>
-</div>
-
-</main>
-
-<section class="author-detail">
-    <section class="post-footer-item author-card">
-        <div class="avatar">
-            <img src="https://damonc-top2.github.io/web-assets/commons/avatar_high.png" alt="">
-        </div>
-        <div class="author-name" rel="author">damonc</div>
-        <div class="bio">
-            <p>Developer & Maintainer</p>
-        </div>
-        
-        <ul class="sns-links">
-            
-            <li>
-                <a href="damonc@126.com" target="_blank" aria-label="email">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-email"></use>
-                    </svg>
-                </a>
-            </li>
-            
-            <li>
-                <a href="https://github.com/damonc-top" target="_blank" aria-label="github">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-github"></use>
-                    </svg>
-                </a>
-            </li>
-            
-        </ul>
-        
-    </section>
-    <section class="post-footer-item read-next">
-        
-        <div class="read-next-item">
-            <a href="/Unity_Shader_Fundamentals.html" class="read-next-link" aria-label="Unity Shader 基本语法(翻译二)"></a>
-            <section>
-                <span>Unity Shader 基本语法(翻译二)</span>
-                <p>本篇摘要信息  顶点变换  Color pixels  shader 属性  从顶点传数据至片元函数  查看编译后...</p>
-            </section>
-            
-        </div>
-        
-
-        
-        <div class="read-next-item">
-            <a href="/CG_Function_Library.html" class="read-next-link"
-                aria-label="CG函数标准库"></a>
-            <section>
-                <span>CG函数标准库</span>
-                <p>数学函数（Mathematical Functions）</p>
-            </section>
-            
-        </div>
-        
-    </section>
-    
-
-
-    
-        
-<section class="post-footer-item comment">
-    <div class="comments-headline">
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-comment"></use>
-        </svg>
-        <span>评论</span>
-    </div>
-    
-        
-    
-</section>
-
-    
-
-
-
-    
-    
-    <section class="post-footer-item comment">
-        <div id="waline"></div>
-    </section>
-    
-
-</section>
-            
-
-
-<footer class="g-footer">
-  <div class="g-container">
-    <div class="g-left">
-      <section class="links">
-        本站由 <a href="//jekyllrb.com" target="_blank" class="extlinks">Jekyll</a> 和 基于 <a href="https://github.com/kaeyleo/jekyll-theme-H2O" target="_blank" class="extlinks">H2O主题模版</a> 强力驱动
-          
-        
-      </section>
-      <section class="links">银河揽月 ©
-        
-        
-          2016
-          -
-        
-        2024
-        
-          <a href="https://icp.gov.moe/?keyword=20240228" target="_blank" class="extlinks">萌ICP备20240228号</a>
-        
-        <a href="/rss.xml" target="_blank" aria-label="Terms of Service" class="others">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-rss"></use>
-          </svg> RSS  
-        </a>
-        <a href="/tos" target="_blank" aria-label="Terms of Service" class="others">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-tos"></use>
-          </svg> 使用条款  
-        </a>
-      </section>
-      
-      <section class="links">
-        <span id="busuanzi_container_site_pv">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-pv"></use>
-          </svg> 总浏览量 <span id="busuanzi_value_site_pv"></span> <b>·</b>
-        </span>
-        <span id="busuanzi_container_site_uv">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-user"></use>
-          </svg> 总访问量 <span id="busuanzi_value_site_uv"></span>
-        </span>
-      </section>
-      
-      <section>
-        
-          本站已运行 
-          <span class="alivetime_days"></span> 天
-          <span class="alivetime_hours"></span> 小时
-          <span class="alivetime_minutes"></span> 分
-          <span class="alivetime_seconds"></span> 秒
-        
-      </section>
-    </div>
-    <div class="g-right">
-      
-      
-      <section class="badges">
-        
-          <a href="https://www.foreverblog.cn/" target="_blank" class="foreverblog" aria-label="foreverblog"> 
-            <img src="https://img.foreverblog.cn/logo_en_default.png" alt=""> 
-          </a>
-        
-        
-          <a href="https://www.foreverblog.cn/go.html" target="_blank" class="wormhole" aria-label="wormhole"> 
-            <img src="https://img.foreverblog.cn/wormhole_3.gif" alt="" title="穿梭虫洞-随机访问十年之约友链博客">
-          </a>
-        
-        
-          <a href="https://www.travellings.cn/go.html" target="_blank" class="travelling-badge" aria-label="Travelling" rel="noopener" title="开往-友链接力">
-            <img src="https://cdn.jsdelivr.net/gh/travellings-link/travellings/assets/logo.gif" alt="开往-友链接力">
-          </a>
-        
-        
-          <a href="https://notbyai.fyi/" target="_blank" class="notbyAI" aria-label="notbyAI"> 
-            <img src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI">
-          </a>
-        
-      </section>
-      
-    </div>
-    
-  </div>
-</footer>
-<div class="cookie-tip">
-   为了提升本站的使用体验和必要功能的正常使用，本站会使用本地 Cookie。详细请查看「 <a href="/tos.html">本站使用条款</a> 」了解更多。
-
-  <button id="accept-tos">同意</button>
-</div>
-
-<section id="tools">
-  
-  
-  <div class="tool toc">
-    <svg class="icon b1 active" aria-hidden="true">
-      <use xlink:href="#icon-toc"></use>
-    </svg>
-    <svg class="icon b2" aria-hidden="true">
-      <use xlink:href="#icon-exit"></use>
-    </svg>
-  </div>
-  
-</section>
-<section id="bttb" aria-label="Scroll back to top" class="bttb">
-  <div class="tool">
-    <svg class="icon top" aria-hidden="true">
-      <use xlink:href="#icon-top"></use>
-    </svg>
-  </div>
-</section>
-        </div>
-        
-<div class="modal">
-    <div class="modal-content">
-        <header>
-            <span class="close">&times;</span>
-        </header>
-        <div class="container"></div>
-    </div>
-</div>
-
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" async></script>
-        
-            <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/dayjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/customParseFormat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/relativeTime.js"></script>
-<script>
-    $(document).ready(function () {
-        var time_formats = ['YYYY-MM-DD HH:mm:ss ZZ', 'YYYY DD MMM HH:mm:ss ZZ', 'YYYY年MM月DD日 HH:mm:ss ZZ'];
-        function dateFormat(date, format) {
-            var date_org = dayjs(date, time_formats[format]);
-            var date = date_org.format(time_formats[format]);
-            return { "date_org": date_org, "date": date }
-        }
-
-        dayjs.extend(window.dayjs_plugin_customParseFormat);
-        dayjs.extend(window.dayjs_plugin_relativeTime);
-        var post_date = $("meta[property='post-date']").attr('content');
-        var post_date_format = $("meta[property='post-date-format']").attr('content');
-        var local_post_date = dateFormat(post_date, post_date_format);
-
-        $(".post time span.create-at").html(local_post_date["date"]);
-
-        fetch("https://api.github.com/repos/damonc-top/blog/commits?path=_posts/2018/ShaderTranslate/2018-01-01-Unity_Matrix_Transform.md").then((response) => {
-            return response.json();
-        }).then((commits) => {
-            if (commits.length != 0) {
-                var update_at = dayjs(commits[0]['commit']['committer']['date']);
-            } else {
-                var update_at = post_date
-            }
-
-            var local_update_at = dateFormat(update_at, post_date_format);
-            $('.post time span.update-at').html(local_update_at["date"]);
-
-            var relative_time = dayjs().diff(local_update_at["date_org"], 'day');
-            $(".post-copyright .tips span").append(relative_time);
-            if (relative_time > 365) {
-                $(".post-copyright .tips").addClass("active");
-            }
-        });
-    });
-</script>
-            <script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
-<script>
-    socialShare('.social-share', {
-        sites: [
-            
-            'wechat', 
-            
-            'weibo', 
-            
-            'douban', 
-            
-            'twitter'
-            
-        ],
-    wechatQrcodeTitle: "分享到微信朋友圈",
-        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
-      });
-    $("a.social-share-icon").each(function () {
-        $(this).attr("aria-label", $(this).attr("class").split(' ')[1])
-    });
-</script>
-        
-        <script src="https://cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script>
-        <script>
-            /**
-            * Better Scroll Experience
-            */
-            function scrollToAdjust(id){
-              var element = document.getElementById(id);
-              var headerOffset = 90;
-              var elementPosition = element.getBoundingClientRect().top;
-              var offsetPosition = elementPosition + window.scrollY - headerOffset;
-              window.scrollTo({
-                  top: offsetPosition,
-                  behavior: "smooth"
-              });
-            }
-        </script>
-        <script src="/assets/js/app.min.js"></script>
-        <script src="https://at.alicdn.com/t/c/font_3046306_ujr2yq34hw.js"></script>
-        
-
-
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-        
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-		jax: ["input/TeX", "output/HTML-CSS"],
-		tex2jax: {
-			inlineMath: [['$', '$'], ["\\(", "\\)"]],
-			processEscapes: true,
-			skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-		},
-		"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
-      });
-    </script>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var baseurl = $("meta[property='og:baseurl']").attr('content');
-        $("p img").each(function () {
-            $(this).attr('data-src', $(this).attr('src')).removeAttr('src').addClass("lazyload").attr('src', baseurl + '/assets/img/loading.gif');
-            var strA = "<a data-fancybox='gallery' ref='gallery' href='" + $(this).attr('data-src') + "' data-caption='" + $(this).attr('alt') + "'></a>";
-            $(this).wrapAll(strA);
-            var caption = $(this)[0].alt;
-            $(this).parent().after('<span class="caption">' + caption + '</span>');
-        });
-        Fancybox.bind('[data-fancybox]', {
-            on: {
-                load: (fancybox, slide) => {
-                    var gray = $("meta[property='og:gray']").attr('content');
-                    if (gray == "true") {
-                        $(".fancybox__content img").addClass("gray");
-                        $(".carousel__track .fancybox__thumb").addClass("gray");
-                    }
-                }
-            }
-        });
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var previous_url = $("meta[property='og:previous_url']").attr('content');
-        var next_url = $("meta[property='og:next_url']").attr('content');
-
-        hotkeys('left', function (event, handler) {
-            // Prevent the default refresh event under WINDOWS system
-            event.preventDefault();
-            if (previous_url) {
-                console.log('you pressed left!');
-                window.location.href = previous_url;
-            } else {
-                $("#no-previous").addClass("active");
-                setTimeout(function () { $("#no-previous").removeClass("active"); }, 1500);
-            }
-        });
-
-        hotkeys('right', function (event, handler) {
-            // Prevent the default refresh event under WINDOWS system
-            event.preventDefault();
-            if (next_url) {
-                console.log('you pressed right!');
-                window.location.href = next_url;
-            } else {
-                $("#no-next").addClass("active");
-                setTimeout(function () { $("#no-next").removeClass("active"); }, 1500);
-            }
-        });
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
-<script>
-    $(document).ready(function () {
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: "default",
-        });
-        mermaid.init(undefined, $('.mermaid2'));
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-        
-
-<script src="https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.umd.js"></script>
-<script>
-    $(document).ready(function () {
-        Waline.init({
-            el: '#waline',
-            serverURL: 'https://blog-comments-lp4e9awzo-damonc-tops-projects.vercel.app',
-            reaction: true,
-        comment: true,
-        locale: {reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        if ($("#comments-switch").length > 0) {
-            var comment_status = $("#cmn-toggle-4")[0].checked;
-            if (comment_status) {
-                $("#waline").addClass("active");
-            } else {
-                $("#disqus_thread").addClass("active");
-            }
-            $("#cmn-toggle-4").click(function () {
-                $("#disqus_thread").toggleClass("active");
-                $("#waline").toggleClass("active");
-            })
-        } else {
-            if ($("#disqus_thread").length > 0) {
-                $("#disqus_thread").addClass("active");
-            } else if ($("#waline").length > 0) {
-                $("#waline").addClass("active");
-            }
-        }
-    })
-</script>
-        <script>
-    if ("serviceWorker" in navigator) {
-        if (navigator.serviceWorker.controller) {
-            console.log("An active service worker found, no need to register");
-        } else {
-            // Register the service worker
-            navigator.serviceWorker
-            .register("/sw.js", {
-                scope: "/"
-            })
-            .then(function (reg) {
-                console.log("Service worker has been registered for scope: " + reg.scope);
-            });
-        }
-    }
-
-// 检测浏览器是否支持SW
-// if(navigator.serviceWorker != null){
-//     navigator.serviceWorker.register("/sw.js")
-//         .then(function(registartion){
-//             console.log('支持sw:',registartion.scope)
-//         })
-// } else {
-//     console.log('不支持sw')
-// }
-</script>
-        
-        
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
-<script type="text/javascript">
-    docsearch({
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
-        indexName: "damonc",
-        container: 'li#search',
-        debug: true,
-    });
-    docsearch({
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
-        indexName: "damonc",
-        container: '#search-toggle',
-        debug: true,
-    });
-</script>
-
-  </body>
-
-</html>
+</code></pre></div></div><p>现在有了一个简单的透视相机，如果要完全模拟Unity的透视相机，我们还必须处理近平面和远平面。这将需要处理投影到一个立方体而不是一个平面，因此需要保留深度信息。然后还有视野裁切方面的问题。此外，Unity的摄像头是在负Z方向上拍摄的，这需要对一些数字进行求负。</p><p>矩阵不可怕。</p><div class="post-copyright"><p> <span>版权声明：</span> 如无特别声明，本文版权归 <a href="https://www.damonc.top" class="cplink">银河揽月</a> 所有，转载请注明本文链接。</p><p> （采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="extlinks">CC BY-NC-SA 4.0</a> 许可协议进行授权）</p><p><span>本文标题：</span>《 Unity 基本矩阵(翻译一) 》</p><p><span>本文链接：</span><a href="https://www.damonc.top/Unity_Matrix_Transform.html" class="cplink">https://www.damonc.top/Unity_Matrix_Transform.html</a></p><p class="tips">本文最后一次更新为 <span></span> 天前，文章中的某些内容可能已过时！</p></div></article></div><div class="table-of-contents"><div class="toc-header"><h2>目录</h2></div><div class="toc-body"><ul><li><a onclick="scrollToAdjust('可视空间')">可视空间</a><ul><li><a onclick="scrollToAdjust('操控一组3维坐标')">操控一组3维坐标</a></ul><li><a onclick="scrollToAdjust('空间变换')">空间变换</a><ul><li><a onclick="scrollToAdjust('位移')">位移</a><li><a onclick="scrollToAdjust('缩放')">缩放</a><li><a onclick="scrollToAdjust('旋转(二维)')">旋转(二维)</a></ul><li><a onclick="scrollToAdjust('旋转完全体')">旋转完全体</a><ul><li><a onclick="scrollToAdjust('2d矩阵')">2D矩阵</a><li><a onclick="scrollToAdjust('3d矩阵')">3D矩阵</a><li><a onclick="scrollToAdjust('绕x轴和y轴的旋转矩阵推导')">绕X轴和Y轴的旋转矩阵推导</a><li><a onclick="scrollToAdjust('统一的旋转矩阵')">统一的旋转矩阵</a></ul><li><a onclick="scrollToAdjust('矩阵变换')">矩阵变换</a><ul><li><a onclick="scrollToAdjust('其次坐标(homogeneous-coordinates)')">其次坐标(Homogeneous Coordinates)</a><li><a onclick="scrollToAdjust('使用矩阵')">使用矩阵</a><li><a onclick="scrollToAdjust('合并矩阵')">合并矩阵</a></ul><li><a onclick="scrollToAdjust('3d到2d投影矩阵')">3D到2D投影矩阵</a><ul><li><a onclick="scrollToAdjust('正交相机orthographic-camera')">正交相机Orthographic Camera</a><li><a onclick="scrollToAdjust('透视相机perspective-camera')">透视相机Perspective Camera</a></ul></ul></div></div></div><div class="social-share-wrapper"><div class="social-share"></div></div></main><section class="author-detail"><section class="post-footer-item author-card"><div class="avatar"> <img src="https://damonc-top2.github.io/web-assets/commons/avatar_high.png" alt=""></div><div class="author-name" rel="author">damonc</div><div class="bio"><p>Developer & Maintainer</p></div><ul class="sns-links"><li> <a href="damonc@126.com" target="_blank" aria-label="email"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-email"></use> </svg> </a><li> <a href="https://github.com/damonc-top" target="_blank" aria-label="github"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-github"></use> </svg> </a></ul></section><section class="post-footer-item read-next"><div class="read-next-item"> <a href="/Unity_Shader_Fundamentals.html" class="read-next-link" aria-label="Unity Shader 基本语法(翻译二)"></a><section> <span>Unity Shader 基本语法(翻译二)</span><p>本篇摘要信息 顶点变换 Color pixels shader 属性 从顶点传数据至片元函数 查看编译后...</p></section></div><div class="read-next-item"> <a href="/CG_Function_Library.html" class="read-next-link" aria-label="CG函数标准库"></a><section> <span>CG函数标准库</span><p>数学函数（Mathematical Functions）</p></section></div></section><section class="post-footer-item comment"><div class="comments-headline"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-comment"></use> </svg> <span>评论</span></div></section><section class="post-footer-item comment"><div id="waline"></div></section></section><footer class="g-footer"><div class="g-container"><div class="g-left"><section class="links"> 本站由 <a href="//jekyllrb.com" target="_blank" class="extlinks">Jekyll</a> 和 基于 <a href="https://github.com/kaeyleo/jekyll-theme-H2O" target="_blank" class="extlinks">H2O主题模版</a> 强力驱动</section><section class="links">银河揽月 © 2016 - 2024 <a href="https://icp.gov.moe/?keyword=20240228" target="_blank" class="extlinks">萌ICP备20240228号</a> <a href="/rss.xml" target="_blank" aria-label="Terms of Service" class="others"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-rss"></use> </svg> RSS </a> <a href="/tos" target="_blank" aria-label="Terms of Service" class="others"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-tos"></use> </svg> 使用条款 </a></section><section class="links"> <span id="busuanzi_container_site_pv"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-pv"></use> </svg> 总浏览量 <span id="busuanzi_value_site_pv"></span> <b>·</b> </span> <span id="busuanzi_container_site_uv"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-user"></use> </svg> 总访问量 <span id="busuanzi_value_site_uv"></span> </span></section><section> 本站已运行 <span class="alivetime_days"></span> 天 <span class="alivetime_hours"></span> 小时 <span class="alivetime_minutes"></span> 分 <span class="alivetime_seconds"></span> 秒</section></div><div class="g-right"><section class="badges"> <a href="https://www.foreverblog.cn/" target="_blank" class="foreverblog" aria-label="foreverblog"> <img src="https://img.foreverblog.cn/logo_en_default.png" alt=""> </a> <a href="https://www.foreverblog.cn/go.html" target="_blank" class="wormhole" aria-label="wormhole"> <img src="https://img.foreverblog.cn/wormhole_3.gif" alt="" title="穿梭虫洞-随机访问十年之约友链博客"> </a> <a href="https://www.travellings.cn/go.html" target="_blank" class="travelling-badge" aria-label="Travelling" rel="noopener" title="开往-友链接力"> <img src="https://cdn.jsdelivr.net/gh/travellings-link/travellings/assets/logo.gif" alt="开往-友链接力"> </a> <a href="https://notbyai.fyi/" target="_blank" class="notbyAI" aria-label="notbyAI"> <img src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI"> </a></section></div></div></footer><div class="cookie-tip"> 为了提升本站的使用体验和必要功能的正常使用，本站会使用本地 Cookie。详细请查看「 <a href="/tos.html">本站使用条款</a> 」了解更多。 <button id="accept-tos">同意</button></div><section id="tools"><div class="tool toc"> <svg class="icon b1 active" aria-hidden="true"> <use xlink:href="#icon-toc"></use> </svg> <svg class="icon b2" aria-hidden="true"> <use xlink:href="#icon-exit"></use> </svg></div></section><section id="bttb" aria-label="Scroll back to top" class="bttb"><div class="tool"> <svg class="icon top" aria-hidden="true"> <use xlink:href="#icon-top"></use> </svg></div></section></div><div class="modal"><div class="modal-content"><header> <span class="close">&times;</span></header><div class="container"></div></div></div><script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" async></script> <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/dayjs.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/customParseFormat.js"></script> <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/relativeTime.js"></script> <script> $(document).ready(function () { var time_formats = ['YYYY-MM-DD HH:mm:ss ZZ', 'YYYY DD MMM HH:mm:ss ZZ', 'YYYY年MM月DD日 HH:mm:ss ZZ']; function dateFormat(date, format) { var date_org = dayjs(date, time_formats[format]); var date = date_org.format(time_formats[format]); return { "date_org": date_org, "date": date } } dayjs.extend(window.dayjs_plugin_customParseFormat); dayjs.extend(window.dayjs_plugin_relativeTime); var post_date = $("meta[property='post-date']").attr('content'); var post_date_format = $("meta[property='post-date-format']").attr('content'); var local_post_date = dateFormat(post_date, post_date_format); $(".post time span.create-at").html(local_post_date["date"]); fetch("https://api.github.com/repos/damonc-top/blog/commits?path=_posts/2018/ShaderTranslate/2018-01-01-Unity_Matrix_Transform.md").then((response) => { return response.json(); }).then((commits) => { if (commits.length != 0) { var update_at = dayjs(commits[0]['commit']['committer']['date']); } else { var update_at = post_date } var local_update_at = dateFormat(update_at, post_date_format); $('.post time span.update-at').html(local_update_at["date"]); var relative_time = dayjs().diff(local_update_at["date_org"], 'day'); $(".post-copyright .tips span").append(relative_time); if (relative_time > 365) { $(".post-copyright .tips").addClass("active"); } }); }); </script> <script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script> <script> socialShare('.social-share', { sites: [ 'wechat', 'weibo', 'douban', 'twitter' ], wechatQrcodeTitle: "分享到微信朋友圈", wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>' }); $("a.social-share-icon").each(function () { $(this).attr("aria-label", $(this).attr("class").split(' ')[1]) }); </script> <script src="https://cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script> <script> /** * Better Scroll Experience */ function scrollToAdjust(id){ var element = document.getElementById(id); var headerOffset = 90; var elementPosition = element.getBoundingClientRect().top; var offsetPosition = elementPosition + window.scrollY - headerOffset; window.scrollTo({ top: offsetPosition, behavior: "smooth" }); } </script> <script src="/assets/js/app.min.js"></script> <script src="https://at.alicdn.com/t/c/font_3046306_ujr2yq34hw.js"></script> <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ jax: ["input/TeX", "output/HTML-CSS"], tex2jax: { inlineMath: [['$', '$'], ["\\(", "\\)"]], processEscapes: true, skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }, "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] } }); </script> <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.min.js"></script> <script> $(document).ready(function () { var baseurl = $("meta[property='og:baseurl']").attr('content'); $("p img").each(function () { $(this).attr('data-src', $(this).attr('src')).removeAttr('src').addClass("lazyload").attr('src', baseurl + '/assets/img/loading.gif'); var strA = "<a data-fancybox='gallery' ref='gallery' href='" + $(this).attr('data-src') + "' data-caption='" + $(this).attr('alt') + "'></a>"; $(this).wrapAll(strA); var caption = $(this)[0].alt; $(this).parent().after('<span class="caption">' + caption + '</span>'); }); Fancybox.bind('[data-fancybox]', { on: { load: (fancybox, slide) => { var gray = $("meta[property='og:gray']").attr('content'); if (gray == "true") { $(".fancybox__content img").addClass("gray"); $(".carousel__track .fancybox__thumb").addClass("gray"); } } } }); }); </script> <script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script> <script> $(document).ready(function () { var previous_url = $("meta[property='og:previous_url']").attr('content'); var next_url = $("meta[property='og:next_url']").attr('content'); hotkeys('left', function (event, handler) { // Prevent the default refresh event under WINDOWS system event.preventDefault(); if (previous_url) { console.log('you pressed left!'); window.location.href = previous_url; } else { $("#no-previous").addClass("active"); setTimeout(function () { $("#no-previous").removeClass("active"); }, 1500); } }); hotkeys('right', function (event, handler) { // Prevent the default refresh event under WINDOWS system event.preventDefault(); if (next_url) { console.log('you pressed right!'); window.location.href = next_url; } else { $("#no-next").addClass("active"); setTimeout(function () { $("#no-next").removeClass("active"); }, 1500); } }); }); </script> <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script> <script> $(document).ready(function () { mermaid.initialize({ startOnLoad: true, theme: "default", }); mermaid.init(undefined, $('.mermaid2')); }); </script> <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.umd.js"></script> <script> $(document).ready(function () { Waline.init({ el: '#waline', serverURL: 'https://blog-comments-lp4e9awzo-damonc-tops-projects.vercel.app', reaction: true, comment: true, locale: {reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'} }); }); </script> <script> $(document).ready(function () { if ($("#comments-switch").length > 0) { var comment_status = $("#cmn-toggle-4")[0].checked; if (comment_status) { $("#waline").addClass("active"); } else { $("#disqus_thread").addClass("active"); } $("#cmn-toggle-4").click(function () { $("#disqus_thread").toggleClass("active"); $("#waline").toggleClass("active"); }) } else { if ($("#disqus_thread").length > 0) { $("#disqus_thread").addClass("active"); } else if ($("#waline").length > 0) { $("#waline").addClass("active"); } } }) </script> <script> if ("serviceWorker" in navigator) { if (navigator.serviceWorker.controller) { console.log("An active service worker found, no need to register"); } else { // Register the service worker navigator.serviceWorker .register("/sw.js", { scope: "/" }) .then(function (reg) { console.log("Service worker has been registered for scope: " + reg.scope); }); } } // 检测浏览器是否支持SW // if(navigator.serviceWorker != null){ // navigator.serviceWorker.register("/sw.js") // .then(function(registartion){ // console.log('支持sw:',registartion.scope) // }) // } else { // console.log('不支持sw') // } </script> <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script> <script type="text/javascript"> docsearch({ appId: "BHQWK3P97Y", apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97", indexName: "damonc", container: 'li#search', debug: true, }); docsearch({ appId: "BHQWK3P97Y", apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97", indexName: "damonc", container: '#search-toggle', debug: true, }); </script> <table id="compress_html_profile_20241022" class="compress_html_profile"> <thead> <tr> <td>Step <td>Bytes <tbody> <tr> <td>raw <td>107645 <tr> <td>endings <td>107430 <tr> <td>startings <td>107424 <tr> <td>comments <td>107345 <tr> <td>collapse <td>99193 <tr> <td>clippings <td>98859 </table>
