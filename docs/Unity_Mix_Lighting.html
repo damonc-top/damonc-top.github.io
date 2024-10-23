@@ -65,7 +65,7 @@
     href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/line-numbers/prism-line-numbers.min.css">
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.css" />
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 
 
     
@@ -1144,6 +1144,43 @@
     </section>
     
 
+<script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
+<script>
+    $(document).ready(function () {
+        Waline.init({
+            el: '#waline',
+            serverURL: 'https://comments.damonc.top',
+            reaction: true,
+            comment: true,
+            locale: {reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'},
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ($("#comments-switch").length > 0) {
+            var comment_status = $("#cmn-toggle-4")[0].checked;
+            if (comment_status) {
+                $("#waline").addClass("active");
+            } else {
+                $("#disqus_thread").addClass("active");
+            }
+            $("#cmn-toggle-4").click(function () {
+                $("#disqus_thread").toggleClass("active");
+                $("#waline").toggleClass("active");
+            })
+        } else {
+            if ($("#disqus_thread").length > 0) {
+                $("#disqus_thread").addClass("active");
+            } else if ($("#waline").length > 0) {
+                $("#waline").addClass("active");
+            }
+        }
+    })
+</script>
+    
+
 
     
         
@@ -1318,7 +1355,18 @@
 
         $(".post time span.create-at").html(local_post_date["date"]);
 
-        fetch("https://api.github.com/repos/damonc-top/blog/commits?path=_posts/2018/ShaderTranslate/2018-01-21-Unity_Mix_Lighting.md").then((response) => {
+        // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2018/ShaderTranslate/2018-01-21-Unity_Mix_Lighting.md", {
+        //     headers: {
+        //         'Authorization': 'token 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',
+        //         'Accept': 'application/vnd.github.v3+json'
+        //     }
+        // }).then((response) => {
+        //     return response.json();
+        fetch("https://winter-meadow-170b.damoncbl.workers.dev?" + new URLSearchParams({
+            owner: "damonc-top",
+            repo: "blog",
+            path: "post_project/_posts/2018/ShaderTranslate/2018-01-21-Unity_Mix_Lighting.md"
+        })).then((response) => {
             return response.json();
         }).then((commits) => {
             if (commits.length != 0) {
@@ -1471,43 +1519,6 @@
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-        
-
-<script src="https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.umd.js"></script>
-<script>
-    $(document).ready(function () {
-        Waline.init({
-            el: '#waline',
-            serverURL: 'https://comments.damonc.top',
-            reaction: true,
-        comment: true,
-        locale: {reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        if ($("#comments-switch").length > 0) {
-            var comment_status = $("#cmn-toggle-4")[0].checked;
-            if (comment_status) {
-                $("#waline").addClass("active");
-            } else {
-                $("#disqus_thread").addClass("active");
-            }
-            $("#cmn-toggle-4").click(function () {
-                $("#disqus_thread").toggleClass("active");
-                $("#waline").toggleClass("active");
-            })
-        } else {
-            if ($("#disqus_thread").length > 0) {
-                $("#disqus_thread").addClass("active");
-            } else if ($("#waline").length > 0) {
-                $("#waline").addClass("active");
-            }
-        }
-    })
-</script>
         <script>
     if ("serviceWorker" in navigator) {
         if (navigator.serviceWorker.controller) {
