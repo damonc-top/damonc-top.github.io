@@ -24,7 +24,7 @@
         content="银河揽月">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/404.html">
-    <meta property="og:baseurl" content="/docs">
+    <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
     <meta property="og:site_name" content="银河揽月">
     <meta property="og:gray" content="false">
@@ -36,11 +36,11 @@
     <meta name="theme-color" content="#81BBFF" />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="manifest" href="/docs/manifest.json" async>
-    <link rel="apple-touch-icon" href="/docs/assets/img/touch/apple-touch-icon.png" />
-    <link rel="Shortcut Icon" href="/docs/favicon.ico">
-    <link rel="icon" href="/docs/favicon.ico" type="image/x-icon" />
-    <link rel="bookmark" href="/docs/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="/manifest.json" async>
+    <link rel="apple-touch-icon" href="/assets/img/touch/apple-touch-icon.png" />
+    <link rel="Shortcut Icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="bookmark" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.min.css" async>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" async>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css" async>
@@ -66,7 +66,7 @@
     
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
 
-    <link rel="stylesheet" href="/docs/assets/css/app.min.css" async>
+    <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
     
@@ -83,7 +83,7 @@
             <input id="nm-switch" type="hidden" value="false">
             <header class="g-header" data-theme="default">
     <div class="g-logo">
-      <a href="/docs/" aria-label="logo"></a>
+      <a href="/" aria-label="logo"></a>
     </div>
     <!-- <i id="menu-toggle" class="iconfont icon-menu"></i> -->
     
@@ -114,7 +114,7 @@
             
                 
                 <li>
-                    <a href="/docs/" aria-label="home">
+                    <a href="/" aria-label="home">
                         home
                     </a>
                 </li>
@@ -122,7 +122,7 @@
             
                 
                 <li>
-                    <a href="/docs/blog/index.html" aria-label="blog">
+                    <a href="/blog/index.html" aria-label="blog">
                         blog
                     </a>
                 </li>
@@ -130,7 +130,7 @@
             
                 
                 <li>
-                    <a href="/docs/archives.html" aria-label="archives">
+                    <a href="/archives.html" aria-label="archives">
                         archives
                     </a>
                 </li>
@@ -138,7 +138,7 @@
             
                 
                 <li>
-                    <a href="/docs/tags.html" aria-label="tags">
+                    <a href="/tags.html" aria-label="tags">
                         tags
                     </a>
                 </li>
@@ -150,7 +150,7 @@
                     <ul class="dropdown-menu">
                     
                         <li>
-                            <a href="/docs/feed.xml" aria-label="RSS">
+                            <a href="/feed.xml" aria-label="RSS">
                                 RSS
                             </a>
                         </li>
@@ -270,7 +270,7 @@
         
         
           <a href="https://notbyai.fyi/" target="_blank" class="notbyAI" aria-label="notbyAI"> 
-            <img loading="lazy" src="/docs/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI">
+            <img loading="lazy" src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI">
           </a>
         
       </section>
@@ -280,7 +280,7 @@
   </div>
 </footer>
 <div class="cookie-tip">
-   为了提升本站的使用体验和必要功能的正常使用，本站会使用本地 Cookie。详细请查看「 <a href="/docs/tos.html">本站使用条款</a> 」了解更多。
+   为了提升本站的使用体验和必要功能的正常使用，本站会使用本地 Cookie。详细请查看「 <a href="/tos.html">本站使用条款</a> 」了解更多。
 
   <button id="accept-tos">同意</button>
 </div>
@@ -336,7 +336,7 @@
               });
             }
         </script>
-        <script src="/docs/assets/js/app.min.js"></script>
+        <script src="/assets/js/app.min.js"></script>
         <script src="https://at.alicdn.com/t/c/font_3046306_ujr2yq34hw.js"></script>
         
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -422,8 +422,8 @@
         } else {
             // Register the service worker
             navigator.serviceWorker
-            .register("/docs/sw.js", {
-                scope: "/docs/"
+            .register("/sw.js", {
+                scope: "/"
             })
             .then(function (reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
@@ -433,7 +433,7 @@
 
 // 检测浏览器是否支持SW
 // if(navigator.serviceWorker != null){
-//     navigator.serviceWorker.register("/docs/sw.js")
+//     navigator.serviceWorker.register("/sw.js")
 //         .then(function(registartion){
 //             console.log('支持sw:',registartion.scope)
 //         })

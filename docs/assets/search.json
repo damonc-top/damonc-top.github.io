@@ -2,144 +2,144 @@
   {
     "title"    : "Unity Addressable Group结构",
     "tags"     : "Unity3d Addressable",
-    "url"      : "/docs/Unity_Addressabel_Group.html"
+    "url"      : "/Unity_Addressabel_Group.html"
   } ,
 
   {
     "title"    : "Unity Addressable Editor结构",
     "tags"     : "Unity3d Addressable",
-    "url"      : "/docs/Unity_Addressable_Editor.html"
+    "url"      : "/Unity_Addressable_Editor.html"
   } ,
 
   {
     "title"    : "视差和法线、高度图回顾(翻译二十)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Parallax_Normals_Heightmap.html"
+    "url"      : "/Unity_Parallax_Normals_Heightmap.html"
   } ,
 
   {
     "title"    : "Unity GPU Instance(翻译十九)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_GPU_Instance.html"
+    "url"      : "/Unity_GPU_Instance.html"
   } ,
 
   {
     "title"    : "Unity 实时 GI &amp; LPPV &amp; LOD(翻译十八)",
     "tags"     : "Shader Unity3d API",
-    "url"      : "/docs/Unity_RealTime_GI_LOD.html"
+    "url"      : "/Unity_RealTime_GI_LOD.html"
   } ,
 
   {
     "title"    : "Unity 混合光照(翻译十七)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Mix_Lighting.html"
+    "url"      : "/Unity_Mix_Lighting.html"
   } ,
 
   {
     "title"    : "Unity 光照烘焙(翻译十六)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Static_Lightting.html"
+    "url"      : "/Unity_Static_Lightting.html"
   } ,
 
   {
     "title"    : "Unity Deferred Lights-延迟光照(翻译十五)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Deferred_Lights.html"
+    "url"      : "/Unity_Deferred_Lights.html"
   } ,
 
   {
     "title"    : "Unity Shader Fog(翻译十四)",
     "tags"     : "Shader",
-    "url"      : "/docs/UNity_Shader_Fog.html"
+    "url"      : "/UNity_Shader_Fog.html"
   } ,
 
   {
     "title"    : "Unity Shader 延迟渲染(翻译十三)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Deferred_Shading.html"
+    "url"      : "/Unity_Deferred_Shading.html"
   } ,
 
   {
     "title"    : "Unity 透明渲染(翻译十二)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Shader_Transparent_2.html"
+    "url"      : "/Unity_Shader_Transparent_2.html"
   } ,
 
   {
     "title"    : "Unity 透明渲染(翻译十一)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Shader_Transparent_1.html"
+    "url"      : "/Unity_Shader_Transparent_1.html"
   } ,
 
   {
     "title"    : "Unity Shader GUI 扩展二(翻译十)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_ShaderGUI_Extension_2.html"
+    "url"      : "/Unity_ShaderGUI_Extension_2.html"
   } ,
 
   {
     "title"    : "Unity Shader GUI 扩展一(翻译九)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_ShaderGUI_Extension_1.html"
+    "url"      : "/Unity_ShaderGUI_Extension_1.html"
   } ,
 
   {
     "title"    : "Unity Reflection 反射(翻译八)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Reflection.html"
+    "url"      : "/Unity_Reflection.html"
   } ,
 
   {
     "title"    : "Unity Shadow 阴影(翻译七)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Shadows.html"
+    "url"      : "/Unity_Shadows.html"
   } ,
 
   {
     "title"    : "Unity 纹理高级用法(翻译六)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Advance_Texture.html"
+    "url"      : "/Unity_Advance_Texture.html"
   } ,
 
   {
     "title"    : "Unity 基础光照多光源采样(翻译五)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Multi_Light.html"
+    "url"      : "/Unity_Multi_Light.html"
   } ,
 
   {
     "title"    : "Unity 基础光照(翻译四)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_First_light.html"
+    "url"      : "/Unity_First_light.html"
   } ,
 
   {
     "title"    : "Unity 多纹理融合(翻译三)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Combine_Texture.html"
+    "url"      : "/Unity_Combine_Texture.html"
   } ,
 
   {
     "title"    : "Unity Shader 基本语法(翻译二)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Shader_Fundamentals.html"
+    "url"      : "/Unity_Shader_Fundamentals.html"
   } ,
 
   {
     "title"    : "Unity 基本矩阵(翻译一)",
     "tags"     : "Shader",
-    "url"      : "/docs/Unity_Matrix_Transform.html"
+    "url"      : "/Unity_Matrix_Transform.html"
   } ,
 
   {
     "title"    : "CG函数标准库",
     "tags"     : "CG",
-    "url"      : "/docs/CG_Function_Library.html"
+    "url"      : "/CG_Function_Library.html"
   } ,
 
   {
     "title"    : "Markdown语法集合速查表",
     "tags"     : "Markdown",
-    "url"      : "/docs/markdown_cheatSheet.html"
+    "url"      : "/markdown_cheatSheet.html"
   } 
 ]
