@@ -1,1 +1,1 @@
-Sitemap: https://www.damonc.top/sitemap.xml
+Sitemap: https://www.damonc.top/docs/sitemap.xml
