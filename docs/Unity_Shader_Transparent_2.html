@@ -41,14 +41,16 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="manifest" href="/manifest.json" async>
     <link rel="apple-touch-icon" href="/assets/img/touch/apple-touch-icon.png" />
     <link rel="Shortcut Icon" href="/favicon.ico">
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="bookmark" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.min.css" async>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" async>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css" async>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
 
@@ -65,14 +67,14 @@
     href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/line-numbers/prism-line-numbers.min.css">
 
     
-<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@3.3.2/dist/waline.css" async>
 
 
     
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
 
-    <link rel="stylesheet" href="/assets/css/app.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/app.min.css" async>
+    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
     
     <body class="line-numbers" ontouchstart="">
@@ -576,7 +578,7 @@ Unity包含一个抖动模式图集，我们可以使用。它包含16种4×4像
 <section class="author-detail">
     <section class="post-footer-item author-card">
         <div class="avatar">
-            <img src="https://damonc-top2.github.io/web-assets/commons/avatar_high.png" alt="">
+            <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
         <div class="author-name" rel="author">damonc</div>
         <div class="bio">
@@ -630,7 +632,7 @@ Unity包含一个抖动模式图集，我们可以使用。它包含16种4×4像
     </section>
     
 
-<script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
+<script src="https://unpkg.com/@waline/client@3.3.2/dist/waline.umd.js" async></script>
 <script>
     $(document).ready(function () {
         Waline.init({
@@ -756,22 +758,22 @@ Unity包含一个抖动模式图集，我们可以使用。它包含16种4×4像
       <section class="badges">
         
           <a href="https://www.foreverblog.cn/" target="_blank" class="foreverblog" aria-label="foreverblog"> 
-            <img src="https://img.foreverblog.cn/logo_en_default.png" alt=""> 
+            <img loading="lazy" src="https://img.foreverblog.cn/logo_en_default.png" alt=""> 
           </a>
         
         
           <a href="https://www.foreverblog.cn/go.html" target="_blank" class="wormhole" aria-label="wormhole"> 
-            <img src="https://img.foreverblog.cn/wormhole_3.gif" alt="" title="穿梭虫洞-随机访问十年之约友链博客">
+            <img loading="lazy" src="https://img.foreverblog.cn/wormhole_3.gif" alt="" title="穿梭虫洞-随机访问十年之约友链博客">
           </a>
         
         
           <a href="https://www.travellings.cn/go.html" target="_blank" class="travelling-badge" aria-label="Travelling" rel="noopener" title="开往-友链接力">
-            <img src="https://cdn.jsdelivr.net/gh/travellings-link/travellings/assets/logo.gif" alt="开往-友链接力">
+            <img loading="lazy" src="https://cdn.jsdelivr.net/gh/travellings-link/travellings/assets/logo.gif" alt="开往-友链接力">
           </a>
         
         
           <a href="https://notbyai.fyi/" target="_blank" class="notbyAI" aria-label="notbyAI"> 
-            <img src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI">
+            <img loading="lazy" src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI">
           </a>
         
       </section>
@@ -913,12 +915,21 @@ Unity包含一个抖动模式图集，我们可以使用。它包含16种4×4像
         <script src="/assets/js/app.min.js"></script>
         <script src="https://at.alicdn.com/t/c/font_3046306_ujr2yq34hw.js"></script>
         
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WN45VXRK"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'GTM-WN45VXRK');
+</script>
+
 
 
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
         
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
