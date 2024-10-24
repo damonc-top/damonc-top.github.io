@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2024-10-23T18:45:16+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">银河揽月</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>damonc</name></author><entry><title type="html">Unity Addressable Group结构</title><link href="https://www.damonc.top/Unity_Addressabel_Group.html" rel="alternate" type="text/html" title="Unity Addressable Group结构" /><published>2024-07-12T20:00:00+08:00</published><updated>2024-07-12T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Addressabel_Group</id><content type="html" xml:base="https://www.damonc.top/Unity_Addressabel_Group.html"><![CDATA[<p>总结在使用Unity Addressable System过程中遇到的一部分问题。本文Addressable后续简称AA。</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2024-10-24T23:12:52+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">银河揽月</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>damonc</name></author><entry><title type="html">Unity Addressable Group结构</title><link href="https://www.damonc.top/Unity_Addressabel_Group.html" rel="alternate" type="text/html" title="Unity Addressable Group结构" /><published>2024-07-12T20:00:00+08:00</published><updated>2024-07-12T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Addressabel_Group</id><content type="html" xml:base="https://www.damonc.top/Unity_Addressabel_Group.html"><![CDATA[<p>总结在使用Unity Addressable System过程中遇到的一部分问题。本文Addressable后续简称AA。</p>
 <ul>
   <li>Addressable构建AssetBundle</li>
   <li>AssetGroup的组织结构</li>
@@ -13,7 +13,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_win_pkg_mgr.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_win_pkg_mgr.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Addressable Version Seleclt.</a></i></center>    
         </font>
@@ -23,7 +23,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_version.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_version.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Addressable Version List.</a></i></center>    
         </font>
@@ -31,8 +31,8 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_1_21.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_2_0.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_1_21.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_2_0.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Addressable Branch.</a></i></center>    
         </font>
@@ -47,7 +47,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_deps.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_deps.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Addressable Dependencies.</a></i></center>    
         </font>
@@ -56,7 +56,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/sbp_upgrade.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/sbp_upgrade.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>SBP指定版本.</a></i></center>    
         </font>
@@ -109,7 +109,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_assets_settings.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_assets_settings.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>AddressableAssetSettings预览.</a></i></center>    
         </font>
@@ -118,7 +118,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_in_use.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_in_use.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Profile预览.</a></i></center>    
         </font>
@@ -126,7 +126,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_window.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_window.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Profile Window.</a></i></center>    
         </font>
@@ -138,7 +138,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Catalog设置面板.</a></i></center>    
         </font>
@@ -156,7 +156,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/update_download.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/update_download.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Update Downloads设置.</a></i></center>    
         </font>
@@ -172,7 +172,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/setting_build.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/setting_build.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Build设置.</a></i></center>    
         </font>
@@ -190,9 +190,9 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/play_mode.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_mode.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/play_mode.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_mode.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Build Bundle设置.</a></i></center>    
         </font>
@@ -219,7 +219,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_view.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_view.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Group设置.</a></i></center>    
         </font>
@@ -237,7 +237,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>schema耗时片段.</a></i></center>    
         </font>
@@ -263,8 +263,8 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200615181223145-1229624244.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200615181223966-473200226.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200615181223145-1229624244.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200615181223966-473200226.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>albedo map 和 normal map.</a></i></center>    
         </font>
@@ -274,7 +274,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191420845-1957506928.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191420845-1957506928.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>平坦的视角.</a></i></center>    
         </font>
@@ -284,7 +284,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191421654-712293996.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191421654-712293996.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>法线贴图的光线变化.</a></i></center>    
         </font>
@@ -294,7 +294,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191422519-1710373191.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191422519-1710373191.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>高度图.</a></i></center>    
         </font>
@@ -351,7 +351,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191423089-347056836.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191423089-347056836.png" width="250" alt="loading failed, need vpn." /></center>
 
 <h3 id="坐标匹配">坐标匹配</h3>
 
@@ -392,7 +392,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012938981-982216259.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012938981-982216259.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>u坐标移动.</a></i></center>    
         </font>
@@ -404,7 +404,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192759952-594530144.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192759952-594530144.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>varies across a surface.</a></i></center>    
         </font>
@@ -485,7 +485,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192800432-1757806048.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192800432-1757806048.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>影视图方向用作UV偏移.</a></i></center>    
         </font>
@@ -495,7 +495,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012940748-384205609.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012940748-384205609.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>随投影视角方向移动UV.</a></i></center>    
         </font>
@@ -513,7 +513,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012942351-290008046.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012942351-290008046.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>由高度调整的移动.</a></i></center>    
         </font>
@@ -528,7 +528,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012944095-1997194416.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012944095-1997194416.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>视差贴图效果 由合理到过量.</a></i></center>    
         </font>
@@ -546,7 +546,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192800958-1980748310.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192800958-1980748310.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>光线投射到底部，有限且正确.</a></i></center>    
         </font>
@@ -565,7 +565,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192802151-218582125.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192802151-218582125.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>视差贴图像标准着色器.</a></i></center>    
         </font>
@@ -575,7 +575,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192802555-2049613835.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192802555-2049613835.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>球面视差贴图.</a></i></center>    
         </font>
@@ -585,7 +585,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192803371-1931947503.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192803371-1931947503.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>阴影不受视差影响.</a></i></center>    
         </font>
@@ -637,7 +637,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192803893-1797850325.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192803893-1797850325.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>细节网格纹理.</a></i></center>    
         </font>
@@ -647,8 +647,8 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192804491-290326603.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192805295-1360127209.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192804491-290326603.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192805295-1360127209.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>细节UV不受影响.</a></i></center>    
         </font>
@@ -676,7 +676,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192806533-2106069113.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192806533-2106069113.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>正确的UV.</a></i></center>    
         </font>
@@ -688,7 +688,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192807160-2024700857.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192807160-2024700857.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>实际与预测的高度对比.</a></i></center>    
         </font>
@@ -700,7 +700,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192807679-1545265192.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192807679-1545265192.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>随视图射线前进.</a></i></center>    
         </font>
@@ -827,7 +827,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012945572-448280189.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012945572-448280189.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Raymarching 步进10次 无偏差, 无限制.</a></i></center>    
         </font>
@@ -876,7 +876,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012948054-536464296.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012948054-536464296.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Raymarching 100次采样.</a></i></center>    
         </font>
@@ -894,7 +894,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012948690-1598196626.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012948690-1598196626.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Raymarching 100次采样.</a></i></center>    
         </font>
@@ -908,7 +908,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012949277-977122761.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012949277-977122761.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>执行直线交叉.</a></i></center>    
         </font>
@@ -944,7 +944,7 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012950193-51635460.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012950193-51635460.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>线段交点.</a></i></center>    
         </font>
@@ -958,7 +958,7 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012951620-360864955.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012951620-360864955.png" width="250" alt="loading failed, need vpn." /></center>
 
 <p>效果看起来好多了。我们现在假设表面在样本点之间是线性的，这可以防止最明显的分层假象。然而，它不能帮助我们检测我们是否错过了步骤之间的交集。我们仍然需要很多的样本来处理小的特征，轮廓和浅角度。</p>
 
@@ -990,7 +990,7 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012952340-10743193.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012952340-10743193.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>越来越接近交点.</a></i></center>    
         </font>
@@ -1062,7 +1062,7 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012953271-1061541462.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012953271-1061541462.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>10步长加上3个二分查找的最终效果.</a></i></center>    
         </font>
@@ -1078,7 +1078,7 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012954391-1540920343.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012954391-1540920343.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>动态批处理会产生奇怪的结果.</a></i></center>    
         </font>
@@ -1114,7 +1114,7 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/batched-correct.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/batched-correct.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>动态批量与正确的结果.</a></i></center>    
         </font>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[由于视角的原因，当调整摄像机位置时，观察到的事物的相对位置会发生变化，这种视觉现象称为视差。在坐火车高速行驶看窗外的景物，附近的物体看起来很大并且移动很快，而远处的背景看起来很小并且移动较慢。渲染时，相机使用透视模式时，也会出现视差。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender20/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender20/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity GPU Instance(翻译十九)</title><link href="https://www.damonc.top/Unity_GPU_Instance.html" rel="alternate" type="text/html" title="Unity GPU Instance(翻译十九)" /><published>2018-01-24T20:00:00+08:00</published><updated>2018-01-24T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_GPU_Instance</id><content type="html" xml:base="https://www.damonc.top/Unity_GPU_Instance.html"><![CDATA[<p>本篇摘要：</p>
@@ -1164,7 +1164,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010902826-821880737.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010902826-821880737.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>5000 draw call.</a></i></center>    
         </font>
@@ -1174,7 +1174,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010904552-338192039.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010904552-338192039.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>6 draw call.</a></i></center>    
         </font>
@@ -1199,8 +1199,8 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010905493-1524350499.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010906722-1492830859.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010905493-1524350499.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010906722-1492830859.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>合并了，但是显示有错误.</a></i></center>    
         </font>
@@ -1232,7 +1232,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010908398-221325174.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010908398-221325174.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>矩阵替换内部实现？.</a></i></center>    
         </font>
@@ -1290,7 +1290,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010909964-776430193.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010909964-776430193.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>批处理爆炸.</a></i></center>    
         </font>
@@ -1312,7 +1312,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010911627-1161944067.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010911627-1161944067.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>instanced 阴影.</a></i></center>    
         </font>
@@ -1324,7 +1324,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010913312-1389275661.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010913312-1389275661.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>批处理爆炸.</a></i></center>    
         </font>
@@ -1338,7 +1338,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010914967-1310775534.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010914967-1310775534.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>多光源instance.</a></i></center>    
         </font>
@@ -1364,7 +1364,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010916576-490651101.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010916576-490651101.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>球体与随机的颜色，没有批量和阴影.</a></i></center>    
         </font>
@@ -1441,7 +1441,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010918398-38688989.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010918398-38688989.png" width="250" alt="loading failed, need vpn." /></center>
 
 <p>现在，我们的颜色随机的球再次被批处理。 我们<strong>可以用相同的方式使其他属性可变。 对于颜色，浮点数，矩阵和四分量浮点向量，这是可能的</strong>。 <strong>如果要改变纹理，可以使用单独的纹理数组</strong>，并将索引添加到实例化缓冲区。其他属性修改类似。</p>
 
@@ -1512,7 +1512,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010919954-2006515171.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010919954-2006515171.png" width="250" alt="loading failed, need vpn." /></center>
 
 <p>不幸的是没有有效的批处理。Unity能够对以相同的LOD颜色球体进行批处理，但是如果可以像往常一样进行批处理会更好。 我们可以通过用缓冲数组替换unity_LODFade来实现。可以通过为支持实例化的每个过程添加lodfade实例化选项来指示Unity的着色器代码执行此操作。</p>
 
@@ -1523,7 +1523,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010921540-656727216.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010921540-656727216.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>instance LOD fading.</a></i></center>    
         </font>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[还有另一种组合draw call的方法：GPU instance或Geometry instance。与动态批处理一样，此操作在运行时针对可见对象。 它的目标是让GPU一次性渲染同一网格的多个副本。 因此，它不能组合不同的网格或材质，但不仅限于小网格。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender19/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender19/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity 实时 GI &amp;amp; LPPV &amp;amp; LOD(翻译十八)</title><link href="https://www.damonc.top/Unity_RealTime_GI_LOD.html" rel="alternate" type="text/html" title="Unity 实时 GI &amp;amp; LPPV &amp;amp; LOD(翻译十八)" /><published>2018-01-23T20:00:00+08:00</published><updated>2018-01-23T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_RealTime_GI_LOD</id><content type="html" xml:base="https://www.damonc.top/Unity_RealTime_GI_LOD.html"><![CDATA[<p>本篇摘要：</p>
@@ -1552,7 +1552,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003217232-1241081746.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003217232-1241081746.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>实时全局光照和烘焙光照同时启用的状态.</a></i></center>    
         </font>
@@ -1562,7 +1562,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003333043-1240937953.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003333043-1240937953.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>主光源设置为实时模式.</a></i></center>    
         </font>
@@ -1572,7 +1572,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003421685-903339628.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003421685-903339628.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>只有动态对象能接收实时的全局光照.</a></i></center>    
         </font>
@@ -1586,7 +1586,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003617860-357493611.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003617860-357493611.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>实时光照贴图，屋顶被选中时候的状态.</a></i></center>    
         </font>
@@ -1723,7 +1723,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013216623-414124444.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013216623-414124444.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>把实时全局光照应用于一切物体之上.</a></i></center>    
         </font>
@@ -1733,7 +1733,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013217805-1029939389.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013217805-1029939389.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>禁用混合光源以后，间接光照仍然被保留.</a></i></center>    
         </font>
@@ -1743,7 +1743,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013219337-640958770.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013219337-640958770.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>切换实时光与实时GI.</a></i></center>    
         </font>
@@ -1753,8 +1753,8 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013220298-1170450196.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013221104-52400640.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013220298-1170450196.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013221104-52400640.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>没有影响的间接光源和实时的聚光光源.</a></i></center>    
         </font>
@@ -1768,7 +1768,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222060-1153434303.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222060-1153434303.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>用自发光球来烘焙全局光照.</a></i></center>    
         </font>
@@ -1809,8 +1809,8 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222795-276798177.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013223641-2073252267.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222795-276798177.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013223641-2073252267.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>带有自发光球的实时全局光照效果.</a></i></center>    
         </font>
@@ -1865,7 +1865,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013226755-1065411582.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013226755-1065411582.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>动画控制实时GI.</a></i></center>    
         </font>
@@ -1885,7 +1885,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229006-1893115114.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229006-1893115114.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>对于大型动态物体来说，光照效果不好.</a></i></center>    
         </font>
@@ -1895,7 +1895,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229758-553683463.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229758-553683463.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>启用了LPPV（光照探针代理体）支持.</a></i></center>    
         </font>
@@ -1907,7 +1907,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013230509-1112003195.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013230509-1112003195.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>光照探针代理体组件.</a></i></center>    
         </font>
@@ -1919,7 +1919,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231203-999964017.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231203-999964017.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用一个光照探针代理体而不是常规的探针器.</a></i></center>    
         </font>
@@ -1929,8 +1929,8 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231870-1652713364.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013232779-1496013065.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231870-1652713364.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013232779-1496013065.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>自定义探针器分辨率以适应拉伸的立方体.</a></i></center>    
         </font>
@@ -1951,7 +1951,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013233601-1847365803.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013233601-1847365803.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>没有更多球面谐波的效果.</a></i></center>    
         </font>
@@ -2034,7 +2034,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013235369-787618137.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013235369-787618137.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>采样后的LPPV（光照探针代理体）的效果，在伽马空间中的效果太暗.</a></i></center>    
         </font>
@@ -2055,7 +2055,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013236310-749557848.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013236310-749557848.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>采样后的LPPV（光照探针代理体）的效果，带有正确的颜色.</a></i></center>    
         </font>
@@ -2073,8 +2073,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237093-2016130218.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237695-361227834.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237093-2016130218.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237695-361227834.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>球体和立方体作为一个对象.</a></i></center>    
         </font>
@@ -2084,7 +2084,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013238446-1711254101.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013238446-1711254101.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>组件LOD组.</a></i></center>    
         </font>
@@ -2096,7 +2096,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013239110-167141319.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013239110-167141319.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>让球这个子物体使用LOD 0等级.</a></i></center>    
         </font>
@@ -2119,7 +2119,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013240110-283978428.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013240110-283978428.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>让球这个子物体使用LOD 0等级.</a></i></center>    
         </font>
@@ -2131,7 +2131,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013241019-1435398902.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013241019-1435398902.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>没有光照探针时候的烘焙光照.</a></i></center>    
         </font>
@@ -2145,7 +2145,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013242971-183808454.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013242971-183808454.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>LOD 1使用光照探针来计算实时全局光照.</a></i></center>    
         </font>
@@ -2155,7 +2155,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013243831-1402316420.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013243831-1402316420.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>仅对LOD 1等级使用烘焙光照，使用的是低强度的主光源.</a></i></center>    
         </font>
@@ -2165,7 +2165,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013244794-1245713384.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013244794-1245713384.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>LOD 1强制使用光照探针.</a></i></center>    
         </font>
@@ -2179,7 +2179,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013245526-1175118666.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013245526-1175118666.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>带有0.5变换宽度的淡入淡出.</a></i></center>    
         </font>
@@ -2246,7 +2246,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013246331-642394563.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013246331-642394563.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>通过抖动方法得到的淡入淡出几何体.</a></i></center>    
         </font>
@@ -2271,8 +2271,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013247225-2138491287.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013249358-581600268.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013247225-2138491287.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013249358-581600268.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>对几何体和阴影都做了淡入淡出处理.</a></i></center>    
         </font>
@@ -2300,8 +2300,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002309942-1932595350.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002311276-1707091650.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002309942-1932595350.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002311276-1707091650.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>完全实时和完全烘焙光照.</a></i></center>    
         </font>
@@ -2313,7 +2313,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002312394-324532807.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002312394-324532807.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>混合光照，烘焙间接.</a></i></center>    
         </font>
@@ -2323,7 +2323,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002313374-471117722.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002313374-471117722.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>混合模式的主光源.</a></i></center>    
         </font>
@@ -2335,8 +2335,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002314496-2053721233.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002315595-1655913714.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002314496-2053721233.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002315595-1655913714.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>完全烘焙的光照贴图 vs 只有间接光的光照贴图.</a></i></center>    
         </font>
@@ -2346,7 +2346,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002316908-68636833.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002316908-68636833.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>混合光照，实时直接光照烘焙间接光.</a></i></center>    
         </font>
@@ -2363,8 +2363,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002318408-928334072.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002319957-145579115.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002318408-928334072.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002319957-145579115.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>阴影衰减，标准着色器vs我们的着色器.</a></i></center>    
         </font>
@@ -2479,7 +2479,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002321275-2134383138.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002321275-2134383138.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Shadowmask模式.</a></i></center>    
         </font>
@@ -2489,7 +2489,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002322323-849349388.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002322323-849349388.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>烘焙的强度以及阴影蒙版.</a></i></center>    
         </font>
@@ -2499,7 +2499,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002323536-1775535799.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002323536-1775535799.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>没有烘焙阴影.</a></i></center>    
         </font>
@@ -2587,7 +2587,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002325094-888038969.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002325094-888038969.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>实时阴影和阴影蒙版阴影.</a></i></center>    
         </font>
@@ -2597,7 +2597,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002326606-1972314102.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002326606-1972314102.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>只有实时阴影衰减了.</a></i></center>    
         </font>
@@ -2735,7 +2735,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002327719-433885054.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002327719-433885054.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>距离阴影蒙版模式.</a></i></center>    
         </font>
@@ -2747,7 +2747,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002329008-1483902900.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002329008-1483902900.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>所有物体都有实时阴影.</a></i></center>    
         </font>
@@ -2763,7 +2763,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002330331-1413395037.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002330331-1413395037.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>四个光源，都是混合光.</a></i></center>    
         </font>
@@ -2775,8 +2775,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002332758-586177298.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002333778-925731185.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002332758-586177298.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002333778-925731185.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>5个重叠的光照，其中一个为完全烘焙光.</a></i></center>    
         </font>
@@ -2788,7 +2788,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002335110-966052747.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002335110-966052747.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>两个方向光源产生错误的衰减.</a></i></center>    
         </font>
@@ -2856,7 +2856,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002336571-896877423.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002336571-896877423.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>两个定向光源正确的衰减.</a></i></center>    
         </font>
@@ -2868,7 +2868,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002337701-173459592.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002337701-173459592.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>消减模式.</a></i></center>    
         </font>
@@ -2878,7 +2878,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002338965-1025220581.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002338965-1025220581.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>静态物体受到两次光照.</a></i></center>    
         </font>
@@ -2926,7 +2926,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002340399-1575340233.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002340399-1575340233.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>静态物体只有烘焙光.</a></i></center>    
         </font>
@@ -3001,7 +3001,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002341952-1577870051.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002341952-1577870051.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>减去后得到的光照.</a></i></center>    
         </font>
@@ -3023,7 +3023,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002343602-223725225.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002343602-223725225.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>有颜色的阴影.</a></i></center>    
         </font>
@@ -3037,7 +3037,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002345136-2052798411.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002345136-2052798411.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>正确的消减阴影.</a></i></center>    
         </font>
@@ -3047,7 +3047,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002346714-785287043.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002346714-785287043.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>多重光照错误的消减.</a></i></center>    
         </font>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[烘焙光照有间接光而没有实时光照，因为间接光需要光照贴图。由于间接光可以为场景加入很大的真实感，如果我们可以将它和实时光照融合在一起就再好不过了。这是可以的，但也意味着着色的开销会增加。我们需要将混合光（Mixed Lighting）的光照模式（Lighting Mode）设置为烘焙间接（Baked Indirect）。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender17/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender17/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity 光照烘焙(翻译十六)</title><link href="https://www.damonc.top/Unity_Static_Lightting.html" rel="alternate" type="text/html" title="Unity 光照烘焙(翻译十六)" /><published>2018-01-19T20:00:00+08:00</published><updated>2018-01-19T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Static_Lightting</id><content type="html" xml:base="https://www.damonc.top/Unity_Static_Lightting.html"><![CDATA[<p>实时光照计算的开销非常昂贵。根据翻译13，延迟渲染允许程序员使用的光源可以多于Forward渲染，但阴影的开销仍然对性能有一个限制。如果我们的场景是动态的，那么没有办法来避免执行这些计算。但是如果光源和几何物体位置都是不变的，那么我们可以只计算一次光照并重复使用。这使得我们可以在场景中放置许多光源，而不必在运行的时候再渲染它们。这种方法也可以使用那些不能用作实时光源的区域光源(area lighting)。</p>
@@ -3058,7 +3058,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>针对光照贴图的一个测试场景.</a></i></center>    
         </font>
@@ -3070,7 +3070,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用烘焙模式的主方向光源.</a></i></center>    
         </font>
@@ -3080,7 +3080,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>没有直接光照的效果.</a></i></center>    
         </font>
@@ -3090,7 +3090,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>烘培间接光照模式.</a></i></center>    
         </font>
@@ -3109,7 +3109,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>静态标签设定.</a></i></center>    
         </font>
@@ -3119,7 +3119,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>对于光照贴图来说是静态的物体.</a></i></center>    
         </font>
@@ -3129,7 +3129,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用烘焙光照的场景.</a></i></center>    
         </font>
@@ -3143,7 +3143,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>自动烘焙.</a></i></center>    
         </font>
@@ -3155,7 +3155,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>默认的光照贴图设置.</a></i></center>    
         </font>
@@ -3165,7 +3165,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用“Non-directional”模式的光照贴图.</a></i></center>    
         </font>
@@ -3175,7 +3175,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>得到光照贴图.</a></i></center>    
         </font>
@@ -3185,8 +3185,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>光照贴图的分辨率的不同会带来很大的差异.</a></i></center>    
         </font>
@@ -3202,8 +3202,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>没有环境光照，realtime vs. lightmapped.</a></i></center>    
         </font>
@@ -3213,8 +3213,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>绿色的地面，realtime vs. lightmapped.</a></i></center>    
         </font>
@@ -3224,8 +3224,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>自发光的地面，realtime vs. lightmapped.</a></i></center>    
         </font>
@@ -3235,8 +3235,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用环境遮挡的效果.</a></i></center>    
         </font>
@@ -3246,7 +3246,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>显然是错误的环境遮挡效果.</a></i></center>    
         </font>
@@ -3258,7 +3258,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>半透明的屋顶.</a></i></center>    
         </font>
@@ -3268,7 +3268,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>镂空的屋顶.</a></i></center>    
         </font>
@@ -3278,7 +3278,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>四边形上有一个错误.</a></i></center>    
         </font>
@@ -3292,7 +3292,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>指示这是透明的.</a></i></center>    
         </font>
@@ -3304,8 +3304,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>为透明四边形使用自定义参数.</a></i></center>    
         </font>
@@ -3319,7 +3319,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用我们的白色材质的球体.</a></i></center>    
         </font>
@@ -3428,7 +3428,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用原始光照图数据的效果.</a></i></center>    
         </font>
@@ -3444,7 +3444,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用解码后光照图数据的效果.</a></i></center>    
         </font>
@@ -3462,7 +3462,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>半透明的屋顶，效果不正确.</a></i></center>    
         </font>
@@ -3483,7 +3483,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>半透明的屋顶，正确的效果.</a></i></center>    
         </font>
@@ -3495,7 +3495,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>镂空的屋顶，效果不正确.</a></i></center>    
         </font>
@@ -3505,7 +3505,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>镂空的屋顶，正确的效果.</a></i></center>    
         </font>
@@ -3517,7 +3517,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>绿色的地板，效果不正确.</a></i></center>    
         </font>
@@ -3703,7 +3703,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>间接光照设置为0的效果.</a></i></center>    
         </font>
@@ -3728,7 +3728,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>间接光照着色的效果.</a></i></center>    
         </font>
@@ -3755,8 +3755,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>粗糙的绿色金属，standard vs. our.</a></i></center>    
         </font>
@@ -3783,7 +3783,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>调整反照率后的效果.</a></i></center>    
         </font>
@@ -3795,8 +3795,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用了法线贴图，standard vs. our.</a></i></center>    
         </font>
@@ -3810,7 +3810,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>再次启用定向光照贴图.</a></i></center>    
         </font>
@@ -3820,7 +3820,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>强度图和方向图.</a></i></center>    
         </font>
@@ -3894,7 +3894,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>使用带有方向的光照贴图的效果.</a></i></center>    
         </font>
@@ -3929,7 +3929,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png" width="250" alt="loading failed, need vpn." /></center>
 
 <p>为了更好地混合静态和动态对象，我们必须以某种方式将烘焙的光照应用于动态对象。为了解决这个问题，Unity有光照探针。 光照探针是对空间中的一个点包含该位置的光照信息。 它是用球面谐波来存储这些信息而不是用纹理。 如果可用的话，这些光照探针将用于动态对象，而不是全局环境数据。所以我们要做的就是创建一些探针，等到烘焙的时候，我们的着色器就会自动使用它们。</p>
 
@@ -3940,7 +3940,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>一个新的光探测器组.</a></i></center>    
         </font>
@@ -3950,7 +3950,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png" width="250" alt="loading failed, need vpn." /></center>
 
 <h3 id="放置光照探针">放置光照探针</h3>
 
@@ -3959,7 +3959,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>封装区域.</a></i></center>    
         </font>
@@ -3969,7 +3969,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>放置更多的探测器.</a></i></center>    
         </font>
@@ -3979,7 +3979,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>调整探测器的位置.</a></i></center>    
         </font>
@@ -3989,7 +3989,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>移动动态对象.</a></i></center>    
         </font>
@@ -4014,7 +4014,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812390-1178609122.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812390-1178609122.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>修改内置的Shader.</a></i></center>    
         </font>
@@ -4026,7 +4026,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812964-728132925.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812964-728132925.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>least 2 passes.</a></i></center>    
         </font>
@@ -4269,7 +4269,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011132912-1838344751.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011132912-1838344751.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>光照方向错误.</a></i></center>    
         </font>
@@ -4282,7 +4282,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011133845-1557873589.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011133845-1557873589.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>正确，没有阴影.</a></i></center>    
         </font>
@@ -4317,7 +4317,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011134639-175464244.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011134639-175464244.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>有阴影的方向光.</a></i></center>    
         </font>
@@ -4338,7 +4338,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011135350-727795272.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011135350-727795272.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>阴影距离配置.</a></i></center>    
         </font>
@@ -4348,7 +4348,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136133-1319763420.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136133-1319763420.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>长、短距离阴影对比.</a></i></center>    
         </font>
@@ -4402,7 +4402,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136822-531625316.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136822-531625316.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>阴影渐隐.</a></i></center>    
         </font>
@@ -4431,7 +4431,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011137698-104613306.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011137698-104613306.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>带有cookie的方向光.</a></i></center>    
         </font>
@@ -4441,7 +4441,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138369-1638016260.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138369-1638016260.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>硬边过渡.</a></i></center>    
         </font>
@@ -4454,7 +4454,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138941-1152817269.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138941-1152817269.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>偏移采样.</a></i></center>    
         </font>
@@ -4487,7 +4487,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011139705-601577612.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011139705-601577612.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>渲染范围.</a></i></center>    
         </font>
@@ -4497,7 +4497,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011140292-1380890338.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011140292-1380890338.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>剔除方式.</a></i></center>    
         </font>
@@ -4517,8 +4517,8 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141041-480459935.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141704-455701372.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141041-480459935.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141704-455701372.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>当靠近相机时，要绘制背面才正确.</a></i></center>    
         </font>
@@ -4617,7 +4617,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011142595-16646437.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011142595-16646437.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>正确的世界位置.</a></i></center>    
         </font>
@@ -4661,7 +4661,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527012302994-353496315.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527012302994-353496315.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>cookie衰减.</a></i></center>    
         </font>
@@ -4693,7 +4693,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085923716-1558484014.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085923716-1558484014.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>cookie 和 distance衰减.</a></i></center>    
         </font>
@@ -4757,7 +4757,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085924576-1982519938.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085924576-1982519938.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>高亮.</a></i></center>    
         </font>
@@ -4779,7 +4779,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085925412-308331709.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085925412-308331709.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>点光源阴影.</a></i></center>    
         </font>
@@ -4817,7 +4817,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085926193-2066682458.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085926193-2066682458.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>点光源cookie.</a></i></center>    
         </font>
@@ -4874,14 +4874,14 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235158162-487991047.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235158162-487991047.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>deferred 提示.</a></i></center>    
         </font>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235158998-641873984.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235158998-641873984.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>不明显的雾.</a></i></center>    
         </font>
@@ -4892,8 +4892,8 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235159582-1089337078.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235200361-31174269.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235159582-1089337078.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235200361-31174269.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>linear fog.</a></i></center>    
         </font>
@@ -4916,8 +4916,8 @@ f值 被限定在[0, 1]范围，被用在雾和物体着色之间插值。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235201459-832769226.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235203426-304224456.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235201459-832769226.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235203426-304224456.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>指数雾.</a></i></center>    
         </font>
@@ -4927,7 +4927,7 @@ f值 被限定在[0, 1]范围，被用在雾和物体着色之间插值。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235204598-417023262.png" width="150" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235204598-417023262.png" width="150" alt="loading failed, need vpn." /></center>
 
 <p>d 是fog的密度因子；<br />
 c 是距离因子。</p>
@@ -4936,8 +4936,8 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235205400-412540608.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235206302-247343724.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235205400-412540608.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235206302-247343724.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>指数平方雾.</a></i></center>    
         </font>
@@ -4947,7 +4947,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235207307-166956062.png" width="150" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235207307-166956062.png" width="150" alt="loading failed, need vpn." /></center>
 
 <h3 id="渲染雾-adding-fog">渲染雾-Adding Fog</h3>
 
@@ -5009,7 +5009,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235208597-1924410952.png" width="350" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235208597-1924410952.png" width="350" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>linear：standard vs. mine.</a></i></center>    
         </font>
@@ -5017,7 +5017,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235209833-525170101.png" width="350" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235209833-525170101.png" width="350" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>exp：standard vs. mine.</a></i></center>    
         </font>
@@ -5025,7 +5025,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235210707-599317063.png" width="350" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235210707-599317063.png" width="350" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>exp2：standard vs. mine.</a></i></center>    
         </font>
@@ -5036,7 +5036,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235211359-387262789.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235211359-387262789.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>深度 (三角) vs. 距离(园).</a></i></center>    
         </font>
@@ -5045,7 +5045,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235212013-881187042.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235212013-881187042.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>红到蓝旋转，深度改变密度.</a></i></center>    
         </font>
@@ -5070,7 +5070,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004339507-1542612657.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004339507-1542612657.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>错误.</a></i></center>    
         </font>
@@ -5078,7 +5078,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004340429-1853847721.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004340429-1853847721.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>正确.</a></i></center>    
         </font>
@@ -5154,7 +5154,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004341631-1514085003.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004341631-1514085003.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>太亮.</a></i></center>    
         </font>
@@ -5171,7 +5171,7 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004342819-161700675.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004342819-161700675.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>太亮.</a></i></center>    
         </font>
@@ -5209,7 +5209,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004343465-563203657.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004343465-563203657.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>后处理pass.</a></i></center>    
         </font>
@@ -5328,7 +5328,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004344659-491057751.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004344659-491057751.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>不太明显的雾.</a></i></center>    
         </font>
@@ -5346,8 +5346,8 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004345386-585512243.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004346464-2132954797.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004345386-585512243.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004346464-2132954797.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>不太明显的雾.</a></i></center>    
         </font>
@@ -5366,8 +5366,8 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004347033-483399479.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004347679-1381640131.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004347033-483399479.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004347679-1381640131.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>金字塔区域.</a></i></center>    
         </font>
@@ -5377,7 +5377,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004348280-181627301.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004348280-181627301.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Image每个像素发射一条射线.</a></i></center>    
         </font>
@@ -5387,7 +5387,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004348844-1867477460.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004348844-1867477460.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>射线的缩放.</a></i></center>    
         </font>
@@ -5461,8 +5461,8 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004349963-1740626309.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004351071-1952278624.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004349963-1740626309.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004351071-1952278624.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>基于距离的雾 standard vs deferrd.</a></i></center>    
         </font>
@@ -5480,7 +5480,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004352199-224022866.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004352199-224022866.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>基于距离的雾 standard vs deferrd.</a></i></center>    
         </font>
@@ -5528,7 +5528,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154452501-654159285.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154452501-654159285.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Forward，no shadow.</a></i></center>    
         </font>
@@ -5537,7 +5537,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453072-905156320.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453072-905156320.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>enable shadow.</a></i></center>    
         </font>
@@ -5551,7 +5551,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453746-531274810.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453746-531274810.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Forward，enable shadow.</a></i></center>    
         </font>
@@ -5568,7 +5568,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154454370-1630685432.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154454370-1630685432.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Deferred，no shadows.</a></i></center>    
         </font>
@@ -5586,7 +5586,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154455028-1110322294.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154455028-1110322294.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Deffered，enable shadows.</a></i></center>    
         </font>
@@ -5637,7 +5637,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743046-2070098632.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743046-2070098632.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>重复流程.</a></i></center>    
         </font>
@@ -5646,7 +5646,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743816-266537686.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743816-266537686.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>缓存，及部分数据须再次计算.</a></i></center>    
         </font>
@@ -5655,7 +5655,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085744534-1514664437.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085744534-1514664437.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>deferred shading.</a></i></center>    
         </font>
@@ -5668,8 +5668,8 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085745459-1157598431.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085746437-849874847.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085745459-1157598431.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085746437-849874847.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>many lights, deferred vs. forward.</a></i></center>    
         </font>
@@ -5684,7 +5684,7 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747037-32153529.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747037-32153529.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>directional lights use a quad.</a></i></center>    
         </font>
@@ -5704,13 +5704,13 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747661-944531804.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747661-944531804.png" width="250" alt="loading failed, need vpn." /></center>
 
 <p>3、PointLight使用类似方法，区别在于它被渲染成球体Mesh。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748333-84112664.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748333-84112664.png" width="250" alt="loading failed, need vpn." /></center>
 
 <h3 id="分析什么是g-buffers">分析什么是G-Buffers</h3>
 
@@ -5724,8 +5724,8 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748906-1729642644.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085749514-1177384899.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748906-1729642644.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085749514-1177384899.png" width="250" alt="loading failed, need vpn." /></center>
 
 <p>Albedo-对应RT0；典型代表diffuse color<br />
 Specular–对应RT1；典型代表specular + roughness<br />
@@ -5736,8 +5736,8 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085750340-1204540914.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751182-1595821136.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085750340-1204540914.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751182-1595821136.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>分析freamDebugger.</a></i></center>    
         </font>
@@ -5746,18 +5746,18 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751737-547155192.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751737-547155192.png" width="250" alt="loading failed, need vpn." /></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752276-673585314.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752276-673585314.png" width="250" alt="loading failed, need vpn." /></center>
 
 <p>接着，渲染forward depth，同样存到G-buffer缓冲区。由于是forward所以输出黑色轮廓，覆盖了之前的片元。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752842-152103750.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085753560-1117632710.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752842-152103750.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085753560-1117632710.png" width="250" alt="loading failed, need vpn." /></center>
 
 <h2 id="开始写deferred-shader">开始写Deferred Shader</h2>
 
@@ -5773,7 +5773,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085754350-329303799.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085754350-329303799.png" width="250" alt="loading failed, need vpn." /></center>
 <p>完整版的着色</p>
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Pass</span> <span class="p">{</span>
     <span class="n">Tags</span> <span class="p">{</span>
@@ -5847,8 +5847,8 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755050-910260994.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755657-1285744974.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755050-910260994.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755657-1285744974.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Albedo and occlusion.</a></i></center>    
         </font>
@@ -5866,8 +5866,8 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756307-1469309635.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756898-570367115.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756307-1469309635.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756898-570367115.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Specular color and smoothness.</a></i></center>    
         </font>
@@ -5882,8 +5882,8 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095715198-211370403.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095716344-858855160.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095715198-211370403.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095716344-858855160.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Normals.</a></i></center>    
         </font>
@@ -5898,7 +5898,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717065-134464069.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717065-134464069.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>错误的emission.</a></i></center>    
         </font>
@@ -5930,7 +5930,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717626-627650926.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717626-627650926.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>错误的emission.</a></i></center>    
         </font>
@@ -5939,7 +5939,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711223-338108844.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711223-338108844.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>four buffers shading.</a></i></center>    
         </font>
@@ -5949,7 +5949,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711963-2074230932.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711963-2074230932.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>four buffers shading.</a></i></center>    
         </font>
@@ -5968,7 +5968,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022712610-2058578821.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022712610-2058578821.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>incorrect shading in LDR Mode.</a></i></center>    
         </font>
@@ -5977,7 +5977,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713171-753954029.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713171-753954029.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>incorrect shading in LDR Mode.</a></i></center>    
         </font>
@@ -5996,7 +5996,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713922-1209753322.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713922-1209753322.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>use exp2(x) and log in LDR.</a></i></center>    
         </font>
@@ -6007,13 +6007,13 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120606250-2021680703.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120606250-2021680703.png" width="250" alt="loading failed, need vpn." /></center>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120607116-2089631344.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608003-761474677.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120607116-2089631344.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608003-761474677.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>forward vs. deferred mode.</a></i></center>    
         </font>
@@ -6028,7 +6028,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608590-1131496695.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608590-1131496695.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>forward reflection probes.</a></i></center>    
         </font>
@@ -6039,7 +6039,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120609178-2053336560.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120609178-2053336560.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>deferred reflection probes.</a></i></center>    
         </font>
@@ -6051,8 +6051,8 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113835823-536491925.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113836571-1742764446.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113835823-536491925.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113836571-1742764446.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Draw deferred reflections.</a></i></center>    
         </font>
@@ -6060,7 +6060,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113837105-1079901044.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113837105-1079901044.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Importance.</a></i></center>    
         </font>
@@ -6075,7 +6075,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113839245-749750193.gif" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113839245-749750193.gif" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>blend distance gif.</a></i></center>    
         </font>
@@ -6090,8 +6090,8 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113840651-738922493.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img id="fit-picture" loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113841329-1065907482.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113840651-738922493.png" width="250" alt="loading failed, need vpn." /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113841329-1065907482.png" width="250" alt="loading failed, need vpn." /></center>
 <font size="2.5">
             <center><i><a>Importance.</a></i></center>    
         </font>
