@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -296,30 +298,33 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003217232-1241081746.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>实时全局光照和烘焙光照同时启用的状态.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003217232-1241081746.png" width="250"><font size="2.5">
+            <i>实时全局光照和烘焙光照同时启用的状态.</i>
+        </font>
+</center>
 
 <p>要实际查看实时全局光照，请将测试场景中的主光源的模式设置为实时模式。 由于我们没有其他光源，即使启用了烘焙光照也能有效地关闭。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003333043-1240937953.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>主光源设置为实时模式.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003333043-1240937953.png" width="250"><font size="2.5">
+            <i>主光源设置为实时模式.</i>
+        </font>
+</center>
 
 <p>确保场景中的所有对象都使用我们的白色材质。 像上次一样，球体都是动态的，而其他的都是静态几何体。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003421685-903339628.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>只有动态对象能接收实时的全局光照.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003421685-903339628.png" width="250"><font size="2.5">
+            <i>只有动态对象能接收实时的全局光照.</i>
+        </font>
+</center>
 
 <p>事实证明，只有动态对象会受益于实时全局光照。静态物体会变的暗一点。这是因为光照探针自动并入实时全局光照。而静态对象必须对实时的光照贴图进行采样，而这些光照贴图与烘焙的光照贴图不同。我们的着色器还不支持。</p>
 
@@ -330,10 +335,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003617860-357493611.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>实时光照贴图，屋顶被选中时候的状态.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003617860-357493611.png" width="250"><font size="2.5">
+            <i>实时光照贴图，屋顶被选中时候的状态.</i>
+        </font>
+</center>
 
 <p>虽然实时光照贴图已经被烘焙出来，并且它们还可能显示正确，但我们的meta渲染通道实际上使用的是错误的坐标。实时全局光照具有自己的光照贴图坐标，最终可能与静态光照贴图的坐标不同。Unity会根据光照贴图和对象的设置来自动生成这些坐标。这些数据存储在第三套UV中。所以将这些数据添加到My Lightmapping中的VertexData里面。</p>
 
@@ -467,30 +473,33 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013216623-414124444.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>把实时全局光照应用于一切物体之上.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013216623-414124444.png" width="250"><font size="2.5">
+            <i>把实时全局光照应用于一切物体之上.</i>
+        </font>
+</center>
 
 <p>现在我们的着色器使用的是实时光照贴图。最初，当使用Distance Shadowmask模式的时候，它的效果可能看起来与使用混合光源的烘焙光照的效果相同。当在播放模式下关闭光源的时候，差异就变得非常明显。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013217805-1029939389.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>禁用混合光源以后，间接光照仍然被保留.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013217805-1029939389.png" width="250"><font size="2.5">
+            <i>禁用混合光源以后，间接光照仍然被保留.</i>
+        </font>
+</center>
 
 <p>禁用混合光源以后，其间接光照将保持不变。相比之下，实时光照的间接贡献就会消失，并重新出现 - 这是应该出现的情况。 不过，新情况的完全烘焙好可能需要一段时间。 Enlighten系统会逐步调整光照贴图和光照探针。 这种情况发生的速度取决于场景的复杂性和实时全局光照CPU质量设置。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013219337-640958770.gif" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>切换实时光与实时GI.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013219337-640958770.gif" width="250"><font size="2.5">
+            <i>切换实时光与实时GI.</i>
+        </font>
+</center>
 
 <p>所有实时光源都对实时全局光照有贡献。 然而，它的典型用途是那些仅在主要方向上存在光线的光源，比如可以代表太阳，因为它在天空中移动。它适用于方向光源。点光源和聚光光源也能工作，但只是没有阴影。所以<strong>当使用带有阴影的点光源或聚光光源的时候，你可能会遇到不正确的间接光照结果</strong>。</p>
 
@@ -498,12 +507,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013220298-1170450196.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013221104-52400640.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013220298-1170450196.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013221104-52400640.png" width="250"><font size="2.5">
+            <i>没有影响的间接光源和实时的聚光光源.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>没有影响的间接光源和实时的聚光光源.</a></i></center>    
-        
 
 <p>如果要从实时全局光照里面去掉一个实时光源，可以通过设置它的Indirect Multiplier将它的光强度设置为零。</p>
 
@@ -514,10 +522,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222060-1153434303.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>用自发光球来烘焙全局光照.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222060-1153434303.png" width="250"><font size="2.5">
+            <i>用自发光球来烘焙全局光照.</i>
+        </font>
+</center>
 
 <p>要将自发光光源烘焙到静态光照贴图中，我们必须在我们的着色器的GUI中设置材质的全局光照标志。因为我们总是将标志设置为BakedEmissive，光源最终将以烘焙好的光照贴图的形式出现。如果自发光光源是恒定的这个效果是很不错的，但这样就不允许我们做动画控制。</p>
 
@@ -556,12 +565,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222795-276798177.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013223641-2073252267.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222795-276798177.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013223641-2073252267.png" width="250"><font size="2.5">
+            <i>带有自发光球的实时全局光照效果.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>带有自发光球的实时全局光照效果.</a></i></center>    
-        
 
 <p>烘焙全局光照和实时全局光照之间的视觉差异主要是因为实时光照贴图通常具有比烘焙全局光照更低的分辨率。所以当自发光不发生不变化的时候，你也可以使用烘焙全局光照，确保能够利用其更高的分辨率。</p>
 
@@ -613,10 +621,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013226755-1065411582.gif" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>动画控制实时GI.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013226755-1065411582.gif" width="250"><font size="2.5">
+            <i>动画控制实时GI.</i>
+        </font>
+</center>
 
 <p>调用UpdateGIMaterials方法会触发物体自发光的完整更新，并<strong>使用其meta渲染通道进行渲染</strong>。当自发光比纯色更复杂的时候，这是必要的，举个简单的例子来说，比如说我们使用纹理。如果一个<strong>纯色</strong>就足够了，那么我们可以通过使用渲染器和自发光颜色<strong>调用DynamicGI.SetEmissive方法</strong>来得到一个比较快捷的计算方式。这<strong>比使用meta渲染通道来渲染物体更快</strong>，所以在能够使用的时候可以利用这种方法。</p>
 
@@ -633,20 +642,22 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229006-1893115114.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>对于大型动态物体来说，光照效果不好.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229006-1893115114.png" width="250"><font size="2.5">
+            <i>对于大型动态物体来说，光照效果不好.</i>
+        </font>
+</center>
 
 <p>为了使光照探针器适用于这样的情况，我们可以使用光照探针代理体，或者简称为LPPV。这可以通过向着色器发送插值后的探针器数据网格而不是单个插值后的探针器数据来做到。这需要具有线性滤波的浮点数3D纹理，这就将这个方法限制到只能在现代显卡上使用。此外，还要确保在图形层设置中启用LPPV（光照探针代理体）支持。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229758-553683463.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>启用了LPPV（光照探针代理体）支持.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229758-553683463.png" width="250"><font size="2.5">
+            <i>启用了LPPV（光照探针代理体）支持.</i>
+        </font>
+</center>
 
 <h3 id="向物体中添加一个光照探针代理体">向物体中添加一个光照探针代理体</h3>
 
@@ -655,10 +666,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013230509-1112003195.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>光照探针代理体组件.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013230509-1112003195.png" width="250"><font size="2.5">
+            <i>光照探针代理体组件.</i>
+        </font>
+</center>
 
 <p>LPPV（光照探针代理体）通过在运行时在光照探针之间进行插值来工作，就好像它们是常规动态对象的网格一样。插值后得到的结果被缓存，刷新模式（Refresh Mode）控制在何时进行更新。默认值为“自动（Automatic）”，这意味着当动态全局光照更改和探针器组发生移动的时候会触发更新。包围盒模式（Bounding Box Mode）控制着代理体的定位。自动本地化（AutomaticLocal ）意味着它会去匹配其附着的对象的包围盒。这些默认设置适用于我们的立方体，因此我们将保留这些设置。</p>
 
@@ -667,10 +679,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231203-999964017.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>使用一个光照探针代理体而不是常规的探针器.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231203-999964017.png" width="250"><font size="2.5">
+            <i>使用一个光照探针代理体而不是常规的探针器.</i>
+        </font>
+</center>
 
 <p>自动分辨率模式（automaticresolution mode）对于我们的拉伸立方体不起作用。 因此，将“分辨率模式（Resolution Mode ）”设置为“自定义（Custom ）”，并确保立方体的角上有采样点，并沿着其长边有多个样本点。当你选中这个对象的时候，可以看到这些采样点。</p>
 
@@ -678,12 +691,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231870-1652713364.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013232779-1496013065.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231870-1652713364.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013232779-1496013065.png" width="250"><font size="2.5">
+            <i>自定义探针器分辨率以适应拉伸的立方体.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>自定义探针器分辨率以适应拉伸的立方体.</a></i></center>    
-        
 
 <h3 id="对光照探针代理体进行采样">对光照探针代理体进行采样</h3>
 
@@ -701,10 +713,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013233601-1847365803.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>没有更多球面谐波的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013233601-1847365803.png" width="250"><font size="2.5">
+            <i>没有更多球面谐波的效果.</i>
+        </font>
+</center>
 
 <p>得到的结果是所有的球面谐波被禁用，对于不使用LPPV（光照探针代理体）的动态对象也是如此。这是因为_UNITY_LIGHT_PROBE_PROXY_VOLUME_在项目范围内定义，而不是对每个对象实例进行定义。单个对象是否使用LPPV由UnityShaderVariables中定义的unity_ProbeVolumeParams的X分量指定。如果unity_ProbeVolumeParams的X分量设置为1，那么我们有一个LPPV（光照探针代理体），否则我们应该使用常规的球面谐波。</p>
 
@@ -784,10 +797,11 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013235369-787618137.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>采样后的LPPV（光照探针代理体）的效果，在伽马空间中的效果太暗.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013235369-787618137.png" width="250"><font size="2.5">
+            <i>采样后的LPPV（光照探针代理体）的效果，在伽马空间中的效果太暗.</i>
+        </font>
+</center>
 
 <p>我们的着色器现在在需要的时候对LPPV（光照探针代理体）进行采样，但结果太暗了。至少在伽马颜色空间中工作就是这样的结果。这是因为球面谐波数据存储在线性空间中。因此，可能需要进行颜色的转换。</p>
 
@@ -805,10 +819,11 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013236310-749557848.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>采样后的LPPV（光照探针代理体）的效果，带有正确的颜色.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013236310-749557848.png" width="250"><font size="2.5">
+            <i>采样后的LPPV（光照探针代理体）的效果，带有正确的颜色.</i>
+        </font>
+</center>
 
 <h2 id="lod-groups">LOD Groups</h2>
 
@@ -824,22 +839,22 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237093-2016130218.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237695-361227834.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237093-2016130218.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237695-361227834.png" width="250"><font size="2.5">
+            <i>球体和立方体作为一个对象.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>球体和立方体作为一个对象.</a></i></center>    
-        
 
 <p>通过Component /Rendering / LOD Group将一个LOD组组件添加到父对象。你会得到一个具有默认设置的LOD组，它有三个LOD等级。 百分比是指由对象的包围盒覆盖的窗口的垂直部分。因此，当垂直尺寸下降到窗口高度的60％的时候，默认设置为切换到LOD 1，当垂直尺寸下降到窗口高度的30％的时候，默认设置为切换到LOD 2。当垂直尺寸下降到窗口高度的10％的时候，它根本不渲染。 你可以通过拖动LOD框的边来更改这些阈值。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013238446-1711254101.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>组件LOD组.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013238446-1711254101.png" width="250"><font size="2.5">
+            <i>组件LOD组.</i>
+        </font>
+</center>
 
 <p>这些阈值由LOD偏移（LOD Bias）进行修改，LOD偏移（LOD Bias）可以在组件检视器里面查看并修改。目前使用的是质量设置为2的默认值，这意味着阈值被减半。也可以设置为最大LOD等级，这将导致跳过最高级别。</p>
 
@@ -848,10 +863,11 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013239110-167141319.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>让球这个子物体使用LOD 0等级.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013239110-167141319.png" width="250"><font size="2.5">
+            <i>让球这个子物体使用LOD 0等级.</i>
+        </font>
+</center>
 
 <p>一旦配置了LOD等级，你可以通过移动相机来查看它们的效果。如果物体足够大的话，它将使用球体，否则的话它将使用立方体，或根本不会渲染。</p>
 
@@ -871,10 +887,11 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013240110-283978428.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>让球这个子物体使用LOD 0等级.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013240110-283978428.png" width="250"><font size="2.5">
+            <i>让球这个子物体使用LOD 0等级.</i>
+        </font>
+</center>
 
 <p><em>使用烘焙光源得到的效果</em></p>
 
@@ -883,10 +900,11 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013241019-1435398902.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>没有光照探针时候的烘焙光照.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013241019-1435398902.png" width="250"><font size="2.5">
+            <i>没有光照探针时候的烘焙光照.</i>
+        </font>
+</center>
 
 <p>禁用光探针组会使得立方体变得更暗。这意味着他们不再接受间接光照。 这是因为在烘焙过程中确定间接光照的时候使用的是LOD 0。为了找到其他LOD等级下的间接光照， Unity可以做到的最好程度是依靠烘焙光照探针。 因此，即使在运行时我们不需要光照探针，我们也需要光照探针来为我们的立方体计算间接光照。</p>
 
@@ -897,30 +915,33 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013242971-183808454.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>LOD 1使用光照探针来计算实时全局光照.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013242971-183808454.png" width="250"><font size="2.5">
+            <i>LOD 1使用光照探针来计算实时全局光照.</i>
+        </font>
+</center>
 
 <p>当烘焙全局光照和实时全局光照同时使用的时候，它会变得更加复杂。 在这种情况下，立方体应该对烘焙全局光照使用光照贴图，对实时全局光照使用光照探针。不幸的是，这是不可能的，这是因为光照贴图和和球面谐波不能同时使用。这是一个非此即彼的问题。因为光照贴图数据对于立方体来说是可用的，所以Unity最终会使用它。因此，立方体不受实时全局光照的影响。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013243831-1402316420.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>仅对LOD 1等级使用烘焙光照，使用的是低强度的主光源.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013243831-1402316420.png" width="250"><font size="2.5">
+            <i>仅对LOD 1等级使用烘焙光照，使用的是低强度的主光源.</i>
+        </font>
+</center>
 
 <p>一个重要的细节是，烘焙的LOD等级和渲染的LOD等级是完全独立的。 他们不需要使用相同的设置。如果实时全局光照最终比烘焙全局光照更重要，你可以强制立方体使用光照探针，确保它对于光照贴图来说不是静态的，同时保持球体静止。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013244794-1245713384.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>LOD 1强制使用光照探针.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013244794-1245713384.png" width="250"><font size="2.5">
+            <i>LOD 1强制使用光照探针.</i>
+        </font>
+</center>
 
 <h3 id="lod淡入淡出功能">LOD淡入淡出功能</h3>
 
@@ -931,10 +952,11 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013245526-1175118666.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>带有0.5变换宽度的淡入淡出.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013245526-1175118666.png" width="250"><font size="2.5">
+            <i>带有0.5变换宽度的淡入淡出.</i>
+        </font>
+</center>
 
 <p>当启用淡入淡出的时候，在LOD组之间进行转换的时候会同时渲染两个LOD等级。</p>
 
@@ -998,10 +1020,11 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013246331-642394563.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>通过抖动方法得到的淡入淡出几何体.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013246331-642394563.png" width="250"><font size="2.5">
+            <i>通过抖动方法得到的淡入淡出几何体.</i>
+        </font>
+</center>
 
 <p>淡入淡出现在可以在几何体上正常工作了。为了使其适用于阴影，我们必须调整My Shadows着色器。 首先，当我们进行淡入淡出处理的时候，必须使用vpos。其次，我们还必须在片段程序开始的位置使用UnityApplyDitherCrossFade函数。</p>
 
@@ -1024,12 +1047,11 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013247225-2138491287.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013249358-581600268.gif" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013247225-2138491287.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013249358-581600268.gif" width="250"><font size="2.5">
+            <i>对几何体和阴影都做了淡入淡出处理.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>对几何体和阴影都做了淡入淡出处理.</a></i></center>    
-        
 
 <p>因为立方体和球体相互交叉，所以我们在对它们做淡入淡出处理的时候，得到一些奇怪的自阴影效果。这对于看到淡入淡出处理能在阴影上起作用是很方便的，但是当你为实际游戏创建LOD几何体的时候，需要注意这些瑕疵。</p>
 
@@ -1540,14 +1562,14 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

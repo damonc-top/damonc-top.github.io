@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -282,10 +284,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/cubearray.png" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>cube数组.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/cubearray.png" width=""><font size="2.5">
+            <i>cube数组.</i>
+        </font>
+</center>
 
 <h3 id="操控一组3维坐标">操控一组3维坐标</h3>
 
@@ -401,10 +404,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/move.gif" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>位移.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/move.gif" width=""><font size="2.5">
+            <i>位移.</i>
+        </font>
+</center>
 
 <h3 id="缩放">缩放</h3>
 
@@ -425,10 +429,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/scale.gif" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>缩放.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/scale.gif" width=""><font size="2.5">
+            <i>缩放.</i>
+        </font>
+</center>
 
 <p>这里有一个问题：当进行缩放时，缩放会改变每个Cube对象的position。这是因为我们先计算了空间坐标，然后才缩放的它。而Unity中Transform组件是先缩放后位移。所以正确的计算顺序是：先缩放后位移。</p>
 
@@ -451,20 +456,22 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/rotation1.png" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>2维空间下绕Z轴旋转.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/rotation1.png" width=""><font size="2.5">
+            <i>2维空间下绕Z轴旋转.</i>
+        </font>
+</center>
 
 <p><strong>旋转一个点坐标后会发什么吗</strong>？先简单的考虑一个以原点为中心的单位圆上的一点P，设p初始位置为(1,0)，然后再以每90°增量进行一次旋转，如下图：</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/rotation2.png" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>0°旋转到90°和180°变化.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/rotation2.png" width=""><font size="2.5">
+            <i>0°旋转到90°和180°变化.</i>
+        </font>
+</center>
 
 <p>由上图可知，点p(1,0)旋转一次(90°)变为了(0,1)，再旋转一次(180°)变为了(-1,0)，再往下旋转会变为(0,-1)，最后回到原位置(1,0). 那如果用点(0,1)作为初始位置，其变换顺序(0,1)\(\rightarrow\)(-1,0)\(\rightarrow\)(0,-1)\(\rightarrow\)(1,0)\(\rightarrow\)(0,1). 因此这个点坐标始终围绕0，1，0，-1进行循环，唯一得区别是起始点位置不同。</p>
 
@@ -473,10 +480,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/trangle%20math.png" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Sine 和 Cosine曲线.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/trangle%20math.png" width=""><font size="2.5">
+            <i>Sine 和 Cosine曲线.</i>
+        </font>
+</center>
 
 <p>结合上面两张图，Sine曲线代表了Y分量，Cosine曲线代表了X分量，坐标用曲线表示就是\((\cos z, \sin z)\)，若起始点为(1,0)则结果为\((cosz,sinz)\)，<strong>逆时针旋转90°</strong>后(根据\(sin(-z) = –sin z, cos(-z) = cos z\)的<strong>对称性质</strong>)则结果为\((−sin z,cos z)\)。因此我们可以用绕Z轴计算sine和cosine曲线，由于提供的是角度，但实际上sin及cos只能作用于弧度，所以我们需要转化它:</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="n">Vector3</span> <span class="nf">Apply</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">point</span><span class="p">)</span>
@@ -521,10 +529,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/move%20scale%20rotation.gif" width="" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>最终变换效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/move%20scale%20rotation.gif" width=""><font size="2.5">
+            <i>最终变换效果.</i>
+        </font>
+</center>
 
 <h2 id="旋转完全体">旋转完全体</h2>
 <p>-</p>
@@ -1162,13 +1171,12 @@ z \over w\\
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/3d%20view.png" width="" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/2d%20view.png" width="" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/plane.png" width="" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/3d%20view.png" width="">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/2d%20view.png" width="">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/plane.png" width=""><font size="2.5">
+            <i>3d转换到2d.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>3d转换到2d.</a></i></center>    
-        
 
 <p>实际上，这种粗暴的方法还蛮像那么回事，确实变成了2D了。其他的X、Y轴同理，就不演示了。这就是正交投影。不管相机如何缩放、旋转、位移，始终呈现的2D效果。移动相机的视觉效果和移动世界的相反方向是一致的，也就是3个变换组件的变量与摄像机的缩放、旋转、位移变量是互为正负关系。</p>
 
@@ -1221,12 +1229,11 @@ z \over w\\
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/3d%20view2.png" width="" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/plane2.png" width="" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/3d%20view2.png" width="">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender1/plane2.png" width=""><font size="2.5">
+            <i>透视投影.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>透视投影.</a></i></center>    
-        
 
 <p>设置一个点到平面的投影距离，它也会影响投影视觉效果。它就像相机的焦距，值越大视野就越小。现在我们先定义一个变量<em>focalLength</em>值默认为1，这能产生90°的视野。</p>
 
@@ -1783,14 +1790,14 @@ z \over w\\
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -304,19 +306,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154452501-654159285.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Forward，no shadow.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154452501-654159285.png" width="250"><font size="2.5">
+            <i>Forward，no shadow.</i>
+        </font>
+</center>
 
 <p><strong>2. Enable Shadows</strong><br>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453072-905156320.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>enable shadow.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453072-905156320.png" width="250"><font size="2.5">
+            <i>enable shadow.</i>
+        </font>
+</center>
 <p>启用阴影后，需要更多的Draw Calls去生成阴影纹理，分析如下：</p>
 
 <p>首先，填充depth-buffer，需要<strong>47</strong>次Draw Call，<em>47少于64得益于dynamicBatching</em>；<br>
@@ -327,10 +331,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453746-531274810.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Forward，enable shadow.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453746-531274810.png" width="250"><font size="2.5">
+            <i>Forward，enable shadow.</i>
+        </font>
+</center>
 <center>
 <b>&amp;$\uparrow Use Forward Path \uparrow$$</b>
 </center>
@@ -344,10 +349,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154454370-1630685432.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Deferred，no shadows.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154454370-1630685432.png" width="250"><font size="2.5">
+            <i>Deferred，no shadows.</i>
+        </font>
+</center>
 
 <p>首先，45次Draw Call渲染GBuffer，这得益于dynamic Batching；<br>
 其次，1次Draw Call复制深度纹理；<br>
@@ -362,10 +368,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154455028-1110322294.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Deffered，enable shadows.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154455028-1110322294.png" width="250"><font size="2.5">
+            <i>Deffered，enable shadows.</i>
+        </font>
+</center>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deferred不支持MSAA，如果启用Camera组件会有Warning
 
@@ -415,28 +422,31 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743046-2070098632.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>重复流程.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743046-2070098632.png" width="250"><font size="2.5">
+            <i>重复流程.</i>
+        </font>
+</center>
 
 <p>既然每次计算的几何性质都是一样的，可以让basePass计算后将它们存储在一个缓冲区中。然后，additivePass可以重用数据，消除重复的工作。要存储这些片段的数据，就需要一个适合的缓冲区，就像深度和帧缓冲区一样。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743816-266537686.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>缓存，及部分数据须再次计算.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743816-266537686.png" width="250"><font size="2.5">
+            <i>缓存，及部分数据须再次计算.</i>
+        </font>
+</center>
 
 <p>现在，缓冲区中提供了照明所需的所有几何数据。 唯一缺少的是灯光本身。 但这意味着我们不再需要渲染几何体，仅需渲染光就足够了。 此外，basePass只需要填充缓冲区，然后推迟所有直接光照着色计算。这就是延迟着色。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085744534-1514664437.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>deferred shading.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085744534-1514664437.png" width="250"><font size="2.5">
+            <i>deferred shading.</i>
+        </font>
+</center>
 
 <h3 id="deferred下多光源如何使用">deferred下多光源如何使用</h3>
 
@@ -447,12 +457,11 @@
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085745459-1157598431.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085746437-849874847.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085745459-1157598431.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085746437-849874847.png" width="250"><font size="2.5">
+            <i>many lights, deferred vs. forward.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>many lights, deferred vs. forward.</a></i></center>    
-        
 
 <p><em>多个实时光源，也可以用bake替代。</em></p>
 
@@ -464,10 +473,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747037-32153529.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>directional lights use a quad.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747037-32153529.png" width="250"><font size="2.5">
+            <i>directional lights use a quad.</i>
+        </font>
+</center>
 
 <p>该shader使用了_UnityDeferredLibrary.cginc_的UnityDeferredCalculateLightParams函数计算光照。</p>
 
@@ -484,13 +494,13 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747661-944531804.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747661-944531804.png" width="250"></center>
 
 <p>3、PointLight使用类似方法，区别在于它被渲染成球体Mesh。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748333-84112664.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748333-84112664.png" width="250"></center>
 
 <h3 id="分析什么是g-buffers">分析什么是G-Buffers</h3>
 
@@ -505,8 +515,8 @@
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748906-1729642644.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085749514-1177384899.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748906-1729642644.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085749514-1177384899.png" width="250">
 </center>
 
 <p>Albedo-对应RT0；典型代表diffuse color<br>
@@ -519,30 +529,29 @@ Emission–对应RT3；典型代表emission + reflection</p>
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085750340-1204540914.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751182-1595821136.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085750340-1204540914.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751182-1595821136.png" width="250"><font size="2.5">
+            <i>分析freamDebugger.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>分析freamDebugger.</a></i></center>    
-        
 
 <p>首先，执行deferred渲染G-buffer，数据存到G-buffer缓冲区。在这渲染期间，forward模式下的物体不参与渲染，不可见。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751737-547155192.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751737-547155192.png" width="250"></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752276-673585314.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752276-673585314.png" width="250"></center>
 
 <p>接着，渲染forward depth，同样存到G-buffer缓冲区。由于是forward所以输出黑色轮廓，覆盖了之前的片元。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752842-152103750.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085753560-1117632710.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752842-152103750.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085753560-1117632710.png" width="250">
 </center>
 
 <h2 id="开始写deferred-shader">开始写Deferred Shader</h2>
@@ -559,7 +568,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085754350-329303799.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085754350-329303799.png" width="250"></center>
 <p>完整版的着色</p>
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Pass</span> <span class="p">{</span>
     <span class="n">Tags</span> <span class="p">{</span>
@@ -634,12 +643,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755050-910260994.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755657-1285744974.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755050-910260994.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755657-1285744974.png" width="250"><font size="2.5">
+            <i>Albedo and occlusion.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>Albedo and occlusion.</a></i></center>    
-        
 
 <h3 id="计算buffer-1">计算Buffer 1</h3>
 
@@ -655,12 +663,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756307-1469309635.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756898-570367115.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756307-1469309635.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756898-570367115.png" width="250"><font size="2.5">
+            <i>Specular color and smoothness.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>Specular color and smoothness.</a></i></center>    
-        
 
 <h3 id="计算buffer-2">计算Buffer 2</h3>
 
@@ -673,12 +680,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095715198-211370403.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095716344-858855160.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095715198-211370403.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095716344-858855160.png" width="250"><font size="2.5">
+            <i>Normals.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>Normals.</a></i></center>    
-        
 
 <h3 id="计算buffer-3">计算Buffer 3</h3>
 
@@ -690,10 +696,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717065-134464069.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>错误的emission.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717065-134464069.png" width="250"><font size="2.5">
+            <i>错误的emission.</i>
+        </font>
+</center>
 
 <p>上面使用的color颜色已计算过阴影，需要使用DEFRRED_PASS重新计算；同时关闭<code class="language-plaintext highlighter-rouge">light.ndotl计算；在GetEmission也要使用DEFRRED_PASS标签</code></p>
 
@@ -722,29 +729,32 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717626-627650926.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>错误的emission.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717626-627650926.png" width="250"><font size="2.5">
+            <i>错误的emission.</i>
+        </font>
+</center>
 
 <h3 id="ambient-light">Ambient Light</h3>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711223-338108844.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>four buffers shading.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711223-338108844.png" width="250"><font size="2.5">
+            <i>four buffers shading.</i>
+        </font>
+</center>
 
 <p>输出四个Buffers后结果看起来较好，但是还不够完整，还缺少环境光。<strong>环境光与自发光都没有单独的pass计算，都需要在g-buffers填充后附加到最终颜色值上。</strong>环境光是间接光，在间接光函数计算DEFERRED_PASS</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711963-2074230932.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>four buffers shading.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711963-2074230932.png" width="250"><font size="2.5">
+            <i>four buffers shading.</i>
+        </font>
+</center>
 
 <h3 id="光源范围-ldr与hdr分析">光源范围-LDR与HDR分析</h3>
 
@@ -760,19 +770,21 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022712610-2058578821.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>incorrect shading in LDR Mode.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022712610-2058578821.png" width="250"><font size="2.5">
+            <i>incorrect shading in LDR Mode.</i>
+        </font>
+</center>
 
 <p>在上图描述中，Unity会使用exp2(x)编码LDR数据，所以对自发光和环境光也要使用exp2(x)编码。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713171-753954029.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>incorrect shading in LDR Mode.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713171-753954029.png" width="250"><font size="2.5">
+            <i>incorrect shading in LDR Mode.</i>
+        </font>
+</center>
 
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma multi_compile _ UNITY_HDR_ON
 </span>
@@ -788,10 +800,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713922-1209753322.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>use exp2(x) and log in LDR.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713922-1209753322.png" width="250"><font size="2.5">
+            <i>use exp2(x) and log in LDR.</i>
+        </font>
+</center>
 
 <h2 id="deferred-reflections">Deferred Reflections</h2>
 
@@ -799,18 +812,17 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120606250-2021680703.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120606250-2021680703.png" width="250"></center>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120607116-2089631344.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608003-761474677.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120607116-2089631344.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608003-761474677.png" width="250"><font size="2.5">
+            <i>forward vs. deferred mode.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>forward vs. deferred mode.</a></i></center>    
-        
 
 <h3 id="逐像素照射">逐像素照射</h3>
 
@@ -822,10 +834,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608590-1131496695.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>forward reflection probes.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608590-1131496695.png" width="250"><font size="2.5">
+            <i>forward reflection probes.</i>
+        </font>
+</center>
 
 <p>Deferred模式下：<br>
     reflection只渲染box size范围，探射的范围被投射到与boxProjection相交的面积。所以reflection的反射不会超出给定BoxSize范围。实际上，边缘消失的时候也会延伸一点。其他两个探头也是如此。</p>
@@ -833,10 +846,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120609178-2053336560.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>deferred reflection probes.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120609178-2053336560.png" width="250"><font size="2.5">
+            <i>deferred reflection probes.</i>
+        </font>
+</center>
 
 <p>渲染reflection所用方法，与渲染lights类似：<br>
 首先，使用Internal-StencilWrite shader渲染box size大小的Mesh并写入<strong>模板缓冲</strong>区；<br>
@@ -846,20 +860,20 @@ Emission–对应RT3；典型代表emission + reflection</p>
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113835823-536491925.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113836571-1742764446.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113835823-536491925.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113836571-1742764446.png" width="250"><font size="2.5">
+            <i>Draw deferred reflections.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>Draw deferred reflections.</a></i></center>    
-        
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113837105-1079901044.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Importance.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113837105-1079901044.png" width="250"><font size="2.5">
+            <i>Importance.</i>
+        </font>
+</center>
 
 <p>Importance决定各reflection的渲染先后顺序；Intensity决定了反射强度：默认为1，最小为0，大于1过曝。Forward下是整个接收面积；Deferred下是相交面积。下面谈Blend Distance。</p>
 
@@ -871,10 +885,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113839245-749750193.gif" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>blend distance gif.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113839245-749750193.gif" width="250"><font size="2.5">
+            <i>blend distance gif.</i>
+        </font>
+</center>
 
 <h3 id="deferred-pass下的反射">Deferred Pass下的反射</h3>
 
@@ -887,12 +902,11 @@ Emission–对应RT3；典型代表emission + reflection</p>
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113840651-738922493.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113841329-1065907482.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113840651-738922493.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113841329-1065907482.png" width="250"><font size="2.5">
+            <i>Importance.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>Importance.</a></i></center>    
-        
 
 <p>采样黑色探针是浪费。要确保deferred pass只在有需要时采样，用UNITY_ENABLE_REFLECTION_BUFFERS来检查。</p>
 
@@ -1413,14 +1427,14 @@ Emission–对应RT3；典型代表emission + reflection</p>
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -303,10 +305,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/objects.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>未着色物体.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/objects.png" width="250"><font size="2.5">
+            <i>未着色物体.</i>
+        </font>
+</center>
 <p>Unity内置的cube、sphere网格包含了顶点法线，可直接获取它们并传递给片元函数。</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">VertexData</span> <span class="p">{</span>
@@ -340,10 +343,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/batching.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>法线向量作为颜色渲染.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/batching.png" width="250"><font size="2.5">
+            <i>法线向量作为颜色渲染.</i>
+        </font>
+</center>
 
 <p>这些是直接来自网格的原始法线。立方体的面看起来是平的，因为每个面都只有四个顶点组成了两个三角面，这些顶点的法线都指向同一个方向。相比之下，球体的顶点法线都指向了不同的方向，从而产生了平滑的颜色过渡。</p>
 
@@ -368,19 +372,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/batching-settings.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>关闭动态合批.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/batching-settings.png" width="250"><font size="2.5">
+            <i>关闭动态合批.</i>
+        </font>
+</center>
 
 <p>除了动态批处理，Unity还支持进行静态批处理。这对于静态几何体的工作方式不同，但也涉及到世界空间的转换。静态批处理需要预先构建，这里先跳过。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/no-batching.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>没有批处理影响的法线颜色.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/no-batching.png" width="250"><font size="2.5">
+            <i>没有批处理影响的法线颜色.</i>
+        </font>
+</center>
 
 <h3 id="转换法线到世界空间">转换法线到世界空间</h3>
 
@@ -408,10 +414,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/object-to-world.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>对象到世界空间.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/object-to-world.png" width="250"><font size="2.5">
+            <i>对象到世界空间.</i>
+        </font>
+</center>
 
 <p>法线现在位于世界空间中，但有些法线颜色看起来比其他法线更亮。那是因为它们当中有被缩放过。所以我们必须在转换后对它们进行归一化。</p>
 
@@ -422,30 +429,33 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/normalized.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>归一化法线.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/normalized.png" width="250"><font size="2.5">
+            <i>归一化法线.</i>
+        </font>
+</center>
 
 <p>虽然对向量进行了归一化，但对于没有统一比例的法线，颜色看起来也有些不一致。这是因为当一个表面在某一维上被拉伸时，它的法线不会以同样的方式拉伸。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/scaling-incorrect.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>缩放x轴，顶点和法线变为$$1 \over 2$$.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/scaling-incorrect.png" width="250"><font size="2.5">
+            <i>缩放x轴，顶点和法线变为$$1 \over 2$$.</i>
+        </font>
+</center>
 
 <p>当缩放比例不均匀时，应将其反转为法线。法线将在归一标准化后与变形表面的形状相匹配。它对统一的比例没有影响。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/scaling-correct.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>缩放x轴，顶点变为$$1 \over 2$$法线变为2.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/scaling-correct.png" width="250"><font size="2.5">
+            <i>缩放x轴，顶点变为$$1 \over 2$$法线变为2.</i>
+        </font>
+</center>
 
 <p>所以我们必须反转比例，但旋转应该保持不变。那如何去翻转缩放？</p>
 
@@ -498,10 +508,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/normalized.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>正确的世界空间法线.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/normalized.png" width="250"><font size="2.5">
+            <i>正确的世界空间法线.</i>
+        </font>
+</center>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">mul</span><span class="p">(</span><span class="nf">transpose</span><span class="p">((</span><span class="n">float3x3</span><span class="p">)</span><span class="n">unity_WorldToObject</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span><span class="c1">//这个写法行的通，只是学习一下上面的知识.汇编也很难看</span>
 
@@ -555,19 +566,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/renormalized.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>再次归一化.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/renormalized.png" width="250"><font size="2.5">
+            <i>再次归一化.</i>
+        </font>
+</center>
 
 <p>虽然再次归一化会产生更好的结果，但是值的误差其实通常非常小。如果在移动设备上，这一步可以省略。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/interpolation-error.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>夸张的错误.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/interpolation-error.png" width="250"><font size="2.5">
+            <i>夸张的错误.</i>
+        </font>
+</center>
 
 <h2 id="漫反射-diffuse-shading">漫反射 Diffuse Shading</h2>
 
@@ -580,10 +593,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/lambert.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>漫反射.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/lambert.png" width="250"><font size="2.5">
+            <i>漫反射.</i>
+        </font>
+</center>
 
 <p>我们可以通过计算表面法线和光方向的点积来确定这个朗伯反射系数。我们已经知道法线，但还不知道光的方向。在代码内给定一个直接从物体头顶上方照射的方向。</p>
 
@@ -597,12 +611,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/lit-from-above-gamma.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/lit-from-above-linear.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/lit-from-above-gamma.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/lit-from-above-linear.png" width="250"><font size="2.5">
+            <i>从上方照亮，左伽马 vs. 右线性。.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>从上方照亮，左伽马 vs. 右线性。.</a></i></center>    
-        
 
 <blockquote class="prompt-tip">
   <p>什么是点积？。</p>
@@ -624,10 +637,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/dot-product.png" width="200" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>点积.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/dot-product.png" width="200"><font size="2.5">
+            <i>点积.</i>
+        </font>
+</center>
 
 <h3 id="约束负数光照-clamped-lighting">约束负数光照 Clamped Lighting</h3>
 
@@ -676,10 +690,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/include-files.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>UnityStandardBRDF引用结构.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/include-files.png" width="250"><font size="2.5">
+            <i>UnityStandardBRDF引用结构.</i>
+        </font>
+</center>
 
 <h3 id="光源-light-source">光源 Light Source</h3>
 
@@ -687,10 +702,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/default-scene-light.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>方向光.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/default-scene-light.png" width="250"><font size="2.5">
+            <i>方向光.</i>
+        </font>
+</center>
 
 <p><code class="language-plaintext highlighter-rouge">UnityShaderVariables</code>定义<code class="language-plaintext highlighter-rouge">float4 _WorldSpaceLightPos0</code>，其中包含当前灯光的位置和光线来自的方向，在定向光的情况下，它有四个分量。因为它们是齐次坐标，所以我们的定向光的第四个分量是不需要的。</p>
 
@@ -706,10 +722,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/rendering-path.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>渲染通道.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/rendering-path.png" width="250"><font size="2.5">
+            <i>渲染通道.</i>
+        </font>
+</center>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Pass</span> <span class="p">{</span>
     <span class="n">Tags</span> <span class="p">{</span>
@@ -755,10 +772,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/light-color.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>光的颜色.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/light-color.png" width="250"><font size="2.5">
+            <i>光的颜色.</i>
+        </font>
+</center>
 
 <h3 id="反照率-albedo">反照率 Albedo</h3>
 
@@ -790,17 +808,16 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/albedo-inspector.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/albedo-inspector.png" width="250"></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/albedo-gamma.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/albedo-linear.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/albedo-gamma.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/albedo-linear.png" width="250"><font size="2.5">
+            <i>在伽马和线性空间中使用反照率进行漫反射着色.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>在伽马和线性空间中使用反照率进行漫反射着色.</a></i></center>    
-        
 
 <h2 id="高光镜面反射-specular-shading">高光(镜面)反射 Specular Shading</h2>
 
@@ -852,10 +869,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/reflection-directions.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>反射方向.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/reflection-directions.png" width="250"><font size="2.5">
+            <i>反射方向.</i>
+        </font>
+</center>
 
 <blockquote class="prompt-tip">
   <p>reflect内部实现
@@ -871,10 +889,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/phong.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>镜面反射.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/phong.png" width="250"><font size="2.5">
+            <i>镜面反射.</i>
+        </font>
+</center>
 
 <h3 id="光滑度-smoothness">光滑度 Smoothness</h3>
 
@@ -896,10 +915,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/smoothness.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>看着像玉.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/smoothness.png" width="250"><font size="2.5">
+            <i>看着像玉.</i>
+        </font>
+</center>
 
 <h3 id="blinn-phong光照公式">Blinn-Phong光照公式</h3>
 
@@ -916,19 +936,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/blinn-phong.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Blinn-Phong反射.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/blinn-phong.png" width="250"><font size="2.5">
+            <i>Blinn-Phong反射.</i>
+        </font>
+</center>
 
 <p>这种方法会产生更大范围的高光，但这可以通过使用更高的平滑度值来抵消。尽管这两种方法仍然是近似值。一个很大的限制是它可以为从后面照亮的对象产生无效的高光。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/specular-error.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>不正确的反射，平滑度为0.01.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/specular-error.png" width="250"><font size="2.5">
+            <i>不正确的反射，平滑度为0.01.</i>
+        </font>
+</center>
 
 <p>当使用低平滑度值时，这些伪影会变得很明显。它们可以通过使用阴影来隐藏，或者通过基于光照角度淡出高光来隐藏。Unity 的传统着色器也有这个问题，所以我们也不用担心。无论如何，我们很快就会转向另一种照明方法。</p>
 
@@ -974,10 +996,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/colored-specular.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>有色镜面反射.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/colored-specular.png" width="250"><font size="2.5">
+            <i>有色镜面反射.</i>
+        </font>
+</center>
 
 <h3 id="漫反射和镜面反射-diffuse-and-specular">漫反射和镜面反射 Diffuse and Specular</h3>
 
@@ -988,10 +1011,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/diffuse-specular-linear.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>漫反射加镜面反射 gama vs. linear.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/diffuse-specular-linear.png" width="250"><font size="2.5">
+            <i>漫反射加镜面反射 gama vs. linear.</i>
+        </font>
+</center>
 
 <h2 id="能量守恒-energy-conservation">能量守恒 Energy Conservation</h2>
 
@@ -999,10 +1023,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/too-bright.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>很亮的镜面，0.1平滑度.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/too-bright.png" width="250"><font size="2.5">
+            <i>很亮的镜面，0.1平滑度.</i>
+        </font>
+</center>
 
 <p>当光照射到表面时，它的一部分光会作为镜面光反射回来，其余部分要么会穿透表面，要么会作为漫射光返回，要么被吸收。但我们目前没有考虑到这一点。相反，我们的光既反射又漫射。</p>
 
@@ -1017,10 +1042,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/not-too-bright.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>不再那么亮.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/not-too-bright.png" width="250"><font size="2.5">
+            <i>不再那么亮.</i>
+        </font>
+</center>
 
 <p>漫反射和镜面反射的贡献现在是相关联的。高光越强，漫反射部分越暗。黑色镜面色调产生零反射，只会看到全强度的反照率。白色镜面色调会形成完美的镜子，因此完全消除了反照率。</p>
 
@@ -1040,10 +1066,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/red-specular.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>红色镜面反射，青色反照率.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/red-specular.png" width="250"><font size="2.5">
+            <i>红色镜面反射，青色反照率.</i>
+        </font>
+</center>
 
 <p>为了防止这种着色，我们可以使用单色能量守恒。这只是意味着我们使用镜面反射颜色的最强分量来降低反照率。</p>
 
@@ -1055,10 +1082,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/monochrome-energy-conservation.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>单色能量守恒.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/monochrome-energy-conservation.png" width="250"><font size="2.5">
+            <i>单色能量守恒.</i>
+        </font>
+</center>
 
 <h3 id="辅助函数">辅助函数</h3>
 
@@ -1071,10 +1099,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/include-files.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>引用层次结构.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/include-files.png" width="250"><font size="2.5">
+            <i>引用层次结构.</i>
+        </font>
+</center>
 
 <p>此函数将反照率和镜面反射颜色作为输入，并输出调整后的反照率和输出\(1-reflectivity\)。第三个输出参数是是一个减去镜面反射强度，我们拿来乘以反照率的因子。</p>
 
@@ -1144,10 +1173,11 @@ inline half3 EnergyConservationBetweenDiffuseAndSpecular (
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/metallic-slider.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>金属滑块.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/metallic-slider.png" width="250"><font size="2.5">
+            <i>金属滑块.</i>
+        </font>
+</center>
 
 <p>现在我们可以从反照率和金属属性中推导出镜面色调。然后可以简单地将反照率乘以\(1-metallic\)。</p>
 
@@ -1235,10 +1265,11 @@ inline half3 EnergyConservationBetweenDiffuseAndSpecular (
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/include-files.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>UnityPBSLighting的引用结构.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/include-files.png" width="250"><font size="2.5">
+            <i>UnityPBSLighting的引用结构.</i>
+        </font>
+</center>
 
 <blockquote class="prompt-tip">
   <p>UNITY_BRDF_PBS内部实现</p>
@@ -1365,19 +1396,18 @@ inline half3 EnergyConservationBetweenDiffuseAndSpecular (
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/nonmetal-gamma.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/nonmetal-linear.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/nonmetal-gamma.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/nonmetal-linear.png" width="250">
 </center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/metal-gamma.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/metal-linear.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/metal-gamma.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender4/metal-linear.png" width="250"><font size="2.5">
+            <i>非金属和金属，gama vs. linear.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>非金属和金属，gama vs. linear.</a></i></center>    
-        
 
                 <div class="post-copyright">
                     <p>
@@ -1886,14 +1916,14 @@ inline half3 EnergyConservationBetweenDiffuseAndSpecular (
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

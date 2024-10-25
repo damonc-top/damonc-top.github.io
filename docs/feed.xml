@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2024-10-24T23:58:59+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">银河揽月</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>damonc</name></author><entry><title type="html">Unity Addressable Group结构</title><link href="https://www.damonc.top/Unity_Addressabel_Group.html" rel="alternate" type="text/html" title="Unity Addressable Group结构" /><published>2024-07-12T20:00:00+08:00</published><updated>2024-07-12T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Addressabel_Group</id><content type="html" xml:base="https://www.damonc.top/Unity_Addressabel_Group.html"><![CDATA[<p>总结在使用Unity Addressable System过程中遇到的一部分问题。本文Addressable后续简称AA。</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2024-10-25T23:16:13+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">银河揽月</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>damonc</name></author><entry><title type="html">Unity Addressable Group结构</title><link href="https://www.damonc.top/Unity_Addressabel_Group.html" rel="alternate" type="text/html" title="Unity Addressable Group结构" /><published>2024-07-12T20:00:00+08:00</published><updated>2024-07-12T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Addressabel_Group</id><content type="html" xml:base="https://www.damonc.top/Unity_Addressabel_Group.html"><![CDATA[<p>总结在使用Unity Addressable System过程中遇到的一部分问题。本文Addressable后续简称AA。</p>
 <ul>
   <li>Addressable构建AssetBundle</li>
   <li>AssetGroup的组织结构</li>
@@ -13,29 +13,26 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_win_pkg_mgr.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Addressable Version Seleclt.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_win_pkg_mgr.png" width="250" /><font size="2.5">
+            <i>Addressable Version Seleclt.</i>
+        </font></center>
 
 <h3 id="手动安装">手动安装</h3>
 <p>在Package Manager选择一个合适的Addressable版本还要结合Addressable更新log，打开<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html"><code class="language-plaintext highlighter-rouge">Addressable更新日志</code></a>，版本列表展示了Address able对应的Unity版本：
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_version.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Addressable Version List.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_version.png" width="250" /><font size="2.5">
+            <i>Addressable Version List.</i>
+        </font></center>
 <p>Unity这里分了两个分支维护Addressable，其中一个分支是1.21版本对应的Unity版本是2019+，另一个分支是2.0版本对应的Unity版本是2023+:
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_1_21.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_2_0.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Addressable Branch.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_1_21.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_2_0.png" width="250" /><font size="2.5">
+            <i>Addressable Branch.</i>
+        </font></center>
 
 <p>2.0以上版本也可以用在非2023版的引擎，主要还是针对2023+ Unity引擎支持新的API什么的。如果想把2.0版本合到1.21，开一Beyond Compare合并差异也行。</p>
 
@@ -47,19 +44,17 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_deps.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Addressable Dependencies.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_deps.png" width="250" /><font size="2.5">
+            <i>Addressable Dependencies.</i>
+        </font></center>
 <p>Addressable最重要的依赖是ScriptableBuildPipeline，SBP这个包要更新到1.21.23或2.1.x以上，旧版SBP对SpriteAtlas图集打包会有冗余。
 打开Packages/manifest.json，强制指定SBP版本”com.unity.scriptablebuildpipeline”: “1.21.23”,
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/sbp_upgrade.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>SBP指定版本.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/sbp_upgrade.png" width="250" /><font size="2.5">
+            <i>SBP指定版本.</i>
+        </font></center>
 
 <h2 id="addressable结构预览">Addressable结构预览</h2>
 <p>安装好了AA之后，会在Assets目录生成以下目录：</p>
@@ -109,27 +104,24 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_assets_settings.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>AddressableAssetSettings预览.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_assets_settings.png" width="250" /><font size="2.5">
+            <i>AddressableAssetSettings预览.</i>
+        </font></center>
 
 <h4 id="profile">Profile</h4>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_in_use.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Profile预览.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_in_use.png" width="250" /><font size="2.5">
+            <i>Profile预览.</i>
+        </font></center>
 <p>Profile In Use可以选择系统自带或自定义，其中自定义使用Manager按钮打开Profile Window:
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_window.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Profile Window.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_window.png" width="250" /><font size="2.5">
+            <i>Profile Window.</i>
+        </font></center>
 <p>Profile主要作用是指定打包地址和加载地址，我新增了BuildPath打包的保存目录和HotUpdate热更资源目录，这两个参数要在Catalog指定。见<a href="#jump1"><code class="language-plaintext highlighter-rouge">Catalog</code></a></p>
 
 <p><span id="jump1"></span></p>
@@ -138,10 +130,9 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Catalog设置面板.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png" width="250" /><font size="2.5">
+            <i>Catalog设置面板.</i>
+        </font></center>
 
 <ul>
   <li>Player Version Override: 这个参数会对构建好的catalog进行重命名，unity使用时间戳，我们自己可以用自己的构建版本号，格式可以是catalog_1.2.1720684396.json。这篇是对<a href="">catalog</a>的详解。</li>
@@ -156,10 +147,9 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/update_download.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Update Downloads设置.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/update_download.png" width="250" /><font size="2.5">
+            <i>Update Downloads设置.</i>
+        </font></center>
 
 <p>指定addressables_content_state.bin的保存地址，该文件只在本地构建时有用，可以看看<a href="https://docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html"><code class="language-plaintext highlighter-rouge">官方workflow</code></a>。简化描述我的理解就是打开Groups-Tools-Check Content Update Restrictions窗口，选择上一次保存的addressables_content_state去比对会生成一份catalog和一小撮热更bundle，就是增量更新这些bundle。但是如果玩家本地用户目录的bundle不小心损坏了，或则资源版本回退，直接使用这方案就不好办。</p>
 
@@ -172,10 +162,9 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/setting_build.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Build设置.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/setting_build.png" width="250" /><font size="2.5">
+            <i>Build设置.</i>
+        </font></center>
 <ul>
   <li>Build Addressables on Player Build: 出包的时候一起出Assetbundle，我关了不需要，我是先出Bundle资源的。</li>
   <li>Ignore Invalid/Unsupported Files in Build: 排除无效文件。</li>
@@ -190,12 +179,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/play_mode.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_mode.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Build Bundle设置.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/play_mode.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_mode.png" width="250" /><font size="2.5">
+            <i>Build Bundle设置.</i>
+        </font></center>
 <p>Play mode指定在编辑器是怎么加载资源，本地测试用</p>
 <ul>
   <li>Fast Mode: 不打包直接加载文件，速度快但在Profiler中提供的信息较少</li>
@@ -219,10 +207,9 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_view.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Group设置.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_view.png" width="250" /><font size="2.5">
+            <i>Group设置.</i>
+        </font></center>
 
 <ul>
   <li>Include In Build: 启用才能构建该组内所包含的Asset Entry。</li>
@@ -237,10 +224,9 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>schema耗时片段.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png" width="250" /><font size="2.5">
+            <i>schema耗时片段.</i>
+        </font></center>
 <p>每次增加Schema会触发save操作，每次修改Schema内部值后会触发Group Dirty Notify进一步触发遍历所有Group排查引用该schema的Group更新。</p>
 
 <p>Content Update Restriction是ContentUpdateGroupSchema，定义该Asset Group内的资源构建成bundle包时是否可以热更，如果要热更一定要添加</p>
@@ -263,41 +249,37 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200615181223145-1229624244.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200615181223966-473200226.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>albedo map 和 normal map.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200615181223145-1229624244.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200615181223966-473200226.png" width="250" /><font size="2.5">
+            <i>albedo map 和 normal map.</i>
+        </font></center>
 
 <p>如果没有法线贴图，表面看起来很平坦。 添加法线贴图会使它看起来好像具有不规则的表面。 但是，高度海拔差异看起来不明显。 当从入射视角与表面的夹角越趋于0，高度差越不明显。如果高程差异较大，则表面特征的相对视觉位置应由于视差而发生很大变化，但不会发生变化。 我们看到的视差是平坦的表面。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191420845-1957506928.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>平坦的视角.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191420845-1957506928.png" width="250" /><font size="2.5">
+            <i>平坦的视角.</i>
+        </font></center>
 
 <p>虽然可以增加法线贴图的强度，但这不会改变视差。同样，当法线贴图变得太强时，它会看起来很奇怪。它影响了平坦表面的光线的明暗变换，而视差效果它们确实是平的。所以法线贴图只适用于小的变化，但不会表现出明显的视差。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191421654-712293996.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>法线贴图的光线变化.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191421654-712293996.png" width="250" /><font size="2.5">
+            <i>法线贴图的光线变化.</i>
+        </font></center>
 
 <p>要获得真正的深度视差感，<strong>首先</strong>需要确定深度应该是多少。法线贴图不包含这些信息。所以我们需要一个高度图。这样，我们就可以创建一个基于高度信息的假视差效果，就像法线贴图创建一个假斜率一样。下面的贴图也称它是灰度图，黑色代表最低点，白色代表最高点。因为我们将使用这个贴图来创建一个视差效果，也称为视差图。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191422519-1710373191.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>高度图.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191422519-1710373191.png" width="250" /><font size="2.5">
+            <i>高度图.</i>
+        </font></center>
 
 <p>确保在导入时禁用sRGB(颜色纹理)，这样在使用线性空间渲染时数据就不会被弄乱</p>
 
@@ -351,7 +333,7 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191423089-347056836.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200616191423089-347056836.png" width="250" /></center>
 
 <h3 id="坐标匹配">坐标匹配</h3>
 
@@ -392,10 +374,9 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012938981-982216259.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>u坐标移动.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012938981-982216259.gif" width="250" /><font size="2.5">
+            <i>u坐标移动.</i>
+        </font></center>
 
 <h3 id="随视角方向移动">随视角方向移动</h3>
 
@@ -404,10 +385,9 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192759952-594530144.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>varies across a surface.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192759952-594530144.png" width="250" /><font size="2.5">
+            <i>varies across a surface.</i>
+        </font></center>
 
 <p>纹理坐标存在于切线空间中。为了调整这些坐标，需要知道视图在切线空间中的方向。这需要矩阵乘法对空间进行转换。在fragment-程序已经有了一个切线空间矩阵，但是它是用于从切线空间到世界空间的转换。在本例中，需要从对象空间转到切线空间。</p>
 
@@ -485,20 +465,18 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192800432-1757806048.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>影视图方向用作UV偏移.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192800432-1757806048.png" width="250" /><font size="2.5">
+            <i>影视图方向用作UV偏移.</i>
+        </font></center>
 
 <p>所有这一切的影响是表面似乎被拉向上的切线空间，看起来比它实际上更高，基于视差强度。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012940748-384205609.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>随投影视角方向移动UV.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012940748-384205609.gif" width="250" /><font size="2.5">
+            <i>随投影视角方向移动UV.</i>
+        </font></center>
 
 <h3 id="基于高度滑动">基于高度滑动</h3>
 
@@ -513,10 +491,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012942351-290008046.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>由高度调整的移动.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012942351-290008046.gif" width="250" /><font size="2.5">
+            <i>由高度调整的移动.</i>
+        </font></center>
 
 <p>低的区域现在保持不变，而高的区域被向上拉。standard shader抵消了这种效果，所以低的区域也向下移动，而在中间的区域保持他们原来的位置。这是通过从原始高度数据中减去差值来实现的。</p>
 
@@ -528,10 +505,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012944095-1997194416.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>视差贴图效果 由合理到过量.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012944095-1997194416.gif" width="250" /><font size="2.5">
+            <i>视差贴图效果 由合理到过量.</i>
+        </font></center>
 
 <p>这就产生了我们想要的视差效果，但它只在低强度下有效。不足的是位移位移变换的很快，会撕裂表面。</p>
 
@@ -546,10 +522,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192800958-1980748310.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>光线投射到底部，有限且正确.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192800958-1980748310.png" width="250" /><font size="2.5">
+            <i>光线投射到底部，有限且正确.</i>
+        </font></center>
 
 <p>为了找到合适的偏移量，我们必须缩放视图方向向量，通过除以它自己的Z分量来使它的Z分量变成1。因为我们以后不需要用Z，我们只需要用X和Y除以Z。</p>
 
@@ -565,30 +540,27 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192802151-218582125.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>视差贴图像标准着色器.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192802151-218582125.png" width="250" /><font size="2.5">
+            <i>视差贴图像标准着色器.</i>
+        </font></center>
 
 <p>通过上述多个步骤修正后, 现在我们的着色器与标准着色器支持同样的视差效果。视差映射可以应用于任何表面，投影假设切线空间是均匀的。曲面具有弯曲的切线空间，因此会产生物理上不正确的结果。只要视差强度和曲率很小，你就可以摆脱它。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192802555-2049613835.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>球面视差贴图.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192802555-2049613835.png" width="250" /><font size="2.5">
+            <i>球面视差贴图.</i>
+        </font></center>
 
 <p>同样，阴影坐标不会受到这个效果的影响。因此，阴影在强烈的视差的组合下看起来很奇怪，好像漂浮在表面上。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192803371-1931947503.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>阴影不受视差影响.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192803371-1931947503.png" width="250" /><font size="2.5">
+            <i>阴影不受视差影响.</i>
+        </font></center>
 
 <h3 id="parallax-configuration">Parallax Configuration</h3>
 
@@ -637,21 +609,19 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192803893-1797850325.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>细节网格纹理.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192803893-1797850325.png" width="250" /><font size="2.5">
+            <i>细节网格纹理.</i>
+        </font></center>
 
 <p>使用这个纹理作为材质的细节albedo贴图。设置二级贴图的平铺为10×10。这表明，细节紫外线确实仍然不受影响。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192804491-290326603.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192805295-1360127209.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>细节UV不受影响.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192804491-290326603.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192805295-1360127209.png" width="250" /><font size="2.5">
+            <i>细节UV不受影响.</i>
+        </font></center>
 
 <p>Standard也简单地添加了UV偏移到细节UV，这是存储在UV插值器的ZW组件。</p>
 
@@ -676,10 +646,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192806533-2106069113.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>正确的UV.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192806533-2106069113.png" width="250" /><font size="2.5">
+            <i>正确的UV.</i>
+        </font></center>
 
 <h2 id="ray-marching-光线步进">Ray Marching-光线步进</h2>
 
@@ -688,10 +657,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192807160-2024700857.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>实际与预测的高度对比.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192807160-2024700857.png" width="250" /><font size="2.5">
+            <i>实际与预测的高度对比.</i>
+        </font></center>
 
 <p>先假设入口点的高度与交点的高度相同，但这实际上只有在入口点和交点具有相同的高度时才是正确的。当偏移量不大且高度场变化不大时，它的效果仍然很好。但是，当偏移量太大或高度变化太快时，该算法就会出现问题，而这很可能是错误的。这就会造成表面撕裂。</p>
 
@@ -700,10 +668,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192807679-1545265192.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>随视图射线前进.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200617192807679-1545265192.png" width="250" /><font size="2.5">
+            <i>随视图射线前进.</i>
+        </font></center>
 
 <p>有各种不同的视差贴图使用raymarching。常见的是陡视差映射_Steep Parallax Mapping_、地形映射_Relief Mapping_和视差遮挡映射_Parallax Occlusion Mapping_。与使用单一纹理样本相比，它们能通过高度场来创建更好的视差效果。除此之外，它们还可以应用额外的阴影和技术来改进该算法。当我们做的匹配这些方法时，我会调用它。</p>
 
@@ -827,10 +794,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012945572-448280189.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Raymarching 步进10次 无偏差, 无限制.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012945572-448280189.png" width="250" /><font size="2.5">
+            <i>Raymarching 步进10次 无偏差, 无限制.</i>
+        </font></center>
 
 <p>与简单的视差偏移方法相比，视差效果更加明显。较高的区域现在也正确地阻挡了我们后面较低区域的视野。我们还得到了明显的图层，总共10层。</p>
 
@@ -876,10 +842,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012948054-536464296.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Raymarching 100次采样.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012948054-536464296.png" width="250" /><font size="2.5">
+            <i>Raymarching 100次采样.</i>
+        </font></center>
 
 <p>这让我们知道了它的效果能有多好，但它计算量太大了，一般不适合手机。所以把样本数设为10后，我们仍然可以看到视差效果看起来连续和平滑。然而，由视差遮挡引起的轮廓总是锯齿状的，MSAA并不能消除这一点，因为它只适用于几何图形的边缘，而不是纹理效果。只要不依赖深度缓冲区，后处理抗锯齿技术能解决。</p>
 
@@ -894,10 +859,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012948690-1598196626.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Raymarching 100次采样.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012948690-1598196626.png" width="250" /><font size="2.5">
+            <i>Raymarching 100次采样.</i>
+        </font></center>
 
 <h3 id="步长之间插值">步长之间插值</h3>
 
@@ -908,10 +872,9 @@ model 1与model 2都只支持8个Texture Coordinate Register -&gt;Texcoord[0-7]�
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012949277-977122761.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>执行直线交叉.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012949277-977122761.png" width="250" /><font size="2.5">
+            <i>执行直线交叉.</i>
+        </font></center>
 
 <p>在for循环内，我们必须跟踪之前的UV偏移量、步长高度和表面高度。一般来说，这些等于循环之前的第一个样本。</p>
 
@@ -944,10 +907,9 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012950193-51635460.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>线段交点.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012950193-51635460.png" width="250" /><font size="2.5">
+            <i>线段交点.</i>
+        </font></center>
 
 <p>实际上，在这种情况下，我们可以使用插值器来缩放我们要添加到上一点上的UV偏移量。它可以归结为相同的东西，只是用了更少的数学。</p>
 
@@ -958,7 +920,7 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012951620-360864955.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012951620-360864955.png" width="250" /></center>
 
 <p>效果看起来好多了。我们现在假设表面在样本点之间是线性的，这可以防止最明显的分层假象。然而，它不能帮助我们检测我们是否错过了步骤之间的交集。我们仍然需要很多的样本来处理小的特征，轮廓和浅角度。</p>
 
@@ -990,10 +952,9 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012952340-10743193.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>越来越接近交点.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012952340-10743193.png" width="250" /><font size="2.5">
+            <i>越来越接近交点.</i>
+        </font></center>
 
 <p>上述方法是二分查找的一个应用。它与地形测绘方法最匹配。每走一步，路程减半，直到到达目的地。在我们的例子中，我们将简单地做固定次数，以达到预期的解决方案。一步，得到0.5。两步，得到0.25、0.75。三步，是0.125、0.375、0.625、0.875。注意，从第二步开始，每次采样提升分的辨率将翻倍。</p>
 
@@ -1062,10 +1023,9 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012953271-1061541462.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>10步长加上3个二分查找的最终效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012953271-1061541462.png" width="250" /><font size="2.5">
+            <i>10步长加上3个二分查找的最终效果.</i>
+        </font></center>
 
 <p>结果看起来相当不错，但仍不完美。二分法搜索可以比简单的插值处理较浅的角度，但仍然需要相当多的搜索步骤，以摆脱分层。所以这是一个试验的问题，找出哪种方法在特定情况下最有效，需要多少步骤。</p>
 
@@ -1078,10 +1038,9 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012954391-1540920343.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>动态批处理会产生奇怪的结果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/1692664-20200618012954391-1540920343.png" width="250" /><font size="2.5">
+            <i>动态批处理会产生奇怪的结果.</i>
+        </font></center>
 
 <p>在批处理将它们合并到一个单一的网格中之后，Unity不能标准化处理后的几何法向量和切向量。因此顶点数据正确的假设不再成立。</p>
 
@@ -1114,10 +1073,9 @@ t = (a - c) / (a - c + d - b)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/batched-correct.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>动态批量与正确的结果.</a></i></center>    
-        </font>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[由于视角的原因，当调整摄像机位置时，观察到的事物的相对位置会发生变化，这种视觉现象称为视差。在坐火车高速行驶看窗外的景物，附近的物体看起来很大并且移动很快，而远处的背景看起来很小并且移动较慢。渲染时，相机使用透视模式时，也会出现视差。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender20/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender20/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity GPU Instance(翻译十九)</title><link href="https://www.damonc.top/Unity_GPU_Instance.html" rel="alternate" type="text/html" title="Unity GPU Instance(翻译十九)" /><published>2018-01-24T20:00:00+08:00</published><updated>2018-01-24T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_GPU_Instance</id><content type="html" xml:base="https://www.damonc.top/Unity_GPU_Instance.html"><![CDATA[<p>本篇摘要：</p>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender20/batched-correct.png" width="250" /><font size="2.5">
+            <i>动态批量与正确的结果.</i>
+        </font></center>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[由于视角的原因，当调整摄像机位置时，观察到的事物的相对位置会发生变化，这种视觉现象称为视差。在坐火车高速行驶看窗外的景物，附近的物体看起来很大并且移动很快，而远处的背景看起来很小并且移动较慢。渲染时，相机使用透视模式时，也会出现视差。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender20/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender20/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity GPU Instance(翻译十九)</title><link href="https://www.damonc.top/Unity_GPU_Instance.html" rel="alternate" type="text/html" title="Unity GPU Instance(翻译十九)" /><published>2018-01-24T20:00:00+08:00</published><updated>2018-01-24T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_GPU_Instance</id><content type="html" xml:base="https://www.damonc.top/Unity_GPU_Instance.html"><![CDATA[<p>本篇摘要：</p>
 <ul>
   <li>渲染大量球体-优化DrawCall</li>
   <li>支持GPU-Instance</li>
@@ -1164,20 +1122,18 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010902826-821880737.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>5000 draw call.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010902826-821880737.png" width="250" /><font size="2.5">
+            <i>5000 draw call.</i>
+        </font></center>
 
 <p>但是当使用cube代替球体</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010904552-338192039.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>6 draw call.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010904552-338192039.png" width="250" /><font size="2.5">
+            <i>6 draw call.</i>
+        </font></center>
 
 <h3 id="支持instance">支持Instance</h3>
 
@@ -1199,11 +1155,10 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010905493-1524350499.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010906722-1492830859.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>合并了，但是显示有错误.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010905493-1524350499.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010906722-1492830859.png" width="250" /><font size="2.5">
+            <i>合并了，但是显示有错误.</i>
+        </font></center>
 
 <p>批处理数量已减少到42，这意味着现在仅用40个批处理即可渲染所有5000个球体。帧速率也高达80 fps，但是只有几个球体可见。<strong>错误原因</strong>：虽然5000个球体仍在渲染，但是在合批中同一批次的所有球体的顶点转换时都使用了同一个位置：它们都使用同一批次中第一个球的转换矩阵。 发生这种情况是因为现在同一批中所有球体的矩阵都作为数组发送到GPU。 在不告知着色器要使用哪个数组索引的情况下，它始终使用第一个索引。</p>
 
@@ -1232,10 +1187,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010908398-221325174.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>矩阵替换内部实现？.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010908398-221325174.png" width="250" /><font size="2.5">
+            <i>矩阵替换内部实现？.</i>
+        </font></center>
 
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//UnityInstancing中的实际代码要复杂得多。 它要处理平台差异，其他使用实例化的方法以及用于立</span>
 <span class="c1">//体声渲染的特殊代码，从而导致间接定义的多个步骤。 它还必须重新定义UnityObjectToClipPos，因</span>
@@ -1290,10 +1244,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010909964-776430193.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>批处理爆炸.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010909964-776430193.png" width="250" /><font size="2.5">
+            <i>批处理爆炸.</i>
+        </font></center>
 
 <p>为大量物体渲染阴影会增加GPU耗能。但是我们也可以在渲染球体阴影时使用GPU instance。在shadow caster-pass中添加instance指令；同时也增加<code class="language-plaintext highlighter-rouge">UNITY_VERTEX_INPUT_INSTANCE_ID</code> and <code class="language-plaintext highlighter-rouge">UNITY_SETUP_INSTANCE_ID</code></p>
 
@@ -1312,10 +1265,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010911627-1161944067.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>instanced 阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010911627-1161944067.png" width="250" /><font size="2.5">
+            <i>instanced 阴影.</i>
+        </font></center>
 
 <h3 id="多光源">多光源</h3>
 
@@ -1324,10 +1276,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010913312-1389275661.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>批处理爆炸.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010913312-1389275661.png" width="250" /><font size="2.5">
+            <i>批处理爆炸.</i>
+        </font></center>
 
 <p>上图，完全不支持多光源批处理。 要将instance与多个光源结合使用，只能切换到延迟渲染路径。 为此，请将所需的编译器指令添加到着色器的延迟传递中。</p>
 
@@ -1338,10 +1289,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010914967-1310775534.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>多光源instance.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010914967-1310775534.png" width="250" /><font size="2.5">
+            <i>多光源instance.</i>
+        </font></center>
 
 <h2 id="mixing-material-properties">Mixing Material Properties</h2>
 
@@ -1364,10 +1314,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010916576-490651101.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>球体与随机的颜色，没有批量和阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010916576-490651101.png" width="250" /><font size="2.5">
+            <i>球体与随机的颜色，没有批量和阴影.</i>
+        </font></center>
 
 <p>即使我们为物料启用了批处理，它也不再起作用。由于每个球体现在都有自己的材质，因此每个球体的着色器状态也必被更改。 这显示在统计面板中为SetPass call的数量。在这修改之前只有少量几个批次渲染，但是现在是5000加批次。</p>
 
@@ -1441,7 +1390,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010918398-38688989.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010918398-38688989.png" width="250" /></center>
 
 <p>现在，我们的颜色随机的球再次被批处理。 我们<strong>可以用相同的方式使其他属性可变。 对于颜色，浮点数，矩阵和四分量浮点向量，这是可能的</strong>。 <strong>如果要改变纹理，可以使用单独的纹理数组</strong>，并将索引添加到实例化缓冲区。其他属性修改类似。</p>
 
@@ -1512,7 +1461,7 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010919954-2006515171.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010919954-2006515171.png" width="250" /></center>
 
 <p>不幸的是没有有效的批处理。Unity能够对以相同的LOD颜色球体进行批处理，但是如果可以像往常一样进行批处理会更好。 我们可以通过用缓冲数组替换unity_LODFade来实现。可以通过为支持实例化的每个过程添加lodfade实例化选项来指示Unity的着色器代码执行此操作。</p>
 
@@ -1523,10 +1472,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010921540-656727216.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>instance LOD fading.</a></i></center>    
-        </font>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[还有另一种组合draw call的方法：GPU instance或Geometry instance。与动态批处理一样，此操作在运行时针对可见对象。 它的目标是让GPU一次性渲染同一网格的多个副本。 因此，它不能组合不同的网格或材质，但不仅限于小网格。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender19/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender19/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity 实时 GI &amp;amp; LPPV &amp;amp; LOD(翻译十八)</title><link href="https://www.damonc.top/Unity_RealTime_GI_LOD.html" rel="alternate" type="text/html" title="Unity 实时 GI &amp;amp; LPPV &amp;amp; LOD(翻译十八)" /><published>2018-01-23T20:00:00+08:00</published><updated>2018-01-23T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_RealTime_GI_LOD</id><content type="html" xml:base="https://www.damonc.top/Unity_RealTime_GI_LOD.html"><![CDATA[<p>本篇摘要：</p>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender19/1692664-20200612010921540-656727216.png" width="250" /><font size="2.5">
+            <i>instance LOD fading.</i>
+        </font></center>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[还有另一种组合draw call的方法：GPU instance或Geometry instance。与动态批处理一样，此操作在运行时针对可见对象。 它的目标是让GPU一次性渲染同一网格的多个副本。 因此，它不能组合不同的网格或材质，但不仅限于小网格。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender19/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender19/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity 实时 GI &amp;amp; LPPV &amp;amp; LOD(翻译十八)</title><link href="https://www.damonc.top/Unity_RealTime_GI_LOD.html" rel="alternate" type="text/html" title="Unity 实时 GI &amp;amp; LPPV &amp;amp; LOD(翻译十八)" /><published>2018-01-23T20:00:00+08:00</published><updated>2018-01-23T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_RealTime_GI_LOD</id><content type="html" xml:base="https://www.damonc.top/Unity_RealTime_GI_LOD.html"><![CDATA[<p>本篇摘要：</p>
 <ul>
   <li>支持实时全局光照</li>
   <li>用动画控制发光对GI的贡献</li>
@@ -1552,30 +1500,27 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003217232-1241081746.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>实时全局光照和烘焙光照同时启用的状态.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003217232-1241081746.png" width="250" /><font size="2.5">
+            <i>实时全局光照和烘焙光照同时启用的状态.</i>
+        </font></center>
 
 <p>要实际查看实时全局光照，请将测试场景中的主光源的模式设置为实时模式。 由于我们没有其他光源，即使启用了烘焙光照也能有效地关闭。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003333043-1240937953.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>主光源设置为实时模式.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003333043-1240937953.png" width="250" /><font size="2.5">
+            <i>主光源设置为实时模式.</i>
+        </font></center>
 
 <p>确保场景中的所有对象都使用我们的白色材质。 像上次一样，球体都是动态的，而其他的都是静态几何体。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003421685-903339628.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>只有动态对象能接收实时的全局光照.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003421685-903339628.png" width="250" /><font size="2.5">
+            <i>只有动态对象能接收实时的全局光照.</i>
+        </font></center>
 
 <p>事实证明，只有动态对象会受益于实时全局光照。静态物体会变的暗一点。这是因为光照探针自动并入实时全局光照。而静态对象必须对实时的光照贴图进行采样，而这些光照贴图与烘焙的光照贴图不同。我们的着色器还不支持。</p>
 
@@ -1586,10 +1531,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003617860-357493611.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>实时光照贴图，屋顶被选中时候的状态.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605003617860-357493611.png" width="250" /><font size="2.5">
+            <i>实时光照贴图，屋顶被选中时候的状态.</i>
+        </font></center>
 
 <p>虽然实时光照贴图已经被烘焙出来，并且它们还可能显示正确，但我们的meta渲染通道实际上使用的是错误的坐标。实时全局光照具有自己的光照贴图坐标，最终可能与静态光照贴图的坐标不同。Unity会根据光照贴图和对象的设置来自动生成这些坐标。这些数据存储在第三套UV中。所以将这些数据添加到My Lightmapping中的VertexData里面。</p>
 
@@ -1723,41 +1667,37 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013216623-414124444.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>把实时全局光照应用于一切物体之上.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013216623-414124444.png" width="250" /><font size="2.5">
+            <i>把实时全局光照应用于一切物体之上.</i>
+        </font></center>
 
 <p>现在我们的着色器使用的是实时光照贴图。最初，当使用Distance Shadowmask模式的时候，它的效果可能看起来与使用混合光源的烘焙光照的效果相同。当在播放模式下关闭光源的时候，差异就变得非常明显。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013217805-1029939389.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>禁用混合光源以后，间接光照仍然被保留.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013217805-1029939389.png" width="250" /><font size="2.5">
+            <i>禁用混合光源以后，间接光照仍然被保留.</i>
+        </font></center>
 
 <p>禁用混合光源以后，其间接光照将保持不变。相比之下，实时光照的间接贡献就会消失，并重新出现 - 这是应该出现的情况。 不过，新情况的完全烘焙好可能需要一段时间。 Enlighten系统会逐步调整光照贴图和光照探针。 这种情况发生的速度取决于场景的复杂性和实时全局光照CPU质量设置。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013219337-640958770.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>切换实时光与实时GI.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013219337-640958770.gif" width="250" /><font size="2.5">
+            <i>切换实时光与实时GI.</i>
+        </font></center>
 
 <p>所有实时光源都对实时全局光照有贡献。 然而，它的典型用途是那些仅在主要方向上存在光线的光源，比如可以代表太阳，因为它在天空中移动。它适用于方向光源。点光源和聚光光源也能工作，但只是没有阴影。所以<strong>当使用带有阴影的点光源或聚光光源的时候，你可能会遇到不正确的间接光照结果</strong>。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013220298-1170450196.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013221104-52400640.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>没有影响的间接光源和实时的聚光光源.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013220298-1170450196.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013221104-52400640.png" width="250" /><font size="2.5">
+            <i>没有影响的间接光源和实时的聚光光源.</i>
+        </font></center>
 
 <p>如果要从实时全局光照里面去掉一个实时光源，可以通过设置它的Indirect Multiplier将它的光强度设置为零。</p>
 
@@ -1768,10 +1708,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222060-1153434303.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>用自发光球来烘焙全局光照.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222060-1153434303.png" width="250" /><font size="2.5">
+            <i>用自发光球来烘焙全局光照.</i>
+        </font></center>
 
 <p>要将自发光光源烘焙到静态光照贴图中，我们必须在我们的着色器的GUI中设置材质的全局光照标志。因为我们总是将标志设置为BakedEmissive，光源最终将以烘焙好的光照贴图的形式出现。如果自发光光源是恒定的这个效果是很不错的，但这样就不允许我们做动画控制。</p>
 
@@ -1809,11 +1748,10 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222795-276798177.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013223641-2073252267.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>带有自发光球的实时全局光照效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013222795-276798177.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013223641-2073252267.png" width="250" /><font size="2.5">
+            <i>带有自发光球的实时全局光照效果.</i>
+        </font></center>
 
 <p>烘焙全局光照和实时全局光照之间的视觉差异主要是因为实时光照贴图通常具有比烘焙全局光照更低的分辨率。所以当自发光不发生不变化的时候，你也可以使用烘焙全局光照，确保能够利用其更高的分辨率。</p>
 
@@ -1865,10 +1803,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013226755-1065411582.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>动画控制实时GI.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013226755-1065411582.gif" width="250" /><font size="2.5">
+            <i>动画控制实时GI.</i>
+        </font></center>
 
 <p>调用UpdateGIMaterials方法会触发物体自发光的完整更新，并<strong>使用其meta渲染通道进行渲染</strong>。当自发光比纯色更复杂的时候，这是必要的，举个简单的例子来说，比如说我们使用纹理。如果一个<strong>纯色</strong>就足够了，那么我们可以通过使用渲染器和自发光颜色<strong>调用DynamicGI.SetEmissive方法</strong>来得到一个比较快捷的计算方式。这<strong>比使用meta渲染通道来渲染物体更快</strong>，所以在能够使用的时候可以利用这种方法。</p>
 
@@ -1885,20 +1822,18 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229006-1893115114.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>对于大型动态物体来说，光照效果不好.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229006-1893115114.png" width="250" /><font size="2.5">
+            <i>对于大型动态物体来说，光照效果不好.</i>
+        </font></center>
 
 <p>为了使光照探针器适用于这样的情况，我们可以使用光照探针代理体，或者简称为LPPV。这可以通过向着色器发送插值后的探针器数据网格而不是单个插值后的探针器数据来做到。这需要具有线性滤波的浮点数3D纹理，这就将这个方法限制到只能在现代显卡上使用。此外，还要确保在图形层设置中启用LPPV（光照探针代理体）支持。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229758-553683463.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>启用了LPPV（光照探针代理体）支持.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013229758-553683463.png" width="250" /><font size="2.5">
+            <i>启用了LPPV（光照探针代理体）支持.</i>
+        </font></center>
 
 <h3 id="向物体中添加一个光照探针代理体">向物体中添加一个光照探针代理体</h3>
 
@@ -1907,10 +1842,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013230509-1112003195.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>光照探针代理体组件.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013230509-1112003195.png" width="250" /><font size="2.5">
+            <i>光照探针代理体组件.</i>
+        </font></center>
 
 <p>LPPV（光照探针代理体）通过在运行时在光照探针之间进行插值来工作，就好像它们是常规动态对象的网格一样。插值后得到的结果被缓存，刷新模式（Refresh Mode）控制在何时进行更新。默认值为“自动（Automatic）”，这意味着当动态全局光照更改和探针器组发生移动的时候会触发更新。包围盒模式（Bounding Box Mode）控制着代理体的定位。自动本地化（AutomaticLocal ）意味着它会去匹配其附着的对象的包围盒。这些默认设置适用于我们的立方体，因此我们将保留这些设置。</p>
 
@@ -1919,21 +1853,19 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231203-999964017.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用一个光照探针代理体而不是常规的探针器.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231203-999964017.png" width="250" /><font size="2.5">
+            <i>使用一个光照探针代理体而不是常规的探针器.</i>
+        </font></center>
 
 <p>自动分辨率模式（automaticresolution mode）对于我们的拉伸立方体不起作用。 因此，将“分辨率模式（Resolution Mode ）”设置为“自定义（Custom ）”，并确保立方体的角上有采样点，并沿着其长边有多个样本点。当你选中这个对象的时候，可以看到这些采样点。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231870-1652713364.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013232779-1496013065.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>自定义探针器分辨率以适应拉伸的立方体.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013231870-1652713364.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013232779-1496013065.png" width="250" /><font size="2.5">
+            <i>自定义探针器分辨率以适应拉伸的立方体.</i>
+        </font></center>
 
 <h3 id="对光照探针代理体进行采样">对光照探针代理体进行采样</h3>
 
@@ -1951,10 +1883,9 @@ test test test!!dfS:FDFH&amp;*YER#.
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013233601-1847365803.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>没有更多球面谐波的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013233601-1847365803.png" width="250" /><font size="2.5">
+            <i>没有更多球面谐波的效果.</i>
+        </font></center>
 
 <p>得到的结果是所有的球面谐波被禁用，对于不使用LPPV（光照探针代理体）的动态对象也是如此。这是因为_UNITY_LIGHT_PROBE_PROXY_VOLUME_在项目范围内定义，而不是对每个对象实例进行定义。单个对象是否使用LPPV由UnityShaderVariables中定义的unity_ProbeVolumeParams的X分量指定。如果unity_ProbeVolumeParams的X分量设置为1，那么我们有一个LPPV（光照探针代理体），否则我们应该使用常规的球面谐波。</p>
 
@@ -2034,10 +1965,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013235369-787618137.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>采样后的LPPV（光照探针代理体）的效果，在伽马空间中的效果太暗.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013235369-787618137.png" width="250" /><font size="2.5">
+            <i>采样后的LPPV（光照探针代理体）的效果，在伽马空间中的效果太暗.</i>
+        </font></center>
 
 <p>我们的着色器现在在需要的时候对LPPV（光照探针代理体）进行采样，但结果太暗了。至少在伽马颜色空间中工作就是这样的结果。这是因为球面谐波数据存储在线性空间中。因此，可能需要进行颜色的转换。</p>
 
@@ -2055,10 +1985,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013236310-749557848.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>采样后的LPPV（光照探针代理体）的效果，带有正确的颜色.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013236310-749557848.png" width="250" /><font size="2.5">
+            <i>采样后的LPPV（光照探针代理体）的效果，带有正确的颜色.</i>
+        </font></center>
 
 <h2 id="lod-groups">LOD Groups</h2>
 
@@ -2073,21 +2002,19 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237093-2016130218.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237695-361227834.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>球体和立方体作为一个对象.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237093-2016130218.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013237695-361227834.png" width="250" /><font size="2.5">
+            <i>球体和立方体作为一个对象.</i>
+        </font></center>
 
 <p>通过Component /Rendering / LOD Group将一个LOD组组件添加到父对象。你会得到一个具有默认设置的LOD组，它有三个LOD等级。 百分比是指由对象的包围盒覆盖的窗口的垂直部分。因此，当垂直尺寸下降到窗口高度的60％的时候，默认设置为切换到LOD 1，当垂直尺寸下降到窗口高度的30％的时候，默认设置为切换到LOD 2。当垂直尺寸下降到窗口高度的10％的时候，它根本不渲染。 你可以通过拖动LOD框的边来更改这些阈值。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013238446-1711254101.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>组件LOD组.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013238446-1711254101.png" width="250" /><font size="2.5">
+            <i>组件LOD组.</i>
+        </font></center>
 
 <p>这些阈值由LOD偏移（LOD Bias）进行修改，LOD偏移（LOD Bias）可以在组件检视器里面查看并修改。目前使用的是质量设置为2的默认值，这意味着阈值被减半。也可以设置为最大LOD等级，这将导致跳过最高级别。</p>
 
@@ -2096,10 +2023,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013239110-167141319.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>让球这个子物体使用LOD 0等级.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013239110-167141319.png" width="250" /><font size="2.5">
+            <i>让球这个子物体使用LOD 0等级.</i>
+        </font></center>
 
 <p>一旦配置了LOD等级，你可以通过移动相机来查看它们的效果。如果物体足够大的话，它将使用球体，否则的话它将使用立方体，或根本不会渲染。</p>
 
@@ -2119,10 +2045,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013240110-283978428.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>让球这个子物体使用LOD 0等级.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013240110-283978428.png" width="250" /><font size="2.5">
+            <i>让球这个子物体使用LOD 0等级.</i>
+        </font></center>
 
 <p><em>使用烘焙光源得到的效果</em></p>
 
@@ -2131,10 +2056,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013241019-1435398902.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>没有光照探针时候的烘焙光照.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013241019-1435398902.png" width="250" /><font size="2.5">
+            <i>没有光照探针时候的烘焙光照.</i>
+        </font></center>
 
 <p>禁用光探针组会使得立方体变得更暗。这意味着他们不再接受间接光照。 这是因为在烘焙过程中确定间接光照的时候使用的是LOD 0。为了找到其他LOD等级下的间接光照， Unity可以做到的最好程度是依靠烘焙光照探针。 因此，即使在运行时我们不需要光照探针，我们也需要光照探针来为我们的立方体计算间接光照。</p>
 
@@ -2145,30 +2069,27 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013242971-183808454.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>LOD 1使用光照探针来计算实时全局光照.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013242971-183808454.png" width="250" /><font size="2.5">
+            <i>LOD 1使用光照探针来计算实时全局光照.</i>
+        </font></center>
 
 <p>当烘焙全局光照和实时全局光照同时使用的时候，它会变得更加复杂。 在这种情况下，立方体应该对烘焙全局光照使用光照贴图，对实时全局光照使用光照探针。不幸的是，这是不可能的，这是因为光照贴图和和球面谐波不能同时使用。这是一个非此即彼的问题。因为光照贴图数据对于立方体来说是可用的，所以Unity最终会使用它。因此，立方体不受实时全局光照的影响。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013243831-1402316420.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>仅对LOD 1等级使用烘焙光照，使用的是低强度的主光源.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013243831-1402316420.png" width="250" /><font size="2.5">
+            <i>仅对LOD 1等级使用烘焙光照，使用的是低强度的主光源.</i>
+        </font></center>
 
 <p>一个重要的细节是，烘焙的LOD等级和渲染的LOD等级是完全独立的。 他们不需要使用相同的设置。如果实时全局光照最终比烘焙全局光照更重要，你可以强制立方体使用光照探针，确保它对于光照贴图来说不是静态的，同时保持球体静止。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013244794-1245713384.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>LOD 1强制使用光照探针.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013244794-1245713384.png" width="250" /><font size="2.5">
+            <i>LOD 1强制使用光照探针.</i>
+        </font></center>
 
 <h3 id="lod淡入淡出功能">LOD淡入淡出功能</h3>
 
@@ -2179,10 +2100,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013245526-1175118666.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>带有0.5变换宽度的淡入淡出.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013245526-1175118666.png" width="250" /><font size="2.5">
+            <i>带有0.5变换宽度的淡入淡出.</i>
+        </font></center>
 
 <p>当启用淡入淡出的时候，在LOD组之间进行转换的时候会同时渲染两个LOD等级。</p>
 
@@ -2246,10 +2166,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013246331-642394563.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>通过抖动方法得到的淡入淡出几何体.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013246331-642394563.png" width="250" /><font size="2.5">
+            <i>通过抖动方法得到的淡入淡出几何体.</i>
+        </font></center>
 
 <p>淡入淡出现在可以在几何体上正常工作了。为了使其适用于阴影，我们必须调整My Shadows着色器。 首先，当我们进行淡入淡出处理的时候，必须使用vpos。其次，我们还必须在片段程序开始的位置使用UnityApplyDitherCrossFade函数。</p>
 
@@ -2271,11 +2190,10 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013247225-2138491287.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013249358-581600268.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>对几何体和阴影都做了淡入淡出处理.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013247225-2138491287.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender18/1692664-20200605013249358-581600268.gif" width="250" /><font size="2.5">
+            <i>对几何体和阴影都做了淡入淡出处理.</i>
+        </font></center>
 
 <p>因为立方体和球体相互交叉，所以我们在对它们做淡入淡出处理的时候，得到一些奇怪的自阴影效果。这对于看到淡入淡出处理能在阴影上起作用是很方便的，但是当你为实际游戏创建LOD几何体的时候，需要注意这些瑕疵。</p>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><category term="Unity3d API" /><summary type="html"><![CDATA[了解间接光需要知道光在静态表面之间如何反射。重点在于哪些表面可能会受到其他表面的影响，以及程度如何。弄清这些关系需要做很多的工作，不能实时完成。所以这个数据由编辑器处理并存储在运行时使用。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender18/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender18/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity 混合光照(翻译十七)</title><link href="https://www.damonc.top/Unity_Mix_Lighting.html" rel="alternate" type="text/html" title="Unity 混合光照(翻译十七)" /><published>2018-01-21T20:00:00+08:00</published><updated>2018-01-21T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Mix_Lighting</id><content type="html" xml:base="https://www.damonc.top/Unity_Mix_Lighting.html"><![CDATA[<p>本篇摘要：</p>
 <ul>
@@ -2300,11 +2218,10 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002309942-1932595350.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002311276-1707091650.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>完全实时和完全烘焙光照.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002309942-1932595350.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002311276-1707091650.png" width="250" /><font size="2.5">
+            <i>完全实时和完全烘焙光照.</i>
+        </font></center>
 
 <h3 id="混合模式">混合模式</h3>
 
@@ -2313,20 +2230,18 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002312394-324532807.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>混合光照，烘焙间接.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002312394-324532807.png" width="250" /><font size="2.5">
+            <i>混合光照，烘焙间接.</i>
+        </font></center>
 
 <p>我们已经在<a href="https://www.damonc.top/2018/01/19/Unity_Static_Lightting/">前一篇</a>教程中切换到这个模式了，但是之前我们只使用了完全烘焙光照。虽然表现结果与完全烘焙光照相同，混合光照模式没有任何区别。为了使用混合光照，光源的模式必须要设置为混合。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002313374-471117722.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>混合模式的主光源.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002313374-471117722.png" width="250" /><font size="2.5">
+            <i>混合模式的主光源.</i>
+        </font></center>
 
 <p>在将主定向光改为混合光后，两件事会发生：</p>
 
@@ -2335,21 +2250,19 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002314496-2053721233.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002315595-1655913714.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>完全烘焙的光照贴图 vs 只有间接光的光照贴图.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002314496-2053721233.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002315595-1655913714.png" width="250" /><font size="2.5">
+            <i>完全烘焙的光照贴图 vs 只有间接光的光照贴图.</i>
+        </font></center>
 
 <p>第二，所有物体都会像主光源被设置为实时那样被照亮。只有一点不同：光照贴图被用来为静态物体添加间接光，而不是球谐光或探头。动态物体的间接光仍要使用光照探头。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002316908-68636833.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>混合光照，实时直接光照烘焙间接光.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002316908-68636833.png" width="250" /><font size="2.5">
+            <i>混合光照，实时直接光照烘焙间接光.</i>
+        </font></center>
 
 <p>我们不需要改变我们的着色器来支持这点，因为前向基础通道（forward base pass）已经融合了光照贴图数据和主定向光源。和往常一样，额外的光照会得到附加通道（additive pass）。当使用延迟渲染通道时，主光源也会得到一个通道。</p>
 
@@ -2363,11 +2276,10 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002318408-928334072.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002319957-145579115.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>阴影衰减，标准着色器vs我们的着色器.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002318408-928334072.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002319957-145579115.png" width="250" /><font size="2.5">
+            <i>阴影衰减，标准着色器vs我们的着色器.</i>
+        </font></center>
 
 <p>虽然Unity很长一段时间都有混合光照模式，但实际上它在Unity5中就不起作用了。Unity5.6中新加入了一个混合光照模式，即我们现在使用的这个。当该新模式被加入时，_UNITY_LIGHT_ATTENUATION_宏下面的代码发生了变化。我们在使用完全烘焙光照或者实时光照时没有注意到这一点，但是我们必须更新我们的代码以适应混合光照的新方法。由于这是最近的一个巨大的变化，我们必须要注意它所带来的问题。</p>
 
@@ -2479,30 +2391,27 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002321275-2134383138.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Shadowmask模式.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002321275-2134383138.png" width="250" /><font size="2.5">
+            <i>Shadowmask模式.</i>
+        </font></center>
 
 <p>在这个模式中，混合光照的间接光和阴影衰减都存储在了光照贴图中。阴影被存储在一张额外的贴图（即阴影蒙版）。当只有主定向光源时，红色的阴影蒙版决定是否过滤被照亮的物体。红色是因为阴影信息被存储在纹理的R通道中。事实上，贴图中至多可以储存四个光照的阴影，因为它只有四个通道。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002322323-849349388.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>烘焙的强度以及阴影蒙版.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002322323-849349388.png" width="250" /><font size="2.5">
+            <i>烘焙的强度以及阴影蒙版.</i>
+        </font></center>
 
 <p>在Unity创建了阴影蒙版后，静态物体的阴影投射会消失。只有光照探头仍会处理它们。动态物体的阴影不受影响。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002323536-1775535799.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>没有烘焙阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002323536-1775535799.png" width="250" /><font size="2.5">
+            <i>没有烘焙阴影.</i>
+        </font></center>
 
 <h3 id="对阴影蒙版采样">对阴影蒙版采样</h3>
 
@@ -2587,20 +2496,18 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002325094-888038969.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>实时阴影和阴影蒙版阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002325094-888038969.png" width="250" /><font size="2.5">
+            <i>实时阴影和阴影蒙版阴影.</i>
+        </font></center>
 
 <p>现在静态物体有了实时阴影和烘焙阴影，且它们正确地混合。实时阴影的衰减仍然超过了阴影距离，但是烘焙阴影没有。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002326606-1972314102.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>只有实时阴影衰减了.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002326606-1972314102.png" width="250" /><font size="2.5">
+            <i>只有实时阴影衰减了.</i>
+        </font></center>
 
 <h3 id="添加一个阴影蒙版g-buffer">添加一个阴影蒙版G-Buffer</h3>
 
@@ -2735,10 +2642,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002327719-433885054.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>距离阴影蒙版模式.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002327719-433885054.png" width="250" /><font size="2.5">
+            <i>距离阴影蒙版模式.</i>
+        </font></center>
 
 <p><em>在2017及以上，使用哪个阴影蒙版模式是通过质量设置进行控制。</em></p>
 
@@ -2747,10 +2653,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002329008-1483902900.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>所有物体都有实时阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002329008-1483902900.png" width="250" /><font size="2.5">
+            <i>所有物体都有实时阴影.</i>
+        </font></center>
 
 <p>不过这里仍有一个阴影蒙版。在这个模式中，烘焙阴影和光照探头的使用超出了阴影距离。因此该模式是成本最高的模式，在阴影距离范围内等价于烘焙间接模式，超出该范围则等价于阴影蒙版模式。</p>
 
@@ -2763,10 +2668,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002330331-1413395037.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>四个光源，都是混合光.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002330331-1413395037.png" width="250" /><font size="2.5">
+            <i>四个光源，都是混合光.</i>
+        </font></center>
 
 <p><strong>主方向光源的阴影仍存储在R通道中</strong>。你还能够看到存储在G通道和B通道中的聚光源的阴影，最后一个聚光源的阴影存储在A通道中。</p>
 
@@ -2775,11 +2679,10 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002332758-586177298.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002333778-925731185.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>5个重叠的光照，其中一个为完全烘焙光.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002332758-586177298.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002333778-925731185.png" width="250" /><font size="2.5">
+            <i>5个重叠的光照，其中一个为完全烘焙光.</i>
+        </font></center>
 
 <h3 id="支持多个有蒙版的定向光">支持多个有蒙版的定向光</h3>
 
@@ -2788,10 +2691,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002335110-966052747.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>两个方向光源产生错误的衰减.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002335110-966052747.png" width="250" /><font size="2.5">
+            <i>两个方向光源产生错误的衰减.</i>
+        </font></center>
 
 <p>这是使用UNITY_LIGHT_ATTENUATION的新方法中的一个漏洞：Unity使用通过UNITY_SHADOW_COORDS定义的阴影插值来存储方向阴影的屏幕空间坐标，或者其它拥有阴影蒙版的光源的光照贴图坐标。</p>
 
@@ -2856,10 +2758,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002336571-896877423.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>两个定向光源正确的衰减.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002336571-896877423.png" width="250" /><font size="2.5">
+            <i>两个定向光源正确的衰减.</i>
+        </font></center>
 
 <h2 id="消减阴影-subtractive-shadows">消减阴影-Subtractive Shadows</h2>
 
@@ -2868,20 +2769,18 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002337701-173459592.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>消减模式.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002337701-173459592.png" width="250" /><font size="2.5">
+            <i>消减模式.</i>
+        </font></center>
 
 <p>在切换到消减模式后，场景会亮很多。这是由于静态物体现在同时使用完全烘焙的光照贴图和方向光源。这是因为动态物体仍然会同时使用光照探头和方向光源。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002338965-1025220581.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>静态物体受到两次光照.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002338965-1025220581.png" width="250" /><font size="2.5">
+            <i>静态物体受到两次光照.</i>
+        </font></center>
 
 <p><strong>消减模式只可用于前向渲染</strong>。当使用延迟渲染路径时，相关的物体会回到前向渲染路径，就像透明物体那样。</p>
 
@@ -2926,10 +2825,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002340399-1575340233.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>静态物体只有烘焙光.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002340399-1575340233.png" width="250" /><font size="2.5">
+            <i>静态物体只有烘焙光.</i>
+        </font></center>
 
 <h3 id="为烘焙光打阴影">为烘焙光打阴影</h3>
 
@@ -3001,10 +2899,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002341952-1577870051.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>减去后得到的光照.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002341952-1577870051.png" width="250" /><font size="2.5">
+            <i>减去后得到的光照.</i>
+        </font></center>
 
 <p>无论在什么环境光场景中，这总会产生纯黑色阴影。为了更好地符合场景的需要，我们可以使用我们的消减阴影颜色，可以通过unity_ShadowColor实现。阴影区域不应比这个颜色更暗，不过它们可以更亮些。所以我们取计算出的光照和阴影颜色的最大值。</p>
 
@@ -3023,10 +2920,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002343602-223725225.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>有颜色的阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002343602-223725225.png" width="250" /><font size="2.5">
+            <i>有颜色的阴影.</i>
+        </font></center>
 
 <p>因为我们的场景的环境强度（ambient intensity）被设置为0，所以默认的阴影颜色和场景不太搭配。但是可以很轻松地发现消减阴影，因此我没有调整它。还有一点非常明显，即阴影颜色现在覆盖了所有的烘焙阴影，而实际不应该这样。它应该只影响那些接收动态阴影的区域，不应该使烘焙阴影变亮。为此，使用消减光照和烘焙光照的最小值。</p>
 
@@ -3037,20 +2933,18 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002345136-2052798411.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>正确的消减阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002345136-2052798411.png" width="250" /><font size="2.5">
+            <i>正确的消减阴影.</i>
+        </font></center>
 
 <p>现在只要我们使用适当的阴影颜色，我们就会得到正确的消减阴影。但是记住这只是一个近似，而且它不太适用于多重光照。例如，其它的烘焙光会产生错误的阴影。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002346714-785287043.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>多重光照错误的消减.</a></i></center>    
-        </font>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[烘焙光照有间接光而没有实时光照，因为间接光需要光照贴图。由于间接光可以为场景加入很大的真实感，如果我们可以将它和实时光照融合在一起就再好不过了。这是可以的，但也意味着着色的开销会增加。我们需要将混合光（Mixed Lighting）的光照模式（Lighting Mode）设置为烘焙间接（Baked Indirect）。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender17/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender17/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity 光照烘焙(翻译十六)</title><link href="https://www.damonc.top/Unity_Static_Lightting.html" rel="alternate" type="text/html" title="Unity 光照烘焙(翻译十六)" /><published>2018-01-19T20:00:00+08:00</published><updated>2018-01-19T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Static_Lightting</id><content type="html" xml:base="https://www.damonc.top/Unity_Static_Lightting.html"><![CDATA[<p>实时光照计算的开销非常昂贵。根据翻译13，延迟渲染允许程序员使用的光源可以多于Forward渲染，但阴影的开销仍然对性能有一个限制。如果我们的场景是动态的，那么没有办法来避免执行这些计算。但是如果光源和几何物体位置都是不变的，那么我们可以只计算一次光照并重复使用。这使得我们可以在场景中放置许多光源，而不必在运行的时候再渲染它们。这种方法也可以使用那些不能用作实时光源的区域光源(area lighting)。</p>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender17/1692664-20200603002346714-785287043.png" width="250" /><font size="2.5">
+            <i>多重光照错误的消减.</i>
+        </font></center>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[烘焙光照有间接光而没有实时光照，因为间接光需要光照贴图。由于间接光可以为场景加入很大的真实感，如果我们可以将它和实时光照融合在一起就再好不过了。这是可以的，但也意味着着色的开销会增加。我们需要将混合光（Mixed Lighting）的光照模式（Lighting Mode）设置为烘焙间接（Baked Indirect）。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender17/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender17/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity 光照烘焙(翻译十六)</title><link href="https://www.damonc.top/Unity_Static_Lightting.html" rel="alternate" type="text/html" title="Unity 光照烘焙(翻译十六)" /><published>2018-01-19T20:00:00+08:00</published><updated>2018-01-19T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Static_Lightting</id><content type="html" xml:base="https://www.damonc.top/Unity_Static_Lightting.html"><![CDATA[<p>实时光照计算的开销非常昂贵。根据翻译13，延迟渲染允许程序员使用的光源可以多于Forward渲染，但阴影的开销仍然对性能有一个限制。如果我们的场景是动态的，那么没有办法来避免执行这些计算。但是如果光源和几何物体位置都是不变的，那么我们可以只计算一次光照并重复使用。这使得我们可以在场景中放置许多光源，而不必在运行的时候再渲染它们。这种方法也可以使用那些不能用作实时光源的区域光源(area lighting)。</p>
 
 <h2 id="光照贴图-lightingmapping">光照贴图-Lightingmapping</h2>
 
@@ -3058,10 +2952,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>针对光照贴图的一个测试场景.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png" width="250" /><font size="2.5">
+            <i>针对光照贴图的一个测试场景.</i>
+        </font></center>
 
 <h3 id="烘焙光源-baked-lights">烘焙光源-Baked Lights</h3>
 
@@ -3070,30 +2963,27 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用烘焙模式的主方向光源.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png" width="250" /><font size="2.5">
+            <i>使用烘焙模式的主方向光源.</i>
+        </font></center>
 
 <p><strong>将主方向光源变成烘培光源后，就不被纳入动态光照计算。从动态对象的角度来看，光源是不存在的。 唯一仍然不变的是环境光照，它仍然是基于主方向光源的。</strong></p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>没有直接光照的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png" width="250" /><font size="2.5">
+            <i>没有直接光照的效果.</i>
+        </font></center>
 
 <p>要实际启用光照贴图，请在lighting窗口的“混合光照（<em>Mixed Lighting</em>）”中打开“烘培全局光照(<em>BakedGlobal Illumination</em>)”。 然后<strong>将光照模式设置为“烘培间接光照（<em>BakedIndirect</em>）”。 尽管它的名字说的是烘培间接光照，但是它也包括了直接光照</strong>。 它通常用于向场景添加间接光照。另外，确保实时全局光照（<em>Realtime Global Illumination</em>）被禁用，因为我们还没有支持到这一点。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>烘培间接光照模式.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png" width="250" /><font size="2.5">
+            <i>烘培间接光照模式.</i>
+        </font></center>
 
 <h3 id="静态几何体">静态几何体</h3>
 
@@ -3109,30 +2999,27 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>静态标签设定.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png" width="250" /><font size="2.5">
+            <i>静态标签设定.</i>
+        </font></center>
 
 <p>一个物体对于光照贴图来说是否是静态的，也可以通过其网格渲染器的检视器来进行查看和编辑。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>对于光照贴图来说是静态的物体.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png" width="250" /><font size="2.5">
+            <i>对于光照贴图来说是静态的物体.</i>
+        </font></center>
 
 <p>现在，所有的物体都是静态的，它们将被包含在光照贴图的处理过程中。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用烘焙光照的场景.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png" width="250" /><font size="2.5">
+            <i>使用烘焙光照的场景.</i>
+        </font></center>
 
 <p><strong>必须注意</strong>，使用光照贴图得到的结果不如使用实时照明得到的结果亮度那么高。这是因为缺失了镜面高光，只剩下了漫反射光照。镜面高光取决于视角，因此取决于相机的角度。正是由于相机是移动的，因此它不能包含在光照贴图中。(使用场景推荐)这种限制意味着光照贴图可以用于微弱的光线和暗淡的表面，但不能用于强直射光或有光泽的表面。如果你想要镜面高光，你将不得不使用实时光源。所以你经常会使用烘烤光源和实时光源的混合。</p>
 
@@ -3143,10 +3030,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>自动烘焙.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png" width="250" /><font size="2.5">
+            <i>自动烘焙.</i>
+        </font></center>
 
 <h3 id="光照贴图设置-lightingmapping-setting">光照贴图设置-Lightingmapping Setting</h3>
 
@@ -3155,41 +3041,37 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>默认的光照贴图设置.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png" width="250" /><font size="2.5">
+            <i>默认的光照贴图设置.</i>
+        </font></center>
 
 <p>在做任何事情之前，请将“DirectionalMode“设置为”Non-Direction“。 稍后我们会处理其他模式。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用“Non-directional”模式的光照贴图.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png" width="250" /><font size="2.5">
+            <i>使用“Non-directional”模式的光照贴图.</i>
+        </font></center>
 
 <p>烘烤的光照存储在纹理中。 你可以通过将光照窗口从“场景（Scene）“切换到”全局地图（<em>Global Maps</em>）“模式来进行查看。 使用默认设置，我的测试场景很容易与一张1024×1024贴图相匹配。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>得到光照贴图.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png" width="250" /><font size="2.5">
+            <i>得到光照贴图.</i>
+        </font></center>
 
 <p>Unity自带的Objects物体都有用于光照贴图的UV坐标。对于手动导入的模型，可以自己提供UV坐标，也可以让Unity生成。烘烤后可以在光照贴图中看到展开的纹理。它们需要多少空间取决于场景中物体的大小和光照贴图的分辨率设置。 如果质量要求高分辨率太大，一张贴图涨不下，Unity会创建额外的贴图存储，直至完成。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>光照贴图的分辨率的不同会带来很大的差异.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png" width="250" /><font size="2.5">
+            <i>光照贴图的分辨率的不同会带来很大的差异.</i>
+        </font></center>
 
 <p>对于每个项目来说，最佳设置都是不同。 你必须不断的调整烘焙参数，直到达成很好的效果及平衡。需要注意的是，视觉质量也很大程度上取决于用于光照贴图的纹理展开的质量。不存在纹理接缝可能会产生明显的瑕疵。Unity的默认球体就是一个很好的例子。它不适用于光照贴图。</p>
 
@@ -3202,54 +3084,49 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>没有环境光照，realtime vs. lightmapped.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png" width="250" /><font size="2.5">
+            <i>没有环境光照，realtime vs. lightmapped.</i>
+        </font></center>
 
 <p>每次光子反射的时候，它都会失去一些能量，它会被一些需要的材质采样着色。Unity在烘焙间接光照的时候，物体会根据附近的颜色进行着色。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>绿色的地面，realtime vs. lightmapped.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png" width="250" /><font size="2.5">
+            <i>绿色的地面，realtime vs. lightmapped.</i>
+        </font></center>
 
 <p>自发光表面也会影响烘焙光照。它们会成为间接光源。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>自发光的地面，realtime vs. lightmapped.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png" width="250" /><font size="2.5">
+            <i>自发光的地面，realtime vs. lightmapped.</i>
+        </font></center>
 
 <p>间接光照的一个特殊设置是AO环境遮挡：这是指在角落和转折中发生的间接光照造成的阴影。这是一种人为的提升，可以增强深度方面的视觉。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用环境遮挡的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png" width="250" /><font size="2.5">
+            <i>使用环境遮挡的效果.</i>
+        </font></center>
 
 <p>环境遮挡效果完全基于物体表面。它不考虑光线实际来自哪里。烘焙时并不总是正确，举个简单的例子：当与自发光表面组合的时候就会产生一些错误的结果。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>显然是错误的环境遮挡效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png" width="250" /><font size="2.5">
+            <i>显然是错误的环境遮挡效果.</i>
+        </font></center>
 
 <h3 id="透明度-transparency">透明度-Transparency</h3>
 
@@ -3258,30 +3135,27 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>半透明的屋顶.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png" width="250" /><font size="2.5">
+            <i>半透明的屋顶.</i>
+        </font></center>
 
 <p>镂空材质也可以在光照贴图中正常工作。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>镂空的屋顶.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png" width="250" /><font size="2.5">
+            <i>镂空的屋顶.</i>
+        </font></center>
 
 <p>但 这仅在使用封闭曲面的时候有效。当使用像是quad这样的单面几何，光线将在不存在的一面损坏。<em>当另外一面没有任何东西的时候，这是很好的，但是当使用单面透明表面的时候会导致问题</em>。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>四边形上有一个错误.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png" width="250" /><font size="2.5">
+            <i>四边形上有一个错误.</i>
+        </font></center>
 
 <p>为了处理这个问题，必须告诉光照贴图系统将这些表面视为透明的。 这可以通过自定义光照贴图设置完成</p>
 
@@ -3292,10 +3166,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>指示这是透明的.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png" width="250" /><font size="2.5">
+            <i>指示这是透明的.</i>
+        </font></center>
 
 <ol>
   <li>单独设置：通过物体的网格渲染器检视器来选择它们。你的资源名字将显示在Lightmap参数的下拉列表中。</li>
@@ -3304,11 +3177,10 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>为透明四边形使用自定义参数.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png" width="250" /><font size="2.5">
+            <i>为透明四边形使用自定义参数.</i>
+        </font></center>
 
 <p>将物体标记为透明也会改变它对间接光照的贡献。透明物体让间接光通过，而不透明物体则会阻挡间接光。</p>
 
@@ -3319,10 +3191,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用我们的白色材质的球体.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png" width="250" /><font size="2.5">
+            <i>使用我们的白色材质的球体.</i>
+        </font></center>
 
 <h3 id="光照贴图的着色器变体">光照贴图的着色器变体</h3>
 
@@ -3428,10 +3299,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用原始光照图数据的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png" width="250" /><font size="2.5">
+            <i>使用原始光照图数据的效果.</i>
+        </font></center>
 
 <p>我们现在得到了烘焙的间接光照，但效果看起来不对。这是因为光照贴图数据已被编码。颜色以RGBM格式或是半强度格式进行存储，以支持高强度的光。UnityCG的DecodeLightmap函数负责为我们解码。</p>
 
@@ -3444,10 +3314,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用解码后光照图数据的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png" width="250" /><font size="2.5">
+            <i>使用解码后光照图数据的效果.</i>
+        </font></center>
 
 <h2 id="创建光照贴图">创建光照贴图</h2>
 
@@ -3462,10 +3331,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>半透明的屋顶，效果不正确.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png" width="250" /><font size="2.5">
+            <i>半透明的屋顶，效果不正确.</i>
+        </font></center>
 
 <p><strong>光照贴图</strong>仍然把屋顶看成是实心物体，这是不正确的。它<strong>使用材质的渲染类型来确定如何处理表面</strong>，这应该告诉光照贴图我们的对象是半透明的。事实上，它确实知道屋顶是半透明的，它只是把它看作是完全不透明的而已。这是因为<strong>它</strong>采用Unity的命名约定<strong>_Color材质属性的alpha组件以及主纹理来设置不透明度</strong>。</p>
 
@@ -3483,10 +3351,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>半透明的屋顶，正确的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png" width="250" /><font size="2.5">
+            <i>半透明的屋顶，正确的效果.</i>
+        </font></center>
 
 <h3 id="镂空部分的阴影-cutout-shadow">镂空部分的阴影-Cutout Shadow</h3>
 
@@ -3495,20 +3362,18 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>镂空的屋顶，效果不正确.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png" width="250" /><font size="2.5">
+            <i>镂空的屋顶，效果不正确.</i>
+        </font></center>
 
 <p>解决方案是再次<strong>采用Unity的命名约定_Cutoff材质属性</strong>。所以替换shader、cg文件、GUI拓展。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>镂空的屋顶，正确的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png" width="250" /><font size="2.5">
+            <i>镂空的屋顶，正确的效果.</i>
+        </font></center>
 
 <h3 id="添加一个meta渲染通道-add-meta-pass">添加一个Meta渲染通道-Add Meta Pass</h3>
 
@@ -3517,10 +3382,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>绿色的地板，效果不正确.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png" width="250" /><font size="2.5">
+            <i>绿色的地板，效果不正确.</i>
+        </font></center>
 
 <p>要采样物体的表面颜色，光照贴图程序会将它的光照模式设置为Meta来寻找一个着色器渲染通道。这个渲染通道仅由光照贴图程序使用，不使用剔除。所以让我们在我们的着色器上添加一个渲染通道。</p>
 
@@ -3703,10 +3567,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>间接光照设置为0的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png" width="250" /><font size="2.5">
+            <i>间接光照设置为0的效果.</i>
+        </font></center>
 
 <p>要<strong>获得自发光颜色</strong>，我们可以简单的<strong>使用GetEmission函数</strong>。要<strong>获得反照率</strong>，我们必须再次<strong>使用_DiffuseAndSpecularFromMetallic_函数</strong>。 该函数具有镜面高光颜色和反射率作为输出参数，即使我们现在不使用它们，我们也必须提供这些参数。我们可以使用<strong>surfaceData.SpecularColor来捕获镜面高光颜色</strong>。</p>
 
@@ -3728,10 +3591,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>间接光照着色的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png" width="250" /><font size="2.5">
+            <i>间接光照着色的效果.</i>
+        </font></center>
 
 <p>但自发光光照可能还没有出现在光照贴图中。这是因为光照贴图程序并不总是包含一个自发光光照的渲染通道。<strong>材质必须表明它们具有自发光光照属性，</strong>以对烘焙过程做出贡献。这是<strong>通过Material.globalIlluminationFlags属性</strong>完成的。扩展GUI设置：当自发光光照编辑的时候，它应该被烘焙进光照贴图。</p>
 
@@ -3755,11 +3617,10 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>粗糙的绿色金属，standard vs. our.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png" width="250" /><font size="2.5">
+            <i>粗糙的绿色金属，standard vs. our.</i>
+        </font></center>
 
 <p>标准着色器通过<strong>将反射率的一部分加到镜面高光颜色</strong>进行补偿（高亮）。它使用_UnityStandardBRDF.cginc_的_SmoothnessToRoughness函数_来确定基于平滑度的粗糙度值，将其缩小一半，并使用它来缩放镜面高光颜色。</p>
 
@@ -3783,10 +3644,9 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>调整反照率后的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png" width="250" /><font size="2.5">
+            <i>调整反照率后的效果.</i>
+        </font></center>
 
 <h2 id="方向光照贴图-directinal-lightmap">方向光照贴图-Directinal Lightmap</h2>
 
@@ -3795,11 +3655,10 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用了法线贴图，standard vs. our.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png" width="250" /><font size="2.5">
+            <i>使用了法线贴图，standard vs. our.</i>
+        </font></center>
 
 <p>当从实时光照切换到烘焙光时，法线贴图的影响几乎完全消失。这是因为它要求环境反射才能看到它们。</p>
 
@@ -3810,20 +3669,18 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>再次启用定向光照贴图.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png" width="250" /><font size="2.5">
+            <i>再次启用定向光照贴图.</i>
+        </font></center>
 
 <p>当使用方向光照贴图的时候，Unity将创建两个贴图。第一张贴图包含通常的光照信息，称为强度图。 第二张贴图被称为方向图。 它包含大部分烘烤光来自的方向。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>强度图和方向图.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png" width="250" /><font size="2.5">
+            <i>强度图和方向图.</i>
+        </font></center>
 
 <p>当方向图可用的时候，用它来对烘焙光进行简单的<strong>漫反射阴影计算</strong>。这使得它可用于法线贴图之上。注意，只有一个光方向是已知的，所以阴影将是一个近似。至少有一个主方向光照的时候，结果就会很好。</p>
 
@@ -3894,10 +3751,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>使用带有方向的光照贴图的效果.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png" width="250" /><font size="2.5">
+            <i>使用带有方向的光照贴图的效果.</i>
+        </font></center>
 
 <p><em>DecodeDirectionLightmap内部做了什么？</em></p>
 
@@ -3929,7 +3785,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png" width="250" /></center>
 
 <p>为了更好地混合静态和动态对象，我们必须以某种方式将烘焙的光照应用于动态对象。为了解决这个问题，Unity有光照探针。 光照探针是对空间中的一个点包含该位置的光照信息。 它是用球面谐波来存储这些信息而不是用纹理。 如果可用的话，这些光照探针将用于动态对象，而不是全局环境数据。所以我们要做的就是创建一些探针，等到烘焙的时候，我们的着色器就会自动使用它们。</p>
 
@@ -3940,17 +3796,16 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>一个新的光探测器组.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png" width="250" /><font size="2.5">
+            <i>一个新的光探测器组.</i>
+        </font></center>
 
 <p>通过检视器，可以在启用“编辑探针”模式后编辑光探测器组。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png" width="250" /></center>
 
 <h3 id="放置光照探针">放置光照探针</h3>
 
@@ -3959,40 +3814,36 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>封装区域.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png" width="250" /><font size="2.5">
+            <i>封装区域.</i>
+        </font></center>
 
 <p>然后根据光照条件如何变化来添加更多的探针。你不必将它们放置在静态几何中。 也不要把它们放在不透明的单面几何体错误的那一面。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>放置更多的探测器.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png" width="250" /><font size="2.5">
+            <i>放置更多的探测器.</i>
+        </font></center>
 
 <p>继续添加和移动探测器，直到你在所有区域都有了合理的光照条件，并且在它们之间发生的转换是可以接受的。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>调整探测器的位置.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png" width="250" /><font size="2.5">
+            <i>调整探测器的位置.</i>
+        </font></center>
 
 <p>可以通过移动动态对象来测试探针。当选择一个动态对象的时候，也会显示当前正在发挥作用的探针。探针将显示其光照，而不仅仅是黄色球体。你还可以看到用于动态对象的内插数据。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>移动动态对象.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif" width="250" /><font size="2.5">
+            <i>移动动态对象.</i>
+        </font></center>
 
 <p>通过不同的光照探头，物体的明暗变化明显。</p>]]></content><author><name>catlikecoding</name></author><category term="Shader" /><summary type="html"><![CDATA[为什么没有立即得到烘焙光源？为了确保在需要的时候光照贴图可以实际生成和更新，请在光照窗口的底部启用“自动生成（Auto Generate）”。 否则，你必须手动生成新的光照贴图。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender16/tutorial-image.png" /><media:content medium="image" url="https://www.damonc.top/web-assets/posts/2018/month1/catRender16/tutorial-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Unity Deferred Lights-延迟光照(翻译十五)</title><link href="https://www.damonc.top/Unity_Deferred_Lights.html" rel="alternate" type="text/html" title="Unity Deferred Lights-延迟光照(翻译十五)" /><published>2018-01-17T20:00:00+08:00</published><updated>2018-01-17T20:00:00+08:00</updated><id>https://www.damonc.top/Unity_Deferred_Lights</id><content type="html" xml:base="https://www.damonc.top/Unity_Deferred_Lights.html"><![CDATA[<p>本篇摘要：</p>
 <ul>
@@ -4014,10 +3865,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812390-1178609122.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>修改内置的Shader.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812390-1178609122.png" width="250" /><font size="2.5">
+            <i>修改内置的Shader.</i>
+        </font></center>
 
 <h3 id="第二个passa-second-pass">第二个PassA Second Pass</h3>
 
@@ -4026,10 +3876,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812964-728132925.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>least 2 passes.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200519084812964-728132925.png" width="250" /><font size="2.5">
+            <i>least 2 passes.</i>
+        </font></center>
 
 <p>先简单复制第一个Pass解决错误，结果是屏幕内除了天空盒外所有物体被渲染成黑色了。这是因为使用了stencil-buffer。</p>
 
@@ -4269,10 +4118,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011132912-1838344751.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>光照方向错误.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011132912-1838344751.png" width="250" /><font size="2.5">
+            <i>光照方向错误.</i>
+        </font></center>
 
 <p>计算得到最终的光照，但光的方向错误了。原因：_LightDir是光到表面的方向。在CreateLight计算中需要表面到光的方向</p>
 
@@ -4282,10 +4130,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011133845-1557873589.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>正确，没有阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011133845-1557873589.png" width="250" /><font size="2.5">
+            <i>正确，没有阴影.</i>
+        </font></center>
 
 <h3 id="阴影-shadows">阴影 Shadows</h3>
 
@@ -4317,10 +4164,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011134639-175464244.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>有阴影的方向光.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011134639-175464244.png" width="250" /><font size="2.5">
+            <i>有阴影的方向光.</i>
+        </font></center>
 
 <p>当然，这仅在定向光启用了阴影时才有效。 如果不是，则阴影衰减始终为1。</p>
 
@@ -4338,20 +4184,18 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011135350-727795272.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>阴影距离配置.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011135350-727795272.png" width="250" /><font size="2.5">
+            <i>阴影距离配置.</i>
+        </font></center>
 
 <p>当阴影几乎快达到了该限定距离就会淡出，Unity内置的shader是这样设定并计算。由于我将手动采样该阴影纹理，当到达纹理的边缘时阴影会被截取，结果是阴影虽然消失了，但有被急剧切割的生硬画面。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136133-1319763420.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>长、短距离阴影对比.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136133-1319763420.png" width="250" /><font size="2.5">
+            <i>长、短距离阴影对比.</i>
+        </font></center>
 
 <p>要渐隐阴影，<strong>首先</strong>要知道的是阴影完全消失的距离。该距离又依赖于阴影投射方向。在Stable Fit模式下，以map的中心点呈球面形开始渐隐消失阴影；在Close Fit模式它是依赖于视野深度。</p>
 
@@ -4402,10 +4246,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136822-531625316.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>阴影渐隐.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011136822-531625316.png" width="250" /><font size="2.5">
+            <i>阴影渐隐.</i>
+        </font></center>
 
 <h3 id="light-cookies">Light Cookies</h3>
 
@@ -4431,20 +4274,18 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011137698-104613306.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>带有cookie的方向光.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011137698-104613306.png" width="250" /><font size="2.5">
+            <i>带有cookie的方向光.</i>
+        </font></center>
 
 <p>整体结果似乎可以，但是观察边缘似乎有硬边</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138369-1638016260.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>硬边过渡.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138369-1638016260.png" width="250" /><font size="2.5">
+            <i>硬边过渡.</i>
+        </font></center>
 
 <p>相邻片元的cookie坐标的巨大差异就会导致该问题出现。在这种情况下，GPU选择的mipmap级别对于最近的表面是low level。解决办法之一就是：在采样mip映射时应用偏移。<a href="http://aras-p.info/blog/2010/01/07/screenspace-vs-mip-mapping/">大v的总结</a></p>
 
@@ -4454,10 +4295,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138941-1152817269.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>偏移采样.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011138941-1152817269.png" width="250" /><font size="2.5">
+            <i>偏移采样.</i>
+        </font></center>
 
 <h3 id="支持ldr-supporting-ldr">支持LDR Supporting LDR</h3>
 
@@ -4487,20 +4327,18 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011139705-601577612.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>渲染范围.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011139705-601577612.png" width="250" /><font size="2.5">
+            <i>渲染范围.</i>
+        </font></center>
 
 <p>根据上图，金字塔是作为一个普通的3D对象呈现的。它的背面被剔除，所以我们可以看到金字塔的正面。只有当它前面没有东西的时候，它才会被画出来。除此之外，还添加了一个pass，用于设置模板缓冲区，以将绘图限制为位于金字塔卷内的片段。您可以通过frame-debugger来验证。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011140292-1380890338.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>剔除方式.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011140292-1380890338.png" width="250" /><font size="2.5">
+            <i>剔除方式.</i>
+        </font></center>
 
 <p>这意味着我们的着色器的culling和z-test设置被否弃了。 因此将其从着色器中删除。</p>
 
@@ -4517,11 +4355,10 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141041-480459935.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141704-455701372.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>当靠近相机时，要绘制背面才正确.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141041-480459935.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011141704-455701372.png" width="250" /><font size="2.5">
+            <i>当靠近相机时，要绘制背面才正确.</i>
+        </font></center>
 
 <h3 id="支持多光源-supporting-multiple-light-types">支持多光源 Supporting Multiple Light Types</h3>
 
@@ -4617,10 +4454,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011142595-16646437.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>正确的世界位置.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527011142595-16646437.png" width="250" /><font size="2.5">
+            <i>正确的世界位置.</i>
+        </font></center>
 
 <p>再次看看UnityObjectToViewPos内部实现</p>
 
@@ -4661,10 +4497,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527012302994-353496315.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>cookie衰减.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527012302994-353496315.png" width="250" /><font size="2.5">
+            <i>cookie衰减.</i>
+        </font></center>
 
 <p>上图实际上产生了两个光锥，一个向前一个向后。 后向圆锥通常在渲染区域之外结束，但这并不能保证。我们只需要前向锥，它对应于负的W坐标。</p>
 
@@ -4693,10 +4528,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085923716-1558484014.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>cookie 和 distance衰减.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085923716-1558484014.png" width="250" /><font size="2.5">
+            <i>cookie 和 distance衰减.</i>
+        </font></center>
 
 <h3 id="shadows">Shadows</h3>
 
@@ -4757,10 +4591,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085924576-1982519938.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>高亮.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085924576-1982519938.png" width="250" /><font size="2.5">
+            <i>高亮.</i>
+        </font></center>
 
 <h3 id="shadows-1">Shadows</h3>
 
@@ -4779,10 +4612,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085925412-308331709.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>点光源阴影.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085925412-308331709.png" width="250" /><font size="2.5">
+            <i>点光源阴影.</i>
+        </font></center>
 
 <h3 id="cookies">Cookies</h3>
 
@@ -4817,10 +4649,9 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085926193-2066682458.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>点光源cookie.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender15/1692664-20200527085926193-2066682458.png" width="250" /><font size="2.5">
+            <i>点光源cookie.</i>
+        </font></center>
 
 <h3 id="skipping-shadows">Skipping Shadows</h3>
 
@@ -4874,17 +4705,15 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235158162-487991047.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>deferred 提示.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235158162-487991047.png" width="250" /><font size="2.5">
+            <i>deferred 提示.</i>
+        </font></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235158998-641873984.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>不明显的雾.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235158998-641873984.png" width="250" /><font size="2.5">
+            <i>不明显的雾.</i>
+        </font></center>
 
 <h3 id="线性雾-linear-fog">线性雾-Linear Fog</h3>
 
@@ -4892,11 +4721,10 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235159582-1089337078.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235200361-31174269.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>linear fog.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235159582-1089337078.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235200361-31174269.png" width="250" /><font size="2.5">
+            <i>linear fog.</i>
+        </font></center>
 
 <p>雾的浓度是随视距线性增长的，在视距开头正常显示，超过这个距离就只有雾的颜色可见。</p>
 
@@ -4916,18 +4744,17 @@ f值 被限定在[0, 1]范围，被用在雾和物体着色之间插值。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235201459-832769226.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235203426-304224456.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>指数雾.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235201459-832769226.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235203426-304224456.png" width="250" /><font size="2.5">
+            <i>指数雾.</i>
+        </font></center>
 
 <p><strong>指数雾公式</strong>：
 \(f = {1 \over {2^{cd}}}\)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235204598-417023262.png" width="150" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235204598-417023262.png" width="150" /></center>
 
 <p>d 是fog的密度因子；<br />
 c 是距离因子。</p>
@@ -4936,18 +4763,17 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235205400-412540608.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235206302-247343724.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>指数平方雾.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235205400-412540608.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235206302-247343724.png" width="250" /><font size="2.5">
+            <i>指数平方雾.</i>
+        </font></center>
 
 <p><strong>指数平方雾公式</strong>：
 \(f = {1 \over {2^{(cd)^2}}}\)
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235207307-166956062.png" width="150" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235207307-166956062.png" width="150" /></center>
 
 <h3 id="渲染雾-adding-fog">渲染雾-Adding Fog</h3>
 
@@ -5009,26 +4835,23 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235208597-1924410952.png" width="350" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>linear：standard vs. mine.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235208597-1924410952.png" width="350" /><font size="2.5">
+            <i>linear：standard vs. mine.</i>
+        </font></center>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235209833-525170101.png" width="350" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>exp：standard vs. mine.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235209833-525170101.png" width="350" /><font size="2.5">
+            <i>exp：standard vs. mine.</i>
+        </font></center>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235210707-599317063.png" width="350" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>exp2：standard vs. mine.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235210707-599317063.png" width="350" /><font size="2.5">
+            <i>exp2：standard vs. mine.</i>
+        </font></center>
 
 <h3 id="深度雾-depth-based-fog">深度雾-Depth-Based Fog</h3>
 
@@ -5036,19 +4859,17 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235211359-387262789.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>深度 (三角) vs. 距离(园).</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235211359-387262789.png" width="250" /><font size="2.5">
+            <i>深度 (三角) vs. 距离(园).</i>
+        </font></center>
 
 <p><strong>基于深度代替距离的优点</strong>是：不必计算平方根，计算速度更快，适用于非真实渲染。<strong>缺点</strong>是：忽略视角，也即相机以原点旋转会影响雾密度，因为旋转时密度会改变。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235212013-881187042.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>红到蓝旋转，深度改变密度.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200516235212013-881187042.png" width="250" /><font size="2.5">
+            <i>红到蓝旋转，深度改变密度.</i>
+        </font></center>
 
 <p>支持depth-based深度雾 ，必须把clip-pass裁剪空间深度值传递到片元函数。定义一个关键字：FOG_DEPTH.</p>
 
@@ -5070,18 +4891,16 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004339507-1542612657.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>错误.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004339507-1542612657.png" width="250" /><font size="2.5">
+            <i>错误.</i>
+        </font></center>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004340429-1853847721.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>正确.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004340429-1853847721.png" width="250" /><font size="2.5">
+            <i>正确.</i>
+        </font></center>
 
 <p>不正确的原因：可能会有反向裁剪空间Z的情况，需要转换。</p>
 
@@ -5154,10 +4973,9 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004341631-1514085003.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>太亮.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004341631-1514085003.png" width="250" /><font size="2.5">
+            <i>太亮.</i>
+        </font></center>
 
 <p>解决办法就是：对additive pass使用黑色雾，这样就会淡化一部分颜色。</p>
 
@@ -5171,10 +4989,9 @@ c 是距离因子。</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004342819-161700675.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>太亮.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004342819-161700675.png" width="250" /><font size="2.5">
+            <i>太亮.</i>
+        </font></center>
 
 <h2 id="延迟雾渲染-deferred-fog">延迟雾渲染-Deferred Fog</h2>
 
@@ -5209,10 +5026,9 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004343465-563203657.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>后处理pass.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004343465-563203657.png" width="250" /><font size="2.5">
+            <i>后处理pass.</i>
+        </font></center>
 
 <h3 id="fog-shader">Fog Shader</h3>
 
@@ -5328,10 +5144,9 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004344659-491057751.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>不太明显的雾.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004344659-491057751.png" width="250" /><font size="2.5">
+            <i>不太明显的雾.</i>
+        </font></center>
 
 <h3 id="雾混合-fixing-the-fog">雾混合-Fixing the Fog</h3>
 
@@ -5346,11 +5161,10 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004345386-585512243.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004346464-2132954797.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>不太明显的雾.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004345386-585512243.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004346464-2132954797.png" width="250" /><font size="2.5">
+            <i>不太明显的雾.</i>
+        </font></center>
 
 <p>处理近平面（非精确处理），near plane存储在Y值中</p>
 
@@ -5366,31 +5180,28 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004347033-483399479.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004347679-1381640131.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>金字塔区域.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004347033-483399479.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004347679-1381640131.png" width="250" /><font size="2.5">
+            <i>金字塔区域.</i>
+        </font></center>
 
 <p>对于渲染的后处理图形Image的每个像素，都能通过从顶点到底边发射一条射线(从屏幕射向3D空间)，检测是否击中任何物体，击中渲染，未击中不渲染。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004348280-181627301.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Image每个像素发射一条射线.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004348280-181627301.png" width="250" /><font size="2.5">
+            <i>Image每个像素发射一条射线.</i>
+        </font></center>
 
 <p>若击中某个物体，那么对应像素的深度就要小于1. 如果，该射线在半道击中了物体，射线对应的像素深度值就是1/2.这就意味着 $射线对应的Z值 ={射线击中物体时的长度\over射线总长度}$。范围[0, 1]。又由于射线的方向都是一致的，X和Y坐标也应该减半。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004348844-1867477460.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>射线的缩放.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004348844-1867477460.png" width="250" /><font size="2.5">
+            <i>射线的缩放.</i>
+        </font></center>
 
 <p>一旦得到该射线，就能从相机的位置出发，寻找可能会被渲染的物体表面的世界坐标(若击中)。同时，也要得到该射线的长度。</p>
 
@@ -5461,11 +5272,10 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004349963-1740626309.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004351071-1952278624.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>基于距离的雾 standard vs deferrd.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004349963-1740626309.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004351071-1952278624.png" width="250" /><font size="2.5">
+            <i>基于距离的雾 standard vs deferrd.</i>
+        </font></center>
 
 <h3 id="天空盒-fogged-skybox">天空盒-Fogged Skybox</h3>
 
@@ -5480,10 +5290,9 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004352199-224022866.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>基于距离的雾 standard vs deferrd.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender14/1692664-20200518004352199-224022866.png" width="250" /><font size="2.5">
+            <i>基于距离的雾 standard vs deferrd.</i>
+        </font></center>
 
 <h3 id="no-fog">No Fog</h3>
 
@@ -5528,19 +5337,17 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154452501-654159285.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Forward，no shadow.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154452501-654159285.png" width="250" /><font size="2.5">
+            <i>Forward，no shadow.</i>
+        </font></center>
 
 <p><strong>2. Enable Shadows</strong><br />
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453072-905156320.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>enable shadow.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453072-905156320.png" width="250" /><font size="2.5">
+            <i>enable shadow.</i>
+        </font></center>
 <p>启用阴影后，需要更多的Draw Calls去生成阴影纹理，分析如下：</p>
 
 <p>首先，填充depth-buffer，需要<strong>47</strong>次Draw Call，<em>47少于64得益于dynamicBatching</em>；<br />
@@ -5551,10 +5358,9 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453746-531274810.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Forward，enable shadow.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453746-531274810.png" width="250" /><font size="2.5">
+            <i>Forward，enable shadow.</i>
+        </font></center>
 <center>
 <b>&amp;$\uparrow Use Forward Path \uparrow$$</b>
 </center>
@@ -5568,10 +5374,9 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154454370-1630685432.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Deferred，no shadows.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154454370-1630685432.png" width="250" /><font size="2.5">
+            <i>Deferred，no shadows.</i>
+        </font></center>
 
 <p>首先，45次Draw Call渲染GBuffer，这得益于dynamic Batching；<br />
 其次，1次Draw Call复制深度纹理；<br />
@@ -5586,10 +5391,9 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154455028-1110322294.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Deffered，enable shadows.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154455028-1110322294.png" width="250" /><font size="2.5">
+            <i>Deffered，enable shadows.</i>
+        </font></center>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deferred不支持MSAA，如果启用Camera组件会有Warning
 
@@ -5637,28 +5441,25 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743046-2070098632.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>重复流程.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743046-2070098632.png" width="250" /><font size="2.5">
+            <i>重复流程.</i>
+        </font></center>
 
 <p>既然每次计算的几何性质都是一样的，可以让basePass计算后将它们存储在一个缓冲区中。然后，additivePass可以重用数据，消除重复的工作。要存储这些片段的数据，就需要一个适合的缓冲区，就像深度和帧缓冲区一样。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743816-266537686.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>缓存，及部分数据须再次计算.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743816-266537686.png" width="250" /><font size="2.5">
+            <i>缓存，及部分数据须再次计算.</i>
+        </font></center>
 
 <p>现在，缓冲区中提供了照明所需的所有几何数据。 唯一缺少的是灯光本身。 但这意味着我们不再需要渲染几何体，仅需渲染光就足够了。 此外，basePass只需要填充缓冲区，然后推迟所有直接光照着色计算。这就是延迟着色。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085744534-1514664437.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>deferred shading.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085744534-1514664437.png" width="250" /><font size="2.5">
+            <i>deferred shading.</i>
+        </font></center>
 
 <h3 id="deferred下多光源如何使用">deferred下多光源如何使用</h3>
 
@@ -5668,11 +5469,10 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085745459-1157598431.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085746437-849874847.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>many lights, deferred vs. forward.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085745459-1157598431.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085746437-849874847.png" width="250" /><font size="2.5">
+            <i>many lights, deferred vs. forward.</i>
+        </font></center>
 
 <p><em>多个实时光源，也可以用bake替代。</em></p>
 
@@ -5684,10 +5484,9 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747037-32153529.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>directional lights use a quad.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747037-32153529.png" width="250" /><font size="2.5">
+            <i>directional lights use a quad.</i>
+        </font></center>
 
 <p>该shader使用了_UnityDeferredLibrary.cginc_的UnityDeferredCalculateLightParams函数计算光照。</p>
 
@@ -5704,13 +5503,13 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747661-944531804.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747661-944531804.png" width="250" /></center>
 
 <p>3、PointLight使用类似方法，区别在于它被渲染成球体Mesh。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748333-84112664.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748333-84112664.png" width="250" /></center>
 
 <h3 id="分析什么是g-buffers">分析什么是G-Buffers</h3>
 
@@ -5724,8 +5523,8 @@ destination   输出雾。若为空直接进入帧缓冲区</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748906-1729642644.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085749514-1177384899.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748906-1729642644.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085749514-1177384899.png" width="250" /></center>
 
 <p>Albedo-对应RT0；典型代表diffuse color<br />
 Specular–对应RT1；典型代表specular + roughness<br />
@@ -5736,28 +5535,27 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085750340-1204540914.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751182-1595821136.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>分析freamDebugger.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085750340-1204540914.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751182-1595821136.png" width="250" /><font size="2.5">
+            <i>分析freamDebugger.</i>
+        </font></center>
 
 <p>首先，执行deferred渲染G-buffer，数据存到G-buffer缓冲区。在这渲染期间，forward模式下的物体不参与渲染，不可见。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751737-547155192.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751737-547155192.png" width="250" /></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752276-673585314.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752276-673585314.png" width="250" /></center>
 
 <p>接着，渲染forward depth，同样存到G-buffer缓冲区。由于是forward所以输出黑色轮廓，覆盖了之前的片元。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752842-152103750.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085753560-1117632710.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752842-152103750.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085753560-1117632710.png" width="250" /></center>
 
 <h2 id="开始写deferred-shader">开始写Deferred Shader</h2>
 
@@ -5773,7 +5571,7 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085754350-329303799.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085754350-329303799.png" width="250" /></center>
 <p>完整版的着色</p>
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Pass</span> <span class="p">{</span>
     <span class="n">Tags</span> <span class="p">{</span>
@@ -5847,11 +5645,10 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755050-910260994.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755657-1285744974.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Albedo and occlusion.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755050-910260994.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755657-1285744974.png" width="250" /><font size="2.5">
+            <i>Albedo and occlusion.</i>
+        </font></center>
 
 <h3 id="计算buffer-1">计算Buffer 1</h3>
 
@@ -5866,11 +5663,10 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756307-1469309635.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756898-570367115.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Specular color and smoothness.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756307-1469309635.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756898-570367115.png" width="250" /><font size="2.5">
+            <i>Specular color and smoothness.</i>
+        </font></center>
 
 <h3 id="计算buffer-2">计算Buffer 2</h3>
 
@@ -5882,11 +5678,10 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095715198-211370403.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095716344-858855160.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Normals.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095715198-211370403.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095716344-858855160.png" width="250" /><font size="2.5">
+            <i>Normals.</i>
+        </font></center>
 
 <h3 id="计算buffer-3">计算Buffer 3</h3>
 
@@ -5898,10 +5693,9 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717065-134464069.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>错误的emission.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717065-134464069.png" width="250" /><font size="2.5">
+            <i>错误的emission.</i>
+        </font></center>
 
 <p>上面使用的color颜色已计算过阴影，需要使用DEFRRED_PASS重新计算；同时关闭<code class="language-plaintext highlighter-rouge">light.ndotl计算；在GetEmission也要使用DEFRRED_PASS标签</code></p>
 
@@ -5930,29 +5724,26 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717626-627650926.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>错误的emission.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717626-627650926.png" width="250" /><font size="2.5">
+            <i>错误的emission.</i>
+        </font></center>
 
 <h3 id="ambient-light">Ambient Light</h3>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711223-338108844.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>four buffers shading.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711223-338108844.png" width="250" /><font size="2.5">
+            <i>four buffers shading.</i>
+        </font></center>
 
 <p>输出四个Buffers后结果看起来较好，但是还不够完整，还缺少环境光。<strong>环境光与自发光都没有单独的pass计算，都需要在g-buffers填充后附加到最终颜色值上。</strong>环境光是间接光，在间接光函数计算DEFERRED_PASS</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711963-2074230932.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>four buffers shading.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711963-2074230932.png" width="250" /><font size="2.5">
+            <i>four buffers shading.</i>
+        </font></center>
 
 <h3 id="光源范围-ldr与hdr分析">光源范围-LDR与HDR分析</h3>
 
@@ -5968,19 +5759,17 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022712610-2058578821.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>incorrect shading in LDR Mode.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022712610-2058578821.png" width="250" /><font size="2.5">
+            <i>incorrect shading in LDR Mode.</i>
+        </font></center>
 
 <p>在上图描述中，Unity会使用exp2(x)编码LDR数据，所以对自发光和环境光也要使用exp2(x)编码。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713171-753954029.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>incorrect shading in LDR Mode.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713171-753954029.png" width="250" /><font size="2.5">
+            <i>incorrect shading in LDR Mode.</i>
+        </font></center>
 
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma multi_compile _ UNITY_HDR_ON
 </span>
@@ -5996,10 +5785,9 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713922-1209753322.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>use exp2(x) and log in LDR.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713922-1209753322.png" width="250" /><font size="2.5">
+            <i>use exp2(x) and log in LDR.</i>
+        </font></center>
 
 <h2 id="deferred-reflections">Deferred Reflections</h2>
 
@@ -6007,16 +5795,15 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120606250-2021680703.png" width="250" alt="loading failed, need vpn." /></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120606250-2021680703.png" width="250" /></center>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120607116-2089631344.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608003-761474677.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>forward vs. deferred mode.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120607116-2089631344.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608003-761474677.png" width="250" /><font size="2.5">
+            <i>forward vs. deferred mode.</i>
+        </font></center>
 
 <h3 id="逐像素照射">逐像素照射</h3>
 
@@ -6028,10 +5815,9 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608590-1131496695.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>forward reflection probes.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608590-1131496695.png" width="250" /><font size="2.5">
+            <i>forward reflection probes.</i>
+        </font></center>
 
 <p>Deferred模式下：<br />
     reflection只渲染box size范围，探射的范围被投射到与boxProjection相交的面积。所以reflection的反射不会超出给定BoxSize范围。实际上，边缘消失的时候也会延伸一点。其他两个探头也是如此。</p>
@@ -6039,10 +5825,9 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120609178-2053336560.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>deferred reflection probes.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120609178-2053336560.png" width="250" /><font size="2.5">
+            <i>deferred reflection probes.</i>
+        </font></center>
 
 <p>渲染reflection所用方法，与渲染lights类似：<br />
 首先，使用Internal-StencilWrite shader渲染box size大小的Mesh并写入<strong>模板缓冲</strong>区；<br />
@@ -6051,19 +5836,17 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113835823-536491925.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113836571-1742764446.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Draw deferred reflections.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113835823-536491925.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113836571-1742764446.png" width="250" /><font size="2.5">
+            <i>Draw deferred reflections.</i>
+        </font></center>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113837105-1079901044.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Importance.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113837105-1079901044.png" width="250" /><font size="2.5">
+            <i>Importance.</i>
+        </font></center>
 
 <p>Importance决定各reflection的渲染先后顺序；Intensity决定了反射强度：默认为1，最小为0，大于1过曝。Forward下是整个接收面积；Deferred下是相交面积。下面谈Blend Distance。</p>
 
@@ -6075,10 +5858,9 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113839245-749750193.gif" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>blend distance gif.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113839245-749750193.gif" width="250" /><font size="2.5">
+            <i>blend distance gif.</i>
+        </font></center>
 
 <h3 id="deferred-pass下的反射">Deferred Pass下的反射</h3>
 
@@ -6090,11 +5872,10 @@ Emission–对应RT3；典型代表emission + reflection</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113840651-738922493.png" width="250" alt="loading failed, need vpn." /><body></body>
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113841329-1065907482.png" width="250" alt="loading failed, need vpn." /></center>
-<font size="2.5">
-            <center><i><a>Importance.</a></i></center>    
-        </font>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113840651-738922493.png" width="250" /><body></body>
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113841329-1065907482.png" width="250" /><font size="2.5">
+            <i>Importance.</i>
+        </font></center>
 
 <p>采样黑色探针是浪费。要确保deferred pass只在有需要时采样，用UNITY_ENABLE_REFLECTION_BUFFERS来检查。</p>
 

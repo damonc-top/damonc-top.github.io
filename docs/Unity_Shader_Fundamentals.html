@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -288,10 +290,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/default-lighting.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>默认光照.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/default-lighting.png" width="250"><font size="2.5">
+            <i>默认光照.</i>
+        </font>
+</center>
 
 <p>第一选项卡<em>Environment</em>是跟环境光照相关，在这里可以设置天空盒。这个Default-Skybox当前正被用于场景的背景光、环境光、和反射光。设置为none就能关闭这些光。顺便把下面的<em>Realtime Ligting</em>和<em>Mixed Lighting</em>也关掉，现在还用不上，后面会陆续介绍。</p>
 
@@ -300,30 +303,31 @@
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/default-spere.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-skybox.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/default-spere.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-skybox.png" width="250"><font size="2.5">
+            <i>简单光照.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>简单光照.</a></i></center>    
-        
 
 <p>这个深蓝色被定义在摄像机，它默认使用天空盒渲染，当天空盒失效后场景会默认退回到使用相机纯色模式。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/camera.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>默认的摄像机设置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/camera.png" width="250"><font size="2.5">
+            <i>默认的摄像机设置.</i>
+        </font>
+</center>
 
 <p>为了进一步简化渲染，再隐藏或删除方向光对象。这将消除场景中的直接光照，以及所有它投射的阴影。剩下纯色背景和球体的轮廓。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-light.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>未着色球体.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-light.png" width="250"><font size="2.5">
+            <i>未着色球体.</i>
+        </font>
+</center>
 
 <h2 id="图像渲染">图像渲染</h2>
 
@@ -333,10 +337,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/sphere-object.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>球体默认自带组件.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/sphere-object.png" width="250"><font size="2.5">
+            <i>球体默认自带组件.</i>
+        </font>
+</center>
 
 <p>Transform组件用于更改坐标、方向，以及网格和包围盒的尺寸。<a href="%22https://www.damonc.top/posts/Unity-Matrix&amp;Transform/%22">这里</a>有对Transform层次结构的清晰描述。如果一个物体最终处于摄像机视野内，它就会被安排渲染。</p>
 
@@ -344,10 +349,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/cpu-gpu.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>2u分工.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/cpu-gpu.png" width="250"><font size="2.5">
+            <i>2u分工.</i>
+        </font>
+</center>
 
 <p>当前这个球体使用了Unity的默认材质，自带了一个标准shader。我们现在把它去掉替换成自己的shader，从头开始写。</p>
 
@@ -357,10 +363,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/my-first-shader.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>第一个shader.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/my-first-shader.png" width="250"><font size="2.5">
+            <i>第一个shader.</i>
+        </font>
+</center>
 
 <p>Shader是通过<em>shader</em>关键字定义，关键字是一个字符串，在下拉界面中选择时显示的也是该关键字。它不必与文件名相同。</p>
 
@@ -374,19 +381,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/my-material.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>给材质指定Shader.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/my-material.png" width="250"><font size="2.5">
+            <i>给材质指定Shader.</i>
+        </font>
+</center>
 
 <p>给球体指定上我们新建的Material，替换掉默认的。这时的球体会立即变成紫红色。发生这个的原因是Unity切换到了错误的shader，它故意使用这个颜色来提醒开发者这是一个错误。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/material-with-shader.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>指定MyMaterial.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/material-with-shader.png" width="250"><font size="2.5">
+            <i>指定MyMaterial.</i>
+        </font>
+</center>
 
 <p>shader warning中提到了没有sub-shader. 我们可以使用sub-shader操作shader变量进行分组, 这允许程序员为不同的编译平台提供不同的sub-shader.例如我们可以用一个sub-shader既支持pc又支持手机平台.定义一个SubShader块</p>
 
@@ -417,10 +426,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/sphere-with-pass.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>空shader效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/sphere-with-pass.png" width="250"><font size="2.5">
+            <i>空shader效果.</i>
+        </font>
+</center>
 
 <h3 id="shader程序">Shader程序</h3>
 
@@ -437,10 +447,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/vertex-fragment-programs.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>顶点片元函数.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/vertex-fragment-programs.png" width="250"><font size="2.5">
+            <i>顶点片元函数.</i>
+        </font>
+</center>
 
 <p>同时，我们必须通过pragma指令告诉编译器使用哪些程序</p>
 
@@ -482,10 +493,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/shader-inspector.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>shader检视面板信息.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/shader-inspector.png" width="250"><font size="2.5">
+            <i>shader检视面板信息.</i>
+        </font>
+</center>
 
 <p>如果你点击该按钮，Unity将会编译该shader并打开它，接着就可以查看生成的代码。我们试着先选择OpenGL Core，然后再选择D3D11，看看底层代码是怎么回事的。</p>
 
@@ -588,10 +600,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/include-files.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>UnityCG.cginc结构.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/include-files.png" width="250"><font size="2.5">
+            <i>UnityCG.cginc结构.</i>
+        </font>
+</center>
 
 <p><em>UnityShaderVariables.cginc</em>定义了一大堆渲染所需的着色器变量，比如<strong>矩阵变换、相机和光照数据等等</strong>。</p>
 
@@ -694,10 +707,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/raw-position.png" width="200" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>扭曲的球.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/raw-position.png" width="200"><font size="2.5">
+            <i>扭曲的球.</i>
+        </font>
+</center>
 
 <p>使用MVP：model_view_projection矩阵变换顶点坐标，该值定义在<em>UnityShaderVariables</em>文件，变量名是<code class="language-plaintext highlighter-rouge">UNITY_MATRIX_MVP。改为：</code></p>
 
@@ -756,10 +770,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/correct-position.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>正确的球.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/correct-position.png" width="250"><font size="2.5">
+            <i>正确的球.</i>
+        </font>
+</center>
 
 <h2 id="像素颜色">像素颜色</h2>
 
@@ -774,10 +789,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/yellow-sphere.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>黄色球.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/yellow-sphere.png" width="250"><font size="2.5">
+            <i>黄色球.</i>
+        </font>
+</center>
 
 <h3 id="使用shader属性properties">使用Shader属性Properties</h3>
 
@@ -806,10 +822,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/green-sphere.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>纯色球.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/green-sphere.png" width="250"><font size="2.5">
+            <i>纯色球.</i>
+        </font>
+</center>
 
 <h3 id="从顶点到片元">从顶点到片元</h3>
 
@@ -817,10 +834,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/interpolation.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>shader程序执行流程.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/interpolation.png" width="250"><font size="2.5">
+            <i>shader程序执行流程.</i>
+        </font>
+</center>
 
 <p>处理过的顶点数据不直接传递给Fragment片元函数，而在片元函数中访问插值本地数据，需要增加一个参数，并指定语义<em>TEXCOORD0</em>，它表示贴图的UV坐标。</p>
 
@@ -846,10 +864,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/local-position.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>插值本地数据作为颜色.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/local-position.png" width="250"><font size="2.5">
+            <i>插值本地数据作为颜色.</i>
+        </font>
+</center>
 
 <h3 id="结构体">结构体</h3>
 
@@ -926,10 +945,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/local-position-01.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>调整之后的颜色.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/local-position-01.png" width="250"><font size="2.5">
+            <i>调整之后的颜色.</i>
+        </font>
+</center>
 
 <h2 id="纹理">纹理</h2>
 <p>如果想在模型网格上不添加更多三角形面数的情况下为网格添加更多更明显的细节和多样性呈现，可以使用纹理投影到网格的三角形上。</p>
@@ -938,10 +958,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-rectangle.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>uv坐标图.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-rectangle.png" width="300"><font size="2.5">
+            <i>uv坐标图.</i>
+        </font>
+</center>
 
 <p>U坐标从左到右递增，起始点为0终点为1。 V坐标从下到上增加，除了Direct3D它从上到下。</p>
 
@@ -1006,12 +1027,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-sphere.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-sphere-above.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-sphere.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/uv-sphere-above.png" width="250"><font size="2.5">
+            <i>球体缝隙.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>球体缝隙.</a></i></center>    
-        
 
 <h3 id="添加纹理">添加纹理</h3>
 
@@ -1035,10 +1055,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/material-inspector.png" width="320" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>纹理_white显示.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/material-inspector.png" width="320"><font size="2.5">
+            <i>纹理_white显示.</i>
+        </font>
+</center>
 
 <p>通过使用<em>sampler2D</em>类型为变量来访问着色器中的纹理。</p>
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float4</span> <span class="n">_Tint</span><span class="p">;</span>
@@ -1076,21 +1097,21 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere-above.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere-above.png" width="250"><font size="2.5">
+            <i>带纹理球体.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>带纹理球体.</a></i></center>    
-        
 
 <p>球体两极附近会显得非常杂乱。 为什么会这样？ 发生纹理失真是因为插值在三角形中是线性的。 Unity 的球体在两极附近只有几个三角形，其中UV坐标失真最大。所以UV坐标在三角形与三角形的顶点之间是非线性变化，但在三角形内部的顶点之间的变化是线性的。所以球体两极纹理中的直线在三角形边界处突然改变方向。 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere-wireframe.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>跨三角形插值.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/textured-sphere-wireframe.png" width="300"><font size="2.5">
+            <i>跨三角形插值.</i>
+        </font>
+</center>
 
 <p>不同的网格具有不同的 UV 坐标，从而产生不同的映射。 Unity 的默认球体使用经纬度纹理映射，而网格是低分辨率立方体球体。 这足以进行测试，但您最好使用自定义球体网格以获得更好的结果。</p>
 
@@ -1123,10 +1144,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/texture-inspector.png" width="320" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>默认的纹理设置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/texture-inspector.png" width="320"><font size="2.5">
+            <i>默认的纹理设置.</i>
+        </font>
+</center>
 <p>Wrap Mode决定了在使用0-1范围之外的UV坐标进行采样时的输出。</p>
 <ul>
   <li>设置为clamped时，UV被限制在 0–1 范围内。 这意味着超出边缘的像素与位于边缘的像素相同。</li>
@@ -1137,10 +1159,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/clamp.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>在(2, 2)开始平铺.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/clamp.png" width="300"><font size="2.5">
+            <i>在(2, 2)开始平铺.</i>
+        </font>
+</center>
 
 <h3 id="mipmap和filter">Mipmap和Filter</h3>
 
@@ -1162,31 +1185,33 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/bilinear-mips.png" width="410" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/bilinear-mips.png" width="410"></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/no-mips.png" width="410" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>mipmap上有下无.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/no-mips.png" width="410"><font size="2.5">
+            <i>mipmap上有下无.</i>
+        </font>
+</center>
 
 <p>那么在何时使用哪个mipmap级别，它们看起来有什么不同呢？ 先通过在高级纹理设置中启用Fadeout Mip Maps。启用一个淡入淡出范围后，inspector将显示滑块。它定义了一个mipmap范围，在该范围内 mipmap 将转换为纯灰色。 越向右滑动过渡级别越小。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-3.png" width="410" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-3.png" width="410"></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-4.png" width="410" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-4.png" width="410"></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-5.png" width="410" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>mipmap过渡级别.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/mip-5.png" width="410"><font size="2.5">
+            <i>mipmap过渡级别.</i>
+        </font>
+</center>
 
 <p>mipmap过渡之间呈现出模糊到锐利的快速，过渡不自然。这可以通过将过滤器模式切换为Trilinear三线性。 这与双线性过滤的工作方式相同，但它是<strong>在相邻的mipmap级别之间进行插值，这使得采样成本更高</strong>，但它平滑了 mipmap 级别之间的转换。</p>
 
@@ -1208,14 +1233,15 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-aniso.png" width="410" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/without-aniso.png" width="410"></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/with-aniso.png" width="410" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>没有和有Aniso Level.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/with-aniso.png" width="410"><font size="2.5">
+            <i>没有和有Aniso Level.</i>
+        </font>
+</center>
 
 <blockquote class="prompt-warning">
   <p>请注意，这些额外的 mipmap 不像常规 mipmap 那样预先生成。 相反，它们是通过执行额外的纹理样本来模拟的。 因此它们不需要更多空间，但采样成本更高。</p>
@@ -1224,19 +1250,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/aniso-mip.png" width="350" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>各向异性双线性过滤，过渡到灰色.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/aniso-mip.png" width="350"><font size="2.5">
+            <i>各向异性双线性过滤，过渡到灰色.</i>
+        </font>
+</center>
 
 <p>各向异性过滤的深度由 Aniso Level 控制。 为 0 时，它被禁用。 为 1 时，它变为启用并提供最小的效果。 16达到最大值。 但是，这些设置会受到项目质量设置的影响。 可以通过 Edit / Project Settings / Quality 访问质量设置。 找到 各向异性纹理 项目设置
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/rendering-quality.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>渲染质量设置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender2/rendering-quality.png" width="300"><font size="2.5">
+            <i>渲染质量设置.</i>
+        </font>
+</center>
 
 <p>项目设置禁用各向异性纹理时，无论纹理设置如何，都不会发生各向异性过滤。当它设置为 Per Texture时，它​​完全由纹理自身设置控制。也可以设置为 Forced On ，强制把每个纹理都开启Ansio Level，但是若纹理设置Aniso Level为0，仍然不会使用各向异性过滤。</p>
 
@@ -1747,14 +1775,14 @@
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

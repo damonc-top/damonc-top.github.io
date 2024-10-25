@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -278,31 +280,32 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_win_pkg_mgr.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Addressable Version Seleclt.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_win_pkg_mgr.png" width="250"><font size="2.5">
+            <i>Addressable Version Seleclt.</i>
+        </font>
+</center>
 
 <h3 id="手动安装">手动安装</h3>
 <p>在Package Manager选择一个合适的Addressable版本还要结合Addressable更新log，打开<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">Addressable更新日志</code></a>，版本列表展示了Address able对应的Unity版本：
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_version.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Addressable Version List.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_version.png" width="250"><font size="2.5">
+            <i>Addressable Version List.</i>
+        </font>
+</center>
 <p>Unity这里分了两个分支维护Addressable，其中一个分支是1.21版本对应的Unity版本是2019+，另一个分支是2.0版本对应的Unity版本是2023+:
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_1_21.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_2_0.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_1_21.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_2_0.png" width="250"><font size="2.5">
+            <i>Addressable Branch.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>Addressable Branch.</a></i></center>    
-        
 
 <p>2.0以上版本也可以用在非2023版的引擎，主要还是针对2023+ Unity引擎支持新的API什么的。如果想把2.0版本合到1.21，开一Beyond Compare合并差异也行。</p>
 
@@ -314,19 +317,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_deps.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Addressable Dependencies.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_deps.png" width="250"><font size="2.5">
+            <i>Addressable Dependencies.</i>
+        </font>
+</center>
 <p>Addressable最重要的依赖是ScriptableBuildPipeline，SBP这个包要更新到1.21.23或2.1.x以上，旧版SBP对SpriteAtlas图集打包会有冗余。
 打开Packages/manifest.json，强制指定SBP版本”com.unity.scriptablebuildpipeline”: “1.21.23”,
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/sbp_upgrade.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>SBP指定版本.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/sbp_upgrade.png" width="250"><font size="2.5">
+            <i>SBP指定版本.</i>
+        </font>
+</center>
 
 <h2 id="addressable结构预览">Addressable结构预览</h2>
 <p>安装好了AA之后，会在Assets目录生成以下目录：</p>
@@ -376,27 +381,30 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_assets_settings.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>AddressableAssetSettings预览.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_assets_settings.png" width="250"><font size="2.5">
+            <i>AddressableAssetSettings预览.</i>
+        </font>
+</center>
 
 <h4 id="profile">Profile</h4>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_in_use.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Profile预览.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_in_use.png" width="250"><font size="2.5">
+            <i>Profile预览.</i>
+        </font>
+</center>
 <p>Profile In Use可以选择系统自带或自定义，其中自定义使用Manager按钮打开Profile Window:
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_window.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Profile Window.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_window.png" width="250"><font size="2.5">
+            <i>Profile Window.</i>
+        </font>
+</center>
 <p>Profile主要作用是指定打包地址和加载地址，我新增了BuildPath打包的保存目录和HotUpdate热更资源目录，这两个参数要在Catalog指定。见<a href="#jump1"><code class="language-plaintext highlighter-rouge">Catalog</code></a></p>
 
 <p><span id="jump1"></span></p>
@@ -405,10 +413,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Catalog设置面板.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png" width="250"><font size="2.5">
+            <i>Catalog设置面板.</i>
+        </font>
+</center>
 
 <ul>
   <li>Player Version Override: 这个参数会对构建好的catalog进行重命名，unity使用时间戳，我们自己可以用自己的构建版本号，格式可以是catalog_1.2.1720684396.json。这篇是对<a href="">catalog</a>的详解。</li>
@@ -423,10 +432,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/update_download.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Update Downloads设置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/update_download.png" width="250"><font size="2.5">
+            <i>Update Downloads设置.</i>
+        </font>
+</center>
 
 <p>指定addressables_content_state.bin的保存地址，该文件只在本地构建时有用，可以看看<a href="https://docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">官方workflow</code></a>。简化描述我的理解就是打开Groups-Tools-Check Content Update Restrictions窗口，选择上一次保存的addressables_content_state去比对会生成一份catalog和一小撮热更bundle，就是增量更新这些bundle。但是如果玩家本地用户目录的bundle不小心损坏了，或则资源版本回退，直接使用这方案就不好办。</p>
 
@@ -439,10 +449,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/setting_build.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Build设置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/setting_build.png" width="250"><font size="2.5">
+            <i>Build设置.</i>
+        </font>
+</center>
 <ul>
   <li>Build Addressables on Player Build: 出包的时候一起出Assetbundle，我关了不需要，我是先出Bundle资源的。</li>
   <li>Ignore Invalid/Unsupported Files in Build: 排除无效文件。</li>
@@ -458,13 +469,12 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/play_mode.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_mode.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/play_mode.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_mode.png" width="250"><font size="2.5">
+            <i>Build Bundle设置.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>Build Bundle设置.</a></i></center>    
-        
 <p>Play mode指定在编辑器是怎么加载资源，本地测试用</p>
 <ul>
   <li>Fast Mode: 不打包直接加载文件，速度快但在Profiler中提供的信息较少</li>
@@ -488,10 +498,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_view.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Group设置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_view.png" width="250"><font size="2.5">
+            <i>Group设置.</i>
+        </font>
+</center>
 
 <ul>
   <li>Include In Build: 启用才能构建该组内所包含的Asset Entry。</li>
@@ -506,10 +517,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>schema耗时片段.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png" width="250"><font size="2.5">
+            <i>schema耗时片段.</i>
+        </font>
+</center>
 <p>每次增加Schema会触发save操作，每次修改Schema内部值后会触发Group Dirty Notify进一步触发遍历所有Group排查引用该schema的Group更新。</p>
 
 <p>Content Update Restriction是ContentUpdateGroupSchema，定义该Asset Group内的资源构建成bundle包时是否可以热更，如果要热更一定要添加</p>
@@ -1028,14 +1040,14 @@
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

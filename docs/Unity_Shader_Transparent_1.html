@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -318,10 +320,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200407013839019-192734258.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Transparency.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200407013839019-192734258.png" width="250"><font size="2.5">
+            <i>Transparency.</i>
+        </font>
+</center>
 
 <h3 id="自定义裁剪范围">自定义裁剪范围</h3>
 
@@ -487,12 +490,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025558827-763232542.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025559403-1226084825.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025558827-763232542.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025559403-1226084825.png" width="250"><font size="2.5">
+            <i>Opaque vs Transparent.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>Opaque vs Transparent.</a></i></center>    
-        
 
 <p>注意右侧图片，也调用了Render.OpaqueGeometry方法。注意这个调用先后顺序，Opaque和Cutout先被渲染，Transparent后渲染。因此该渲染顺序，确保了半透明物体不会在它们之后渲染。</p>
 
@@ -520,10 +522,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025600271-909157351.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>半透明效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025600271-909157351.png" width="250"><font size="2.5">
+            <i>半透明效果.</i>
+        </font>
+</center>
 
 <p>这两个关键字只是对Fade渲染半透明效果的近似估计，我们也可以自定义属性变量代替。</p>
 
@@ -579,10 +582,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025601128-1501872903.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>奇怪现象.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025601128-1501872903.png" width="250"><font size="2.5">
+            <i>奇怪现象.</i>
+        </font>
+</center>
 
 <p>Unity首先试图绘制距离摄像机最近的物体，这是对重叠几何绘制最有效的方法。不幸的是它对半透明物体失效了。解决方法就是反过来绘制，最远的物体先绘制写入深度缓冲，最近的物体后绘制与深度缓冲比较。这也是绘制半透明物体代价更昂贵的原因。</p>
 
@@ -606,10 +610,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025601996-1517246033.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>重合正确.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025601996-1517246033.png" width="250"><font size="2.5">
+            <i>重合正确.</i>
+        </font>
+</center>
 
 <h2 id="全透明渲染-逼真的材质">全透明渲染-逼真的材质</h2>
 
@@ -627,10 +632,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025602918-1230981286.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>红色过渡趋势.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender11/1692664-20200410025602918-1230981286.png" width="250"><font size="2.5">
+            <i>红色过渡趋势.</i>
+        </font>
+</center>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">RenderingMode</span> <span class="p">{</span>
     <span class="n">Opaque</span><span class="p">,</span> <span class="n">Cutout</span><span class="p">,</span> <span class="n">Fade</span><span class="p">,</span> <span class="n">Transparent</span>
@@ -1184,14 +1190,14 @@
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

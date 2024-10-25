@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -276,10 +278,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>针对光照贴图的一个测试场景.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png" width="250"><font size="2.5">
+            <i>针对光照贴图的一个测试场景.</i>
+        </font>
+</center>
 
 <h3 id="烘焙光源-baked-lights">烘焙光源-Baked Lights</h3>
 
@@ -288,30 +291,33 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>使用烘焙模式的主方向光源.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png" width="250"><font size="2.5">
+            <i>使用烘焙模式的主方向光源.</i>
+        </font>
+</center>
 
 <p><strong>将主方向光源变成烘培光源后，就不被纳入动态光照计算。从动态对象的角度来看，光源是不存在的。 唯一仍然不变的是环境光照，它仍然是基于主方向光源的。</strong></p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>没有直接光照的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png" width="250"><font size="2.5">
+            <i>没有直接光照的效果.</i>
+        </font>
+</center>
 
 <p>要实际启用光照贴图，请在lighting窗口的“混合光照（<em>Mixed Lighting</em>）”中打开“烘培全局光照(<em>BakedGlobal Illumination</em>)”。 然后<strong>将光照模式设置为“烘培间接光照（<em>BakedIndirect</em>）”。 尽管它的名字说的是烘培间接光照，但是它也包括了直接光照</strong>。 它通常用于向场景添加间接光照。另外，确保实时全局光照（<em>Realtime Global Illumination</em>）被禁用，因为我们还没有支持到这一点。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>烘培间接光照模式.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png" width="250"><font size="2.5">
+            <i>烘培间接光照模式.</i>
+        </font>
+</center>
 
 <h3 id="静态几何体">静态几何体</h3>
 
@@ -327,30 +333,33 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>静态标签设定.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png" width="250"><font size="2.5">
+            <i>静态标签设定.</i>
+        </font>
+</center>
 
 <p>一个物体对于光照贴图来说是否是静态的，也可以通过其网格渲染器的检视器来进行查看和编辑。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>对于光照贴图来说是静态的物体.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png" width="250"><font size="2.5">
+            <i>对于光照贴图来说是静态的物体.</i>
+        </font>
+</center>
 
 <p>现在，所有的物体都是静态的，它们将被包含在光照贴图的处理过程中。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>使用烘焙光照的场景.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png" width="250"><font size="2.5">
+            <i>使用烘焙光照的场景.</i>
+        </font>
+</center>
 
 <p><strong>必须注意</strong>，使用光照贴图得到的结果不如使用实时照明得到的结果亮度那么高。这是因为缺失了镜面高光，只剩下了漫反射光照。镜面高光取决于视角，因此取决于相机的角度。正是由于相机是移动的，因此它不能包含在光照贴图中。(使用场景推荐)这种限制意味着光照贴图可以用于微弱的光线和暗淡的表面，但不能用于强直射光或有光泽的表面。如果你想要镜面高光，你将不得不使用实时光源。所以你经常会使用烘烤光源和实时光源的混合。</p>
 
@@ -361,10 +370,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>自动烘焙.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png" width="250"><font size="2.5">
+            <i>自动烘焙.</i>
+        </font>
+</center>
 
 <h3 id="光照贴图设置-lightingmapping-setting">光照贴图设置-Lightingmapping Setting</h3>
 
@@ -373,30 +383,33 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>默认的光照贴图设置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png" width="250"><font size="2.5">
+            <i>默认的光照贴图设置.</i>
+        </font>
+</center>
 
 <p>在做任何事情之前，请将“DirectionalMode“设置为”Non-Direction“。 稍后我们会处理其他模式。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>使用“Non-directional”模式的光照贴图.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png" width="250"><font size="2.5">
+            <i>使用“Non-directional”模式的光照贴图.</i>
+        </font>
+</center>
 
 <p>烘烤的光照存储在纹理中。 你可以通过将光照窗口从“场景（Scene）“切换到”全局地图（<em>Global Maps</em>）“模式来进行查看。 使用默认设置，我的测试场景很容易与一张1024×1024贴图相匹配。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>得到光照贴图.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png" width="250"><font size="2.5">
+            <i>得到光照贴图.</i>
+        </font>
+</center>
 
 <p>Unity自带的Objects物体都有用于光照贴图的UV坐标。对于手动导入的模型，可以自己提供UV坐标，也可以让Unity生成。烘烤后可以在光照贴图中看到展开的纹理。它们需要多少空间取决于场景中物体的大小和光照贴图的分辨率设置。 如果质量要求高分辨率太大，一张贴图涨不下，Unity会创建额外的贴图存储，直至完成。</p>
 
@@ -404,12 +417,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png" width="250"><font size="2.5">
+            <i>光照贴图的分辨率的不同会带来很大的差异.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>光照贴图的分辨率的不同会带来很大的差异.</a></i></center>    
-        
 
 <p>对于每个项目来说，最佳设置都是不同。 你必须不断的调整烘焙参数，直到达成很好的效果及平衡。需要注意的是，视觉质量也很大程度上取决于用于光照贴图的纹理展开的质量。不存在纹理接缝可能会产生明显的瑕疵。Unity的默认球体就是一个很好的例子。它不适用于光照贴图。</p>
 
@@ -423,12 +435,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png" width="250"><font size="2.5">
+            <i>没有环境光照，realtime vs. lightmapped.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>没有环境光照，realtime vs. lightmapped.</a></i></center>    
-        
 
 <p>每次光子反射的时候，它都会失去一些能量，它会被一些需要的材质采样着色。Unity在烘焙间接光照的时候，物体会根据附近的颜色进行着色。</p>
 
@@ -436,12 +447,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png" width="250"><font size="2.5">
+            <i>绿色的地面，realtime vs. lightmapped.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>绿色的地面，realtime vs. lightmapped.</a></i></center>    
-        
 
 <p>自发光表面也会影响烘焙光照。它们会成为间接光源。</p>
 
@@ -449,12 +459,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png" width="250"><font size="2.5">
+            <i>自发光的地面，realtime vs. lightmapped.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>自发光的地面，realtime vs. lightmapped.</a></i></center>    
-        
 
 <p>间接光照的一个特殊设置是AO环境遮挡：这是指在角落和转折中发生的间接光照造成的阴影。这是一种人为的提升，可以增强深度方面的视觉。</p>
 
@@ -462,22 +471,22 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png" width="250"><font size="2.5">
+            <i>使用环境遮挡的效果.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>使用环境遮挡的效果.</a></i></center>    
-        
 
 <p>环境遮挡效果完全基于物体表面。它不考虑光线实际来自哪里。烘焙时并不总是正确，举个简单的例子：当与自发光表面组合的时候就会产生一些错误的结果。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>显然是错误的环境遮挡效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png" width="250"><font size="2.5">
+            <i>显然是错误的环境遮挡效果.</i>
+        </font>
+</center>
 
 <h3 id="透明度-transparency">透明度-Transparency</h3>
 
@@ -486,30 +495,33 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>半透明的屋顶.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png" width="250"><font size="2.5">
+            <i>半透明的屋顶.</i>
+        </font>
+</center>
 
 <p>镂空材质也可以在光照贴图中正常工作。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>镂空的屋顶.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png" width="250"><font size="2.5">
+            <i>镂空的屋顶.</i>
+        </font>
+</center>
 
 <p>但 这仅在使用封闭曲面的时候有效。当使用像是quad这样的单面几何，光线将在不存在的一面损坏。<em>当另外一面没有任何东西的时候，这是很好的，但是当使用单面透明表面的时候会导致问题</em>。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>四边形上有一个错误.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png" width="250"><font size="2.5">
+            <i>四边形上有一个错误.</i>
+        </font>
+</center>
 
 <p>为了处理这个问题，必须告诉光照贴图系统将这些表面视为透明的。 这可以通过自定义光照贴图设置完成</p>
 
@@ -520,10 +532,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>指示这是透明的.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png" width="250"><font size="2.5">
+            <i>指示这是透明的.</i>
+        </font>
+</center>
 
 <ol>
   <li>单独设置：通过物体的网格渲染器检视器来选择它们。你的资源名字将显示在Lightmap参数的下拉列表中。</li>
@@ -533,12 +546,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png" width="250"><font size="2.5">
+            <i>为透明四边形使用自定义参数.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>为透明四边形使用自定义参数.</a></i></center>    
-        
 
 <p>将物体标记为透明也会改变它对间接光照的贡献。透明物体让间接光通过，而不透明物体则会阻挡间接光。</p>
 
@@ -549,10 +561,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>使用我们的白色材质的球体.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png" width="250"><font size="2.5">
+            <i>使用我们的白色材质的球体.</i>
+        </font>
+</center>
 
 <h3 id="光照贴图的着色器变体">光照贴图的着色器变体</h3>
 
@@ -658,10 +671,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>使用原始光照图数据的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png" width="250"><font size="2.5">
+            <i>使用原始光照图数据的效果.</i>
+        </font>
+</center>
 
 <p>我们现在得到了烘焙的间接光照，但效果看起来不对。这是因为光照贴图数据已被编码。颜色以RGBM格式或是半强度格式进行存储，以支持高强度的光。UnityCG的DecodeLightmap函数负责为我们解码。</p>
 
@@ -674,10 +688,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>使用解码后光照图数据的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png" width="250"><font size="2.5">
+            <i>使用解码后光照图数据的效果.</i>
+        </font>
+</center>
 
 <h2 id="创建光照贴图">创建光照贴图</h2>
 
@@ -692,10 +707,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>半透明的屋顶，效果不正确.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png" width="250"><font size="2.5">
+            <i>半透明的屋顶，效果不正确.</i>
+        </font>
+</center>
 
 <p><strong>光照贴图</strong>仍然把屋顶看成是实心物体，这是不正确的。它<strong>使用材质的渲染类型来确定如何处理表面</strong>，这应该告诉光照贴图我们的对象是半透明的。事实上，它确实知道屋顶是半透明的，它只是把它看作是完全不透明的而已。这是因为<strong>它</strong>采用Unity的命名约定<strong>_Color材质属性的alpha组件以及主纹理来设置不透明度</strong>。</p>
 
@@ -713,10 +729,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>半透明的屋顶，正确的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png" width="250"><font size="2.5">
+            <i>半透明的屋顶，正确的效果.</i>
+        </font>
+</center>
 
 <h3 id="镂空部分的阴影-cutout-shadow">镂空部分的阴影-Cutout Shadow</h3>
 
@@ -725,20 +742,22 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>镂空的屋顶，效果不正确.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png" width="250"><font size="2.5">
+            <i>镂空的屋顶，效果不正确.</i>
+        </font>
+</center>
 
 <p>解决方案是再次<strong>采用Unity的命名约定_Cutoff材质属性</strong>。所以替换shader、cg文件、GUI拓展。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>镂空的屋顶，正确的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png" width="250"><font size="2.5">
+            <i>镂空的屋顶，正确的效果.</i>
+        </font>
+</center>
 
 <h3 id="添加一个meta渲染通道-add-meta-pass">添加一个Meta渲染通道-Add Meta Pass</h3>
 
@@ -747,10 +766,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>绿色的地板，效果不正确.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png" width="250"><font size="2.5">
+            <i>绿色的地板，效果不正确.</i>
+        </font>
+</center>
 
 <p>要采样物体的表面颜色，光照贴图程序会将它的光照模式设置为Meta来寻找一个着色器渲染通道。这个渲染通道仅由光照贴图程序使用，不使用剔除。所以让我们在我们的着色器上添加一个渲染通道。</p>
 
@@ -933,10 +953,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>间接光照设置为0的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png" width="250"><font size="2.5">
+            <i>间接光照设置为0的效果.</i>
+        </font>
+</center>
 
 <p>要<strong>获得自发光颜色</strong>，我们可以简单的<strong>使用GetEmission函数</strong>。要<strong>获得反照率</strong>，我们必须再次<strong>使用_DiffuseAndSpecularFromMetallic_函数</strong>。 该函数具有镜面高光颜色和反射率作为输出参数，即使我们现在不使用它们，我们也必须提供这些参数。我们可以使用<strong>surfaceData.SpecularColor来捕获镜面高光颜色</strong>。</p>
 
@@ -958,10 +979,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>间接光照着色的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png" width="250"><font size="2.5">
+            <i>间接光照着色的效果.</i>
+        </font>
+</center>
 
 <p>但自发光光照可能还没有出现在光照贴图中。这是因为光照贴图程序并不总是包含一个自发光光照的渲染通道。<strong>材质必须表明它们具有自发光光照属性，</strong>以对烘焙过程做出贡献。这是<strong>通过Material.globalIlluminationFlags属性</strong>完成的。扩展GUI设置：当自发光光照编辑的时候，它应该被烘焙进光照贴图。</p>
 
@@ -986,12 +1008,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png" width="250"><font size="2.5">
+            <i>粗糙的绿色金属，standard vs. our.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>粗糙的绿色金属，standard vs. our.</a></i></center>    
-        
 
 <p>标准着色器通过<strong>将反射率的一部分加到镜面高光颜色</strong>进行补偿（高亮）。它使用_UnityStandardBRDF.cginc_的_SmoothnessToRoughness函数_来确定基于平滑度的粗糙度值，将其缩小一半，并使用它来缩放镜面高光颜色。</p>
 
@@ -1015,10 +1036,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>调整反照率后的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png" width="250"><font size="2.5">
+            <i>调整反照率后的效果.</i>
+        </font>
+</center>
 
 <h2 id="方向光照贴图-directinal-lightmap">方向光照贴图-Directinal Lightmap</h2>
 
@@ -1028,12 +1050,11 @@
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png" width="250"><font size="2.5">
+            <i>使用了法线贴图，standard vs. our.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>使用了法线贴图，standard vs. our.</a></i></center>    
-        
 
 <p>当从实时光照切换到烘焙光时，法线贴图的影响几乎完全消失。这是因为它要求环境反射才能看到它们。</p>
 
@@ -1044,20 +1065,22 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>再次启用定向光照贴图.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png" width="250"><font size="2.5">
+            <i>再次启用定向光照贴图.</i>
+        </font>
+</center>
 
 <p>当使用方向光照贴图的时候，Unity将创建两个贴图。第一张贴图包含通常的光照信息，称为强度图。 第二张贴图被称为方向图。 它包含大部分烘烤光来自的方向。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>强度图和方向图.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png" width="250"><font size="2.5">
+            <i>强度图和方向图.</i>
+        </font>
+</center>
 
 <p>当方向图可用的时候，用它来对烘焙光进行简单的<strong>漫反射阴影计算</strong>。这使得它可用于法线贴图之上。注意，只有一个光方向是已知的，所以阴影将是一个近似。至少有一个主方向光照的时候，结果就会很好。</p>
 
@@ -1128,10 +1151,11 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>使用带有方向的光照贴图的效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png" width="250"><font size="2.5">
+            <i>使用带有方向的光照贴图的效果.</i>
+        </font>
+</center>
 
 <p><em>DecodeDirectionLightmap内部做了什么？</em></p>
 
@@ -1163,7 +1187,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png" width="250"></center>
 
 <p>为了更好地混合静态和动态对象，我们必须以某种方式将烘焙的光照应用于动态对象。为了解决这个问题，Unity有光照探针。 光照探针是对空间中的一个点包含该位置的光照信息。 它是用球面谐波来存储这些信息而不是用纹理。 如果可用的话，这些光照探针将用于动态对象，而不是全局环境数据。所以我们要做的就是创建一些探针，等到烘焙的时候，我们的着色器就会自动使用它们。</p>
 
@@ -1174,17 +1198,18 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>一个新的光探测器组.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png" width="250"><font size="2.5">
+            <i>一个新的光探测器组.</i>
+        </font>
+</center>
 
 <p>通过检视器，可以在启用“编辑探针”模式后编辑光探测器组。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png" width="250" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png" width="250"></center>
 
 <h3 id="放置光照探针">放置光照探针</h3>
 
@@ -1193,40 +1218,44 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>封装区域.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png" width="250"><font size="2.5">
+            <i>封装区域.</i>
+        </font>
+</center>
 
 <p>然后根据光照条件如何变化来添加更多的探针。你不必将它们放置在静态几何中。 也不要把它们放在不透明的单面几何体错误的那一面。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>放置更多的探测器.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png" width="250"><font size="2.5">
+            <i>放置更多的探测器.</i>
+        </font>
+</center>
 
 <p>继续添加和移动探测器，直到你在所有区域都有了合理的光照条件，并且在它们之间发生的转换是可以接受的。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>调整探测器的位置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png" width="250"><font size="2.5">
+            <i>调整探测器的位置.</i>
+        </font>
+</center>
 
 <p>可以通过移动动态对象来测试探针。当选择一个动态对象的时候，也会显示当前正在发挥作用的探针。探针将显示其光照，而不仅仅是黄色球体。你还可以看到用于动态对象的内插数据。</p>
 
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>移动动态对象.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif" width="250"><font size="2.5">
+            <i>移动动态对象.</i>
+        </font>
+</center>
 
 <p>通过不同的光照探头，物体的明暗变化明显。</p>
 
@@ -1737,14 +1766,14 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

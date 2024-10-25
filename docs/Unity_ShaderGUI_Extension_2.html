@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -358,21 +360,21 @@ _shader_feature _OCCLUSION_MAP</p>
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002428844-1633530000.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002429884-753672113.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002428844-1633530000.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002429884-753672113.png" width="250"><font size="2.5">
+            <i>without and with occlusion map.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>without and with occlusion map.</a></i></center>    
-        
 
 <p>上图带有遮挡纹理的凹陷阴影过渡，gif显示：
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002430720-1254806120.gif" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>阴影过渡.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002430720-1254806120.gif" width="250"><font size="2.5">
+            <i>阴影过渡.</i>
+        </font>
+</center>
 
 <h3 id="间接光阴影">间接光阴影</h3>
 
@@ -392,12 +394,11 @@ _shader_feature _OCCLUSION_MAP</p>
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002431843-521494391.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002432943-1346085548.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002431843-521494391.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002432943-1346085548.png" width="250"><font size="2.5">
+            <i>wihtout and with occlusion.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>wihtout and with occlusion.</a></i></center>    
-        
 
 <p>把图1.2与图1.1对比，可以明显感觉到Occlusion纹理好似专门针对间接光而制作，它随着凹陷越深阴影越明显，甚至有点过头了。那么我们何不把直接光采样这步去掉，看看它的效果如何。</p>
 
@@ -414,12 +415,11 @@ _shader_feature _OCCLUSION_MAP</p>
     代表一次加载多少张图
 -->
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002434117-175883438.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002435159-1689982604.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002434117-175883438.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002435159-1689982604.png" width="250"><font size="2.5">
+            <i>without and with occlusion.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>without and with occlusion.</a></i></center>    
-        
 
 <p>把上图逐一对比，感觉最后一图的效果适中，看起来舒服。就Occlusion而言，它具有相当大真实感。虽然如此，我们通常会发现游戏里的遮挡图也被用在直接光上。Unity老旧的shader就是这样做的，虽然它不太真实，但是对灯光效果的控制提供了相当大的灵活性。</p>
 
@@ -431,10 +431,11 @@ _shader_feature _OCCLUSION_MAP</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002435932-2016880462.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>合并后的纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002435932-2016880462.png" width="250"><font size="2.5">
+            <i>合并后的纹理.</i>
+        </font>
+</center>
 
 <p><strong>优势</strong></p>
 <ul>
@@ -453,10 +454,11 @@ _shader_feature _OCCLUSION_MAP</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002437151-266064391.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>细节纹理效果.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002437151-266064391.png" width="250"><font size="2.5">
+            <i>细节纹理效果.</i>
+        </font>
+</center>
 
 <h3 id="细节遮罩纹理">细节遮罩纹理</h3>
 
@@ -500,10 +502,11 @@ _shader_feature _OCCLUSION_MAP</p>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002438806-745344487.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Mask Details.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender10/1692664-20200406002438806-745344487.png" width="250"><font size="2.5">
+            <i>Mask Details.</i>
+        </font>
+</center>
 
                 <div class="post-copyright">
                     <p>
@@ -1012,14 +1015,14 @@ _shader_feature _OCCLUSION_MAP</p>
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置

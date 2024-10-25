@@ -41,6 +41,8 @@
     
     
     <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -71,7 +73,7 @@
 
 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.2" async>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
     <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -291,10 +293,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>略微扭曲的网格纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid.png" width="250"><font size="2.5">
+            <i>略微扭曲的网格纹理.</i>
+        </font>
+</center>
 
 <p>新建一个纹理融合shader</p>
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Shader</span> <span class="s">"Custom/Textured With Detail"</span> <span class="p">{</span>
@@ -313,14 +316,15 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detailed-inspector.png" width="300" alt="loading failed, need vpn."></center>
+<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detailed-inspector.png" width="300"></center>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detailed-scene.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>网格纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detailed-scene.png" width="300"><font size="2.5">
+            <i>网格纹理.</i>
+        </font>
+</center>
 
 <p>将材质分配给quad并查看它。从远处看效果还行。但是靠得太近看会变得模糊不清。缺失一些细节，同时纹理压缩造成的伪影也会变得很明显。
 网格特写，显示低纹素密度和 DXT1 伪影。
@@ -328,10 +332,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-close-up.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>带有低像素密度和DXT1伪影.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-close-up.png" width="300"><font size="2.5">
+            <i>带有低像素密度和DXT1伪影.</i>
+        </font>
+</center>
 
 <h3 id="多张纹理贴图采样">多张纹理贴图采样</h3>
 
@@ -355,10 +360,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/tiling.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>平铺纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/tiling.png" width="300"><font size="2.5">
+            <i>平铺纹理.</i>
+        </font>
+</center>
 
 <p>请注意，此时我们正在执行两个纹理采样，但最终却只使用其中一个。这似乎很浪费。是吗？看看编译的顶点程序。</p>
 
@@ -438,10 +444,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/multiplied.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>平铺纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/multiplied.png" width="300"><font size="2.5">
+            <i>平铺纹理.</i>
+        </font>
+</center>
 
 <p>由于纹理采样时参数不再相同，编译器也必须保留两次采样。</p>
 
@@ -494,19 +501,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/doubled.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>增亮颜色.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/doubled.png" width="300"><font size="2.5">
+            <i>增亮颜色.</i>
+        </font>
+</center>
 
 <p>这种直接扩大倍数的做法很粗暴。我们知道任何数乘以1不变，但是对细节纹理色加倍时，但对于1/2这个分界值就有用了。颜色区间是0-1，低于1/2的值将是结果变暗，高于1/2的值将变亮。这里引入一张特殊的灰度细节纹理来处理。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-detail.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>细节灰度图.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-detail.png" width="250"><font size="2.5">
+            <i>细节灰度图.</i>
+        </font>
+</center>
 
 <blockquote class="prompt-tip">
   <p>灰度细节纹理？</p>
@@ -528,10 +537,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detail-texture-inspector.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>两种纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/detail-texture-inspector.png" width="300"><font size="2.5">
+            <i>两种纹理.</i>
+        </font>
+</center>
 
 <p>我们必须添加变量来访问细节纹理及其平铺和偏移数据</p>
 
@@ -682,12 +692,11 @@
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-with-detail.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-close-up-detail.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-with-detail.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-close-up-detail.png" width="250"><font size="2.5">
+            <i>明暗两张纹理.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>明暗两张纹理.</a></i></center>    
-        
 
 <h3 id="细节纹理渐变融合">细节纹理渐变融合</h3>
 
@@ -698,48 +707,44 @@
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/fading-inspector.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-fading-detail.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/fading-inspector.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/grid-fading-detail.png" width="250"><font size="2.5">
+            <i>纹理过渡.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>纹理过渡.</a></i></center>    
-        
 
 <p>网格从详细到不详细的过渡非常明显，但通常不会注意到它。例如，这里是大理石材质的主纹理和细节纹理。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-detail.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-detail.png" width="250"><font size="2.5">
+            <i>大理石纹理.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>大理石纹理.</a></i></center>    
-        
 
 <p>一旦我们的材质使用了这些纹理，细节纹理的过渡痕迹就不再明显了。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-inspector.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-scene.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-inspector.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-scene.png" width="250"><font size="2.5">
+            <i>大理石材质.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>大理石材质.</a></i></center>    
-        
 
 <p>然而，由于细节纹理的过渡加持，大理石材质在近距离看起来要好得多。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-close.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-close-detail.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-close.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/marble-close-detail.png" width="250"><font size="2.5">
+            <i>没有细节和有细节特写.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>没有细节和有细节特写.</a></i></center>    
-        
 
 <h3 id="线性色彩空间">线性色彩空间</h3>
 
@@ -747,10 +752,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/color-space-inspector.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>选择颜色空间.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/color-space-inspector.png" width="300"><font size="2.5">
+            <i>选择颜色空间.</i>
+        </font>
+</center>
 
 <h3 id="什么是gamma色彩空间">什么是gamma色彩空间?</h3>
 <p>伽玛空间是指经过伽玛校正的色彩空间。伽玛校正是对光强度的调整。最简单的方法是将原始值提高到某个幂次，即\(value^gamma\)。 gamma为 1 表示没有变化， 随着gamma递增光强度递增。</p>
@@ -761,10 +767,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/gamma-to-linear.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>gamma$$1\over 2.2$$encoding vs. $$2.2$$deconding.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/gamma-to-linear.png" width="250"><font size="2.5">
+            <i>gamma$$1\over 2.2$$encoding vs. $$2.2$$deconding.</i>
+        </font>
+</center>
 
 <p>假设Unity纹理的颜色存储为sRGB。在伽马空间中渲染时，着色器直接访问原始颜色和纹理数据。这是我们到目前为止所假设的。</p>
 
@@ -775,12 +782,11 @@
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/gamma-space.png" width="250" alt="loading failed, need vpn.">
-        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/linear-space.png" width="250" alt="loading failed, need vpn.">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/gamma-space.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/linear-space.png" width="250"><font size="2.5">
+            <i>gamma vs. linear 色彩空间.</i>
+        </font>
 </center>
-<font size="2.5">
-            </font><center><i><a>gamma vs. linear 色彩空间.</a></i></center>    
-        
 
 <p>因为我们将细节纹理采样后的颜色乘了2，所以\(1\over 2\)的值不会导致主纹理发生任何变化。但是，转换为线性空间后，它会变为接近\({1\over 2} ^{2.2} \approx 0.22\)。加倍大约是0.44，远小于 1。这就解释了为什么变得更暗。</p>
 
@@ -807,19 +813,21 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/binary-splat-map.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>splat遮罩贴图.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/binary-splat-map.png" width="250"><font size="2.5">
+            <i>splat遮罩贴图.</i>
+        </font>
+</center>
 
 <p>将其添加到项目后，将其导入类型切换为高级。启用Bypass sRGB Sampling并指示其mipmap应在Linear Space中生成。因为该纹理不需要sRGB颜色。所以在线性空间中渲染时不应该进行转换。另外，将其 Wrap Mode 设置为clamp，因为我们不会平铺这张地图。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-binary-import.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>splat导入设置.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-binary-import.png" width="300"><font size="2.5">
+            <i>splat导入设置.</i>
+        </font>
+</center>
 
 <p>创建一个新的 Texture Splatting 着色器。</p>
 <div class="language-hlsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Shader</span> <span class="s">"Custom/Texture Splatting"</span> <span class="p">{</span>
@@ -872,10 +880,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-binary-scene.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>splat图渲染.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-binary-scene.png" width="250"><font size="2.5">
+            <i>splat图渲染.</i>
+        </font>
+</center>
 
 <h3 id="增加融合纹理">增加融合纹理</h3>
 
@@ -892,10 +901,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/two-textures-inspector.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>增加的额外纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/two-textures-inspector.png" width="300"><font size="2.5">
+            <i>增加的额外纹理.</i>
+        </font>
+</center>
 
 <p>为添加到着色器的每个纹理修改平铺和偏移控制值。这需要我们将更多数据从顶点传递到片段着色器，或者在片元着色器中计算UV调整。 这很好，但通常地形的所有纹理都平铺相同。并且 splat 地图根本没有平铺。所以我们只需要一个平铺和偏移控件的实例。</p>
 
@@ -912,10 +922,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/no-tiling-offset.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>不需要额外的贴图纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/no-tiling-offset.png" width="300"><font size="2.5">
+            <i>不需要额外的贴图纹理.</i>
+        </font>
+</center>
 
 <p>将采样器变量添加到我们的着色器代码中，但是不必添加它们对应的 _ST 变量。</p>
 
@@ -935,10 +946,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/textures-added.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>纹理叠加.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/textures-added.png" width="300"><font size="2.5">
+            <i>纹理叠加.</i>
+        </font>
+</center>
 
 <h3 id="使用splat贴图">使用splat贴图</h3>
 
@@ -978,10 +990,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/modulating-first-texture.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>调制第一个纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/modulating-first-texture.png" width="300"><font size="2.5">
+            <i>调制第一个纹理.</i>
+        </font>
+</center>
 
 <p>第一个纹理现在由splat贴图R通道调制。为了完成插值，我们必须将另一个纹理<code class="language-plaintext highlighter-rouge">1-R</code>相乘。</p>
 
@@ -992,10 +1005,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/modulating-both-textures.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>调制两个纹理.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/modulating-both-textures.png" width="300"><font size="2.5">
+            <i>调制两个纹理.</i>
+        </font>
+</center>
 
 <h3 id="rgb-splat贴图">RGB Splat贴图</h3>
 
@@ -1007,10 +1021,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/rgb-splat-map.png" width="250" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>RGB splat 贴图.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/rgb-splat-map.png" width="250"><font size="2.5">
+            <i>RGB splat 贴图.</i>
+        </font>
+</center>
 
 <blockquote class="prompt-warning">
   <p>当 R + G + B 超过1时会发生什么？</p>
@@ -1043,10 +1058,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-rgb-inspector.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>Four textures.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/splat-map-rgb-inspector.png" width="300"><font size="2.5">
+            <i>Four textures.</i>
+        </font>
+</center>
 
 <p>将所需的变量添加到着色器。 再一次，没有额外的 _ST需要的变量。</p>
 
@@ -1064,10 +1080,11 @@
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
-<center class="half"><img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/four-textures-splatted.png" width="300" alt="loading failed, need vpn."></center>
-<font size="2.5">
-            </font><center><i><a>四个纹理飞溅.</a></i></center>    
-        
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender3/four-textures-splatted.png" width="300"><font size="2.5">
+            <i>四个纹理飞溅.</i>
+        </font>
+</center>
 
 <blockquote class="prompt-tip">
   <p>为什么混合区域在线性色彩空间中看起来不同？</p>
@@ -1593,14 +1610,14 @@
 </script>
         
         
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
     // 定义通用配置
     const searchConfig = {
-        appId: "BHQWK3P97Y",
-        apiKey: "2e2eeb36e513c4a7a4ceca7ca778bd97",
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
-        lang: "zh-CN", // 显式设置语言
+        lang: " ", // 显式设置语言
         insights: true,
         debug: false,
         // 添加搜索配置
