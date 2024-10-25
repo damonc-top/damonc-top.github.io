@@ -1010,68 +1010,15 @@
         
 <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
 <script type="text/javascript">
-    // 定义通用配置
-    const searchConfig = {
+    docsearch({
         appId: "NCUJ5WJECO",
         apiKey: "b625a4b91a45af033cbdb526694e9e65",
         indexName: "damonc",
         lang: " ", // 显式设置语言
         insights: true,
         debug: false,
-        // 添加搜索配置
-        searchParameters: {
-            attributesToRetrieve: [
-                'hierarchy.lvl0',
-                'hierarchy.lvl1',
-                'hierarchy.lvl2',
-                'hierarchy.lvl3',
-                'hierarchy.lvl4',
-                'hierarchy.lvl5',
-                'hierarchy.lvl6',
-                'content',
-                'type',
-                'url'
-            ]
-        },
-        // 添加转换器处理可能的未定义值
-        transformItems(items) {
-            return items.map(item => ({
-                ...item,
-                // 确保 hierarchy 存在
-                hierarchy: item.hierarchy || {
-                    lvl0: item.lvl0 || '文档',
-                    lvl1: item.lvl1 || '',
-                    lvl2: item.lvl2 || '',
-                    lvl3: item.lvl3 || '',
-                },
-            }));
-        },
-        // 自定义搜索结果模板
-        hitComponent: ({ hit, children }) => {
-            return {
-                ...hit,
-                title: hit.hierarchy?.lvl0 || hit.lvl0 || '未命名',
-                content: hit.content || ''
-            };
-        }
-    };
-
-    // 初始化搜索实例
-    try {
-        // 第一个搜索框
-        docsearch({
-            ...searchConfig,
-            container: 'li#search',
-        });
-
-        // 第二个搜索框
-        docsearch({
-            ...searchConfig,
-            container: '#search-toggle',
-        });
-    } catch (error) {
-        console.error('DocSearch initialization error:', error);
-    }
+        container: 'li#search',
+    });
 </script>
 
   </body>
