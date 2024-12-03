@@ -43,6 +43,7 @@
     <meta name="theme-color" content="#81BBFF" />
     <meta name="algolia-site-verification" content="5E91324370E1262B" />
     <title>Algolia Verification</title>
+    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -76,7 +77,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
-    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
     
     <body class="line-numbers" ontouchstart="">
@@ -1435,7 +1435,7 @@ inline half3 EnergyConservationBetweenDiffuseAndSpecular (
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
-                    <ul><li><a onclick="scrollToAdjust('法线-normals')">法线 Normals</a><ul><li><a onclick="scrollToAdjust('计算网格法线')">计算网格法线</a></li><li><a onclick="scrollToAdjust('动态批处理')">动态批处理</a></li><li><a onclick="scrollToAdjust('转换法线到世界空间')">转换法线到世界空间</a></li><li><a onclick="scrollToAdjust('再次归一化法线-renormalsed')">再次归一化法线 ReNormalsed</a></li></ul></li><li><a onclick="scrollToAdjust('漫反射-diffuse-shading')">漫反射 Diffuse Shading</a><ul><li><a onclick="scrollToAdjust('约束负数光照-clamped-lighting')">约束负数光照 Clamped Lighting</a></li><li><a onclick="scrollToAdjust('光源-light-source')">光源 Light Source</a></li><li><a onclick="scrollToAdjust('灯光模式-light-mode')">灯光模式 Light Mode</a></li><li><a onclick="scrollToAdjust('光照颜色-light-color')">光照颜色 Light Color</a></li><li><a onclick="scrollToAdjust('反照率-albedo')">反照率 Albedo</a></li></ul></li><li><a onclick="scrollToAdjust('高光(镜面)反射-specular-shading')">高光(镜面)反射 Specular Shading</a><ul><li><a onclick="scrollToAdjust('反射光照颜色-reflecting-light')">反射光照颜色 Reflecting Light</a></li><li><a onclick="scrollToAdjust('光滑度-smoothness')">光滑度 Smoothness</a></li><li><a onclick="scrollToAdjust('blinn-phong光照公式')">Blinn-Phong光照公式</a></li><li><a onclick="scrollToAdjust('高光颜色-specular-color')">高光颜色 Specular Color</a></li><li><a onclick="scrollToAdjust('漫反射和镜面反射-diffuse-and-specular')">漫反射和镜面反射 Diffuse and Specular</a></li></ul></li><li><a onclick="scrollToAdjust('能量守恒-energy-conservation')">能量守恒 Energy Conservation</a><ul><li><a onclick="scrollToAdjust('非金属单色-monochrome')">非金属单色 Monochrome</a></li><li><a onclick="scrollToAdjust('辅助函数')">辅助函数</a></li><li><a onclick="scrollToAdjust('金属工作流程-metallic-workflow')">金属工作流程 Metallic Workflow</a></li></ul></li><li><a onclick="scrollToAdjust('基于物理着色-physically-based-shading')">基于物理着色 Physically-Based Shading</a><ul><li><a onclick="scrollToAdjust('光源结构-light-structures')">光源结构 Light Structures</a></li></ul></li></ul>
+                    <ul><li><a onclick="scrollToAdjust('法线-normals')">1. 法线 Normals</a><ul><li><a onclick="scrollToAdjust('计算网格法线')">1.1 计算网格法线</a></li><li><a onclick="scrollToAdjust('动态批处理')">1.2 动态批处理</a></li><li><a onclick="scrollToAdjust('转换法线到世界空间')">1.3 转换法线到世界空间</a></li><li><a onclick="scrollToAdjust('再次归一化法线-renormalsed')">1.4 再次归一化法线 ReNormalsed</a></li></ul></li><li><a onclick="scrollToAdjust('漫反射-diffuse-shading')">2. 漫反射 Diffuse Shading</a><ul><li><a onclick="scrollToAdjust('约束负数光照-clamped-lighting')">2.1 约束负数光照 Clamped Lighting</a></li><li><a onclick="scrollToAdjust('光源-light-source')">2.2 光源 Light Source</a></li><li><a onclick="scrollToAdjust('灯光模式-light-mode')">2.3 灯光模式 Light Mode</a></li><li><a onclick="scrollToAdjust('光照颜色-light-color')">2.4 光照颜色 Light Color</a></li><li><a onclick="scrollToAdjust('反照率-albedo')">2.5 反照率 Albedo</a></li></ul></li><li><a onclick="scrollToAdjust('高光(镜面)反射-specular-shading')">3. 高光(镜面)反射 Specular Shading</a><ul><li><a onclick="scrollToAdjust('反射光照颜色-reflecting-light')">3.1 反射光照颜色 Reflecting Light</a></li><li><a onclick="scrollToAdjust('光滑度-smoothness')">3.2 光滑度 Smoothness</a></li><li><a onclick="scrollToAdjust('blinn-phong光照公式')">3.3 Blinn-Phong光照公式</a></li><li><a onclick="scrollToAdjust('高光颜色-specular-color')">3.4 高光颜色 Specular Color</a></li><li><a onclick="scrollToAdjust('漫反射和镜面反射-diffuse-and-specular')">3.5 漫反射和镜面反射 Diffuse and Specular</a></li></ul></li><li><a onclick="scrollToAdjust('能量守恒-energy-conservation')">4. 能量守恒 Energy Conservation</a><ul><li><a onclick="scrollToAdjust('非金属单色-monochrome')">4.1 非金属单色 Monochrome</a></li><li><a onclick="scrollToAdjust('辅助函数')">4.2 辅助函数</a></li><li><a onclick="scrollToAdjust('金属工作流程-metallic-workflow')">4.3 金属工作流程 Metallic Workflow</a></li></ul></li><li><a onclick="scrollToAdjust('基于物理着色-physically-based-shading')">5. 基于物理着色 Physically-Based Shading</a><ul><li><a onclick="scrollToAdjust('光源结构-light-structures')">5.1 光源结构 Light Structures</a></li></ul></li></ul>
                 </div>
         
             </div>

@@ -43,6 +43,7 @@
     <meta name="theme-color" content="#81BBFF" />
     <meta name="algolia-site-verification" content="5E91324370E1262B" />
     <title>Algolia Verification</title>
+    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -76,7 +77,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
-    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
     
     <body class="line-numbers" ontouchstart="">
@@ -1285,7 +1285,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
-                    <ul><li><a onclick="scrollToAdjust('光照贴图-lightingmapping')">光照贴图-Lightingmapping</a><ul><li><a onclick="scrollToAdjust('烘焙光源-baked-lights')">烘焙光源-Baked Lights</a></li><li><a onclick="scrollToAdjust('静态几何体')">静态几何体</a></li><li><a onclick="scrollToAdjust('光照贴图设置-lightingmapping-setting')">光照贴图设置-Lightingmapping Setting</a></li><li><a onclick="scrollToAdjust('间接光源')">间接光源</a></li><li><a onclick="scrollToAdjust('透明度-transparency')">透明度-Transparency</a></li></ul></li><li><a onclick="scrollToAdjust('使用光照贴图')">使用光照贴图</a><ul><li><a onclick="scrollToAdjust('光照贴图的着色器变体')">光照贴图的着色器变体</a></li><li><a onclick="scrollToAdjust('光照贴图的坐标')">光照贴图的坐标</a></li><li><a onclick="scrollToAdjust('对光照贴图进行采样-sampling-lightmap')">对光照贴图进行采样-Sampling Lightmap</a></li></ul></li><li><a onclick="scrollToAdjust('创建光照贴图')">创建光照贴图</a><ul><li><a onclick="scrollToAdjust('半透明的阴影-semitransparent-shadow')">半透明的阴影-Semitransparent Shadow</a></li><li><a onclick="scrollToAdjust('镂空部分的阴影-cutout-shadow')">镂空部分的阴影-Cutout Shadow</a></li><li><a onclick="scrollToAdjust('添加一个meta渲染通道-add-meta-pass')">添加一个Meta渲染通道-Add Meta Pass</a></li><li><a onclick="scrollToAdjust('顶点程序-vertex-program')">顶点程序-Vertex Program</a></li><li><a onclick="scrollToAdjust('片段程序-fragment-program')">片段程序-Fragment Program</a></li><li><a onclick="scrollToAdjust('粗糙的金属-rough-metals')">粗糙的金属-Rough Metals</a></li></ul></li><li><a onclick="scrollToAdjust('方向光照贴图-directinal-lightmap')">方向光照贴图-Directinal Lightmap</a><ul><li><a onclick="scrollToAdjust('方向性-directionality')">方向性-Directionality</a></li><li><a onclick="scrollToAdjust('对方向进行采样')">对方向进行采样</a></li><li><a onclick="scrollToAdjust('使用方向贴图')">使用方向贴图</a></li></ul></li><li><a onclick="scrollToAdjust('光照探针-light-probes')">光照探针-Light Probes</a><ul><li><a onclick="scrollToAdjust('创建光照探针组')">创建光照探针组</a></li><li><a onclick="scrollToAdjust('放置光照探针')">放置光照探针</a></li></ul></li></ul>
+                    <ul><li><a onclick="scrollToAdjust('光照贴图-lightingmapping')">1. 光照贴图-Lightingmapping</a><ul><li><a onclick="scrollToAdjust('烘焙光源-baked-lights')">1.1 烘焙光源-Baked Lights</a></li><li><a onclick="scrollToAdjust('静态几何体')">1.2 静态几何体</a></li><li><a onclick="scrollToAdjust('光照贴图设置-lightingmapping-setting')">1.3 光照贴图设置-Lightingmapping Setting</a></li><li><a onclick="scrollToAdjust('间接光源')">1.4 间接光源</a></li><li><a onclick="scrollToAdjust('透明度-transparency')">1.5 透明度-Transparency</a></li></ul></li><li><a onclick="scrollToAdjust('使用光照贴图')">2. 使用光照贴图</a><ul><li><a onclick="scrollToAdjust('光照贴图的着色器变体')">2.1 光照贴图的着色器变体</a></li><li><a onclick="scrollToAdjust('光照贴图的坐标')">2.2 光照贴图的坐标</a></li><li><a onclick="scrollToAdjust('对光照贴图进行采样-sampling-lightmap')">2.3 对光照贴图进行采样-Sampling Lightmap</a></li></ul></li><li><a onclick="scrollToAdjust('创建光照贴图')">3. 创建光照贴图</a><ul><li><a onclick="scrollToAdjust('半透明的阴影-semitransparent-shadow')">3.1 半透明的阴影-Semitransparent Shadow</a></li><li><a onclick="scrollToAdjust('镂空部分的阴影-cutout-shadow')">3.2 镂空部分的阴影-Cutout Shadow</a></li><li><a onclick="scrollToAdjust('添加一个meta渲染通道-add-meta-pass')">3.3 添加一个Meta渲染通道-Add Meta Pass</a></li><li><a onclick="scrollToAdjust('顶点程序-vertex-program')">3.4 顶点程序-Vertex Program</a></li><li><a onclick="scrollToAdjust('片段程序-fragment-program')">3.5 片段程序-Fragment Program</a></li><li><a onclick="scrollToAdjust('粗糙的金属-rough-metals')">3.6 粗糙的金属-Rough Metals</a></li></ul></li><li><a onclick="scrollToAdjust('方向光照贴图-directinal-lightmap')">4. 方向光照贴图-Directinal Lightmap</a><ul><li><a onclick="scrollToAdjust('方向性-directionality')">4.1 方向性-Directionality</a></li><li><a onclick="scrollToAdjust('对方向进行采样')">4.2 对方向进行采样</a></li><li><a onclick="scrollToAdjust('使用方向贴图')">4.3 使用方向贴图</a></li></ul></li><li><a onclick="scrollToAdjust('光照探针-light-probes')">5. 光照探针-Light Probes</a><ul><li><a onclick="scrollToAdjust('创建光照探针组')">5.1 创建光照探针组</a></li><li><a onclick="scrollToAdjust('放置光照探针')">5.2 放置光照探针</a></li></ul></li></ul>
                 </div>
         
             </div>
