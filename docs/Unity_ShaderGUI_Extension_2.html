@@ -1,11 +1,12 @@
 
 <!DOCTYPE html>
 <html lang="zh-Hans">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unity Shader GUI 扩展二(翻译十) - 小号手在利雅得听广播</title>
-    <meta name="author" content="damonc">
+    <meta name="author" content="小号手在利雅得听广播">
     
     <meta name="description" content="Unity Shader GUI 扩展二(翻译十)">
     <meta name="keywords"
@@ -43,7 +44,6 @@
     <meta name="theme-color" content="#81BBFF" />
     <meta name="algolia-site-verification" content="5E91324370E1262B" />
     <title>Algolia Verification</title>
-    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="manifest" href="/manifest.json" async>
@@ -551,7 +551,7 @@ _shader_feature _OCCLUSION_MAP</p>
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">damonc</div>
+        <div class="author-name" rel="author">小号手在利雅得听广播</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -608,10 +608,10 @@ _shader_feature _OCCLUSION_MAP</p>
     $(document).ready(function () {
         Waline.init({
             el: '#waline',
-            serverURL: 'https://comments.damonc.top',
-            reaction: true,
+            serverURL: "https://comments.damonc.top",
+            reaction: "true",
             comment: true,
-            locale: {reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'},
+            locale: "{reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}",
         });
     });
 </script>
