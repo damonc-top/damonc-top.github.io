@@ -5,12 +5,12 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Addressable Editor结构 - 小号手在利雅得听广播</title>
+    <title>Unity Addressable System使用分析(一) - 小号手在利雅得听广播</title>
     <meta name="author" content="小号手在利雅得听广播">
     
-    <meta name="description" content="Unity Addressable Editor结构">
+    <meta name="description" content="Unity Addressable System使用分析(一)">
     <meta name="keywords"
-        content="Unity3d, Addressable">
+        content="Unity3d, Addressable System">
     
     <meta property="og:previous_url" content="/Unity_Addressabel_Group.html">
     
@@ -20,7 +20,7 @@
     
     <meta property="post-date-format" content="0">
     
-    <meta property="post-date" content="2024-07-10 20:00:00 +0800" />
+    <meta property="post-date" content="2024-07-10 00:00:00 +0800" />
     
     
     <meta property="calendar-scale" content="year" />
@@ -29,7 +29,7 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity Addressable Editor结构 - 小号手在利雅得听广播">
+        content="Unity Addressable System使用分析(一) - 小号手在利雅得听广播">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_Addressable_Editor.html">
     <meta property="og:baseurl" content="">
@@ -207,11 +207,11 @@
             
             <a href="/%20/tags.html#Unity3d" class="post-tag">Unity3d</a>
             
-            <a href="/%20/tags.html#Addressable" class="post-tag">Addressable</a>
+            <a href="/%20/tags.html#Addressable%20System" class="post-tag">Addressable System</a>
             
             
         </div>
-        <h1>Unity Addressable Editor结构</h1>
+        <h1>Unity Addressable System使用分析(一)</h1>
         <div class="post-meta">
             <span class="post-meta-item">
                 <svg class="icon" aria-hidden="true">
@@ -236,12 +236,12 @@
                     <use xlink:href="#icon-words"></use>
                 </svg>
                 
-                本文总共  3.9k  字 </span>
+                本文总共  6.8k  字 </span>
                     <span class="post-meta-item">
                         <svg class="icon time" aria-hidden="true">
                             <use xlink:href="#icon-time"></use>
                         </svg>
-                        阅读全文大约需要 12 分钟
+                        阅读全文大约需要 20 分钟
                     </span>
                     
                     <span class="post-meta-item">
@@ -273,10 +273,10 @@
 
 
                 <h2 id="addressable安装">Addressable安装</h2>
-<p>总结在使用Unity Addressable System过程中遇到的一部分问题，该篇主要记录Addressable在Unity编辑器的各种组织结构，本文Addressable后续简称AA。</p>
+<p>  总结在使用Unity Addressable System过程中遇到的一部分问题，该篇主要记录Addressable在Unity编辑器的各种组织结构，本文Addressable后续简称AA，基于1.21.19版本。</p>
 
 <h3 id="package安装">Package安装</h3>
-<p>打开Unity Window - Package Manger，找到Addressable安装找一个合适的版本:
+<p>  打开Unity Window - Package Manger，找到Addressable安装找一个合适的版本：
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
@@ -287,7 +287,7 @@
 </center>
 
 <h3 id="手动安装">手动安装</h3>
-<p>在Package Manager选择一个合适的Addressable版本还要结合Addressable更新log，打开<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">Addressable更新日志</code></a>，版本列表展示了Address able对应的Unity版本：
+<p>  在Package Manager选择一个合适的Addressable版本还要结合Addressable更新log，打开<a href="https%EF%BC%9A//docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">Addressable更新日志</code></a>，版本列表展示了Address able对应的Unity版本：
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
@@ -296,7 +296,7 @@
             <i>Addressable Version List.</i>
         </font>
 </center>
-<p>Unity这里分了两个分支维护Addressable，其中一个分支是1.21版本对应的Unity版本是2019+，另一个分支是2.0版本对应的Unity版本是2023+:
+<p>  Unity这里分了两个分支维护Addressable，其中一个分支是1.21版本对应的Unity版本是2019+，另一个分支是2.0版本对应的Unity版本是2023+：
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
@@ -307,11 +307,7 @@
         </font>
 </center>
 
-<p>2.0以上版本也可以用在非2023版的引擎，主要还是针对2023+ Unity引擎支持新的API什么的。如果想把2.0版本合到1.21，开一Beyond Compare合并差异也行。</p>
-
-<p>打开<a href="https://packages.unity.com/com.unity.addressables" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">Addressable Package Json</code></a>，这里列明了每一个Addressable版本对应的Unity版本，结合<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">Addressable更新日志</code></a>找到一个Bug最少又符合对Unity版本要求的Addressable版本。</p>
-
-<p>找到合适的Addressable版本后，打开Packages/manifest.json，新增依赖包，比如：”com.unity.addressables”: “1.21.19”。</p>
+<p>  2.0以上版本也可以用在非2023版的引擎，主要还是针对2023+ Unity引擎支持新的API什么的。如果想把2.0版本合到1.21，开一Beyond Compare合并差异也行。打开<a href="https%EF%BC%9A//packages.unity.com/com.unity.addressables" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">Addressable Package Json</code></a>，这里列明了每一个Addressable版本对应的Unity版本，结合<a href="https%EF%BC%9A//docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">Addressable更新日志</code></a>找到一个Bug最少又符合对Unity版本要求的Addressable版本。找到合适的Addressable版本后，打开Packages/manifest.json，手动新增包”com.unity.addressables”:”1.21.19”。</p>
 
 <h3 id="安装addressable依赖">安装Addressable依赖</h3>
 <!--url1 url2 url3 url4 url5
@@ -322,8 +318,7 @@
             <i>Addressable Dependencies.</i>
         </font>
 </center>
-<p>Addressable最重要的依赖是ScriptableBuildPipeline，SBP这个包要更新到1.21.23或2.1.x以上，旧版SBP对SpriteAtlas图集打包会有冗余。
-打开Packages/manifest.json，强制指定SBP版本”com.unity.scriptablebuildpipeline”: “1.21.23”,
+<p>  Addressable最重要的依赖是ScriptableBuildPipeline，SBP这个包要更新到1.21.23或2.1.x以上，旧版SBP对SpriteAtlas图集打包会有冗余。打开Packages/manifest.json，强制指定SBP版本”com.unity.scriptablebuildpipeline”:”1.21.23”,
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
@@ -333,8 +328,8 @@
         </font>
 </center>
 
-<h2 id="addressable结构预览">Addressable结构预览</h2>
-<p>安装好了AA之后，会在Assets目录生成以下目录：</p>
+<h3 id="addressable结构预览">Addressable结构预览</h3>
+<p>  安装好了AA之后，会在Assets生成以下目录：</p>
 
 <table>
   <tbody>
@@ -347,8 +342,8 @@
       <td>根目录也包含几个重要文件</td>
     </tr>
     <tr>
-      <td>Android</td>
-      <td>打包后生成的平台目录</td>
+      <td>##Platform</td>
+      <td>根据当前平台构建一次AB包后生成的目录</td>
     </tr>
     <tr>
       <td>AssetGroups</td>
@@ -356,7 +351,7 @@
     </tr>
     <tr>
       <td>Schemas</td>
-      <td>Group组成的逻辑结构和特性描述文件</td>
+      <td>Group组的配置包含逻辑结构和特性描述文件</td>
     </tr>
     <tr>
       <td>AssetGroupTemplates</td>
@@ -369,13 +364,7 @@
   </tbody>
 </table>
 
-<p>AddressableAssetsData根目录包含的重要文件：</p>
-<ul>
-  <li>AddressableAssetSettings：AA的构建AssetBundle设置。</li>
-  <li>DefaultObject：保存当前系统AA生成的GUID，该GUID绑定AddressableAssetSettings对象。</li>
-  <li>CacheInitializationSettings：AB缓存设置。</li>
-  <li>ProfileDataSourceSettings：AB保存和加载地址设置。</li>
-</ul>
+<h2 id="addressable各项配置">Addressable各项配置</h2>
 
 <h3 id="addressableassetsettings">AddressableAssetSettings</h3>
 <!--url1 url2 url3 url4 url5
@@ -386,17 +375,22 @@
             <i>AddressableAssetSettings预览.</i>
         </font>
 </center>
+<p>  AA的全局配置文件，涉及一些打包配置、热更配置、下载配置等等，下面是每项参数配置说明。</p>
 
-<h4 id="profile">Profile</h4>
+<h3 id="profile">Profile</h3>
+
+<p>  <strong>Profile</strong>主要作用是指定打包地址和加载地址，这里可以配置新增打包Ab的保存目录和HotUpdate热更资源目录的指定路径，建议自定义路径。</p>
+
+<p>  这两个参数的使用地方在不同的AA版本有一点差别：1.20以前的版本在Content Update有用到，1.20以后的版本在Catalog有使用。见<a href="#jump1"><code class="language-plaintext highlighter-rouge">Catalog</code></a>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
--->
+--></p>
 <center class="half">
 <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_in_use.png" width="250"><font size="2.5">
             <i>Profile预览.</i>
         </font>
 </center>
-<p>Profile In Use可以选择系统自带或自定义，其中自定义使用Manager按钮打开Profile Window:
+<p>Profile In Use可以选择系统自带或自定义，其中自定义使用Manager按钮打开Profile Window，点击Create按钮新增变量等参数。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
@@ -405,11 +399,10 @@
             <i>Profile Window.</i>
         </font>
 </center>
-<p>Profile主要作用是指定打包地址和加载地址，我新增了BuildPath打包的保存目录和HotUpdate热更资源目录，这两个参数要在Catalog指定。见<a href="#jump1"><code class="language-plaintext highlighter-rouge">Catalog</code></a></p>
 
 <p><span id="jump1"></span></p>
 
-<h4 id="catalog">Catalog</h4>
+<h3 id="catalog">Catalog</h3>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
@@ -418,17 +411,23 @@
             <i>Catalog设置面板.</i>
         </font>
 </center>
-
+<p>  Catalog类似于根bundle，记录了当前构建bundle时的依赖和AA的各项设置。</p>
 <ul>
-  <li>Player Version Override: 这个参数会对构建好的catalog进行重命名，unity使用时间戳，我们自己可以用自己的构建版本号，格式可以是catalog_1.2.1720684396.json。这篇是对<a href="">catalog</a>的详解。</li>
-  <li>Compress Local Catalog: 启用会将catalog.json压缩成catalog.bundle，显著减少文件size。</li>
-  <li>Build Remote Catalog: 要热更catalog就要启用。</li>
-  <li>Build Path: 构建Assetbundle的保存地址。</li>
-  <li>Load Path: 加载AssetBundle的地址，这里我是设置成相对地址，在InternalIdTransformFunc做完成加载地址组装。</li>
-  <li>Only Update catalogs manually: 建议启用，可以定制更新catalog方式。</li>
+  <li>
+<strong>(1) Player Version Override</strong>： 这个参数会对构建好的catalog进行重命名，unity使用时间戳，我们自己可以用自己的构建版本号，格式可以是catalog_1.2.1720684396.json。</li>
+  <li>
+<strong>(2) Compress Local Catalog</strong>： 启用会将Catalog.json压缩成Catalog.bundle，显著减少文件size。</li>
+  <li>
+<strong>(3) Build Remote Catalog</strong>： 要热更Catalog就要启用。</li>
+  <li>
+<strong>(4) Build Path</strong>： 构建Assetbundle的保存地址。</li>
+  <li>
+<strong>(5) Load Path</strong>： 加载AssetBundle的地址，这里我是在Profiles设置成了相对地址，然后在加载脚本回调地址逻辑完成后组装完整的加载地址。</li>
+  <li>
+<strong>(6) Only Update catalogs manually</strong>： 手动控制更新Catalog时机和方式。</li>
 </ul>
 
-<h4 id="update-a-previous-build">Update a Previous Build</h4>
+<h3 id="update-a-previous-build">Update a Previous Build</h3>
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
@@ -438,33 +437,61 @@
         </font>
 </center>
 
-<p>指定addressables_content_state.bin的保存地址，该文件只在本地构建时有用，可以看看<a href="https://docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">官方workflow</code></a>。简化描述我的理解就是打开Groups-Tools-Check Content Update Restrictions窗口，选择上一次保存的addressables_content_state去比对会生成一份catalog和一小撮热更bundle，就是增量更新这些bundle。但是如果玩家本地用户目录的bundle不小心损坏了，或则资源版本回退，直接使用这方案就不好办。</p>
-
-<p>由于我开了手动更新catalog，同时自己维护了一套完整的更新列表，就禁用了这条属性。</p>
-
-<h4 id="downloads">Downloads</h4>
-<p>自定义证书、下载并发数量、超时等设置</p>
-
-<h4 id="builds">Builds</h4>
+<p>  指定addressables_content_state.bin的保存地址，该文件只在本地构建时读取进行增量打包，可以看看<a href="https%EF%BC%9A//docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">官方workflow</code></a>。简化描述就是要构建更新的AssetBundle，请运行Update a Previous Build脚本。此工具还使用到<code class="language-plaintext highlighter-rouge">addressables_content_state.bin</code>文件，它会重新构建所有内容并会生成到一个修改过的目录，该目录可以访问原始AssetBundle中未更改的内容以及新AssetBundle中更改过的内容。通过打开Groups面板Tools选项Check Content Update Restrictions窗口，只要Group内某个资源有修改，就会出现在这个列表中。但是如果玩家本地用户目录的bundle不小心损坏了或者需要回退资源版本，直接使用Unity这个方案就不好办。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
--->
+--></p>
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/modify_update_remote.png" width="250"><font size="2.5">
+            <i>修改过的group列表.</i>
+        </font>
+</center>
+
+<p>  由于我开了手动更新Catalog，同时自己维护了一套完整的更新列表，就禁用了这条属性。</p>
+
+<h3 id="downloads">Downloads</h3>
+<p>  自定义证书、下载并发数量、超时等设置</p>
+<ul>
+  <li>
+<strong>(1) Custom certificate handler</strong>：自定义证书类要实现CertificateHandler。</li>
+  <li>
+<strong>(2) Max Concurrent Web Requests</strong>：设置Web并发下载数量官方建议2-4个。</li>
+  <li>
+<strong>(3) Catalog Download Timeout</strong>：超时设置。</li>
+</ul>
+
+<h3 id="builds">Builds</h3>
+
+<p>  构建AB包的一些设置
+<!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+--></p>
 <center class="half">
 <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/setting_build.png" width="250"><font size="2.5">
             <i>Build设置.</i>
         </font>
 </center>
 <ul>
-  <li>Build Addressables on Player Build: 出包的时候一起出Assetbundle，我关了不需要，我是先出Bundle资源的。</li>
-  <li>Ignore Invalid/Unsupported Files in Build: 排除无效文件。</li>
-  <li>Unique Bundle IDs: Assetbundle唯一标识符。</li>
-  <li>Contiguous Bundles: 定义的Assetbundle内容布局，启用。</li>
-  <li>Non-Recursive Dependency Calculation: 循环依赖计算耗费时间，开启只计算直接依赖，启用。</li>
-  <li>Strip Unity Version From AssetBundles: 裁剪Assetbundle内的unity版本号，启用。</li>
-  <li>Disable Visible Sub Asset Representations: 不直接拖拽引用某个sprite，开启该项可以加快构建时间，开不开无所谓。</li>
+  <li>
+<strong>(1) Build Addressables on Player Build</strong>： 打APK的时候一起先打Assetbundle在打APK，这里我关了不需要，一般是单独出Bundle资源的。</li>
+  <li>
+<strong>(2) Ignore Invalid/Unsupported Files in Build</strong>： 构建时排除无效文件，如果未启用可能导致中断构建。</li>
+  <li>
+<strong>(3) Unique Bundle IDs</strong>： 指定每个Assetbundle生成唯一标识符。</li>
+  <li>
+<strong>(4) Contiguous Bundles</strong>： 定义的Assetbundle内容布局。</li>
+  <li>
+<strong>(5) Non-Recursive Dependency Calculation</strong>： 循环依赖计算耗费时间，开启只计算直接依赖。(某些情况下所有设置都正确却无法加载Bundle，一般是Group内的资源依赖有问题。)</li>
+  <li>
+<strong>(6) Strip Unity Version From AssetBundles</strong>： 裁剪Assetbundle内的unity版本号，启用。</li>
+  <li>
+<strong>(7) Disable Visible Sub Asset Representations</strong>： 不直接拖拽引用某个sprite，开启该项可以加快构建时间。</li>
 </ul>
 
-<h4 id="build-and-play-mode-scripts">Build And Play Mode Scripts</h4>
+<h3 id="build-and-play-mode-scripts">Build And Play Mode Scripts</h3>
+
+<p>  构建AB的一些脚本配置，可以实现IDataBuilder接口自定义打包流程。</p>
+
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 -->
@@ -475,29 +502,24 @@
             <i>Build Bundle设置.</i>
         </font>
 </center>
-<p>Play mode指定在编辑器是怎么加载资源，本地测试用</p>
+<p>  Play mode指定在编辑器是怎么加载资源，本地测试用</p>
 <ul>
-  <li>Fast Mode: 不打包直接加载文件，速度快但在Profiler中提供的信息较少</li>
-  <li>Virtual Mode: 虚拟环境模拟类似于AssetBundle的行为，无需打包</li>
-  <li>Packed Mode: 从实际的AssetBundle中加载资源，真实环境</li>
+  <li>
+<strong>(1) Fast Mode</strong>： 不打包直接加载文件，速度快但在Profiler中提供的信息较少</li>
+  <li>
+<strong>(2) Virtual Mode</strong>： 虚拟环境模拟类似于AssetBundle的行为，无需打包</li>
+  <li>
+<strong>(3) Packed Mode</strong>： 从实际的AssetBundle中加载资源，真实环境</li>
 </ul>
 
-<h2 id="addressable-groups">Addressable Groups</h2>
-<p>Group是Addressable组织资源的一种容器，必须要把资源加入Group才能参与打包。</p>
+<h2 id="addressablegroups分析">AddressableGroups分析</h2>
 
-<blockquote>
-  <p>直接说使用结论</p>
+<h3 id="group配置">Group配置</h3>
 
-  <ul>
-    <li>Group越少越好，在创建Group时非常耗时，成百上千个Group可能卡几十分钟甚至更久。</li>
-    <li>Group越少意味着Asset Entry越多，但是没关系，还有label标签可以用。</li>
-    <li>label标签可以做分类划分，具有相同label标签的资源打成一个bundle包。</li>
-  </ul>
-</blockquote>
-
+<p>  AssetGroups是Addressable组织bundle的一种容器，必须要把资源加入Group才能参与打包。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
--->
+--></p>
 <center class="half">
 <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_view.png" width="250"><font size="2.5">
             <i>Group设置.</i>
@@ -505,33 +527,128 @@
 </center>
 
 <ul>
-  <li>Include In Build: 启用才能构建该组内所包含的Asset Entry。</li>
-  <li>Include Addresses in Catalog: 禁用后构建bundle时不会包含在catalog.json。</li>
-  <li>Include GUIDs in Catalog: 使用AssetReference拖拽引用就得启用。</li>
-  <li>Include Labels in Catalog: 不通过label标签加载资源，我这里不使用label去加载资源。</li>
+  <li>
+<strong>(1) Buildin&amp;Load Path</strong>：选择Local或Remote，一般选RemotRemotee以支持热更，基本上所有资源都可能会热更。</li>
+  <li>
+<strong>(2) AB Compression</strong>：指定AB包用哪种压缩算法：不压缩、LZ4、LZMA。</li>
+  <li>
+<strong>(3) Include In Build</strong>： 启用才能构建该组内所包含的Asset Entry。</li>
+  <li>
+<strong>(4) Force Unique Provider</strong>：是否指定唯一的Group加载实例，如果Group有上百个就不要勾选了。</li>
+  <li>
+<strong>(5) Use AB Cache</strong>：从远程下载的AB是否使用AA的缓存机制。(这个缓存包括AB资源和当前更新时的AA版本信息)</li>
+  <li>
+<strong>(6) Use UnityWebRequest for Local Asset Bundles</strong>：对于本地的AB资源是否使用UnityWebRequestAssetBundle GetAssetBundle加载，还是使用AssetBundle LoadFromFileAsync加载。</li>
+  <li>
+<strong>(7) Request Timeout</strong>：设置下载超时。</li>
+  <li>
+<strong>(8) Use Http Chunked Transfer</strong>：开启分块传输。</li>
+  <li>
+<strong>(9) Http Redirect Limit</strong>：设置重定向次数。</li>
+  <li>
+<strong>(9) Retry Count</strong>：设置下载失败重试次数。</li>
+  <li>
+<strong>(10) Include Addresses in Catalog</strong>： 禁用后构建bundle时不会包含在catalog.json。</li>
+  <li>
+<strong>(11) Include GUIDs in Catalog</strong>： 使用AssetReference拖拽引用就得启用。</li>
+  <li>
+<strong>(12) Include Labels in Catalog</strong>： 不通过label标签加载资源，我这里不使用label去加载资源。</li>
+  <li>
+<strong>(13) Internal Asset Naming Mode</strong>：AB包内资源的ID标识方式，有三种：Full Path(资源全路径)、Filename(资源名)、GUID(unity导入时设置的ID)、Dynamic(官方推荐使用)。这个模式影响Ab的CRC和HASH，设置该模式中任意一种也不会影响我们从AB包内读取某个资源。</li>
+  <li>
+<strong>(14) Cache Clear Behavior</strong>：设置APK包内缓存AA下载的AB资源时长，到期自动清除。</li>
+  <li>
+<strong>(15) Bundle Mode</strong>：构建AB的模式，有三种：Group内所有资源打成一个AB、Group内资源分别单独打成AB、根据组内标签打包。</li>
+  <li>
+<strong>(16) Bundle Naming Mode</strong>：设置AB名，有三种：Group名、 Group名追加HASH、使用Bundle的HASH(推荐-但要做组名与HASH之间的映射，加载Bundle先拿到组名映射的HASH去找Bundle加载)、使用Group组名的字符HASH。</li>
+  <li>
+<strong>(17) Asset Load Mode</strong>：资源加载模式，有两种：从bundle请求加载的资源及其依赖一起加载、bundle内所有的资源全部加载。</li>
+  <li>
+<strong>(18) Asset Provider</strong>：从Bundle内加载Asset，官方推荐使用自带的Asset from Bundle Provider,也可以根据Group内文件类型选择Json、Sprites等provider。</li>
+  <li>
+<strong>(19) Asset Bundle Provider</strong>：加载AssetBundle接口，官方推荐AssetBundle Provider，或者自己实现一套Provider(可以实现加密解密)。</li>
 </ul>
 
-<p>Content Packing &amp; Loading是BundleAssetGroupSchema，定义AssetBundle构建和加载时的一些信息</p>
+<h3 id="content-update">Content Update</h3>
+<ul>
+  <li>
+<strong>(1) Prevent Updates</strong>：是否启用禁止更新移动Asset。当使用了AA自带的<strong>Check for Content Update Restrictions tool</strong>，不启用时如果组内有资源发生变更，这个工具会把变更的资源移动到需要生成的Remote Group内。(我没有使用这个工具也没有启用这个选项，组内的资源移动实现了一个脚本规则检查)。</li>
+</ul>
 
-<p>如果采用创建N个Asset Group方式，然后对Group进行分组打包，这一个Group就要要包含热更Schema和加载Schema，和N个Asset Entry(这取决于该组有多少个address标记资源)。构建分析期间的耗时将会非常严重，截取一个增加Schema耗时图片
+<h3 id="group-schema配置">Group Schema配置</h3>
+
+<p>  BundledAssetGroupSchema主要是Group面板配置，一个Group会生成两份Schema，<strong>#GroupName_BundledAssetGroupSchema</strong>、<strong>#GroupName_BundledAssetGroupSchema</strong>。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
 <center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png" width="250"><font size="2.5">
-            <i>schema耗时片段.</i>
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_serialize.png" width="250"><font size="2.5">
+            <i>Group Debug模式.</i>
         </font>
 </center>
-<p>每次增加Schema会触发save操作，每次修改Schema内部值后会触发Group Dirty Notify进一步触发遍历所有Group排查引用该schema的Group更新。</p>
+<!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+-->
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/schema_serialize1.png" width="250">
+        <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/schema_serialize2.png" width="250"><font size="2.5">
+            <i>Schema Debug模式.</i>
+        </font>
+</center>
 
-<p>Content Update Restriction是ContentUpdateGroupSchema，定义该Asset Group内的资源构建成bundle包时是否可以热更，如果要热更一定要添加</p>
+<p>  通过Debug模式可以看到Group主要是保存了<strong>SerializeEntries</strong>资源、<strong>Schema</strong>配置，所以配置实际上是由Schema保存的。在写代码创建Group时，要把资源加入到Group内、配置写到Schema内。</p>
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//...</span>
+<span class="k">group</span> <span class="p">=</span> <span class="n">settings</span><span class="p">.</span><span class="nf">CreateGroup</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">i</span> <span class="p">==</span> <span class="m">0</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
+<span class="n">AddressableBuildUtil</span><span class="p">.</span><span class="nf">CheckSchemaValue</span><span class="p">(</span><span class="k">group</span><span class="p">,</span> <span class="n">_keyIdArray</span><span class="p">);</span>
+<span class="n">AddressableBuildUtil</span><span class="p">.</span><span class="nf">CheckUpdateSchema</span><span class="p">(</span><span class="k">group</span><span class="p">);</span>
+<span class="c1">//...</span>
+
+<span class="nf">SetSchemaBuildLoadPath</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">keyIds</span><span class="p">);</span>
+<span class="n">schema</span><span class="p">.</span><span class="n">ChunkedTransfer</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="c1">//disable crc 使用md5代替</span>
+<span class="n">schema</span><span class="p">.</span><span class="n">UseAssetBundleCrc</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="n">schema</span><span class="p">.</span><span class="n">UseAssetBundleCrcForCachedBundles</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="c1">//disable guid</span>
+<span class="n">schema</span><span class="p">.</span><span class="n">IncludeGUIDInCatalog</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="n">schema</span><span class="p">.</span><span class="n">IncludeLabelsInCatalog</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="n">schema</span><span class="p">.</span><span class="n">RedirectLimit</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+<span class="n">schema</span><span class="p">.</span><span class="n">RetryCount</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+<span class="n">schema</span><span class="p">.</span><span class="n">Timeout</span> <span class="p">=</span> <span class="m">30</span><span class="p">;</span>
+
+<span class="nf">SetBundleCache</span><span class="p">(</span><span class="n">schema</span><span class="p">);</span>
+<span class="c1">//load asset by name</span>
+<span class="nf">SetSchemaNameMode</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">AssetNamingMode</span><span class="p">.</span><span class="n">Filename</span><span class="p">);</span>
+<span class="c1">//pack mode打包模式</span>
+<span class="nf">SetSchemaPackMode</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">BundlePackingMode</span><span class="p">.</span><span class="n">PackTogetherByLabel</span><span class="p">);</span>
+<span class="c1">//bundle name</span>
+<span class="nf">SetSchemaNameStyle</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">BundleNamingStyle</span><span class="p">.</span><span class="n">FileNameHash</span><span class="p">);</span>
+<span class="c1">//bundle id</span>
+<span class="nf">SetSchemaBundleIdMode</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">BundleInternalIdMode</span><span class="p">.</span><span class="n">GroupGuid</span><span class="p">);</span>
+<span class="c1">//bundle compression</span>
+<span class="nf">SetSchemaBundleCompressionMode</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">BundleCompressionMode</span><span class="p">.</span><span class="n">LZ4</span><span class="p">);</span>
+
+<span class="c1">//设置Schema Value会触发Group dirty通知，要判断值有没有变再设置</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">schema</span><span class="p">.</span><span class="n">BundleMode</span> <span class="p">~=</span> <span class="n">packMode</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">schema</span><span class="p">.</span><span class="n">BundleMode</span> <span class="p">=</span> <span class="n">packMode</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="assetgrouptemplates">AssetGroupTemplates</h2>
+<p>  Group模版配置,可以预先设置好Group的配置，使用该模版创建Group。</p>
+
+<h2 id="databuilders">DataBuilders</h2>
+<p>  存放打包脚本和Editor测试加载脚本的目录，AA提供了四个自带脚本。</p>
 <ul>
-  <li>Static Content, 勾选就是静态资源不参与热更下载</li>
+  <li>
+<strong>(1) BuildScriptFastMode</strong>：对应<strong>Use Asset Database (fastest)</strong>按钮，快速加载模式，类似AssetdataBase加载资源。</li>
+  <li>
+<strong>(2) BuildScriptPackedMode</strong>：对应<strong>Default Build Script</strong>打包按钮，默认的打AB包脚本，可以根据这个脚本修改自己的打包前后流程。</li>
+  <li>
+<strong>(3) BuildScriptPackedPlayMode</strong>：对应<strong>Use Existing Build(#Platform)</strong>，真实完整的AB加载场景模式，在Editor测试AB是否正确。</li>
+  <li>
+<strong>(4) BuildScriptVirtualMode</strong>：对应<strong>Simulate Groups (advanced)</strong>按钮，不用打AB包可模拟加载AB模式。</li>
 </ul>
-
-<p>这两个Schema均继承自AddressableAssetGroupSchema，应该是都要添加到Group内的，这两个文件描述了一个Group构建时所需要的属性。</p>
-
-<p>下一篇讲如何使用 Addressable构建Assetbundle打包。</p>
 
                 <div class="post-copyright">
                     <p>
@@ -548,7 +665,7 @@
                         许可协议进行授权）
                     </p>
                     
-                    <p><span>本文标题：</span>《 Unity Addressable Editor结构 》</p>
+                    <p><span>本文标题：</span>《 Unity Addressable System使用分析(一) 》</p>
                     <p><span>本文链接：</span><a href="https://www.damonc.top/Unity_Addressable_Editor.html" class="cplink">https://www.damonc.top/Unity_Addressable_Editor.html</a></p>
                     <p class="tips">本文最后一次更新为 <span></span> 天前，文章中的某些内容可能已过时！
                     </p>
@@ -559,7 +676,7 @@
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
-                    <ul><li><a onclick="scrollToAdjust('addressable安装')">1. Addressable安装</a><ul><li><a onclick="scrollToAdjust('package安装')">1.1 Package安装</a></li><li><a onclick="scrollToAdjust('手动安装')">1.2 手动安装</a></li><li><a onclick="scrollToAdjust('安装addressable依赖')">1.3 安装Addressable依赖</a></li></ul></li><li><a onclick="scrollToAdjust('addressable结构预览')">2. Addressable结构预览</a><ul><li><a onclick="scrollToAdjust('addressableassetsettings')">2.1 AddressableAssetSettings</a><ul><li><a onclick="scrollToAdjust('profile')">Profile</a></li><li><a onclick="scrollToAdjust('catalog')">Catalog</a></li><li><a onclick="scrollToAdjust('update-a-previous-build')">Update a Previous Build</a></li><li><a onclick="scrollToAdjust('downloads')">Downloads</a></li><li><a onclick="scrollToAdjust('builds')">Builds</a></li><li><a onclick="scrollToAdjust('build-and-play-mode-scripts')">Build And Play Mode Scripts</a></li></ul></li></ul></li><li><a onclick="scrollToAdjust('addressable-groups')">3. Addressable Groups</a></li></ul>
+                    <ul><li><a onclick="scrollToAdjust('addressable安装')">1. Addressable安装</a><ul><li><a onclick="scrollToAdjust('package安装')">1.1 Package安装</a></li><li><a onclick="scrollToAdjust('手动安装')">1.2 手动安装</a></li><li><a onclick="scrollToAdjust('安装addressable依赖')">1.3 安装Addressable依赖</a></li><li><a onclick="scrollToAdjust('addressable结构预览')">1.4 Addressable结构预览</a></li></ul></li><li><a onclick="scrollToAdjust('addressable各项配置')">2. Addressable各项配置</a><ul><li><a onclick="scrollToAdjust('addressableassetsettings')">2.1 AddressableAssetSettings</a></li><li><a onclick="scrollToAdjust('profile')">2.2 Profile</a></li><li><a onclick="scrollToAdjust('catalog')">2.3 Catalog</a></li><li><a onclick="scrollToAdjust('update-a-previous-build')">2.4 Update a Previous Build</a></li><li><a onclick="scrollToAdjust('downloads')">2.5 Downloads</a></li><li><a onclick="scrollToAdjust('builds')">2.6 Builds</a></li><li><a onclick="scrollToAdjust('build-and-play-mode-scripts')">2.7 Build And Play Mode Scripts</a></li></ul></li><li><a onclick="scrollToAdjust('addressablegroups分析')">3. AddressableGroups分析</a><ul><li><a onclick="scrollToAdjust('group配置')">3.1 Group配置</a></li><li><a onclick="scrollToAdjust('content-update')">3.2 Content Update</a></li><li><a onclick="scrollToAdjust('group-schema配置')">3.3 Group Schema配置</a></li></ul></li><li><a onclick="scrollToAdjust('assetgrouptemplates')">4. AssetGroupTemplates</a></li><li><a onclick="scrollToAdjust('databuilders')">5. DataBuilders</a></li></ul>
                 </div>
         
             </div>
@@ -605,10 +722,10 @@
     <section class="post-footer-item read-next">
         
         <div class="read-next-item">
-            <a href="/Unity_Addressabel_Group.html" class="read-next-link" aria-label="Unity Addressable Group结构"></a>
+            <a href="/Unity_Addressabel_Group.html" class="read-next-link" aria-label="Unity Addressable System使用分析(二)"></a>
             <section>
-                <span>Unity Addressable Group结构</span>
-                <p>总结在使用Unity Addressable System过程中遇到的一部分问题。本文Addressable后续简...</p>
+                <span>Unity Addressable System使用分析(二)</span>
+                <p></p>
             </section>
             
         </div>

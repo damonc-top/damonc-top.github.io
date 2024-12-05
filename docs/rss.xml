@@ -5,20 +5,13 @@
     <description>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</description>
     <link>https://www.damonc.top//</link>
     <atom:link href="https://www.damonc.top/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 04 Dec 2024 14:24:55 +0800</pubDate>
-    <lastBuildDate>Wed, 04 Dec 2024 14:24:55 +0800</lastBuildDate>
+    <pubDate>Thu, 05 Dec 2024 14:15:25 +0800</pubDate>
+    <lastBuildDate>Thu, 05 Dec 2024 14:15:25 +0800</lastBuildDate>
     <generator>Jekyll v4.3.4</generator>
     
       <item>
-        <title>Unity Addressable Group结构</title>
-        <description>&lt;p&gt;总结在使用Unity Addressable System过程中遇到的一部分问题。本文Addressable后续简称AA。&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Addressable构建AssetBundle&lt;/li&gt;
-  &lt;li&gt;AssetGroup的组织结构&lt;/li&gt;
-  &lt;li&gt;Addressable构建流程&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;assetgroup&quot;&gt;AssetGroup&lt;/h2&gt;
+        <title>Unity Addressable System使用分析(二)</title>
+        <description>
 </description>
         <pubDate>Fri, 12 Jul 2024 20:00:00 +0800</pubDate>
         <link>https://www.damonc.top/Unity_Addressabel_Group.html</link>
@@ -26,18 +19,18 @@
         
         <category>Unity3d</category>
         
-        <category>Addressable</category>
+        <category>Addressable System</category>
         
         
       </item>
     
       <item>
-        <title>Unity Addressable Editor结构</title>
+        <title>Unity Addressable System使用分析(一)</title>
         <description>&lt;h2 id=&quot;addressable安装&quot;&gt;Addressable安装&lt;/h2&gt;
-&lt;p&gt;总结在使用Unity Addressable System过程中遇到的一部分问题，该篇主要记录Addressable在Unity编辑器的各种组织结构，本文Addressable后续简称AA。&lt;/p&gt;
+&lt;p&gt;  总结在使用Unity Addressable System过程中遇到的一部分问题，该篇主要记录Addressable在Unity编辑器的各种组织结构，本文Addressable后续简称AA，基于1.21.19版本。&lt;/p&gt;
 
 &lt;h3 id=&quot;package安装&quot;&gt;Package安装&lt;/h3&gt;
-&lt;p&gt;打开Unity Window - Package Manger，找到Addressable安装找一个合适的版本:
+&lt;p&gt;  打开Unity Window - Package Manger，找到Addressable安装找一个合适的版本：
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
@@ -46,14 +39,14 @@
         &lt;/font&gt;&lt;/center&gt;
 
 &lt;h3 id=&quot;手动安装&quot;&gt;手动安装&lt;/h3&gt;
-&lt;p&gt;在Package Manager选择一个合适的Addressable版本还要结合Addressable更新log，打开&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable更新日志&lt;/code&gt;&lt;/a&gt;，版本列表展示了Address able对应的Unity版本：
+&lt;p&gt;  在Package Manager选择一个合适的Addressable版本还要结合Addressable更新log，打开&lt;a href=&quot;https：//docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable更新日志&lt;/code&gt;&lt;/a&gt;，版本列表展示了Address able对应的Unity版本：
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
 &lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_version.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Addressable Version List.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
-&lt;p&gt;Unity这里分了两个分支维护Addressable，其中一个分支是1.21版本对应的Unity版本是2019+，另一个分支是2.0版本对应的Unity版本是2023+:
+&lt;p&gt;  Unity这里分了两个分支维护Addressable，其中一个分支是1.21版本对应的Unity版本是2019+，另一个分支是2.0版本对应的Unity版本是2023+：
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
@@ -62,11 +55,7 @@
             &lt;i&gt;Addressable Branch.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
-&lt;p&gt;2.0以上版本也可以用在非2023版的引擎，主要还是针对2023+ Unity引擎支持新的API什么的。如果想把2.0版本合到1.21，开一Beyond Compare合并差异也行。&lt;/p&gt;
-
-&lt;p&gt;打开&lt;a href=&quot;https://packages.unity.com/com.unity.addressables&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable Package Json&lt;/code&gt;&lt;/a&gt;，这里列明了每一个Addressable版本对应的Unity版本，结合&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable更新日志&lt;/code&gt;&lt;/a&gt;找到一个Bug最少又符合对Unity版本要求的Addressable版本。&lt;/p&gt;
-
-&lt;p&gt;找到合适的Addressable版本后，打开Packages/manifest.json，新增依赖包，比如：”com.unity.addressables”: “1.21.19”。&lt;/p&gt;
+&lt;p&gt;  2.0以上版本也可以用在非2023版的引擎，主要还是针对2023+ Unity引擎支持新的API什么的。如果想把2.0版本合到1.21，开一Beyond Compare合并差异也行。打开&lt;a href=&quot;https：//packages.unity.com/com.unity.addressables&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable Package Json&lt;/code&gt;&lt;/a&gt;，这里列明了每一个Addressable版本对应的Unity版本，结合&lt;a href=&quot;https：//docs.unity3d.com/Packages/com.unity.addressables@1.21/changelog/CHANGELOG.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Addressable更新日志&lt;/code&gt;&lt;/a&gt;找到一个Bug最少又符合对Unity版本要求的Addressable版本。找到合适的Addressable版本后，打开Packages/manifest.json，手动新增包”com.unity.addressables”:”1.21.19”。&lt;/p&gt;
 
 &lt;h3 id=&quot;安装addressable依赖&quot;&gt;安装Addressable依赖&lt;/h3&gt;
 &lt;!--url1 url2 url3 url4 url5
@@ -75,8 +64,7 @@
 &lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_deps.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Addressable Dependencies.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
-&lt;p&gt;Addressable最重要的依赖是ScriptableBuildPipeline，SBP这个包要更新到1.21.23或2.1.x以上，旧版SBP对SpriteAtlas图集打包会有冗余。
-打开Packages/manifest.json，强制指定SBP版本”com.unity.scriptablebuildpipeline”: “1.21.23”,
+&lt;p&gt;  Addressable最重要的依赖是ScriptableBuildPipeline，SBP这个包要更新到1.21.23或2.1.x以上，旧版SBP对SpriteAtlas图集打包会有冗余。打开Packages/manifest.json，强制指定SBP版本”com.unity.scriptablebuildpipeline”:”1.21.23”,
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
@@ -84,8 +72,8 @@
             &lt;i&gt;SBP指定版本.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
-&lt;h2 id=&quot;addressable结构预览&quot;&gt;Addressable结构预览&lt;/h2&gt;
-&lt;p&gt;安装好了AA之后，会在Assets目录生成以下目录：&lt;/p&gt;
+&lt;h3 id=&quot;addressable结构预览&quot;&gt;Addressable结构预览&lt;/h3&gt;
+&lt;p&gt;  安装好了AA之后，会在Assets生成以下目录：&lt;/p&gt;
 
 &lt;table&gt;
   &lt;tbody&gt;
@@ -98,8 +86,8 @@
       &lt;td&gt;根目录也包含几个重要文件&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;Android&lt;/td&gt;
-      &lt;td&gt;打包后生成的平台目录&lt;/td&gt;
+      &lt;td&gt;##Platform&lt;/td&gt;
+      &lt;td&gt;根据当前平台构建一次AB包后生成的目录&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;AssetGroups&lt;/td&gt;
@@ -107,7 +95,7 @@
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Schemas&lt;/td&gt;
-      &lt;td&gt;Group组成的逻辑结构和特性描述文件&lt;/td&gt;
+      &lt;td&gt;Group组的配置包含逻辑结构和特性描述文件&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;AssetGroupTemplates&lt;/td&gt;
@@ -120,13 +108,7 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;AddressableAssetsData根目录包含的重要文件：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;AddressableAssetSettings：AA的构建AssetBundle设置。&lt;/li&gt;
-  &lt;li&gt;DefaultObject：保存当前系统AA生成的GUID，该GUID绑定AddressableAssetSettings对象。&lt;/li&gt;
-  &lt;li&gt;CacheInitializationSettings：AB缓存设置。&lt;/li&gt;
-  &lt;li&gt;ProfileDataSourceSettings：AB保存和加载地址设置。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&quot;addressable各项配置&quot;&gt;Addressable各项配置&lt;/h2&gt;
 
 &lt;h3 id=&quot;addressableassetsettings&quot;&gt;AddressableAssetSettings&lt;/h3&gt;
 &lt;!--url1 url2 url3 url4 url5
@@ -135,43 +117,47 @@
 &lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/addressable_assets_settings.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;AddressableAssetSettings预览.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
+&lt;p&gt;  AA的全局配置文件，涉及一些打包配置、热更配置、下载配置等等，下面是每项参数配置说明。&lt;/p&gt;
 
-&lt;h4 id=&quot;profile&quot;&gt;Profile&lt;/h4&gt;
+&lt;h3 id=&quot;profile&quot;&gt;Profile&lt;/h3&gt;
+
+&lt;p&gt;  &lt;strong&gt;Profile&lt;/strong&gt;主要作用是指定打包地址和加载地址，这里可以配置新增打包Ab的保存目录和HotUpdate热更资源目录的指定路径，建议自定义路径。&lt;/p&gt;
+
+&lt;p&gt;  这两个参数的使用地方在不同的AA版本有一点差别：1.20以前的版本在Content Update有用到，1.20以后的版本在Catalog有使用。见&lt;a href=&quot;#jump1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Catalog&lt;/code&gt;&lt;/a&gt;
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
---&gt;
+--&gt;&lt;/p&gt;
 &lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_in_use.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Profile预览.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
-&lt;p&gt;Profile In Use可以选择系统自带或自定义，其中自定义使用Manager按钮打开Profile Window:
+&lt;p&gt;Profile In Use可以选择系统自带或自定义，其中自定义使用Manager按钮打开Profile Window，点击Create按钮新增变量等参数。
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
 &lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/profile_window.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Profile Window.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
-&lt;p&gt;Profile主要作用是指定打包地址和加载地址，我新增了BuildPath打包的保存目录和HotUpdate热更资源目录，这两个参数要在Catalog指定。见&lt;a href=&quot;#jump1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Catalog&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;span id=&quot;jump1&quot;&gt;&lt;/span&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;catalog&quot;&gt;Catalog&lt;/h4&gt;
+&lt;h3 id=&quot;catalog&quot;&gt;Catalog&lt;/h3&gt;
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
 &lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Catalog设置面板.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
-
+&lt;p&gt;  Catalog类似于根bundle，记录了当前构建bundle时的依赖和AA的各项设置。&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Player Version Override: 这个参数会对构建好的catalog进行重命名，unity使用时间戳，我们自己可以用自己的构建版本号，格式可以是catalog_1.2.1720684396.json。这篇是对&lt;a href=&quot;&quot;&gt;catalog&lt;/a&gt;的详解。&lt;/li&gt;
-  &lt;li&gt;Compress Local Catalog: 启用会将catalog.json压缩成catalog.bundle，显著减少文件size。&lt;/li&gt;
-  &lt;li&gt;Build Remote Catalog: 要热更catalog就要启用。&lt;/li&gt;
-  &lt;li&gt;Build Path: 构建Assetbundle的保存地址。&lt;/li&gt;
-  &lt;li&gt;Load Path: 加载AssetBundle的地址，这里我是设置成相对地址，在InternalIdTransformFunc做完成加载地址组装。&lt;/li&gt;
-  &lt;li&gt;Only Update catalogs manually: 建议启用，可以定制更新catalog方式。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(1) Player Version Override&lt;/strong&gt;： 这个参数会对构建好的catalog进行重命名，unity使用时间戳，我们自己可以用自己的构建版本号，格式可以是catalog_1.2.1720684396.json。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(2) Compress Local Catalog&lt;/strong&gt;： 启用会将Catalog.json压缩成Catalog.bundle，显著减少文件size。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(3) Build Remote Catalog&lt;/strong&gt;： 要热更Catalog就要启用。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(4) Build Path&lt;/strong&gt;： 构建Assetbundle的保存地址。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(5) Load Path&lt;/strong&gt;： 加载AssetBundle的地址，这里我是在Profiles设置成了相对地址，然后在加载脚本回调地址逻辑完成后组装完整的加载地址。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(6) Only Update catalogs manually&lt;/strong&gt;： 手动控制更新Catalog时机和方式。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;update-a-previous-build&quot;&gt;Update a Previous Build&lt;/h4&gt;
+&lt;h3 id=&quot;update-a-previous-build&quot;&gt;Update a Previous Build&lt;/h3&gt;
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
@@ -179,31 +165,47 @@
             &lt;i&gt;Update Downloads设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
-&lt;p&gt;指定addressables_content_state.bin的保存地址，该文件只在本地构建时有用，可以看看&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;官方workflow&lt;/code&gt;&lt;/a&gt;。简化描述我的理解就是打开Groups-Tools-Check Content Update Restrictions窗口，选择上一次保存的addressables_content_state去比对会生成一份catalog和一小撮热更bundle，就是增量更新这些bundle。但是如果玩家本地用户目录的bundle不小心损坏了，或则资源版本回退，直接使用这方案就不好办。&lt;/p&gt;
-
-&lt;p&gt;由于我开了手动更新catalog，同时自己维护了一套完整的更新列表，就禁用了这条属性。&lt;/p&gt;
-
-&lt;h4 id=&quot;downloads&quot;&gt;Downloads&lt;/h4&gt;
-&lt;p&gt;自定义证书、下载并发数量、超时等设置&lt;/p&gt;
-
-&lt;h4 id=&quot;builds&quot;&gt;Builds&lt;/h4&gt;
+&lt;p&gt;  指定addressables_content_state.bin的保存地址，该文件只在本地构建时读取进行增量打包，可以看看&lt;a href=&quot;https：//docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;官方workflow&lt;/code&gt;&lt;/a&gt;。简化描述就是要构建更新的AssetBundle，请运行Update a Previous Build脚本。此工具还使用到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addressables_content_state.bin&lt;/code&gt;文件，它会重新构建所有内容并会生成到一个修改过的目录，该目录可以访问原始AssetBundle中未更改的内容以及新AssetBundle中更改过的内容。通过打开Groups面板Tools选项Check Content Update Restrictions窗口，只要Group内某个资源有修改，就会出现在这个列表中。但是如果玩家本地用户目录的bundle不小心损坏了或者需要回退资源版本，直接使用Unity这个方案就不好办。
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
---&gt;
+--&gt;&lt;/p&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/modify_update_remote.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+            &lt;i&gt;修改过的group列表.&lt;/i&gt;
+        &lt;/font&gt;&lt;/center&gt;
+
+&lt;p&gt;  由于我开了手动更新Catalog，同时自己维护了一套完整的更新列表，就禁用了这条属性。&lt;/p&gt;
+
+&lt;h3 id=&quot;downloads&quot;&gt;Downloads&lt;/h3&gt;
+&lt;p&gt;  自定义证书、下载并发数量、超时等设置&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;(1) Custom certificate handler&lt;/strong&gt;：自定义证书类要实现CertificateHandler。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(2) Max Concurrent Web Requests&lt;/strong&gt;：设置Web并发下载数量官方建议2-4个。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(3) Catalog Download Timeout&lt;/strong&gt;：超时设置。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;builds&quot;&gt;Builds&lt;/h3&gt;
+
+&lt;p&gt;  构建AB包的一些设置
+&lt;!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+--&gt;&lt;/p&gt;
 &lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/setting_build.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Build设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;ul&gt;
-  &lt;li&gt;Build Addressables on Player Build: 出包的时候一起出Assetbundle，我关了不需要，我是先出Bundle资源的。&lt;/li&gt;
-  &lt;li&gt;Ignore Invalid/Unsupported Files in Build: 排除无效文件。&lt;/li&gt;
-  &lt;li&gt;Unique Bundle IDs: Assetbundle唯一标识符。&lt;/li&gt;
-  &lt;li&gt;Contiguous Bundles: 定义的Assetbundle内容布局，启用。&lt;/li&gt;
-  &lt;li&gt;Non-Recursive Dependency Calculation: 循环依赖计算耗费时间，开启只计算直接依赖，启用。&lt;/li&gt;
-  &lt;li&gt;Strip Unity Version From AssetBundles: 裁剪Assetbundle内的unity版本号，启用。&lt;/li&gt;
-  &lt;li&gt;Disable Visible Sub Asset Representations: 不直接拖拽引用某个sprite，开启该项可以加快构建时间，开不开无所谓。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(1) Build Addressables on Player Build&lt;/strong&gt;： 打APK的时候一起先打Assetbundle在打APK，这里我关了不需要，一般是单独出Bundle资源的。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(2) Ignore Invalid/Unsupported Files in Build&lt;/strong&gt;： 构建时排除无效文件，如果未启用可能导致中断构建。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(3) Unique Bundle IDs&lt;/strong&gt;： 指定每个Assetbundle生成唯一标识符。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(4) Contiguous Bundles&lt;/strong&gt;： 定义的Assetbundle内容布局。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(5) Non-Recursive Dependency Calculation&lt;/strong&gt;： 循环依赖计算耗费时间，开启只计算直接依赖。(某些情况下所有设置都正确却无法加载Bundle，一般是Group内的资源依赖有问题。)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(6) Strip Unity Version From AssetBundles&lt;/strong&gt;： 裁剪Assetbundle内的unity版本号，启用。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(7) Disable Visible Sub Asset Representations&lt;/strong&gt;： 不直接拖拽引用某个sprite，开启该项可以加快构建时间。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;build-and-play-mode-scripts&quot;&gt;Build And Play Mode Scripts&lt;/h4&gt;
+&lt;h3 id=&quot;build-and-play-mode-scripts&quot;&gt;Build And Play Mode Scripts&lt;/h3&gt;
+
+&lt;p&gt;  构建AB的一些脚本配置，可以实现IDataBuilder接口自定义打包流程。&lt;/p&gt;
+
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
@@ -212,67 +214,127 @@
         &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_mode.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Build Bundle设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
-&lt;p&gt;Play mode指定在编辑器是怎么加载资源，本地测试用&lt;/p&gt;
+&lt;p&gt;  Play mode指定在编辑器是怎么加载资源，本地测试用&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Fast Mode: 不打包直接加载文件，速度快但在Profiler中提供的信息较少&lt;/li&gt;
-  &lt;li&gt;Virtual Mode: 虚拟环境模拟类似于AssetBundle的行为，无需打包&lt;/li&gt;
-  &lt;li&gt;Packed Mode: 从实际的AssetBundle中加载资源，真实环境&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(1) Fast Mode&lt;/strong&gt;： 不打包直接加载文件，速度快但在Profiler中提供的信息较少&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(2) Virtual Mode&lt;/strong&gt;： 虚拟环境模拟类似于AssetBundle的行为，无需打包&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(3) Packed Mode&lt;/strong&gt;： 从实际的AssetBundle中加载资源，真实环境&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;addressable-groups&quot;&gt;Addressable Groups&lt;/h2&gt;
-&lt;p&gt;Group是Addressable组织资源的一种容器，必须要把资源加入Group才能参与打包。&lt;/p&gt;
+&lt;h2 id=&quot;addressablegroups分析&quot;&gt;AddressableGroups分析&lt;/h2&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;直接说使用结论&lt;/p&gt;
+&lt;h3 id=&quot;group配置&quot;&gt;Group配置&lt;/h3&gt;
 
-  &lt;ul&gt;
-    &lt;li&gt;Group越少越好，在创建Group时非常耗时，成百上千个Group可能卡几十分钟甚至更久。&lt;/li&gt;
-    &lt;li&gt;Group越少意味着Asset Entry越多，但是没关系，还有label标签可以用。&lt;/li&gt;
-    &lt;li&gt;label标签可以做分类划分，具有相同label标签的资源打成一个bundle包。&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
+&lt;p&gt;  AssetGroups是Addressable组织bundle的一种容器，必须要把资源加入Group才能参与打包。
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
---&gt;
+--&gt;&lt;/p&gt;
 &lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_view.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Group设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Include In Build: 启用才能构建该组内所包含的Asset Entry。&lt;/li&gt;
-  &lt;li&gt;Include Addresses in Catalog: 禁用后构建bundle时不会包含在catalog.json。&lt;/li&gt;
-  &lt;li&gt;Include GUIDs in Catalog: 使用AssetReference拖拽引用就得启用。&lt;/li&gt;
-  &lt;li&gt;Include Labels in Catalog: 不通过label标签加载资源，我这里不使用label去加载资源。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(1) Buildin&amp;amp;Load Path&lt;/strong&gt;：选择Local或Remote，一般选RemotRemotee以支持热更，基本上所有资源都可能会热更。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(2) AB Compression&lt;/strong&gt;：指定AB包用哪种压缩算法：不压缩、LZ4、LZMA。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(3) Include In Build&lt;/strong&gt;： 启用才能构建该组内所包含的Asset Entry。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(4) Force Unique Provider&lt;/strong&gt;：是否指定唯一的Group加载实例，如果Group有上百个就不要勾选了。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(5) Use AB Cache&lt;/strong&gt;：从远程下载的AB是否使用AA的缓存机制。(这个缓存包括AB资源和当前更新时的AA版本信息)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(6) Use UnityWebRequest for Local Asset Bundles&lt;/strong&gt;：对于本地的AB资源是否使用UnityWebRequestAssetBundle GetAssetBundle加载，还是使用AssetBundle LoadFromFileAsync加载。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(7) Request Timeout&lt;/strong&gt;：设置下载超时。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(8) Use Http Chunked Transfer&lt;/strong&gt;：开启分块传输。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(9) Http Redirect Limit&lt;/strong&gt;：设置重定向次数。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(9) Retry Count&lt;/strong&gt;：设置下载失败重试次数。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(10) Include Addresses in Catalog&lt;/strong&gt;： 禁用后构建bundle时不会包含在catalog.json。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(11) Include GUIDs in Catalog&lt;/strong&gt;： 使用AssetReference拖拽引用就得启用。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(12) Include Labels in Catalog&lt;/strong&gt;： 不通过label标签加载资源，我这里不使用label去加载资源。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(13) Internal Asset Naming Mode&lt;/strong&gt;：AB包内资源的ID标识方式，有三种：Full Path(资源全路径)、Filename(资源名)、GUID(unity导入时设置的ID)、Dynamic(官方推荐使用)。这个模式影响Ab的CRC和HASH，设置该模式中任意一种也不会影响我们从AB包内读取某个资源。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(14) Cache Clear Behavior&lt;/strong&gt;：设置APK包内缓存AA下载的AB资源时长，到期自动清除。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(15) Bundle Mode&lt;/strong&gt;：构建AB的模式，有三种：Group内所有资源打成一个AB、Group内资源分别单独打成AB、根据组内标签打包。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(16) Bundle Naming Mode&lt;/strong&gt;：设置AB名，有三种：Group名、 Group名追加HASH、使用Bundle的HASH(推荐-但要做组名与HASH之间的映射，加载Bundle先拿到组名映射的HASH去找Bundle加载)、使用Group组名的字符HASH。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(17) Asset Load Mode&lt;/strong&gt;：资源加载模式，有两种：从bundle请求加载的资源及其依赖一起加载、bundle内所有的资源全部加载。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(18) Asset Provider&lt;/strong&gt;：从Bundle内加载Asset，官方推荐使用自带的Asset from Bundle Provider,也可以根据Group内文件类型选择Json、Sprites等provider。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(19) Asset Bundle Provider&lt;/strong&gt;：加载AssetBundle接口，官方推荐AssetBundle Provider，或者自己实现一套Provider(可以实现加密解密)。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Content Packing &amp;amp; Loading是BundleAssetGroupSchema，定义AssetBundle构建和加载时的一些信息&lt;/p&gt;
+&lt;h3 id=&quot;content-update&quot;&gt;Content Update&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;(1) Prevent Updates&lt;/strong&gt;：是否启用禁止更新移动Asset。当使用了AA自带的&lt;strong&gt;Check for Content Update Restrictions tool&lt;/strong&gt;，不启用时如果组内有资源发生变更，这个工具会把变更的资源移动到需要生成的Remote Group内。(我没有使用这个工具也没有启用这个选项，组内的资源移动实现了一个脚本规则检查)。&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;如果采用创建N个Asset Group方式，然后对Group进行分组打包，这一个Group就要要包含热更Schema和加载Schema，和N个Asset Entry(这取决于该组有多少个address标记资源)。构建分析期间的耗时将会非常严重，截取一个增加Schema耗时图片
+&lt;h3 id=&quot;group-schema配置&quot;&gt;Group Schema配置&lt;/h3&gt;
+
+&lt;p&gt;  BundledAssetGroupSchema主要是Group面板配置，一个Group会生成两份Schema，&lt;strong&gt;#GroupName_BundledAssetGroupSchema&lt;/strong&gt;、&lt;strong&gt;#GroupName_BundledAssetGroupSchema&lt;/strong&gt;。
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/add_schema.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;schema耗时片段.&lt;/i&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/group_serialize.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+            &lt;i&gt;Group Debug模式.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
-&lt;p&gt;每次增加Schema会触发save操作，每次修改Schema内部值后会触发Group Dirty Notify进一步触发遍历所有Group排查引用该schema的Group更新。&lt;/p&gt;
+&lt;!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+--&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/schema_serialize1.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/schema_serialize2.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+            &lt;i&gt;Schema Debug模式.&lt;/i&gt;
+        &lt;/font&gt;&lt;/center&gt;
 
-&lt;p&gt;Content Update Restriction是ContentUpdateGroupSchema，定义该Asset Group内的资源构建成bundle包时是否可以热更，如果要热更一定要添加&lt;/p&gt;
+&lt;p&gt;  通过Debug模式可以看到Group主要是保存了&lt;strong&gt;SerializeEntries&lt;/strong&gt;资源、&lt;strong&gt;Schema&lt;/strong&gt;配置，所以配置实际上是由Schema保存的。在写代码创建Group时，要把资源加入到Group内、配置写到Schema内。&lt;/p&gt;
+&lt;div class=&quot;language-c# highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;settings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CreateGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;AddressableBuildUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CheckSchemaValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_keyIdArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;AddressableBuildUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CheckUpdateSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//...&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;SetSchemaBuildLoadPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyIds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChunkedTransfer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//disable crc 使用md5代替&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UseAssetBundleCrc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UseAssetBundleCrcForCachedBundles&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//disable guid&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IncludeGUIDInCatalog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IncludeLabelsInCatalog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RedirectLimit&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RetryCount&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Timeout&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;SetBundleCache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//load asset by name&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;SetSchemaNameMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AssetNamingMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//pack mode打包模式&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;SetSchemaPackMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundlePackingMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PackTogetherByLabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//bundle name&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;SetSchemaNameStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleNamingStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileNameHash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//bundle id&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;SetSchemaBundleIdMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleInternalIdMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GroupGuid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//bundle compression&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;SetSchemaBundleCompressionMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleCompressionMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LZ4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//设置Schema Value会触发Group dirty通知，要判断值有没有变再设置&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleMode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;~=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleMode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;assetgrouptemplates&quot;&gt;AssetGroupTemplates&lt;/h2&gt;
+&lt;p&gt;  Group模版配置,可以预先设置好Group的配置，使用该模版创建Group。&lt;/p&gt;
+
+&lt;h2 id=&quot;databuilders&quot;&gt;DataBuilders&lt;/h2&gt;
+&lt;p&gt;  存放打包脚本和Editor测试加载脚本的目录，AA提供了四个自带脚本。&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Static Content, 勾选就是静态资源不参与热更下载&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(1) BuildScriptFastMode&lt;/strong&gt;：对应&lt;strong&gt;Use Asset Database (fastest)&lt;/strong&gt;按钮，快速加载模式，类似AssetdataBase加载资源。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(2) BuildScriptPackedMode&lt;/strong&gt;：对应&lt;strong&gt;Default Build Script&lt;/strong&gt;打包按钮，默认的打AB包脚本，可以根据这个脚本修改自己的打包前后流程。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(3) BuildScriptPackedPlayMode&lt;/strong&gt;：对应&lt;strong&gt;Use Existing Build(#Platform)&lt;/strong&gt;，真实完整的AB加载场景模式，在Editor测试AB是否正确。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(4) BuildScriptVirtualMode&lt;/strong&gt;：对应&lt;strong&gt;Simulate Groups (advanced)&lt;/strong&gt;按钮，不用打AB包可模拟加载AB模式。&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;这两个Schema均继承自AddressableAssetGroupSchema，应该是都要添加到Group内的，这两个文件描述了一个Group构建时所需要的属性。&lt;/p&gt;
-
-&lt;p&gt;下一篇讲如何使用 Addressable构建Assetbundle打包。&lt;/p&gt;
 </description>
-        <pubDate>Wed, 10 Jul 2024 20:00:00 +0800</pubDate>
+        <pubDate>Wed, 10 Jul 2024 00:00:00 +0800</pubDate>
         <link>https://www.damonc.top/Unity_Addressable_Editor.html</link>
         <guid isPermaLink="true">https://www.damonc.top/Unity_Addressable_Editor.html</guid>
         
         <category>Unity3d</category>
         
-        <category>Addressable</category>
+        <category>Addressable System</category>
         
         
       </item>

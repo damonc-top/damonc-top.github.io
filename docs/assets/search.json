@@ -1,13 +1,13 @@
 [
   {
-    "title"    : "Unity Addressable Group结构",
-    "tags"     : "Unity3d Addressable",
+    "title"    : "Unity Addressable System使用分析(二)",
+    "tags"     : "Unity3d Addressable System",
     "url"      : "/Unity_Addressabel_Group.html"
   } ,
 
   {
-    "title"    : "Unity Addressable Editor结构",
-    "tags"     : "Unity3d Addressable",
+    "title"    : "Unity Addressable System使用分析(一)",
+    "tags"     : "Unity3d Addressable System",
     "url"      : "/Unity_Addressable_Editor.html"
   } ,
 
