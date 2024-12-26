@@ -5,14 +5,14 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Addressable System使用分析(一) - 小号手在利雅得听广播</title>
-    <meta name="author" content="小号手在利雅得听广播">
+    <title>Unity Addressable System使用分析(一) - 仗剑天涯</title>
+    <meta name="author" content="仗剑天涯">
     
     <meta name="description" content="Unity Addressable System使用分析(一)">
     <meta name="keywords"
-        content="Unity3d, Addressable System">
+        content="Addressable System">
     
-    <meta property="og:previous_url" content="/Unity_Addressabel_Group.html">
+    <meta property="og:previous_url" content="/unity3d/Unity_Addressabel_Group.html">
     
     
     <meta property="og:next_url" content="/Unity_Parallax_Normals_Heightmap.html">
@@ -29,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity Addressable System使用分析(一) - 小号手在利雅得听广播">
+        content="Unity Addressable System使用分析(一) - 仗剑天涯">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.damonc.top/Unity_Addressable_Editor.html">
+    <meta property="og:url" content="https://www.damonc.top/unity3d/Unity_Addressable_Editor.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="小号手在利雅得听广播">
+    <meta property="og:site_name" content="仗剑天涯">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -205,8 +205,6 @@
         <div class="post-tags">
             
             
-            <a href="/%20/tags.html#Unity3d" class="post-tag">Unity3d</a>
-            
             <a href="/%20/tags.html#Addressable%20System" class="post-tag">Addressable System</a>
             
             
@@ -217,7 +215,7 @@
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-user"></use>
                 </svg>
-                小号手在利雅得听广播
+                仗剑天涯
             </span>
             <time class="post-meta-item" datetime=" 24-07-10">
                 <svg class="icon" aria-hidden="true">
@@ -236,7 +234,7 @@
                     <use xlink:href="#icon-words"></use>
                 </svg>
                 
-                本文总共  6.8k  字 </span>
+                本文总共  6.9k  字 </span>
                     <span class="post-meta-item">
                         <svg class="icon time" aria-hidden="true">
                             <use xlink:href="#icon-time"></use>
@@ -258,6 +256,8 @@
 </div>
 
 <main class="post-content visible">
+    
+    <h2 class="post-subtitle">Addressable组织结构分析</h2>
     
 
     
@@ -437,7 +437,14 @@
         </font>
 </center>
 
-<p>  指定addressables_content_state.bin的保存地址，该文件只在本地构建时读取进行增量打包，可以看看<a href="https%EF%BC%9A//docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">官方workflow</code></a>。简化描述就是要构建更新的AssetBundle，请运行Update a Previous Build脚本。此工具还使用到<code class="language-plaintext highlighter-rouge">addressables_content_state.bin</code>文件，它会重新构建所有内容并会生成到一个修改过的目录，该目录可以访问原始AssetBundle中未更改的内容以及新AssetBundle中更改过的内容。通过打开Groups面板Tools选项Check Content Update Restrictions窗口，只要Group内某个资源有修改，就会出现在这个列表中。但是如果玩家本地用户目录的bundle不小心损坏了或者需要回退资源版本，直接使用Unity这个方案就不好办。
+<ul>
+  <li>
+<strong>(1) Check for Update Issues</strong>：官方推荐使用List Restricted Assets，在更新过程中对使用了限制更新的Group有限制。</li>
+  <li>
+<strong>(2) Content State Build Path</strong>：指定addressables_content_state.bin的保存地址。</li>
+</ul>
+
+<p>  该content_state文件只在本地构建时读取进行增量打包，可以看看<a href="https%EF%BC%9A//docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html" rel="nofollow" target="_blank" class="extlinks"><code class="language-plaintext highlighter-rouge">官方workflow</code></a>。简化描述就是要构建更新的AssetBundle，请运行Update a Previous Build脚本。此工具还使用到<code class="language-plaintext highlighter-rouge">addressables_content_state.bin</code>文件，它会重新构建所有内容并会生成到一个修改过的目录，该目录可以访问原始AssetBundle中未更改的内容以及新AssetBundle中更改过的内容。通过打开Groups面板Tools选项Check Content Update Restrictions窗口，只要Group内某个资源有修改，就会出现在这个列表中。但是如果玩家本地用户目录的bundle不小心损坏了或者需要回退资源版本，直接使用Unity这个方案就不好办。
 <!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --></p>
@@ -597,42 +604,42 @@
 </center>
 
 <p>  通过Debug模式可以看到Group主要是保存了<strong>SerializeEntries</strong>资源、<strong>Schema</strong>配置，所以配置实际上是由Schema保存的。在写代码创建Group时，要把资源加入到Group内、配置写到Schema内。</p>
-<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//...</span>
-<span class="k">group</span> <span class="p">=</span> <span class="n">settings</span><span class="p">.</span><span class="nf">CreateGroup</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">i</span> <span class="p">==</span> <span class="m">0</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
-<span class="n">AddressableBuildUtil</span><span class="p">.</span><span class="nf">CheckSchemaValue</span><span class="p">(</span><span class="k">group</span><span class="p">,</span> <span class="n">_keyIdArray</span><span class="p">);</span>
-<span class="n">AddressableBuildUtil</span><span class="p">.</span><span class="nf">CheckUpdateSchema</span><span class="p">(</span><span class="k">group</span><span class="p">);</span>
-<span class="c1">//...</span>
+<pre><code class="language-CSHARP">//...
+group = settings.CreateGroup(key, i == 0, false, false, null);
+AddressableBuildUtil.CheckSchemaValue(group, _keyIdArray);
+AddressableBuildUtil.CheckUpdateSchema(group);
+//...
 
-<span class="nf">SetSchemaBuildLoadPath</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">keyIds</span><span class="p">);</span>
-<span class="n">schema</span><span class="p">.</span><span class="n">ChunkedTransfer</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-<span class="c1">//disable crc 使用md5代替</span>
-<span class="n">schema</span><span class="p">.</span><span class="n">UseAssetBundleCrc</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-<span class="n">schema</span><span class="p">.</span><span class="n">UseAssetBundleCrcForCachedBundles</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-<span class="c1">//disable guid</span>
-<span class="n">schema</span><span class="p">.</span><span class="n">IncludeGUIDInCatalog</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-<span class="n">schema</span><span class="p">.</span><span class="n">IncludeLabelsInCatalog</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-<span class="n">schema</span><span class="p">.</span><span class="n">RedirectLimit</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
-<span class="n">schema</span><span class="p">.</span><span class="n">RetryCount</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
-<span class="n">schema</span><span class="p">.</span><span class="n">Timeout</span> <span class="p">=</span> <span class="m">30</span><span class="p">;</span>
+SetSchemaBuildLoadPath(schema, keyIds);
+schema.ChunkedTransfer = true;
+//disable crc 使用md5代替
+schema.UseAssetBundleCrc = false;
+schema.UseAssetBundleCrcForCachedBundles = false;
+//disable guid
+schema.IncludeGUIDInCatalog = false;
+schema.IncludeLabelsInCatalog = false;
+schema.RedirectLimit = 2;
+schema.RetryCount = 2;
+schema.Timeout = 30;
 
-<span class="nf">SetBundleCache</span><span class="p">(</span><span class="n">schema</span><span class="p">);</span>
-<span class="c1">//load asset by name</span>
-<span class="nf">SetSchemaNameMode</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">AssetNamingMode</span><span class="p">.</span><span class="n">Filename</span><span class="p">);</span>
-<span class="c1">//pack mode打包模式</span>
-<span class="nf">SetSchemaPackMode</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">BundlePackingMode</span><span class="p">.</span><span class="n">PackTogetherByLabel</span><span class="p">);</span>
-<span class="c1">//bundle name</span>
-<span class="nf">SetSchemaNameStyle</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">BundleNamingStyle</span><span class="p">.</span><span class="n">FileNameHash</span><span class="p">);</span>
-<span class="c1">//bundle id</span>
-<span class="nf">SetSchemaBundleIdMode</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">BundleInternalIdMode</span><span class="p">.</span><span class="n">GroupGuid</span><span class="p">);</span>
-<span class="c1">//bundle compression</span>
-<span class="nf">SetSchemaBundleCompressionMode</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">BundledAssetGroupSchema</span><span class="p">.</span><span class="n">BundleCompressionMode</span><span class="p">.</span><span class="n">LZ4</span><span class="p">);</span>
+SetBundleCache(schema);
+//load asset by name
+SetSchemaNameMode(schema, BundledAssetGroupSchema.AssetNamingMode.Filename);
+//pack mode打包模式
+SetSchemaPackMode(schema, BundledAssetGroupSchema.BundlePackingMode.PackTogetherByLabel);
+//bundle name
+SetSchemaNameStyle(schema, BundledAssetGroupSchema.BundleNamingStyle.FileNameHash);
+//bundle id
+SetSchemaBundleIdMode(schema, BundledAssetGroupSchema.BundleInternalIdMode.GroupGuid);
+//bundle compression
+SetSchemaBundleCompressionMode(schema, BundledAssetGroupSchema.BundleCompressionMode.LZ4);
 
-<span class="c1">//设置Schema Value会触发Group dirty通知，要判断值有没有变再设置</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">schema</span><span class="p">.</span><span class="n">BundleMode</span> <span class="p">~=</span> <span class="n">packMode</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">schema</span><span class="p">.</span><span class="n">BundleMode</span> <span class="p">=</span> <span class="n">packMode</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
+//设置Schema Value会触发Group dirty通知，要判断值有没有变再设置
+if (schema.BundleMode ~= packMode)
+{
+    schema.BundleMode = packMode;
+}
+</code></pre>
 
 <h2 id="assetgrouptemplates">AssetGroupTemplates</h2>
 <p>  Group模版配置,可以预先设置好Group的配置，使用该模版创建Group。</p>
@@ -654,7 +661,7 @@
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">小号手在利雅得听广播</a>
+                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -666,7 +673,7 @@
                     </p>
                     
                     <p><span>本文标题：</span>《 Unity Addressable System使用分析(一) 》</p>
-                    <p><span>本文链接：</span><a href="https://www.damonc.top/Unity_Addressable_Editor.html" class="cplink">https://www.damonc.top/Unity_Addressable_Editor.html</a></p>
+                    <p><span>本文链接：</span><a href="https://www.damonc.top/unity3d/Unity_Addressable_Editor.html" class="cplink">https://www.damonc.top/unity3d/Unity_Addressable_Editor.html</a></p>
                     <p class="tips">本文最后一次更新为 <span></span> 天前，文章中的某些内容可能已过时！
                     </p>
                 </div>
@@ -693,7 +700,7 @@
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">小号手在利雅得听广播</div>
+        <div class="author-name" rel="author">仗剑天涯</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -722,10 +729,10 @@
     <section class="post-footer-item read-next">
         
         <div class="read-next-item">
-            <a href="/Unity_Addressabel_Group.html" class="read-next-link" aria-label="Unity Addressable System使用分析(二)"></a>
+            <a href="/unity3d/Unity_Addressabel_Group.html" class="read-next-link" aria-label="Unity Addressable System使用分析(二)"></a>
             <section>
                 <span>Unity Addressable System使用分析(二)</span>
-                <p></p>
+                <p>  查看Addressable/Content Builders/Default Build Script打包脚本...</p>
             </section>
             
         </div>
@@ -820,7 +827,7 @@
           
         
       </section>
-      <section class="links">小号手在利雅得听广播 ©
+      <section class="links">仗剑天涯 ©
         
         
           2016

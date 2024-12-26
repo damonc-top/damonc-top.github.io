@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>小号手在利雅得听广播</title>
+    <title>仗剑天涯</title>
     <description>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</description>
     <link>https://www.damonc.top//</link>
     <atom:link href="https://www.damonc.top/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 05 Dec 2024 14:15:25 +0800</pubDate>
-    <lastBuildDate>Thu, 05 Dec 2024 14:15:25 +0800</lastBuildDate>
+    <pubDate>Thu, 26 Dec 2024 20:01:36 +0800</pubDate>
+    <lastBuildDate>Thu, 26 Dec 2024 20:01:36 +0800</lastBuildDate>
     <generator>Jekyll v4.3.4</generator>
     
       <item>
@@ -14,13 +14,295 @@
         <description>
 </description>
         <pubDate>Fri, 12 Jul 2024 20:00:00 +0800</pubDate>
-        <link>https://www.damonc.top/Unity_Addressabel_Group.html</link>
-        <guid isPermaLink="true">https://www.damonc.top/Unity_Addressabel_Group.html</guid>
-        
-        <category>Unity3d</category>
+        <link>https://www.damonc.top/unity3d/Unity_Addressable_Build.html</link>
+        <guid isPermaLink="true">https://www.damonc.top/unity3d/Unity_Addressable_Build.html</guid>
         
         <category>Addressable System</category>
         
+        
+        <category>Unity3d</category>
+        
+      </item>
+    
+      <item>
+        <title>Unity Addressable System使用分析(二)</title>
+        <description>&lt;p&gt;  查看Addressable/Content Builders/Default Build Script打包脚本做了哪些工作。&lt;/p&gt;
+
+&lt;h2 id=&quot;构建前置准备&quot;&gt;构建前置准备&lt;/h2&gt;
+
+&lt;p&gt;  AA打包提供了自带脚本&lt;strong&gt;&lt;em&gt;BuildScriptPackedMode&lt;/em&gt;&lt;/strong&gt;打包入口有两个：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;不带打包结果返回：AddressableAssetSettings.BuildPlayerContent();&lt;/li&gt;
+  &lt;li&gt;带打包结果的接口：AddressableAssetSettings.BuildPlayerContent(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;out AddressablesPlayerBuildResult rst&lt;/code&gt;);&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;开始构建&quot;&gt;开始构建&lt;/h3&gt;
+
+&lt;p&gt;  AddressablesPlayerBuildResult主要记录了打包成功后获取到bundle列表信息，每份bundle都有生成，类似于以前的AssetBundle Menifest结构。这个结果可以序列化保存在本地，方便查看调试各资源之间依赖情况。&lt;/p&gt;
+
+&lt;div class=&quot;premonition note&quot;&gt; &lt;div class=&quot;header&quot;&gt; &lt;svg class=&quot;icon note&quot; aria-hidden=&quot;true&quot;&gt; &lt;use xlink:href=&quot;#icon-note&quot;&gt;&lt;/use&gt; &lt;/svg&gt; &lt;div class=&quot;title&quot;&gt; AddressablesPlayerBuildResult结构 &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;content&quot;&gt; 
+&lt;pre&gt;&lt;code class=&quot;language-CSHARP&quot;&gt;//bundle构建后的信息
+class BundleBuildResult{
+ public string FilePath;
+ public string InternalBundleName;
+ public AddressableAssetGroup SourceAssetGroup;
+ public uint Crc;
+ public string Hash;
+}
+public List&amp;lt;BundleBuildResult&amp;gt; AssetBundleBuildResults =&amp;gt; m_AssetBundleBuildResults;
+//catalog hash的路径
+public string RemoteCatalogHashFilePath { get; internal set; }
+//catalog json的路径
+public string RemoteCatalogJsonFilePath { get; internal set; }
+//content state的路径
+public string ContentStateFilePath { get; internal set; }
+&lt;/code&gt;&lt;/pre&gt;
+
+
+
+ &lt;/div&gt; &lt;/div&gt;
+&lt;p&gt;  进入到&lt;strong&gt;&lt;em&gt;BuildPlayerContent&lt;/em&gt;&lt;/strong&gt;函数，最主要工作之一是对所有Group内的所有Entry资源在打包之前把&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BundleFileId&lt;/code&gt;置空，这个字段在编辑器打包时有用到。该变量值在打包时多次使用，非常重要！
+&lt;!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+--&gt;&lt;/p&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/bundle_field_id.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+            &lt;i&gt;Debug模式查看到BundleFileId.&lt;/i&gt;
+        &lt;/font&gt;&lt;/center&gt;
+&lt;p&gt;  进入到&lt;strong&gt;&lt;em&gt;BuildPlayerContentImpl&lt;/em&gt;&lt;/strong&gt;函数，主要做了三块工作。&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;检查Addressables BuildPath目录，存在就清空该目录。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BuildPath&lt;/code&gt;就是构建bundle的存放目录，这里有一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;清空该目录&lt;/code&gt;的操作。&lt;/li&gt;
+  &lt;li&gt;实例化&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddressablesDataBuilderInput&lt;/code&gt;对象，该对象内部初始化：指定构建平台、构建版本号、FileRegistry容器、PreviousContentState置空。&lt;/li&gt;
+  &lt;li&gt;使用指定的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ActivePlayerDataBuilder&lt;/code&gt;构建对象开始构建bundle。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;premonition note&quot;&gt; &lt;div class=&quot;header&quot;&gt; &lt;svg class=&quot;icon note&quot; aria-hidden=&quot;true&quot;&gt; &lt;use xlink:href=&quot;#icon-note&quot;&gt;&lt;/use&gt; &lt;/svg&gt; &lt;div class=&quot;title&quot;&gt; 清空目录如何做到增量打包？ &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;content&quot;&gt; &lt;p&gt;  对于之前使用&lt;strong&gt;&lt;em&gt;BuildPipeline.BuildAssetBundles&lt;/em&gt;&lt;/strong&gt;接口打包，默认自带增量打包参数，除非使用ForceRebuildAssetBundle参数指定。&lt;/p&gt;
+
+&lt;p&gt;  以前的增量打包的所需条件：&lt;/p&gt;
+
+&lt;p&gt;  &lt;strong&gt;(1)&lt;/strong&gt;资源没变化且生成目录下的bundle包和对应manifest存在，不会重新打包；&lt;/p&gt;
+
+&lt;p&gt;  &lt;strong&gt;(2)&lt;/strong&gt;资源没变化即使生成目录下的bundle包被删除了，不会重新打包；&lt;/p&gt;
+
+&lt;p&gt;  &lt;strong&gt;(3)&lt;/strong&gt;只要生成目录下的bundle包对应的manifase被删除了，会重新打包；&lt;/p&gt;
+
+&lt;p&gt;  而现在即使删除了Bundle存放目录，对于增量打包的使用addressables_content_state文件和BuildCache信息组合判断。&lt;/p&gt;
+
+
+
+ &lt;/div&gt; &lt;/div&gt;
+&lt;p&gt;  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ActivePlayerDataBuilder&lt;/code&gt;分析：该对象一定要继承自BuildScriptBase。一定要放在Data Builders列表。一定要给ActivePlayerDataBuilderIndex赋值，或者在Settings的Data Builders列表放在第一位，读取ActivePlayerDataBuilderIndex优先级是高于列表顺序。
+&lt;!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+--&gt;&lt;/p&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+            &lt;i&gt;Data Builders列表就是这个Scripts列表.&lt;/i&gt;
+        &lt;/font&gt;&lt;/center&gt;
+
+&lt;p&gt;  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FileRegistry&lt;/code&gt;分析：文件注册表的作用在构建Bundle期间保存创建Bundle时的存放路径(带hash信息)，然后在Bundle构建的后处理使用ReplaceBundleEntry，使用无hash的路径替换带hash路径。暂时不重要。&lt;/p&gt;
+
+&lt;p&gt;  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddressablesContentState&lt;/code&gt;结构与&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BundleFileId&lt;/code&gt;分析：AddressablesContentState保存了当次构建时所有的Asset缓存信息和Bundle信息，以便在下次构建bundle时读取这些缓存信息。BundleFileId就包含在这些缓存信息内。&lt;/p&gt;
+&lt;div class=&quot;language-csharp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AddressablesContentState&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;playerVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;editorVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CachedAssetState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cachedInfos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remoteCatalogLoadPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CachedBundleState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cachedBundles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CachedAssetState&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IEquatable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CachedAssetState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AssetState&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AssetState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dependencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;groupGuid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bundleFileId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Equals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CachedAssetState&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CachedBundleState&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bundleFileId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;初始化icontextobject&quot;&gt;初始化IContextObject&lt;/h3&gt;
+
+&lt;p&gt;  进入&lt;strong&gt;&lt;em&gt;BuildDataImplementation&lt;/em&gt;&lt;/strong&gt;内，会继续初始化一些数据：调用场景保存(使用SBP管线构建Bundle前一定要保存场景)、初始化AddressableAssetsBuildContext对象、处理所有Group对象。这里有两个重要的数据结构：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ResourceManagerRuntimeData&lt;/code&gt;：用于初始化AA的运行时数据，包含许多AA设置时的参数，每次构建都会重新生成。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddressableAssetsBuildContext&lt;/code&gt;：用于构建过程中数据传递，在后面的Task流的会多次用到IContextObject或IAddressableAssetsBuildContext接口数据。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;span id=&quot;jump1&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;处理group&quot;&gt;处理Group&lt;/h3&gt;
+
+&lt;p&gt;  对每个Group的Schema进行预处理，对Group内所有AssetEntry生成一份&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ContentCatalogDataEntry&lt;/code&gt;运行时寻址数据信息。&lt;/p&gt;
+
+&lt;p&gt;  &lt;strong&gt;(1)PlayerDataGroupSchema&lt;/strong&gt;分别有场景内的资源和Resource目录内的资源。把该Schema内所有的AssetEntry执行GatherAllAssets：收集该Schema内所有资源(包括subAsset、sprite精灵)装入AddressableAssetEntry收集列表。遍历收集列表执行CreateCatalogEntries创建&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ContentCatalogDataEntry&lt;/code&gt;数据(IResourceLocation寻址数据，在运行时初始化AA和加载Catalog这一数据非常重要)。&lt;/p&gt;
+
+&lt;p&gt;  &lt;strong&gt;(2)BundledAssetGroupSchema&lt;/strong&gt;构建bundle配置和包含在Entries列表里的资源，根据BundlePackingMode生成预定义Bundle名，三者的区别是寻址路径参数不一样，&lt;strong&gt;Bundle命名格式&lt;/strong&gt;：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;groupGuid + _assets_ + address + .bundle&lt;/code&gt;。重点说一下PackTogetherByLabel，根据AssetEntry对象内的标签生成Bundle名，选择这个模式命名Bundle，没有特殊需求一般每个Asset只需要一个标签即可，这样一个标签对应多个资源就可以打成一个Bundle。三种模式都会生成一份AssetBundleBuild[]打包数据，然后把该份数据每个BundleName执行ReHash替换(这一步可以定制bundle name)。&lt;/p&gt;
+
+&lt;h2 id=&quot;开始打包&quot;&gt;开始打包&lt;/h2&gt;
+
+&lt;p&gt;  实例化ExtractDataTask对象，实例化AddressableAssetsBundleBuildParameters对象，初始化buildTasks，调用SBP管线ContentPipeline.BuildAssetBundles接口开始打包。&lt;/p&gt;
+
+&lt;h3 id=&quot;contentpipeline&quot;&gt;ContentPipeline&lt;/h3&gt;
+
+&lt;p&gt;  ContentPipeline是SBP打包管线入口的静态类。在调用BuildAssetBundles后进行了一系列的安全检查；把IBuildTask需要的数据装入BuildContext对象的m_ContextObjects字典；在执行RunTask之前先通过Inject函数操作Task成员变量的FieldInfo，再从BuildContext的m_ContextObjects根据成员变量类型取出Value并写入Field；执行Task Running操作；然后再把Task执行后更新的成员变量数据取出装入BuildContext值。&lt;/p&gt;
+
+&lt;h2 id=&quot;task管线&quot;&gt;Task管线&lt;/h2&gt;
+
+&lt;p&gt;  每个Task内的成员变量用属性标记，ContextUsage.In是从BuildContext取出，ContextUsage.InOut是输入输出双向，ContextUsage.Out输出。&lt;/p&gt;
+
+&lt;h3 id=&quot;switchtobuildplatform&quot;&gt;SwitchToBuildPlatform&lt;/h3&gt;
+
+&lt;p&gt;  切换到指定的打包平台(如果当前平台不是目标平台触发切换基本要好几十分钟吧).&lt;/p&gt;
+
+&lt;h3 id=&quot;rebuildspriteatlascache&quot;&gt;RebuildSpriteAtlasCache&lt;/h3&gt;
+
+&lt;p&gt;  触发所有Sprite Atlas Packing操作，生成所有精灵图集的缓存数据。&lt;/p&gt;
+
+&lt;h3 id=&quot;buildplayerscripts&quot;&gt;BuildPlayerScripts&lt;/h3&gt;
+
+&lt;p&gt;  触发所有脚本编译。&lt;/p&gt;
+
+&lt;h3 id=&quot;postscriptscallback&quot;&gt;PostScriptsCallback&lt;/h3&gt;
+
+&lt;p&gt;  编译脚本时的回调，要用到这个回调需要给ContentPipeline.BuildCallbacks注册。&lt;/p&gt;
+
+&lt;h3 id=&quot;calculatescenedependencydata&quot;&gt;CalculateSceneDependencyData&lt;/h3&gt;
+
+&lt;p&gt;  收集Scene的依赖资源信息。&lt;/p&gt;
+
+&lt;h3 id=&quot;calculateassetdependencydata&quot;&gt;CalculateAssetDependencyData&lt;/h3&gt;
+
+&lt;p&gt;  收集资源的依赖信息，有三个最重要的输出数据收集&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IBuildResults、IBuildSpriteData、IBuildExtendedAssetData&lt;/code&gt;传递给下一个Task，这里有许多Unity内部代码现在看不到，用这三个结果数据倒推这个收集流程，先看看这三个数据结构。&lt;/p&gt;
+&lt;div class=&quot;language-csharp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IBuildResults&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IContextObject&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ScriptCompilationResult&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ScriptResults&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WriteResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WriteResults&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SerializedFileMetaData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WriteResultsMetaData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GUID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AssetResultData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AssetResults&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;WriteResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{...}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SerializedFileMetaData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{...}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AssetResultData&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GUID&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Guid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Hash128&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ObjectIdentifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IncludedObjects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ObjectIdentifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ReferencedObjects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ObjectIdentifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;]&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ObjectTypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IBuildSpriteData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IContextObject&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GUID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SpriteImporterData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ImporterData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IBuildExtendedAssetData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IContextObject&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GUID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExtendedAssetData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExtendedData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;(1) 依赖数据新旧对比&lt;/strong&gt;，先用TaskOutput的临时结构AssetOutput保存，AssetOutput包含有上述最重要三个数据。通过BuildCache接口根据Asset GUID获取资产信息，这里的缓存都是从Library下的BuildCache读取，若没有缓存会跳过后续的更新缓存数据操作，然后生成缓存保存；若有上次打包的缓存数据，则检查Sprite与Atlas的关联数据在这次打包前是否发生变化，把缓存中有过时的数据需要重新生成数据替换。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;(2) 依赖数据收集&lt;/strong&gt;，(可跳过不阅读)，具体流程&lt;strong&gt;1)&lt;/strong&gt;遍历每个Asset GUID获取Cache Info，如果Data[2]类型是Sprite就加入packedSprites表；&lt;strong&gt;2)&lt;/strong&gt;获取该Asset CacheInfo Data[4]类型表并遍历，若是Spirte进入GetPlayerDependenciesForAsset检查其依赖；&lt;strong&gt;3)&lt;/strong&gt;遍历所有includedObjects对象并使用ContentBuildInterface.GetPlayerDependenciesForObjects获取该对象的所有依赖，跳过input自身把其他依赖加入otherReferencedAssetObjectsHashSet表；&lt;strong&gt;4)&lt;/strong&gt;使用objectLookingAt栈对收集到的依赖对象再次遍历查找，a.对于不是input自身且没有在explicitAssets表内就加入encounteredExplicitAssetDependencies，若是非打包精灵加入mainRepresentationNeeded，b.对于未处理过的隐式资源，更新或创建implicitOutput，查找缓存依赖，将新发现的依赖压入objectLookingAt栈中继续遍历；&lt;strong&gt;5)&lt;/strong&gt;最后再执行合并collectedImmediateReferences表和mainRepresentationNeeded表返回最终的依赖信息。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;(3) 收集IBuildResults、IBuildSpriteData、IBuildExtendedAssetData&lt;/strong&gt;，非Sprite资源走ProcessAsset处理，使用GetPlayerObjectIdentifiersInAsset获取includedObjects ID表，继续使用GetPlayerDependenciesForAsset收集依赖，然后收集资源的表示装入ExtendedAssetData，然后将依赖项扩展为显式资产。最后将assetOutput.asset装入各自的数据结构中。&lt;/p&gt;
+
+&lt;div class=&quot;language-csharp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;internal&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AssetOutput&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GUID&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Hash128&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AssetLoadInfo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assetInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ObjectDependencyInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectDependencyInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BuildUsageTagSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;usageTags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SpriteImporterData&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spriteData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExtendedAssetData&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extendedData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ObjectTypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectTypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CachedInfo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ICachedData&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CacheEntry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Asset&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CacheEntry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dependencies&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/*
+    [0]AssetLoadInfo
+    [1]BuildUsageTagSet
+    [2]SpriteImporterData
+    [3]ExtendedAssetData
+    [4]List&amp;lt;ObjectTypes&amp;gt;
+    [5]List&amp;lt;ObjectDependencyInfo&amp;gt;
+    */&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Data&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;addhashtobundlenametask&quot;&gt;AddHashToBundleNameTask&lt;/h3&gt;
+
+&lt;p&gt;  如果使用了UniqueBundleIds定义Bundle唯一的标识符，&lt;/p&gt;
+
+&lt;h3 id=&quot;stripunusedspritesources&quot;&gt;StripUnusedSpriteSources&lt;/h3&gt;
+
+&lt;p&gt;  剥离未使用的Spirite，从依赖分析的Task获取的IBuildSpriteData数据进行遍历，在m_DependencyData没有用到的Sprite统统剥离，并从IBuildExtendedAssetData的ExtendedData内删除。&lt;/p&gt;
+
+&lt;h3 id=&quot;generatebundlepacking&quot;&gt;GenerateBundlePacking&lt;/h3&gt;
+
+&lt;p&gt;  处理资源包打包生成内部文件名、收集资源的对象标识符、过滤和处理资源引用、记录资源到文件的映射，过滤逻辑移除默认资源引用、处理资源间的循环引用、去除重复或不必要的引用&lt;/p&gt;
+
+&lt;h3 id=&quot;updatebundleobjectlayout&quot;&gt;UpdateBundleObjectLayout&lt;/h3&gt;
+
+&lt;p&gt;  更新bundle的组织结构，最开始的数据是从ContentPipeline.BuildAssetBundles打包接口参数BundleBuildContent(m_AllBundleInputDefs)对象生成，通过Bundle Packing更新依赖数据后，这块的bundle内部结构数据也要更新。&lt;/p&gt;
+
+&lt;h3 id=&quot;generatebundlecommands&quot;&gt;GenerateBundleCommands&lt;/h3&gt;
+
+&lt;p&gt;  为资源和场景生成打包命令，处理自定义资源、遍历资源包布局，根据资源类型创建不同的命令：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;资源包命令 (CreateAssetBundleCommand)：创建写入命令、创建使用的列表集、创建引用映射、处理依赖哈希并排序、生成资源包写入操作。&lt;/li&gt;
+  &lt;li&gt;场景包命令 (CreateSceneBundleCommand)：获取场景文件对象、创建写入命令、处理预加载对象、生成场景加载信息、创建场景包写入操作。&lt;/li&gt;
+  &lt;li&gt;场景数据命令 (CreateSceneDataCommand)：类似场景包命令、专门处理额外的场景数据。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;generatesubassetpathmaps&quot;&gt;GenerateSubAssetPathMaps&lt;/h3&gt;
+
+&lt;p&gt;  创建子资源的加载信息，资源包写入操作集转为internalName与Value的字典映射，遍历ExtendedData的guid数据，通过AssetToFiles取出主资源，通过主资源获取当前guid的info，根据info和资源表示形式CreateSubAssetLoadInfo，然后插入到主资源info的BundleAssets。&lt;/p&gt;
+
+&lt;h3 id=&quot;generatebundlemaps&quot;&gt;GenerateBundleMaps&lt;/h3&gt;
+
+&lt;p&gt;  对AssetBundle生成依赖映射和使用集合，BuildReferenceMap详细说明源包中的对象所依赖的其他包中存在哪些对象（前向依赖项）；BuildUsageTagSet 详细说明了源包中的对象需要写入的条件数据，该数据由其他包中的对象使用（反向依赖）。&lt;/p&gt;
+
+&lt;h3 id=&quot;writeserializedfiles&quot;&gt;WriteSerializedFiles&lt;/h3&gt;
+
+&lt;p&gt;  把资源包数据分段写入AssetBundle。通过TaskCachingUtility.RunCachedOperation注册本地回调函数分布操作写入：获取缓存、处理未缓存文件hash写入SerializedFileMetaData、保存MetaData数据与WriteResult数据。&lt;/p&gt;
+
+&lt;h3 id=&quot;archiveandcompressbundles&quot;&gt;ArchiveAndCompressBundles&lt;/h3&gt;
+
+&lt;p&gt;  压缩写入资源包，创建ArchiveWorkItem集、执行压缩Item的ResourceFiles所有文件并返回crc。&lt;/p&gt;
+
+&lt;h3 id=&quot;generatelocationliststask&quot;&gt;GenerateLocationListsTask&lt;/h3&gt;
+
+&lt;p&gt;  创建寻址资产的位置列表，用于描述资源在最终构建包中的位置和加载方式。每个位置列表条目包含以下信息：资源类型、加载路径、提供程序、其他元数据。&lt;/p&gt;
+
+&lt;h2 id=&quot;打包后处理&quot;&gt;打包后处理&lt;/h2&gt;
+
+&lt;p&gt;  遍历ContentCatalogDataEntry集合生成主键映射、Bundle ReName、Catalog ReMap、创建Catalog File、保存ContentState。&lt;/p&gt;
+
+&lt;h3 id=&quot;bundle后处理&quot;&gt;Bundle后处理&lt;/h3&gt;
+
+&lt;p&gt;  这一步在Bundle压缩写入后。创建下载信息AssetBundleRequestOptions是提供给AssetBundleProvider下载时使用。根据BundleNaming模式重构AssetBundleName，重构命名这一步会影响bundle命名格式，尤其会破坏&lt;a href=&quot;#jump1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1.3处理Group&lt;/code&gt;&lt;/a&gt;这一步的预命名。&lt;/p&gt;
+</description>
+        <pubDate>Fri, 12 Jul 2024 20:00:00 +0800</pubDate>
+        <link>https://www.damonc.top/unity3d/Unity_Addressabel_Group.html</link>
+        <guid isPermaLink="true">https://www.damonc.top/unity3d/Unity_Addressabel_Group.html</guid>
+        
+        <category>Addressable System</category>
+        
+        
+        <category>Unity3d</category>
         
       </item>
     
@@ -165,7 +447,12 @@
             &lt;i&gt;Update Downloads设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
-&lt;p&gt;  指定addressables_content_state.bin的保存地址，该文件只在本地构建时读取进行增量打包，可以看看&lt;a href=&quot;https：//docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;官方workflow&lt;/code&gt;&lt;/a&gt;。简化描述就是要构建更新的AssetBundle，请运行Update a Previous Build脚本。此工具还使用到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addressables_content_state.bin&lt;/code&gt;文件，它会重新构建所有内容并会生成到一个修改过的目录，该目录可以访问原始AssetBundle中未更改的内容以及新AssetBundle中更改过的内容。通过打开Groups面板Tools选项Check Content Update Restrictions窗口，只要Group内某个资源有修改，就会出现在这个列表中。但是如果玩家本地用户目录的bundle不小心损坏了或者需要回退资源版本，直接使用Unity这个方案就不好办。
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;(1) Check for Update Issues&lt;/strong&gt;：官方推荐使用List Restricted Assets，在更新过程中对使用了限制更新的Group有限制。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;(2) Content State Build Path&lt;/strong&gt;：指定addressables_content_state.bin的保存地址。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;  该content_state文件只在本地构建时读取进行增量打包，可以看看&lt;a href=&quot;https：//docs.unity3d.com/Packages/com.unity.addressables@2.2/manual/content-update-builds-overview.html&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;官方workflow&lt;/code&gt;&lt;/a&gt;。简化描述就是要构建更新的AssetBundle，请运行Update a Previous Build脚本。此工具还使用到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addressables_content_state.bin&lt;/code&gt;文件，它会重新构建所有内容并会生成到一个修改过的目录，该目录可以访问原始AssetBundle中未更改的内容以及新AssetBundle中更改过的内容。通过打开Groups面板Tools选项Check Content Update Restrictions窗口，只要Group内某个资源有修改，就会出现在这个列表中。但是如果玩家本地用户目录的bundle不小心损坏了或者需要回退资源版本，直接使用Unity这个方案就不好办。
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
@@ -279,42 +566,42 @@
         &lt;/font&gt;&lt;/center&gt;
 
 &lt;p&gt;  通过Debug模式可以看到Group主要是保存了&lt;strong&gt;SerializeEntries&lt;/strong&gt;资源、&lt;strong&gt;Schema&lt;/strong&gt;配置，所以配置实际上是由Schema保存的。在写代码创建Group时，要把资源加入到Group内、配置写到Schema内。&lt;/p&gt;
-&lt;div class=&quot;language-c# highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//...&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;settings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CreateGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;AddressableBuildUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CheckSchemaValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_keyIdArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;AddressableBuildUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CheckUpdateSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//...&lt;/span&gt;
+&lt;pre&gt;&lt;code class=&quot;language-CSHARP&quot;&gt;//...
+group = settings.CreateGroup(key, i == 0, false, false, null);
+AddressableBuildUtil.CheckSchemaValue(group, _keyIdArray);
+AddressableBuildUtil.CheckUpdateSchema(group);
+//...
 
-&lt;span class=&quot;nf&quot;&gt;SetSchemaBuildLoadPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyIds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChunkedTransfer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//disable crc 使用md5代替&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UseAssetBundleCrc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UseAssetBundleCrcForCachedBundles&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//disable guid&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IncludeGUIDInCatalog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IncludeLabelsInCatalog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RedirectLimit&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RetryCount&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Timeout&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+SetSchemaBuildLoadPath(schema, keyIds);
+schema.ChunkedTransfer = true;
+//disable crc 使用md5代替
+schema.UseAssetBundleCrc = false;
+schema.UseAssetBundleCrcForCachedBundles = false;
+//disable guid
+schema.IncludeGUIDInCatalog = false;
+schema.IncludeLabelsInCatalog = false;
+schema.RedirectLimit = 2;
+schema.RetryCount = 2;
+schema.Timeout = 30;
 
-&lt;span class=&quot;nf&quot;&gt;SetBundleCache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//load asset by name&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;SetSchemaNameMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AssetNamingMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//pack mode打包模式&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;SetSchemaPackMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundlePackingMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PackTogetherByLabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//bundle name&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;SetSchemaNameStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleNamingStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileNameHash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//bundle id&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;SetSchemaBundleIdMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleInternalIdMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GroupGuid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//bundle compression&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;SetSchemaBundleCompressionMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BundledAssetGroupSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleCompressionMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LZ4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+SetBundleCache(schema);
+//load asset by name
+SetSchemaNameMode(schema, BundledAssetGroupSchema.AssetNamingMode.Filename);
+//pack mode打包模式
+SetSchemaPackMode(schema, BundledAssetGroupSchema.BundlePackingMode.PackTogetherByLabel);
+//bundle name
+SetSchemaNameStyle(schema, BundledAssetGroupSchema.BundleNamingStyle.FileNameHash);
+//bundle id
+SetSchemaBundleIdMode(schema, BundledAssetGroupSchema.BundleInternalIdMode.GroupGuid);
+//bundle compression
+SetSchemaBundleCompressionMode(schema, BundledAssetGroupSchema.BundleCompressionMode.LZ4);
 
-&lt;span class=&quot;c1&quot;&gt;//设置Schema Value会触发Group dirty通知，要判断值有没有变再设置&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleMode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;~=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BundleMode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+//设置Schema Value会触发Group dirty通知，要判断值有没有变再设置
+if (schema.BundleMode ~= packMode)
+{
+    schema.BundleMode = packMode;
+}
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&quot;assetgrouptemplates&quot;&gt;AssetGroupTemplates&lt;/h2&gt;
 &lt;p&gt;  Group模版配置,可以预先设置好Group的配置，使用该模版创建Group。&lt;/p&gt;
@@ -329,13 +616,13 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 10 Jul 2024 00:00:00 +0800</pubDate>
-        <link>https://www.damonc.top/Unity_Addressable_Editor.html</link>
-        <guid isPermaLink="true">https://www.damonc.top/Unity_Addressable_Editor.html</guid>
-        
-        <category>Unity3d</category>
+        <link>https://www.damonc.top/unity3d/Unity_Addressable_Editor.html</link>
+        <guid isPermaLink="true">https://www.damonc.top/unity3d/Unity_Addressable_Editor.html</guid>
         
         <category>Addressable System</category>
         
+        
+        <category>Unity3d</category>
         
       </item>
     
@@ -5491,605 +5778,6 @@ destination   输出雾。若为空直接进入帧缓冲区&lt;/p&gt;
         <pubDate>Mon, 15 Jan 2018 20:00:00 +0800</pubDate>
         <link>https://www.damonc.top/UNity_Shader_Fog.html</link>
         <guid isPermaLink="true">https://www.damonc.top/UNity_Shader_Fog.html</guid>
-        
-        <category>Shader</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Unity Shader 延迟渲染(翻译十三)</title>
-        <description>&lt;p&gt;本篇摘要:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;G-Buffer&lt;/li&gt;
-  &lt;li&gt;HDR与LDR&lt;/li&gt;
-  &lt;li&gt;Deffered反射&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;deferred-rendering-path&quot;&gt;Deferred Rendering Path&lt;/h2&gt;
-
-&lt;p&gt;到目前为止一直使用了Unity的Forward Render Path，现在开始学习Deferred Path，以及对比这两者间的差异&lt;/p&gt;
-
-&lt;h3 id=&quot;准备工作&quot;&gt;准备工作&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;通过Edit/Project Setting/Graphic切换Render Path；&lt;/li&gt;
-  &lt;li&gt;关闭环境光、反射光；&lt;/li&gt;
-  &lt;li&gt;Quality设置阴影质量为最高，方便观察；&lt;/li&gt;
-  &lt;li&gt;启用dynamic batching&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;开始对比draw-calls&quot;&gt;开始对比Draw Calls&lt;/h3&gt;
-
-&lt;p&gt;一共有64个Object可见物体组成一个Prefab。&lt;/p&gt;
-
-&lt;p&gt;通过对比这个prefab有和没有阴影，分别计算处于ForwardPath和DeferredPath下的Draw Call数。&lt;/p&gt;
-&lt;center&gt;
-&lt;b&gt;$$\downarrow Use Forward Path \downarrow$$&lt;/b&gt;
-&lt;/center&gt;
-
-&lt;p&gt;&lt;strong&gt;1. No Shadows&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;没有阴影下，128次几何绘制加1次Clear；&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1次&lt;/code&gt;天空盒绘制；&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2次&lt;/code&gt;屏幕处理绘制，总共&lt;strong&gt;132&lt;/strong&gt;次Draw Call。(如果是使用一个方向光，动态批处理就会生效，就可以少于64个批次绘制)。然而由于有一个额外的方向光，dynamicBatching就不会生效，所以总共绘制两遍。&lt;/p&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154452501-654159285.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Forward，no shadow.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;&lt;strong&gt;2. Enable Shadows&lt;/strong&gt;&lt;br /&gt;
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453072-905156320.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;enable shadow.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-&lt;p&gt;启用阴影后，需要更多的Draw Calls去生成阴影纹理，分析如下：&lt;/p&gt;
-
-&lt;p&gt;首先，填充depth-buffer，需要&lt;strong&gt;47&lt;/strong&gt;次Draw Call，&lt;em&gt;47少于64得益于dynamicBatching&lt;/em&gt;；&lt;br /&gt;
-其次，创建Cascading阴影纹理。第一个光提交了&lt;strong&gt;110&lt;/strong&gt;次Drall Call，同时第二个光提交了&lt;strong&gt;115&lt;/strong&gt;次Drall Call，这些纹理渲染在屏幕空间screen-space buffer，执行过滤。&lt;br /&gt;
-最后，每个光绘制一次几何物体，用了&lt;strong&gt;128&lt;/strong&gt;=$(64*2)$次DC。&lt;/p&gt;
-
-&lt;p&gt;总共&lt;strong&gt;408&lt;/strong&gt;次Draw Calls。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154453746-531274810.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Forward，enable shadow.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-&lt;center&gt;
-&lt;b&gt;&amp;amp;$\uparrow Use Forward Path \uparrow$$&lt;/b&gt;
-&lt;/center&gt;
-
-&lt;p&gt;上面是分析前向渲染，下面是分析延迟渲染。&lt;/p&gt;
-&lt;center&gt;
-&lt;b&gt;$$\downarrow Use Deferred Path \downarrow$$&lt;/b&gt;
-&lt;/center&gt;
-
-&lt;p&gt;&lt;strong&gt;1. No Shadows&lt;/strong&gt;
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154454370-1630685432.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Deferred，no shadows.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;首先，45次Draw Call渲染GBuffer，这得益于dynamic Batching；&lt;br /&gt;
-其次，1次Draw Call复制深度纹理；&lt;br /&gt;
-接着，1次绘制反射和1次自发光反射；&lt;br /&gt;
-最后，2次光照着色(两个方向光)。&lt;/p&gt;
-
-&lt;p&gt;总共52次 = 49次几何绘制； 1次天空盒绘制；2次屏幕处理绘制&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;2. Enable Shadows&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;与上图的lighting着色不同，用231次Draw Calls绘制。但是其阴影绘制方法与Forward模式是一样的。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200510154455028-1110322294.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Deffered，enable shadows.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Deferred不支持MSAA，如果启用Camera组件会有Warning
-
-延迟着色依赖于每个片段存储的数据，这是通过纹理完成的。 这与MSAA不兼容，因为该抗锯
-齿技术依赖于子像素数据。 尽管
-三角形边缘仍然可以从MSAA中受益，但延迟的数据仍会混叠。 您必须依靠一个后处理过滤器来进行抗锯齿。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;center&gt;
-&lt;b&gt;$$\uparrow Use Deferred Path \uparrow$$&lt;/b&gt;
-&lt;/center&gt;
-
-&lt;h3 id=&quot;分析12的对比数据&quot;&gt;分析1.2的对比数据&lt;/h3&gt;
-
-&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;2&quot; border=&quot;0&quot;&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td valign=&quot;top&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;结论&lt;/font&gt;&lt;/td&gt;
-      &lt;td valign=&quot;top&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;当渲染多个light光时，Deffered着色模式比Forward着色模式的渲染效率更高！&lt;/font&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td valign=&quot;top&quot;&gt;相同&lt;/td&gt;
-      &lt;td valign=&quot;top&quot;&gt;两个模式的阴影绘制方法一样&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;
-      &lt;td valign=&quot;center&quot;&gt;差异&lt;/td&gt;
-      &lt;td valign=&quot;center&quot;&gt;
-        &lt;table width=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;2&quot; border=&quot;0&quot;&gt;
-          &lt;tbody&gt;
-            &lt;tr&gt;
-              &lt;td width=&quot;0&quot; valign=&quot;center&quot;&gt;forward模式要求每个光每个物体有一个额外的additive pass；deferred不需要&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td width=&quot;0&quot; valign=&quot;center&quot;&gt;deferred不必花费额外Draw Calls绘制深度纹理，Copy完成。&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;缘由？&lt;/strong&gt;&lt;/font&gt;
-              &lt;/td&gt;
-            &lt;/tr&gt;
-          &lt;/tbody&gt;
-        &lt;/table&gt;
-      &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;缘由以及deferred着色解释：&lt;/p&gt;
-
-&lt;p&gt;要渲染物体，需要抓取它的Mesh数据；转换到正确的空间；插值传递数据；检索properties数据；计算光照。对于Forward shaders：对要着色的物体的每个像素重复上述步骤；additivePass要比basePass节省，是因为depth-buffer已经提前准备好，同时它不需要关心间接光；但它任然会重复在basePase已经完成的有大量工作。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743046-2070098632.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;重复流程.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;既然每次计算的几何性质都是一样的，可以让basePass计算后将它们存储在一个缓冲区中。然后，additivePass可以重用数据，消除重复的工作。要存储这些片段的数据，就需要一个适合的缓冲区，就像深度和帧缓冲区一样。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085743816-266537686.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;缓存，及部分数据须再次计算.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;现在，缓冲区中提供了照明所需的所有几何数据。 唯一缺少的是灯光本身。 但这意味着我们不再需要渲染几何体，仅需渲染光就足够了。 此外，basePass只需要填充缓冲区，然后推迟所有直接光照着色计算。这就是延迟着色。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085744534-1514664437.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;deferred shading.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;deferred下多光源如何使用&quot;&gt;deferred下多光源如何使用&lt;/h3&gt;
-
-&lt;p&gt;当使用一个光源，deferred着色本身没有多大好处。但是当使用很多光源时，每额外增加一个光只会少量增加一点工作，前提是该光源不投射阴影。&lt;/p&gt;
-
-&lt;p&gt;因此，当几何物体和光源分开渲染，光的数量对物体的影响是没有限制的，所有的光对它们范围内的物体都是逐像素着色，这个_Pixel Light Count_也就没用了。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085745459-1157598431.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085746437-849874847.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;many lights, deferred vs. forward.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;&lt;em&gt;多个实时光源，也可以用bake替代。&lt;/em&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;光源如何渲染分析&quot;&gt;光源如何渲染分析&lt;/h3&gt;
-
-&lt;p&gt;光本身是如何渲染的？&lt;/p&gt;
-
-&lt;p&gt;1、directional方向光，它被渲染成一个面片(Quad)覆盖整个屏幕，使用_Internal-DeferredShading_ shader完成渲染.
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747037-32153529.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;directional lights use a quad.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;该shader使用了_UnityDeferredLibrary.cginc_的UnityDeferredCalculateLightParams函数计算光照。&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    **对于SpotLight、PointLight类似，不同在于它有自身的照明范围。**
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;2、SpotLight首先要渲染成一个类似金字塔体Mesh。&lt;/p&gt;
-
-&lt;p&gt;首先，使用Internal-StencilWrite shader渲染该金字塔Mesh并写入&lt;strong&gt;模板缓冲&lt;/strong&gt;区；&lt;br /&gt;
-然后，用该缓冲区与稍后将渲染的片元比对，是否要&lt;strong&gt;屏蔽&lt;/strong&gt;体积范围外的片元光照计算。&lt;br /&gt;
-&lt;strong&gt;目的&lt;/strong&gt;：处于体积范围内的片元将被计算光照、阴影，体积范围外的不需要计算，如果这个金字塔内一个片元被渲染，它会执行光照计算。防止那些不必要的光照计算降低开销。&lt;br /&gt;
-&lt;strong&gt;原因&lt;/strong&gt;：光线无法到达那里。&lt;br /&gt;
-&lt;strong&gt;注意&lt;/strong&gt;，当光的体积与相机的近平面相交则该方法失效。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085747661-944531804.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
-
-&lt;p&gt;3、PointLight使用类似方法，区别在于它被渲染成球体Mesh。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748333-84112664.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;分析什么是g-buffers&quot;&gt;分析什么是G-Buffers&lt;/h3&gt;
-
-&lt;p&gt;缓存数据的缺点就是要存储。deferred渲染使用了multiple render texture实现(MRT)，这些纹理就是G-buffers。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;deferred要求4个G-Buffers，合并后每个像素总位数：LDR160位，HDR192位。这比起32位大多了，所以对于移动GPU有限制，桌面则没问题。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;是哪四个纹理？&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;打开frame Debugger或点击Scene/top left下拉菜单选择Deferred选项
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085748906-1729642644.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085749514-1177384899.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
-
-&lt;p&gt;Albedo-对应RT0；典型代表diffuse color&lt;br /&gt;
-Specular–对应RT1；典型代表specular + roughness&lt;br /&gt;
-Normal-对应RT2；典型代表normals&lt;br /&gt;
-Emission–对应RT3；典型代表emission + reflection&lt;/p&gt;
-
-&lt;h3 id=&quot;混合使用deferred与forward渲染模型&quot;&gt;混合使用Deferred与Forward渲染模型&lt;/h3&gt;
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085750340-1204540914.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751182-1595821136.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;分析freamDebugger.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;首先，执行deferred渲染G-buffer，数据存到G-buffer缓冲区。在这渲染期间，forward模式下的物体不参与渲染，不可见。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085751737-547155192.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752276-673585314.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
-
-&lt;p&gt;接着，渲染forward depth，同样存到G-buffer缓冲区。由于是forward所以输出黑色轮廓，覆盖了之前的片元。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085752842-152103750.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085753560-1117632710.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
-
-&lt;h2 id=&quot;开始写deferred-shader&quot;&gt;开始写Deferred Shader&lt;/h2&gt;
-
-&lt;p&gt;增加一个Pass，指定光照标签Light Mode = “Deferred”，pass的顺序不重要。&lt;/p&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Tags&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&quot;LightMode&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Deferred&quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085754350-329303799.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
-&lt;p&gt;完整版的着色&lt;/p&gt;
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Tags&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&quot;LightMode&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Deferred&quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;CGPROGRAM&lt;/span&gt;
-
-    &lt;span class=&quot;cp&quot;&gt;#pragma target 3.0
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma exclude_renderers nomrt//（对于不支持MRT设备禁用该pass）
-&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _ _RENDERING_CUTOUT
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _METALLIC_MAP
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _ _SMOOTHNESS_ALBEDO _SMOOTHNESS_METALLIC
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _NORMAL_MAP
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _OCCLUSION_MAP
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _EMISSION_MAP
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _DETAIL_MASK
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _DETAIL_ALBEDO_MAP
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma shader_feature _DETAIL_NORMAL_MAP
-&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#pragma vertex MyVertexProgram
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#pragma fragment MyFragmentProgram
-&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#define DEFERRED_PASS
-&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&quot;MyLighting_SemitransparencyShadow.cginc&quot;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
-&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ENDCG&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;4个g-buffer输出&quot;&gt;4个g-buffer输出&lt;/h3&gt;
-
-&lt;p&gt;要填充4个缓冲区需要为Fragment支持两种输出格式；然后修改Fragment函数返回值。&lt;/p&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FragmentOutput&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#ifdef DEFERRED_PASS
-&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gBuffer0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_TARGET0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gBuffer1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_TARGET1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gBuffer2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_TARGET2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gBuffer3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_TARGET3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#else
-&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_TARGET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;FragmentOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MyFragmentProgram&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Interpolators&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FragmentOutput&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;UNITY_INITIALIZE_OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FragmentOutput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//不加这句会有warning&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#ifdef DEFERRED_PASS
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#else
-&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;计算buffer-0&quot;&gt;计算Buffer 0&lt;/h3&gt;
-
-&lt;p&gt;该g-Buffer一般用来计算diffuse albedo和surface occlusion，这是ARGB32格式纹理。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;diffuse存在RGB通道，occlusion存在A通道&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#if defined(DEFERRED_PASS)
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gBuffer0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albedo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gBuffer0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GetOcclusion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#else
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755050-910260994.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085755657-1285744974.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Albedo and occlusion.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;计算buffer-1&quot;&gt;计算Buffer 1&lt;/h3&gt;
-
-&lt;p&gt;该g-Buffer一般用来计算specular albedo和smoothness，也是ARGB32格式纹理。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;specular存在RGB通道，smoothness值存在A通道&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gBuffer1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specularTint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gBuffer1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GetSmoothness&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756307-1469309635.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200511085756898-570367115.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Specular color and smoothness.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;计算buffer-2&quot;&gt;计算Buffer 2&lt;/h3&gt;
-
-&lt;p&gt;该g-Buffer包含了世界空间法线向量，存在RGB通道，是一个ARGB2101010格式纹理。Alpha占2位，RGB各占10位。这意味着该向量的每个标量占10bits而不是之前的8位，也就有更精确。alpha通道不用，默认位1.&lt;/p&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gBuffer2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;normal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095715198-211370403.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095716344-858855160.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Normals.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;计算buffer-3&quot;&gt;计算Buffer 3&lt;/h3&gt;
-
-&lt;p&gt;该g-Buffer被用来计算场景光照，纹理格式依赖于相机设置的HDR或LDR。LDR是ARGB2101010格式。HDR是ARGBHalf格式，每个通道存储16位单精度浮点数，共64位。因此HDR版本比其他buffers大两倍内存。只用到了RGB，Alpha默认为1。&lt;/p&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gBuffer3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717065-134464069.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;错误的emission.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;上面使用的color颜色已计算过阴影，需要使用DEFRRED_PASS重新计算；同时关闭&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;light.ndotl计算；在GetEmission也要使用DEFRRED_PASS标签&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gBuffer3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;UnityLight&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CreateLight&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Interpolators&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;UnityLight&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#if defined(DEFERRED_PASS)
-&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#else
-&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;//...        &lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ndotl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DotClamped&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;normal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;float3&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;GetEmission&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Interpolators&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#if defined(FORWARD_BASE_PASS) || defined(DEFERRED_PASS)
-&lt;/span&gt;        &lt;span class=&quot;err&quot;&gt;…&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#else
-&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200512095717626-627650926.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;错误的emission.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;ambient-light&quot;&gt;Ambient Light&lt;/h3&gt;
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711223-338108844.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;four buffers shading.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;输出四个Buffers后结果看起来较好，但是还不够完整，还缺少环境光。&lt;strong&gt;环境光与自发光都没有单独的pass计算，都需要在g-buffers填充后附加到最终颜色值上。&lt;/strong&gt;环境光是间接光，在间接光函数计算DEFERRED_PASS&lt;/p&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022711963-2074230932.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;four buffers shading.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;光源范围-ldr与hdr分析&quot;&gt;光源范围-LDR与HDR分析&lt;/h3&gt;
-
-&lt;p&gt;对于Internal-DeferredShading shader，Camera组件启用或关闭HDR：&lt;/p&gt;
-
-&lt;p&gt;启用HDR，则不执行pass 1，pass 0 fragment返回half4精度，纹理格式ARGBHalf。每个通道存储16位单精度浮点数，总共64位。&lt;/p&gt;
-
-&lt;p&gt;关闭HDR后，使用LDR计算策略。在pass 0 fragment会返回fixed精度，使用exp2(x)_[exp2(x)=2-x]_对数编码lightBuffer，获取到更大的颜色范围；pass 1则使用log对数解码buffer数据到主纹理上，纹理格式为ARGB2101010。Alpha占2位，RGB各占10位。&lt;/p&gt;
-
-&lt;h3 id=&quot;hdr-与-ldr&quot;&gt;HDR 与 LDR&lt;/h3&gt;
-
-&lt;p&gt;开启HDR模式下，Deferred与Forward着色效果几乎相似。但是在LDR模式下，Deferred着色就是错误的。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022712610-2058578821.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;incorrect shading in LDR Mode.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;在上图描述中，Unity会使用exp2(x)编码LDR数据，所以对自发光和环境光也要使用exp2(x)编码。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713171-753954029.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;incorrect shading in LDR Mode.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#pragma multi_compile _ UNITY_HDR_ON
-&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#if defined(DEFERRED_PASS)
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#if !defined(UNITY_HDR_ON)
-&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exp2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;    &lt;span class=&quot;err&quot;&gt;…&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#else
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200513022713922-1209753322.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;use exp2(x) and log in LDR.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h2 id=&quot;deferred-reflections&quot;&gt;Deferred Reflections&lt;/h2&gt;
-
-&lt;p&gt;展示不同渲染模式下的，探针照射区域过渡对比。下图显示了每个反射可混合多个反射探针。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120606250-2021680703.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120607116-2089631344.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608003-761474677.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;forward vs. deferred mode.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;逐像素照射&quot;&gt;逐像素照射&lt;/h3&gt;
-
-&lt;p&gt;延迟模式的不同之处在于：探测不会针对每个对象进行混合。而是按像素混合的。这是由internal-deferred shader完成计算。图3右很明显，大地板镜子，延伸到结构之外后，它的渲染范围很小。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Forward模式下：&lt;/strong&gt;&lt;br /&gt;
-    地板被迫在整个表面使用reflection探头。结果，boxProjection探射到的投影在box外面也显示。也能看见它和其他探针混在一起。图3左。&lt;/p&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120608590-1131496695.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;forward reflection probes.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;Deferred模式下：&lt;br /&gt;
-    reflection只渲染box size范围，探射的范围被投射到与boxProjection相交的面积。所以reflection的反射不会超出给定BoxSize范围。实际上，边缘消失的时候也会延伸一点。其他两个探头也是如此。&lt;/p&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200515120609178-2053336560.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;deferred reflection probes.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;渲染reflection所用方法，与渲染lights类似：&lt;br /&gt;
-首先，使用Internal-StencilWrite shader渲染box size大小的Mesh并写入&lt;strong&gt;模板缓冲&lt;/strong&gt;区；&lt;br /&gt;
-然后，用该缓冲区与稍后将渲染的片元比对，是否要&lt;strong&gt;屏蔽&lt;/strong&gt;体积范围外的片元。&lt;/p&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113835823-536491925.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113836571-1742764446.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Draw deferred reflections.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113837105-1079901044.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Importance.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;Importance决定各reflection的渲染先后顺序；Intensity决定了反射强度：默认为1，最小为0，大于1过曝。Forward下是整个接收面积；Deferred下是相交面积。下面谈Blend Distance。&lt;/p&gt;
-
-&lt;h3 id=&quot;blend-distance&quot;&gt;Blend Distance&lt;/h3&gt;
-
-&lt;p&gt;Deferred下探针体积边缘有过渡混合，由Blend Distance决定。该值默认为1，只有Deferred模式可调。&lt;/p&gt;
-
-&lt;p&gt;多个probes相交时，边缘过渡混合非常有效。也可以用来增大探射体积范围。
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113839245-749750193.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;blend distance gif.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;h3 id=&quot;deferred-pass下的反射&quot;&gt;Deferred Pass下的反射&lt;/h3&gt;
-
-&lt;p&gt;虽然deferred很有效，并且每个物体可以混合两个以上的探针。&lt;/p&gt;
-
-&lt;p&gt;也有&lt;strong&gt;缺点&lt;/strong&gt;：不能使用锚重写来强制对象使用特定的反射探测。有时这是确保得到正确反射的唯一方法。可以先禁用内置Deferred Refelection，&lt;/p&gt;
-
-&lt;p&gt;打开frame Debugger查看G-Buffers RT3，包含了Emission和Refelection
-&lt;!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113840651-738922493.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender13/1692664-20200516113841329-1065907482.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
-            &lt;i&gt;Importance.&lt;/i&gt;
-        &lt;/font&gt;&lt;/center&gt;
-
-&lt;p&gt;采样黑色探针是浪费。要确保deferred pass只在有需要时采样，用UNITY_ENABLE_REFLECTION_BUFFERS来检查。&lt;/p&gt;
-
-&lt;div class=&quot;language-hlsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;UnityIndirect&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CreateIndirectLight&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Interpolators&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewDir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#if defined(FORWARD_BASE_PASS) || defined(DEFERRED_PASS)
-&lt;/span&gt;        &lt;span class=&quot;cp&quot;&gt;#if defined(DEFERRED_PASS) &amp;amp;&amp;amp; UNITY_ENABLE_REFLECTION_BUFFERS
-&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;indirectLight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;specular&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;    &lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indirectLight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 10 Jan 2018 20:00:00 +0800</pubDate>
-        <link>https://www.damonc.top/Unity_Deferred_Shading.html</link>
-        <guid isPermaLink="true">https://www.damonc.top/Unity_Deferred_Shading.html</guid>
         
         <category>Shader</category>
         

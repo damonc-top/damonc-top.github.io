@@ -1,14 +1,20 @@
 [
   {
     "title"    : "Unity Addressable System使用分析(二)",
-    "tags"     : "Unity3d Addressable System",
-    "url"      : "/Unity_Addressabel_Group.html"
+    "tags"     : "Addressable System",
+    "url"      : "/unity3d/Unity_Addressable_Build.html"
+  } ,
+
+  {
+    "title"    : "Unity Addressable System使用分析(二)",
+    "tags"     : "Addressable System",
+    "url"      : "/unity3d/Unity_Addressabel_Group.html"
   } ,
 
   {
     "title"    : "Unity Addressable System使用分析(一)",
-    "tags"     : "Unity3d Addressable System",
-    "url"      : "/Unity_Addressable_Editor.html"
+    "tags"     : "Addressable System",
+    "url"      : "/unity3d/Unity_Addressable_Editor.html"
   } ,
 
   {
