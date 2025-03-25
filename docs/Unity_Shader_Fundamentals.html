@@ -1,11 +1,12 @@
 
 <!DOCTYPE html>
 <html lang="zh-Hans">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Shader 基本语法(翻译二) - 小号手在利雅得听广播</title>
-    <meta name="author" content="damonc">
+    <title>Unity Shader 基本语法(翻译二) - 仗剑天涯</title>
+    <meta name="author" content="仗剑天涯">
     
     <meta name="description" content="Unity Shader 基本语法(翻译二)">
     <meta name="keywords"
@@ -28,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity Shader 基本语法(翻译二) - 小号手在利雅得听广播">
+        content="Unity Shader 基本语法(翻译二) - 仗剑天涯">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_Shader_Fundamentals.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="小号手在利雅得听广播">
+    <meta property="og:site_name" content="仗剑天涯">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -76,7 +77,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
-    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
     
     <body class="line-numbers" ontouchstart="">
@@ -343,7 +343,7 @@
         </font>
 </center>
 
-<p>Transform组件用于更改坐标、方向，以及网格和包围盒的尺寸。<a href="%22https://www.damonc.top/posts/Unity-Matrix&amp;Transform/%22">这里</a>有对Transform层次结构的清晰描述。如果一个物体最终处于摄像机视野内，它就会被安排渲染。</p>
+<p>Transform组件用于更改坐标、方向，以及网格和包围盒的尺寸。<a href='"https://www.damonc.top/posts/Unity-Matrix&amp;Transform/"'>这里</a>有对Transform层次结构的清晰描述。如果一个物体最终处于摄像机视野内，它就会被安排渲染。</p>
 
 <p>最后，GPU负责渲染物体的mesh。这些具体的渲染指令在物体的material定义好的，这个material引用了一个shader-GPU程序。
 <!--url1 url2 url3 url4 url5
@@ -1272,7 +1272,7 @@
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">小号手在利雅得听广播</a>
+                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -1294,7 +1294,7 @@
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
-                    <ul><li><a onclick="scrollToAdjust('场景初始化')">场景初始化</a><ul><li><a onclick="scrollToAdjust('剥离天空盒')">剥离天空盒</a></li></ul></li><li><a onclick="scrollToAdjust('图像渲染')">图像渲染</a><ul><li><a onclick="scrollToAdjust('创建一个shader')">创建一个Shader</a></li><li><a onclick="scrollToAdjust('shader程序')">Shader程序</a></li><li><a onclick="scrollToAdjust('shader汇编')">Shader汇编</a></li><li><a onclick="scrollToAdjust('引入其他文件')">引入其他文件</a></li><li><a onclick="scrollToAdjust('产生输出(输出语义)')">产生输出(输出语义)</a></li><li><a onclick="scrollToAdjust('顶点变换')">顶点变换</a></li></ul></li><li><a onclick="scrollToAdjust('像素颜色')">像素颜色</a><ul><li><a onclick="scrollToAdjust('使用shader属性properties')">使用Shader属性Properties</a></li><li><a onclick="scrollToAdjust('从顶点到片元')">从顶点到片元</a></li><li><a onclick="scrollToAdjust('结构体')">结构体</a></li><li><a onclick="scrollToAdjust('调整颜色')">调整颜色</a></li></ul></li><li><a onclick="scrollToAdjust('纹理')">纹理</a><ul><li><a onclick="scrollToAdjust('使用uv坐标')">使用UV坐标</a></li><li><a onclick="scrollToAdjust('添加纹理')">添加纹理</a></li><li><a onclick="scrollToAdjust('平铺和偏移')">平铺和偏移</a></li></ul></li><li><a onclick="scrollToAdjust('纹理设置')">纹理设置</a><ul><li><a onclick="scrollToAdjust('mipmap和filter')">Mipmap和Filter</a></li><li><a onclick="scrollToAdjust('aniso-level')">Aniso Level</a></li></ul></li></ul>
+                    <ul><li><a onclick="scrollToAdjust('场景初始化')">1. 场景初始化</a><ul><li><a onclick="scrollToAdjust('剥离天空盒')">1.1 剥离天空盒</a></li></ul></li><li><a onclick="scrollToAdjust('图像渲染')">2. 图像渲染</a><ul><li><a onclick="scrollToAdjust('创建一个shader')">2.1 创建一个Shader</a></li><li><a onclick="scrollToAdjust('shader程序')">2.2 Shader程序</a></li><li><a onclick="scrollToAdjust('shader汇编')">2.3 Shader汇编</a></li><li><a onclick="scrollToAdjust('引入其他文件')">2.4 引入其他文件</a></li><li><a onclick="scrollToAdjust('产生输出(输出语义)')">2.5 产生输出(输出语义)</a></li><li><a onclick="scrollToAdjust('顶点变换')">2.6 顶点变换</a></li></ul></li><li><a onclick="scrollToAdjust('像素颜色')">3. 像素颜色</a><ul><li><a onclick="scrollToAdjust('使用shader属性properties')">3.1 使用Shader属性Properties</a></li><li><a onclick="scrollToAdjust('从顶点到片元')">3.2 从顶点到片元</a></li><li><a onclick="scrollToAdjust('结构体')">3.3 结构体</a></li><li><a onclick="scrollToAdjust('调整颜色')">3.4 调整颜色</a></li></ul></li><li><a onclick="scrollToAdjust('纹理')">4. 纹理</a><ul><li><a onclick="scrollToAdjust('使用uv坐标')">4.1 使用UV坐标</a></li><li><a onclick="scrollToAdjust('添加纹理')">4.2 添加纹理</a></li><li><a onclick="scrollToAdjust('平铺和偏移')">4.3 平铺和偏移</a></li></ul></li><li><a onclick="scrollToAdjust('纹理设置')">5. 纹理设置</a><ul><li><a onclick="scrollToAdjust('mipmap和filter')">5.1 Mipmap和Filter</a></li><li><a onclick="scrollToAdjust('aniso-level')">5.2 Aniso Level</a></li></ul></li></ul>
                 </div>
         
             </div>
@@ -1311,7 +1311,7 @@
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">damonc</div>
+        <div class="author-name" rel="author">仗剑天涯</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -1368,10 +1368,10 @@
     $(document).ready(function () {
         Waline.init({
             el: '#waline',
-            serverURL: 'https://comments.damonc.top',
-            reaction: true,
+            serverURL: "https://comments.damonc.top",
+            reaction: "true",
             comment: true,
-            locale: {reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'},
+            locale: "{reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}",
         });
     });
 </script>
@@ -1438,13 +1438,13 @@
           
         
       </section>
-      <section class="links">小号手在利雅得听广播 ©
+      <section class="links">仗剑天涯 ©
         
         
           2016
           -
         
-        2024
+        2025
         
           <a href="https://icp.gov.moe/?keyword=20240160" target="_blank" class="extlinks">萌ICP备20240160号</a>
         

@@ -1,0 +1,1016 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Addressable System使用分析(三) - 仗剑天涯</title>
+    <meta name="author" content="仗剑天涯">
+    
+    <meta name="description" content="Unity Addressable System使用分析(三)">
+    <meta name="keywords"
+        content="Addressable System">
+    
+    
+    <meta property="og:next_url" content="/unity3d/Unity_Addressabel_Group.html">
+    
+    
+    <meta property="post-date-format" content="0">
+    
+    <meta property="post-date" content="2024-07-15 20:00:00 +0800" />
+    
+    
+    <meta property="calendar-scale" content="year" />
+    <meta property="calendar-scheme" content="null" />
+    <meta property="calendar-color" content="null" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title"
+        content="Unity Addressable System使用分析(三) - 仗剑天涯">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.damonc.top/unity3d/Unity_Addressable_Build.html">
+    <meta property="og:baseurl" content="">
+    <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
+    <meta property="og:site_name" content="仗剑天涯">
+    <meta property="og:gray" content="false">
+    <meta property="og:lang" content="zh-Hans">
+    
+    <meta name="alivestart" content="12/23/2020">
+    
+    
+    <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="manifest" href="/manifest.json" async>
+    <link rel="apple-touch-icon" href="/assets/img/touch/apple-touch-icon.png" />
+    <link rel="Shortcut Icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="bookmark" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.min.css" async>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" async>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css" async>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.min.css" />
+    
+    
+
+
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-one-light.min.css" />
+
+
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/line-numbers/prism-line-numbers.min.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@3.3.2/dist/waline.css" async>
+
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
+
+    <link rel="stylesheet" href="/assets/css/app.min.css" async>
+</head>
+    
+    <body class="line-numbers" ontouchstart="">
+    
+    <!--[if lt IE 10]>
+    <div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+    <![endif]-->
+        
+        
+        <div id="all" class="post" data-theme="default">
+        
+            
+            
+            <div class="alert-tip" id="no-previous">已经是最新一篇文章了！</div>
+            <div class="alert-tip" id="no-next">已经是最后一篇文章了！</div>
+        
+            <input id="nm-switch" type="hidden" value="false">
+            <header class="g-header" data-theme="default">
+    <div class="g-logo">
+      <a href="/" aria-label="logo"></a>
+    </div>
+    <!-- <i id="menu-toggle" class="iconfont icon-menu"></i> -->
+    
+        <div id="search-toggle"></div>
+    
+    
+    <div id="travelling-toggle">
+        <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-train-subway"></use>
+            </svg>
+        </a>
+    </div>
+    
+    <div id="mode-toggle">
+        <svg class="icon icon-day" aria-hidden="true">
+            <use xlink:href="#icon-day"></use>
+        </svg>
+        <svg class="icon icon-night" aria-hidden="true">
+            <use xlink:href="#icon-night"></use>
+        </svg>
+    </div>
+    <svg id="menu-toggle" class="icon-menu" aria-hidden="true">
+        <use xlink:href="#icon-menu"></use>
+    </svg>
+    <nav class="g-nav">
+        <ul>
+            
+                
+                <li>
+                    <a href="/" aria-label="home">
+                        home
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/blog/index.html" aria-label="blog">
+                        blog
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/archives.html" aria-label="archives">
+                        archives
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/tags.html" aria-label="tags">
+                        tags
+                    </a>
+                </li>
+                
+            
+                
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#"> about </a>
+                    <ul class="dropdown-menu">
+                    
+                        <li>
+                            <a href="/feed.xml" aria-label="RSS">
+                                RSS
+                            </a>
+                        </li>
+                    
+                    </ul> 
+                </li>
+                
+            
+            
+            <li class="travelling">
+                <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-train-subway"></use>
+                    </svg>
+                </a>
+            </li>
+            
+            <li class="mode">
+                <svg class="icon day" aria-hidden="true">
+                    <use xlink:href="#icon-day"></use>
+                </svg>
+                <svg class="icon night" aria-hidden="true">
+                    <use xlink:href="#icon-night"></use>
+                </svg>
+            </li>
+            
+            <li id="search"></li>
+            
+        </ul>
+    </nav>
+</header>
+
+            
+
+
+<div class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover"
+    data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="/%20/tags.html#Addressable%20System" class="post-tag">Addressable System</a>
+            
+            
+        </div>
+        <h1>Unity Addressable System使用分析(三)</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-user"></use>
+                </svg>
+                仗剑天涯
+            </span>
+            <time class="post-meta-item" datetime=" 24-07-15">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-calendar"></use>
+                </svg>
+                <span class="create-at"></span>
+            </time>
+            <time class="post-meta-item" datetime=" 24-07-15">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-update"></use>
+                </svg>
+                <span class="update-at"></span>
+            </time>
+            <span class="post-meta-item">
+                <svg class="icon words" aria-hidden="true">
+                    <use xlink:href="#icon-words"></use>
+                </svg>
+                
+                本文总共  5.9k  字 </span>
+                    <span class="post-meta-item">
+                        <svg class="icon time" aria-hidden="true">
+                            <use xlink:href="#icon-time"></use>
+                        </svg>
+                        阅读全文大约需要 17 分钟
+                    </span>
+                    
+                    <span class="post-meta-item">
+                        <svg class="icon pv" aria-hidden="true">
+                            <use xlink:href="#icon-pv"></use>
+                        </svg>
+                        本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                    </span>
+                    
+                    
+        </div>
+    </div>
+    
+</div>
+
+<main class="post-content visible">
+    
+    <h2 class="post-subtitle">使用Unity Addressable System进行热更、加载AB包，查看bundle下载与加载流程。</h2>
+    
+
+    
+
+    <div class="container">
+        
+<div class="submenu hidden">
+
+</div>
+        <div class="contents">
+            <article class="markdown-body post">
+                
+
+
+                <h2 id="addressable初始化">Addressable初始化</h2>
+
+<p>  AA初始化调用函数<code class="language-plaintext highlighter-rouge">Addressables.InitializeAsync(autoReleaseHandle)</code>，返回AsyncOperationHandle。参数autoReleaseHandle是控制Handle是否自动释放，默认是true会自动释放。虽然成功执行了初始化，但是想要拿到AsyncOperationHandle的结果就不能让它自动释放，如果访问会提示handle无效。</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AsyncOperationHandle</span><span class="p">&lt;</span><span class="n">IResourceLocator</span><span class="p">&gt;</span> <span class="n">handle</span> <span class="p">=</span> <span class="n">Addressables</span><span class="p">.</span><span class="nf">InitializeAsync</span><span class="p">();</span>
+<span class="k">yield</span> <span class="k">return</span> <span class="n">handle</span><span class="p">;</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">handle</span><span class="p">.</span><span class="n">Status</span> <span class="p">!=</span> <span class="n">AsyncOperationStatus</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"Initialization Error"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>  AA初始化返回结果就是本地的Catalog.bundle对象，使用DefaultBuildScript打AssetBundle结果会保存在<code class="language-plaintext highlighter-rouge">Library/com.unity.addressables/aa/平台/</code>。Initial加载的就是本地最新的Catalog对象，如果是真机就会加载打包APK时最初打进包的Catalog对象。</p>
+
+<h3 id="catalog结构">Catalog结构</h3>
+
+<p>  Catalog加载后会构建成<code class="language-plaintext highlighter-rouge">ResourceLocationMap</code>对象，该数据对象就是记录了一个Bundle的所保存的地址信息(本地还是远程)。加载Catalog流程：</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 用户代码中调用</span>
+<span class="n">Addressables</span><span class="p">.</span><span class="nf">InitializeAsync</span><span class="p">();</span>
+
+<span class="c1">// 内部实际调用</span>
+<span class="n">AddressablesImpl</span><span class="p">.</span><span class="nf">InitializeAsync</span><span class="p">()</span> <span class="err">→</span> <span class="n">ResourceManager</span><span class="p">.</span><span class="nf">StartOperation</span><span class="p">()</span>
+
+<span class="c1">// 在 InitializeAsync 内部</span>
+<span class="n">InitializationOperation</span> <span class="n">operation</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">InitializationOperation</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="k">return</span> <span class="n">ResourceManager</span><span class="p">.</span><span class="nf">StartOperation</span><span class="p">(</span><span class="n">operation</span><span class="p">,</span> <span class="k">default</span><span class="p">);</span>
+
+<span class="c1">// InitializationOperation 中</span>
+<span class="c1">// 1. 首先加载主 Catalog 文件</span>
+<span class="nf">LoadContentCatalogInternal</span><span class="p">(</span><span class="n">m_ResourceLocators</span><span class="p">,</span> <span class="n">s_Settings</span><span class="p">.</span><span class="n">catalogLocation</span><span class="p">,</span> <span class="p">...);</span>
+
+<span class="c1">// 2. 然后加载额外的 Catalog 文件，包括远程的catalog(如果有配置)</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">catalogLocation</span> <span class="k">in</span> <span class="n">s_Settings</span><span class="p">.</span><span class="n">catalogLocations</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nf">LoadContentCatalogInternal</span><span class="p">(</span><span class="n">m_ResourceLocators</span><span class="p">,</span> <span class="n">catalogLocation</span><span class="p">,</span> <span class="p">...);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>  当 Catalog 加载完成后，系统会解析其中的内容并构建 ResourceLocationMap：</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 在ContentCatalogProvider.cs 中</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ContentCatalogProvider</span> <span class="p">:</span> <span class="n">IResourceProvider</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">OnCatalogLoaded</span><span class="p">(</span><span class="n">ContentCatalogData</span> <span class="n">catalogData</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 创建 ResourceLocationMap</span>
+        <span class="kt">var</span> <span class="n">locMap</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ResourceLocationMap</span><span class="p">(</span><span class="n">catalogData</span><span class="p">);</span>
+        
+        <span class="c1">// 处理内部 ID 映射</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">kvp</span> <span class="k">in</span> <span class="n">catalogData</span><span class="p">.</span><span class="n">InternalIds</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 建立 key -&gt; location[]的映射</span>
+            <span class="kt">string</span> <span class="n">key</span> <span class="p">=</span> <span class="n">kvp</span><span class="p">.</span><span class="n">Key</span><span class="p">;</span>
+            <span class="n">IList</span><span class="p">&lt;</span><span class="n">IResourceLocation</span><span class="p">&gt;</span> <span class="n">locations</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">IResourceLocation</span><span class="p">&gt;();</span>
+            
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">id</span> <span class="k">in</span> <span class="n">kvp</span><span class="p">.</span><span class="n">Value</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// 为每个内部ID创建 ResourceLocation</span>
+                <span class="kt">var</span> <span class="n">loc</span> <span class="p">=</span> <span class="nf">CreateLocationForCatalogEntry</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">catalogData</span><span class="p">);</span>
+                <span class="n">locations</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">loc</span><span class="p">);</span>
+            <span class="p">}</span>
+            
+            <span class="c1">// 将 locations 添加到 ResourceLocationMap 中</span>
+            <span class="n">locMap</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">locations</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// 其他处理...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  <code class="language-plaintext highlighter-rouge">ResourceLocationMap</code>本质上是一个字典结构，它将用户可访问的键映射到对应的资源位置列表：</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ResourceLocationMap 的简化结构</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ResourceLocationMap</span> <span class="p">:</span> <span class="n">IResourceLocator</span>
+<span class="p">{</span>
+    <span class="c1">// 核心数据结构：键 -&gt; 资源位置列表的映射</span>
+    <span class="k">private</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">object</span><span class="p">,</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">IResourceLocation</span><span class="p">&gt;&gt;</span> <span class="n">m_Locations</span><span class="p">;</span>
+    
+    <span class="k">public</span> <span class="nf">ResourceLocationMap</span><span class="p">(</span><span class="n">ContentCatalogData</span> <span class="n">catalogData</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">m_Locations</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">object</span><span class="p">,</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">IResourceLocation</span><span class="p">&gt;&gt;();</span>
+        <span class="c1">// 初始化其他元数据...</span>
+    <span class="p">}</span>
+    
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">object</span> <span class="n">key</span><span class="p">,</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">IResourceLocation</span><span class="p">&gt;</span> <span class="n">locations</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">m_Locations</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="p">=</span> <span class="n">locations</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// IResourceLocator 接口实现</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">Locate</span><span class="p">(</span><span class="kt">object</span> <span class="n">key</span><span class="p">,</span> <span class="n">Type</span> <span class="n">type</span><span class="p">,</span> <span class="k">out</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">IResourceLocation</span><span class="p">&gt;</span> <span class="n">locations</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">m_Locations</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="k">out</span> <span class="n">locations</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="c1">// 根据类型筛选位置...</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">locations</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  当所有 Catalog 都处理完成后，ResourceLocationMap 被注册到 Addressables 系统：</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 在初始化完成时</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">locator</span> <span class="k">in</span> <span class="n">m_ResourceLocators</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// 将构建好的 ResourceLocationMap 注册到 ResourceManager</span>
+    <span class="n">ResourceManager</span><span class="p">.</span><span class="nf">RegisterLocator</span><span class="p">(</span><span class="n">locator</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="加载远程catalog">加载远程Catalog</h2>
+
+<p>  每次修改文件打包AssetBundle后Catalog是有差异的，为了得到最新AssetBundle就要先下载到最新的Catalog文件然后保存在本地Document目录。AA也提供加载指定地址的Catalog，可以是file:///，也可以是http(s)。</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// remoteUrl -&gt; http://localhost:8000/</span>
+<span class="n">AsyncOperationHandle</span><span class="p">&lt;</span><span class="n">IResourceLocator</span><span class="p">&gt;</span> <span class="n">remoteHandle</span> <span class="p">=</span> <span class="n">Addressables</span><span class="p">.</span><span class="nf">LoadContentCatalogAsync</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">remoteUrl</span><span class="p">}</span><span class="s">catalog.bundle"</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="k">yield</span> <span class="k">return</span> <span class="n">remoteHandle</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">remoteHandle</span><span class="p">.</span><span class="n">Status</span> <span class="p">!=</span> <span class="n">AsyncOperationStatus</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"InitRemoteLocation Error"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>  本地模拟Server，把<code class="language-plaintext highlighter-rouge">Library/com.unity.addressables/aa/平台/</code>下面的Assetbundle和catalog复制到一个目录，在该目录打开cmd，输入python -m http.server 8000会模拟一个文件服务器。
+<!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+--></p>
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2024/month7/addressable_system/simulator_server.png" width="250"><font size="2.5">
+            <i>模拟文件服务器.</i>
+        </font>
+</center>
+<p>  下载好之后就能获取到远程<code class="language-plaintext highlighter-rouge">ResourceLocationMap</code>。现在有了本地和远程Location信息，通过对比就能知道有哪些AssetBundle产生变化。</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 缓存AssetBundle Location</span>
+<span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">bool</span><span class="p">&gt;</span> <span class="n">_missingBundle</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">bool</span><span class="p">&gt;();</span>
+<span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">bool</span><span class="p">&gt;</span> <span class="n">_localBundle</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">bool</span><span class="p">&gt;();</span>
+
+<span class="k">private</span> <span class="n">IEnumerator</span> <span class="nf">CheckRemoteLocation</span><span class="p">(</span><span class="n">IResourceLocator</span> <span class="n">local</span><span class="p">,</span> <span class="n">IResourceLocator</span> <span class="n">remote</span><span class="p">)</span>
+<span class="p">{</span> 
+    <span class="c1">// 检查本地资源在远程是否存在</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">key</span> <span class="k">in</span> <span class="n">remote</span><span class="p">.</span><span class="n">Keys</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 默认打包的AssetBundle文件后缀带了.bundle，如果修改AA代码就用自定义</span>
+        <span class="c1">// 一定要增加一个标记，否则就不能区别bundle名和其他信息的描述名</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">key</span><span class="p">.</span><span class="nf">EndsWith</span><span class="p">(</span><span class="s">".bundle"</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">Type</span> <span class="n">iAbType</span> <span class="p">=</span> <span class="k">typeof</span><span class="p">(</span><span class="n">IAssetBundleResource</span><span class="p">);</span>
+        <span class="c1">// Locate定位remoteKey是否在local内，若有表示该AB文件没有差异不用更新</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">local</span><span class="p">.</span><span class="nf">Locate</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">iAbType</span><span class="p">,</span> <span class="k">out</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">IResourceLocation</span><span class="p">&gt;</span> <span class="n">localLocations</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="c1">// remoteKey不在local内，该AB有差异是最新的需要更新下载</span>
+            <span class="n">remote</span><span class="p">.</span><span class="nf">Locate</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">iAbType</span><span class="p">,</span> <span class="k">out</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">IResourceLocation</span><span class="p">&gt;</span> <span class="n">remoteLocations</span><span class="p">);</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">remoteLoc</span> <span class="k">in</span> <span class="n">remoteLocations</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">_missingBundle</span><span class="p">[</span><span class="n">remoteLoc</span><span class="p">.</span><span class="n">PrimaryKey</span><span class="p">]</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="n">IResourceLocation</span> <span class="n">location</span> <span class="k">in</span> <span class="n">localLocations</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">_localBundle</span><span class="p">[</span><span class="n">location</span><span class="p">.</span><span class="n">PrimaryKey</span><span class="p">]</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="更新assetbundle">更新AssetBundle</h3>
+
+<p>  现在拿到了<code class="language-plaintext highlighter-rouge">_missingBundle</code>和<code class="language-plaintext highlighter-rouge">_localBundle</code>，现在就要更新AssetBundle。更新AssetBundle就要获取它的最新地址，那么AA也提供了一个回调接口<code class="language-plaintext highlighter-rouge">Addressables.InternalIdTransformFunc</code>，只要注册了该回调，任何加载动作都会进入到该回调，就可以在回调里面进行处理。</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Addressables</span><span class="p">.</span><span class="n">InternalIdTransformFunc</span> <span class="p">=</span> <span class="n">InternalIdTransformFunc</span><span class="p">;</span>
+
+<span class="kt">string</span> <span class="nf">InternalIdTransformFunc</span><span class="p">(</span><span class="n">IResourceLocation</span> <span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_missingBundle</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">PrimaryKey</span><span class="p">,</span> <span class="k">out</span> <span class="n">_</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s">$"</span><span class="p">{</span><span class="n">remoteUrl</span><span class="p">}{</span><span class="n">arg</span><span class="p">.</span><span class="n">PrimaryKey</span><span class="p">}</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_localBundle</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">PrimaryKey</span><span class="p">,</span> <span class="k">out</span> <span class="n">_</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">arg</span><span class="p">.</span><span class="n">InternalId</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">arg</span><span class="p">.</span><span class="n">InternalId</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>  <code class="language-plaintext highlighter-rouge">IResourceLocation</code>有三个关键信息：<code class="language-plaintext highlighter-rouge">PrimaryKey</code>、<code class="language-plaintext highlighter-rouge">InternalId</code>、<code class="language-plaintext highlighter-rouge">ResourceType</code></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 资源加载名的主要标识符</span>
+<span class="k">public</span> <span class="kt">object</span> <span class="n">PrimaryKey</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1">// 资源加载地址</span>
+<span class="k">public</span> <span class="kt">string</span> <span class="n">InternalId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1">// 资源加载类型，重点处理IAssetBundleResource、catalog类型</span>
+<span class="k">public</span> <span class="n">Type</span> <span class="n">ResourceType</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>先处理如何下载、加载最新的catalog
+  不管是Initial本地Catalog还是Load远程Catalog，只要注册<code class="language-plaintext highlighter-rouge">InternalIdTransformFunc</code>就可以在函数内处理：
+    <div class="language-csharp highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kt">string</span> <span class="nf">InternalIdTransformFunc</span><span class="p">(</span><span class="n">IResourceLocation</span> <span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+ <span class="c1">// 如果argResourceType是catalog类型</span>
+     <span class="c1">// 判定本地缓存目录是否有Catalog.bundle，计算bundle的hash是否与catalog.hash一致</span>
+         <span class="c1">// 如果一致就加载，直接返回$"{缓存目录}/Catalog.bundle"</span>
+         <span class="c1">// 如果没有Catalog.bundle就用包体内的Catalog直接返回arg.InternalId</span>
+
+ <span class="c1">// 如果argResourceType是IAssetBundleResource类型</span>
+     <span class="c1">// 判定缓存目录有该文件</span>
+     <span class="c1">// 有，直接返回$"{缓存目录}/xxx.bundle"</span>
+     <span class="c1">// 没有，直接返回$"{remoteUrl}/xxx.bundle"去下载</span>
+ <span class="c1">// 只要能确保Catalog是最新，下载的AssetBundle文件是一定是最新的</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="复杂的更新策略">复杂的更新策略</h2>
+<p>  上面我是演示用了一种最简单的更新策略，肯定是不能满足复杂需求的。如果设定Group打包使用hash of file name，也就是确保构建时每个AssetBundle名不变，文件内容hash会发生了变化。那么就要维护一份bundle名映射hash表，一个本地一个远程，每次启动就要检查两张表是否一致、是否有变化，同时检查缓存的最新文件有没有丢失。当然也还有其他的策略就不讨论了。</p>
+
+<h2 id="踩坑">踩坑</h2>
+<p>  1. 不能同时存在多个Catalog对象，就是InstantiateAsync了本地Catalog后获取了Result后最好是立即释放掉</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">localLocator</span> <span class="p">=</span> <span class="n">localHandle</span><span class="p">.</span><span class="n">Result</span><span class="p">;</span>
+<span class="n">Addressables</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">localHandle</span><span class="p">);</span>
+<span class="n">Addressables</span><span class="p">.</span><span class="nf">RemoveResourceLocator</span><span class="p">(</span><span class="n">localLocator</span><span class="p">);</span>
+</code></pre></div></div>
+<p>  2. <code class="language-plaintext highlighter-rouge">Addressables.ClearResourceLocators()</code>不能随便调用，会丢弃所有Catalog对象。</p>
+
+<p>  3. 游戏重启，如果是在游戏内重启就不能再次初始化<code class="language-plaintext highlighter-rouge">InstantiateAsync</code>了，内部标记了<code class="language-plaintext highlighter-rouge">hasStartedInitialization</code>。</p>
+
+                <div class="post-copyright">
+                    <p>
+                        <span>版权声明：</span>
+                        如无特别声明，本文版权归
+                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
+                        所有，转载请注明本文链接。
+                    </p>
+                    
+                    <p>
+                        （采用 
+                        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="extlinks">CC
+                            BY-NC-SA 4.0</a>
+                        许可协议进行授权）
+                    </p>
+                    
+                    <p><span>本文标题：</span>《 Unity Addressable System使用分析(三) 》</p>
+                    <p><span>本文链接：</span><a href="https://www.damonc.top/unity3d/Unity_Addressable_Build.html" class="cplink">https://www.damonc.top/unity3d/Unity_Addressable_Build.html</a></p>
+                    <p class="tips">本文最后一次更新为 <span></span> 天前，文章中的某些内容可能已过时！
+                    </p>
+                </div>
+            </article>
+        </div>
+        
+            <div class="table-of-contents">
+                <div class="toc-header"><h2>目录</h2></div>
+                <div class="toc-body">
+                    <ul><li><a onclick="scrollToAdjust('addressable初始化')">1. Addressable初始化</a><ul><li><a onclick="scrollToAdjust('catalog结构')">1.1 Catalog结构</a></li></ul></li><li><a onclick="scrollToAdjust('加载远程catalog')">2. 加载远程Catalog</a><ul><li><a onclick="scrollToAdjust('更新assetbundle')">2.1 更新AssetBundle</a></li></ul></li><li><a onclick="scrollToAdjust('复杂的更新策略')">3. 复杂的更新策略</a></li><li><a onclick="scrollToAdjust('踩坑')">4. 踩坑</a></li></ul>
+                </div>
+        
+            </div>
+        </div>
+        
+<div class="social-share-wrapper">
+    <div class="social-share"></div>
+</div>
+
+</main>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
+        </div>
+        <div class="author-name" rel="author">仗剑天涯</div>
+        <div class="bio">
+            <p>Developer & Maintainer</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="https://github.com/damonc-top" target="_blank" aria-label="github">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                </a>
+            </li>
+            
+            <li>
+                <a href="https://segmentfault.com/u/junyidebocai" target="_blank" aria-label="segmentfault">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-segmentfault"></use>
+                    </svg>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+
+        
+        <div class="read-next-item">
+            <a href="/unity3d/Unity_Addressabel_Group.html" class="read-next-link"
+                aria-label="Unity Addressable System使用分析(二)"></a>
+            <section>
+                <span>Unity Addressable System使用分析(二)</span>
+                <p>构建前置准备</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+
+<script src="https://unpkg.com/@waline/client@3.3.2/dist/waline.umd.js" async></script>
+<script>
+    $(document).ready(function () {
+        Waline.init({
+            el: '#waline',
+            serverURL: "https://comments.damonc.top",
+            reaction: "true",
+            comment: true,
+            locale: "{reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}",
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ($("#comments-switch").length > 0) {
+            var comment_status = $("#cmn-toggle-4")[0].checked;
+            if (comment_status) {
+                $("#waline").addClass("active");
+            } else {
+                $("#disqus_thread").addClass("active");
+            }
+            $("#cmn-toggle-4").click(function () {
+                $("#disqus_thread").toggleClass("active");
+                $("#waline").toggleClass("active");
+            })
+        } else {
+            if ($("#disqus_thread").length > 0) {
+                $("#disqus_thread").addClass("active");
+            } else if ($("#waline").length > 0) {
+                $("#waline").addClass("active");
+            }
+        }
+    })
+</script>
+    
+
+
+    
+        
+<section class="post-footer-item comment">
+    <div class="comments-headline">
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-comment"></use>
+        </svg>
+        <span>评论</span>
+    </div>
+    
+        
+    
+</section>
+
+    
+
+
+
+    
+    
+    <section class="post-footer-item comment">
+        <div id="waline"></div>
+    </section>
+    
+
+</section>
+            
+
+
+<footer class="g-footer">
+  <div class="g-container">
+    <div class="g-left">
+      <section class="links">
+        本站由 <a href="//jekyllrb.com" target="_blank" class="extlinks">Jekyll</a> 和 基于 <a href="https://github.com/kaeyleo/jekyll-theme-H2O" target="_blank" class="extlinks">H2O主题模版</a> 强力驱动
+          
+        
+      </section>
+      <section class="links">仗剑天涯 ©
+        
+        
+          2016
+          -
+        
+        2025
+        
+          <a href="https://icp.gov.moe/?keyword=20240160" target="_blank" class="extlinks">萌ICP备20240160号</a>
+        
+        <a href="/rss.xml" target="_blank" aria-label="Terms of Service" class="others">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-rss"></use>
+          </svg> RSS  
+        </a>
+        <a href="/tos" target="_blank" aria-label="Terms of Service" class="others">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-tos"></use>
+          </svg> 使用条款  
+        </a>
+      </section>
+      
+      <section class="links">
+        <span id="busuanzi_container_site_pv">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-pv"></use>
+          </svg> 总浏览量 <span id="busuanzi_value_site_pv"></span> <b>·</b>
+        </span>
+        <span id="busuanzi_container_site_uv">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-user"></use>
+          </svg> 总访问量 <span id="busuanzi_value_site_uv"></span>
+        </span>
+      </section>
+      
+      <section>
+        
+          本站已运行 
+          <span class="alivetime_days"></span> 天
+          <span class="alivetime_hours"></span> 小时
+          <span class="alivetime_minutes"></span> 分
+          <span class="alivetime_seconds"></span> 秒
+        
+      </section>
+    </div>
+    <div class="g-right">
+      
+      
+      <section class="badges">
+        
+          <a href="https://www.foreverblog.cn/" target="_blank" class="foreverblog" aria-label="foreverblog"> 
+            <img loading="lazy" src="https://img.foreverblog.cn/logo_en_default.png" alt=""> 
+          </a>
+        
+        
+          <a href="https://www.foreverblog.cn/go.html" target="_blank" class="wormhole" aria-label="wormhole"> 
+            <img loading="lazy" src="https://img.foreverblog.cn/wormhole_3.gif" alt="" title="穿梭虫洞-随机访问十年之约友链博客">
+          </a>
+        
+        
+          <a href="https://www.travellings.cn/go.html" target="_blank" class="travelling-badge" aria-label="Travelling" rel="noopener" title="开往-友链接力">
+            <img loading="lazy" src="https://cdn.jsdelivr.net/gh/travellings-link/travellings/assets/logo.gif" alt="开往-友链接力">
+          </a>
+        
+        
+          <a href="https://notbyai.fyi/" target="_blank" class="notbyAI" aria-label="notbyAI"> 
+            <img loading="lazy" src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI">
+          </a>
+        
+      </section>
+      
+    </div>
+    
+  </div>
+</footer>
+<div class="cookie-tip">
+   为了提升本站的使用体验和必要功能的正常使用，本站会使用本地 Cookie。详细请查看「 <a href="/tos.html">本站使用条款</a> 」了解更多。
+
+  <button id="accept-tos">同意</button>
+</div>
+
+<section id="tools">
+  
+  
+  <div class="tool toc">
+    <svg class="icon b1 active" aria-hidden="true">
+      <use xlink:href="#icon-toc"></use>
+    </svg>
+    <svg class="icon b2" aria-hidden="true">
+      <use xlink:href="#icon-exit"></use>
+    </svg>
+  </div>
+  
+</section>
+<section id="bttb" aria-label="Scroll back to top" class="bttb">
+  <div class="tool">
+    <svg class="icon top" aria-hidden="true">
+      <use xlink:href="#icon-top"></use>
+    </svg>
+  </div>
+</section>
+        </div>
+        
+<div class="modal">
+    <div class="modal-content">
+        <header>
+            <span class="close">&times;</span>
+        </header>
+        <div class="container"></div>
+    </div>
+</div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" async></script>
+        
+            <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/customParseFormat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/relativeTime.js"></script>
+<script>
+    $(document).ready(function () {
+        var time_formats = ['YYYY-MM-DD HH:mm:ss ZZ', 'YYYY DD MMM HH:mm:ss ZZ', 'YYYY年MM月DD日 HH:mm:ss ZZ'];
+        function dateFormat(date, format) {
+            var date_org = dayjs(date, time_formats[format]);
+            var date = date_org.format(time_formats[format]);
+            return { "date_org": date_org, "date": date }
+        }
+
+        dayjs.extend(window.dayjs_plugin_customParseFormat);
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        var post_date = $("meta[property='post-date']").attr('content');
+        var post_date_format = $("meta[property='post-date-format']").attr('content');
+        var local_post_date = dateFormat(post_date, post_date_format);
+
+        $(".post time span.create-at").html(local_post_date["date"]);
+
+        // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2024/Addressable System/2024-07-15-Unity_Addressable_Build.md", {
+        //     headers: {
+        //         'Authorization': 'token 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',
+        //         'Accept': 'application/vnd.github.v3+json'
+        //     }
+        // }).then((response) => {
+        //     return response.json();
+        fetch("https://winter-meadow-170b.damoncbl.workers.dev?" + new URLSearchParams({
+            owner: "damonc-top",
+            repo: "blog",
+            path: "post_project/_posts/2024/Addressable System/2024-07-15-Unity_Addressable_Build.md"
+        })).then((response) => {
+            return response.json();
+        }).then((commits) => {
+            if (commits.length != 0) {
+                var update_at = dayjs(commits[0]['commit']['committer']['date']);
+            } else {
+                var update_at = post_date
+            }
+
+            var local_update_at = dateFormat(update_at, post_date_format);
+            $('.post time span.update-at').html(local_update_at["date"]);
+
+            var relative_time = dayjs().diff(local_update_at["date_org"], 'day');
+            $(".post-copyright .tips span").append(relative_time);
+            if (relative_time > 365) {
+                $(".post-copyright .tips").addClass("active");
+            }
+        });
+    });
+</script>
+            <script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: [
+            
+            'wechat', 
+            
+            'weibo', 
+            
+            'douban', 
+            
+            'twitter'
+            
+        ],
+    wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+      });
+    $("a.social-share-icon").each(function () {
+        $(this).attr("aria-label", $(this).attr("class").split(' ')[1])
+    });
+</script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script>
+        <script>
+            /**
+            * Better Scroll Experience
+            */
+            function scrollToAdjust(id){
+              var element = document.getElementById(id);
+              var headerOffset = 90;
+              var elementPosition = element.getBoundingClientRect().top;
+              var offsetPosition = elementPosition + window.scrollY - headerOffset;
+              window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth"
+              });
+            }
+        </script>
+        <script src="/assets/js/app.min.js"></script>
+        <script src="https://at.alicdn.com/t/c/font_3046306_ujr2yq34hw.js"></script>
+        
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WN45VXRK"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'GTM-WN45VXRK');
+</script>
+
+
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+	<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+		jax: ["input/TeX", "output/HTML-CSS"],
+		tex2jax: {
+			inlineMath: [['$', '$'], ["\\(", "\\)"]],
+			processEscapes: true,
+			skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+		},
+		"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+      });
+    </script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var baseurl = $("meta[property='og:baseurl']").attr('content');
+        $("center img").each(function () {
+            $(this).attr('data-src', $(this).attr('src')).removeAttr('src').addClass("lazyload").attr('src', baseurl + '/assets/img/loading.gif');
+            var strA = "<a data-fancybox='gallery' ref='gallery' href='" + $(this).attr('data-src') + "' data-caption='" + $(this).attr('alt') + "'></a>";
+            $(this).wrapAll(strA);
+            var caption = $(this)[0].alt;
+            $(this).parent().after('<span class="caption">' + caption + '</span>');
+        });
+        Fancybox.bind('[data-fancybox]', {
+            on: {
+                load: (fancybox, slide) => {
+                    var gray = $("meta[property='og:gray']").attr('content');
+                    if (gray == "true") {
+                        $(".fancybox__content img").addClass("gray");
+                        $(".carousel__track .fancybox__thumb").addClass("gray");
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var previous_url = $("meta[property='og:previous_url']").attr('content');
+        var next_url = $("meta[property='og:next_url']").attr('content');
+
+        hotkeys('left', function (event, handler) {
+            // Prevent the default refresh event under WINDOWS system
+            event.preventDefault();
+            if (previous_url) {
+                console.log('you pressed left!');
+                window.location.href = previous_url;
+            } else {
+                $("#no-previous").addClass("active");
+                setTimeout(function () { $("#no-previous").removeClass("active"); }, 1500);
+            }
+        });
+
+        hotkeys('right', function (event, handler) {
+            // Prevent the default refresh event under WINDOWS system
+            event.preventDefault();
+            if (next_url) {
+                console.log('you pressed right!');
+                window.location.href = next_url;
+            } else {
+                $("#no-next").addClass("active");
+                setTimeout(function () { $("#no-next").removeClass("active"); }, 1500);
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
+<script>
+    $(document).ready(function () {
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: "default",
+        });
+        mermaid.init(undefined, $('.mermaid2'));
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+        <script>
+    if ("serviceWorker" in navigator) {
+        if (navigator.serviceWorker.controller) {
+            console.log("An active service worker found, no need to register");
+        } else {
+            // Register the service worker
+            navigator.serviceWorker
+            .register("/sw.js", {
+                scope: "/"
+            })
+            .then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    }
+
+// 检测浏览器是否支持SW
+// if(navigator.serviceWorker != null){
+//     navigator.serviceWorker.register("/sw.js")
+//         .then(function(registartion){
+//             console.log('支持sw:',registartion.scope)
+//         })
+// } else {
+//     console.log('不支持sw')
+// }
+</script>
+        
+        
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+<script type="text/javascript">
+    docsearch({
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
+        indexName: "damonc",
+        lang: " ", // 显式设置语言
+        insights: true,
+        debug: false,
+        container: 'li#search',
+    });
+</script>
+
+  </body>
+
+</html>

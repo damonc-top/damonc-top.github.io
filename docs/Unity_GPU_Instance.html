@@ -1,11 +1,12 @@
 
 <!DOCTYPE html>
 <html lang="zh-Hans">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity GPU Instance(翻译十九) - 小号手在利雅得听广播</title>
-    <meta name="author" content="damonc">
+    <title>Unity GPU Instance(翻译十九) - 仗剑天涯</title>
+    <meta name="author" content="仗剑天涯">
     
     <meta name="description" content="Unity GPU Instance(翻译十九)">
     <meta name="keywords"
@@ -28,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity GPU Instance(翻译十九) - 小号手在利雅得听广播">
+        content="Unity GPU Instance(翻译十九) - 仗剑天涯">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_GPU_Instance.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="小号手在利雅得听广播">
+    <meta property="og:site_name" content="仗剑天涯">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -76,7 +77,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
-    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
     
     <body class="line-numbers" ontouchstart="">
@@ -695,7 +695,7 @@ test test test!!dfS:FDFH&amp;*YER#.
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">小号手在利雅得听广播</a>
+                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -717,7 +717,7 @@ test test test!!dfS:FDFH&amp;*YER#.
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
-                    <ul><li><a onclick="scrollToAdjust('batching-instance-批处理')">Batching Instance-批处理</a><ul><li><a onclick="scrollToAdjust('创建大量球体')">创建大量球体</a></li><li><a onclick="scrollToAdjust('支持instance')">支持Instance</a></li><li><a onclick="scrollToAdjust('instance-ids')">Instance IDs</a></li><li><a onclick="scrollToAdjust('批处理大小')">批处理大小</a></li><li><a onclick="scrollToAdjust('instance-shadows')">Instance Shadows</a></li><li><a onclick="scrollToAdjust('多光源')">多光源</a></li></ul></li><li><a onclick="scrollToAdjust('mixing-material-properties')">Mixing Material Properties</a><ul><li><a onclick="scrollToAdjust('随机着色')">随机着色</a></li><li><a onclick="scrollToAdjust('材质属性块-material-property-blocks')">材质属性块-Material Property Blocks</a></li><li><a onclick="scrollToAdjust('property-buffers-属性缓冲区')">Property Buffers-属性缓冲区</a></li><li><a onclick="scrollToAdjust('阴影')">阴影</a></li><li><a onclick="scrollToAdjust('lod-instance')">LOD Instance</a></li></ul></li></ul>
+                    <ul><li><a onclick="scrollToAdjust('batching-instance-批处理')">1. Batching Instance-批处理</a><ul><li><a onclick="scrollToAdjust('创建大量球体')">1.1 创建大量球体</a></li><li><a onclick="scrollToAdjust('支持instance')">1.2 支持Instance</a></li><li><a onclick="scrollToAdjust('instance-ids')">1.3 Instance IDs</a></li><li><a onclick="scrollToAdjust('批处理大小')">1.4 批处理大小</a></li><li><a onclick="scrollToAdjust('instance-shadows')">1.5 Instance Shadows</a></li><li><a onclick="scrollToAdjust('多光源')">1.6 多光源</a></li></ul></li><li><a onclick="scrollToAdjust('mixing-material-properties')">2. Mixing Material Properties</a><ul><li><a onclick="scrollToAdjust('随机着色')">2.1 随机着色</a></li><li><a onclick="scrollToAdjust('材质属性块-material-property-blocks')">2.2 材质属性块-Material Property Blocks</a></li><li><a onclick="scrollToAdjust('property-buffers-属性缓冲区')">2.3 Property Buffers-属性缓冲区</a></li><li><a onclick="scrollToAdjust('阴影')">2.4 阴影</a></li><li><a onclick="scrollToAdjust('lod-instance')">2.5 LOD Instance</a></li></ul></li></ul>
                 </div>
         
             </div>
@@ -734,7 +734,7 @@ test test test!!dfS:FDFH&amp;*YER#.
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">damonc</div>
+        <div class="author-name" rel="author">仗剑天涯</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -791,10 +791,10 @@ test test test!!dfS:FDFH&amp;*YER#.
     $(document).ready(function () {
         Waline.init({
             el: '#waline',
-            serverURL: 'https://comments.damonc.top',
-            reaction: true,
+            serverURL: "https://comments.damonc.top",
+            reaction: "true",
             comment: true,
-            locale: {reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'},
+            locale: "{reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}",
         });
     });
 </script>
@@ -861,13 +861,13 @@ test test test!!dfS:FDFH&amp;*YER#.
           
         
       </section>
-      <section class="links">小号手在利雅得听广播 ©
+      <section class="links">仗剑天涯 ©
         
         
           2016
           -
         
-        2024
+        2025
         
           <a href="https://icp.gov.moe/?keyword=20240160" target="_blank" class="extlinks">萌ICP备20240160号</a>
         

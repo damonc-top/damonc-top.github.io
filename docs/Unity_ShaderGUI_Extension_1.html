@@ -1,11 +1,12 @@
 
 <!DOCTYPE html>
 <html lang="zh-Hans">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Shader GUI 扩展一(翻译九) - 小号手在利雅得听广播</title>
-    <meta name="author" content="damonc">
+    <title>Unity Shader GUI 扩展一(翻译九) - 仗剑天涯</title>
+    <meta name="author" content="仗剑天涯">
     
     <meta name="description" content="Unity Shader GUI 扩展一(翻译九)">
     <meta name="keywords"
@@ -28,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity Shader GUI 扩展一(翻译九) - 小号手在利雅得听广播">
+        content="Unity Shader GUI 扩展一(翻译九) - 仗剑天涯">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_ShaderGUI_Extension_1.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="小号手在利雅得听广播">
+    <meta property="og:site_name" content="仗剑天涯">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -76,7 +77,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
 
     <link rel="stylesheet" href="/assets/css/app.min.css" async>
-    <script async src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
     
     <body class="line-numbers" ontouchstart="">
@@ -848,7 +848,7 @@
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">小号手在利雅得听广播</a>
+                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -870,7 +870,7 @@
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
-                    <ul><li><a onclick="scrollToAdjust('自定义界面')">自定义界面</a><ul><li><a onclick="scrollToAdjust('shadergui-拓展')">ShaderGUI 拓展</a></li><li><a onclick="scrollToAdjust('创建文本')">创建文本</a></li><li><a onclick="scrollToAdjust('显示albedo纹理属性')">显示Albedo纹理属性</a></li><li><a onclick="scrollToAdjust('显示normal纹理属性')">显示Normal纹理属性</a></li><li><a onclick="scrollToAdjust('显示金属和平滑值属性')">显示金属和平滑值属性</a></li><li><a onclick="scrollToAdjust('显示第二细节纹理')">显示第二细节纹理</a></li></ul></li><li><a onclick="scrollToAdjust('金属纹理')">金属纹理</a><ul><li><a onclick="scrollToAdjust('使用metallic-纹理')">使用Metallic 纹理</a></li><li><a onclick="scrollToAdjust('定义metallic的shader关键字')">定义Metallic的Shader关键字</a></li><li><a onclick="scrollToAdjust('<code-class="language-plaintext-highlighter-rouge">2.5-打开debug模式查看</code>')"><code class="language-plaintext highlighter-rouge">2.5 打开Debug模式查看</code></a></li><li><a onclick="scrollToAdjust('使用自定义keyword(features)')">使用自定义Keyword(Features)</a></li><li><a onclick="scrollToAdjust('changecheck检查')">ChangeCheck检查</a></li><li><a onclick="scrollToAdjust('光滑纹理')">光滑纹理</a></li><li><a onclick="scrollToAdjust('albedo与smoothness结合')">Albedo与smoothness结合</a></li><li><a onclick="scrollToAdjust('关键字选择')">关键字选择</a></li><li><a onclick="scrollToAdjust('smoothness变体使用')">Smoothness变体使用</a></li><li><a onclick="scrollToAdjust('查看smoothness_albedo')">查看Smoothness_Albedo</a></li></ul></li><li><a onclick="scrollToAdjust('自发光')">自发光</a><ul><li><a onclick="scrollToAdjust('hdr-emission')">HDR Emission</a></li></ul></li></ul>
+                    <ul><li><a onclick="scrollToAdjust('自定义界面')">1. 自定义界面</a><ul><li><a onclick="scrollToAdjust('shadergui-拓展')">1.1 ShaderGUI 拓展</a></li><li><a onclick="scrollToAdjust('创建文本')">1.2 创建文本</a></li><li><a onclick="scrollToAdjust('显示albedo纹理属性')">1.3 显示Albedo纹理属性</a></li><li><a onclick="scrollToAdjust('显示normal纹理属性')">1.4 显示Normal纹理属性</a></li><li><a onclick="scrollToAdjust('显示金属和平滑值属性')">1.5 显示金属和平滑值属性</a></li><li><a onclick="scrollToAdjust('显示第二细节纹理')">1.6 显示第二细节纹理</a></li></ul></li><li><a onclick="scrollToAdjust('金属纹理')">2. 金属纹理</a><ul><li><a onclick="scrollToAdjust('使用metallic-纹理')">2.1 使用Metallic 纹理</a></li><li><a onclick="scrollToAdjust('定义metallic的shader关键字')">2.2 定义Metallic的Shader关键字</a></li><li><a onclick="scrollToAdjust('<code-class="language-plaintext-highlighter-rouge">2.5-打开debug模式查看</code>')">2.3 <code class="language-plaintext highlighter-rouge">2.5 打开Debug模式查看</code></a></li><li><a onclick="scrollToAdjust('使用自定义keyword(features)')">2.4 使用自定义Keyword(Features)</a></li><li><a onclick="scrollToAdjust('changecheck检查')">2.5 ChangeCheck检查</a></li><li><a onclick="scrollToAdjust('光滑纹理')">2.6 光滑纹理</a></li><li><a onclick="scrollToAdjust('albedo与smoothness结合')">2.7 Albedo与smoothness结合</a></li><li><a onclick="scrollToAdjust('关键字选择')">2.8 关键字选择</a></li><li><a onclick="scrollToAdjust('smoothness变体使用')">2.9 Smoothness变体使用</a></li><li><a onclick="scrollToAdjust('查看smoothness_albedo')">2.10 查看Smoothness_Albedo</a></li></ul></li><li><a onclick="scrollToAdjust('自发光')">3. 自发光</a><ul><li><a onclick="scrollToAdjust('hdr-emission')">3.1 HDR Emission</a></li></ul></li></ul>
                 </div>
         
             </div>
@@ -887,7 +887,7 @@
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">damonc</div>
+        <div class="author-name" rel="author">仗剑天涯</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -944,10 +944,10 @@
     $(document).ready(function () {
         Waline.init({
             el: '#waline',
-            serverURL: 'https://comments.damonc.top',
-            reaction: true,
+            serverURL: "https://comments.damonc.top",
+            reaction: "true",
             comment: true,
-            locale: {reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'},
+            locale: "{reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}",
         });
     });
 </script>
@@ -1014,13 +1014,13 @@
           
         
       </section>
-      <section class="links">小号手在利雅得听广播 ©
+      <section class="links">仗剑天涯 ©
         
         
           2016
           -
         
-        2024
+        2025
         
           <a href="https://icp.gov.moe/?keyword=20240160" target="_blank" class="extlinks">萌ICP备20240160号</a>
         
