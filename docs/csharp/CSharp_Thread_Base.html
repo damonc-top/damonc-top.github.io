@@ -1,0 +1,1179 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多线程编程基础篇(一) - 编程散记</title>
+    <meta name="author" content="编程散记">
+    
+    <meta name="description" content="多线程编程基础篇(一)">
+    <meta name="keywords"
+        content="多线程">
+    
+    <meta property="og:previous_url" content="/csharp/CSharp_Thread_Pattern.html">
+    
+    
+    <meta property="og:next_url" content="/unity3d/Unity_Addressable_Build.html">
+    
+    
+    <meta property="post-date-format" content="0">
+    
+    <meta property="post-date" content="2025-06-03 20:00:00 +0800" />
+    
+    
+    <meta property="calendar-scale" content="year" />
+    <meta property="calendar-scheme" content="null" />
+    <meta property="calendar-color" content="null" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title"
+        content="多线程编程基础篇(一) - 编程散记">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.damonc.top/csharp/CSharp_Thread_Base.html">
+    <meta property="og:baseurl" content="">
+    <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
+    <meta property="og:site_name" content="编程散记">
+    <meta property="og:gray" content="false">
+    <meta property="og:lang" content="zh-Hans">
+    
+    <meta name="alivestart" content="12/23/2020">
+    
+    
+    <meta name="theme-color" content="#81BBFF" />
+    <meta name="algolia-site-verification" content="5E91324370E1262B" />
+    <title>Algolia Verification</title>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="manifest" href="/manifest.json" async>
+    <link rel="apple-touch-icon" href="/assets/img/touch/apple-touch-icon.png" />
+    <link rel="Shortcut Icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="bookmark" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.min.css" async>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" async>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css" async>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.min.css" />
+    
+    
+
+
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-one-light.min.css" />
+
+
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/line-numbers/prism-line-numbers.min.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@3.3.2/dist/waline.css" async>
+
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
+
+    <link rel="stylesheet" href="/assets/css/app.min.css" async>
+</head>
+    
+    <body class="line-numbers" ontouchstart="">
+    
+    <!--[if lt IE 10]>
+    <div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+    <![endif]-->
+        
+        
+        <div id="all" class="post" data-theme="default">
+        
+            
+            
+            <div class="alert-tip" id="no-previous">已经是最新一篇文章了！</div>
+            <div class="alert-tip" id="no-next">已经是最后一篇文章了！</div>
+        
+            <input id="nm-switch" type="hidden" value="false">
+            <header class="g-header" data-theme="default">
+    <div class="g-logo">
+      <a href="/" aria-label="logo"></a>
+    </div>
+    <!-- <i id="menu-toggle" class="iconfont icon-menu"></i> -->
+    
+        <div id="search-toggle"></div>
+    
+    
+    <div id="travelling-toggle">
+        <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-train-subway"></use>
+            </svg>
+        </a>
+    </div>
+    
+    <div id="mode-toggle">
+        <svg class="icon icon-day" aria-hidden="true">
+            <use xlink:href="#icon-day"></use>
+        </svg>
+        <svg class="icon icon-night" aria-hidden="true">
+            <use xlink:href="#icon-night"></use>
+        </svg>
+    </div>
+    <svg id="menu-toggle" class="icon-menu" aria-hidden="true">
+        <use xlink:href="#icon-menu"></use>
+    </svg>
+    <nav class="g-nav">
+        <ul>
+            
+                
+                <li>
+                    <a href="/" aria-label="home">
+                        home
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/blog/index.html" aria-label="blog">
+                        blog
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/archives.html" aria-label="archives">
+                        archives
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a href="/tags.html" aria-label="tags">
+                        tags
+                    </a>
+                </li>
+                
+            
+                
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#"> about </a>
+                    <ul class="dropdown-menu">
+                    
+                        <li>
+                            <a href="/feed.xml" aria-label="RSS">
+                                RSS
+                            </a>
+                        </li>
+                    
+                    </ul> 
+                </li>
+                
+            
+            
+            <li class="travelling">
+                <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-train-subway"></use>
+                    </svg>
+                </a>
+            </li>
+            
+            <li class="mode">
+                <svg class="icon day" aria-hidden="true">
+                    <use xlink:href="#icon-day"></use>
+                </svg>
+                <svg class="icon night" aria-hidden="true">
+                    <use xlink:href="#icon-night"></use>
+                </svg>
+            </li>
+            
+            <li id="search"></li>
+            
+        </ul>
+    </nav>
+</header>
+
+            
+
+
+<div class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover"
+    data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="/%20/tags.html#%E5%A4%9A%E7%BA%BF%E7%A8%8B" class="post-tag">多线程</a>
+            
+            
+        </div>
+        <h1>多线程编程基础篇(一)</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-user"></use>
+                </svg>
+                编程散记
+            </span>
+            <time class="post-meta-item" datetime=" 25-06-03">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-calendar"></use>
+                </svg>
+                <span class="create-at"></span>
+            </time>
+            <time class="post-meta-item" datetime=" 25-06-03">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-update"></use>
+                </svg>
+                <span class="update-at"></span>
+            </time>
+            <span class="post-meta-item">
+                <svg class="icon words" aria-hidden="true">
+                    <use xlink:href="#icon-words"></use>
+                </svg>
+                
+                本文总共  7.0k  字 </span>
+                    <span class="post-meta-item">
+                        <svg class="icon time" aria-hidden="true">
+                            <use xlink:href="#icon-time"></use>
+                        </svg>
+                        阅读全文大约需要 20 分钟
+                    </span>
+                    
+                    <span class="post-meta-item">
+                        <svg class="icon pv" aria-hidden="true">
+                            <use xlink:href="#icon-pv"></use>
+                        </svg>
+                        本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                    </span>
+                    
+                    
+        </div>
+    </div>
+    
+</div>
+
+<main class="post-content visible">
+    
+    <h2 class="post-subtitle">多线程编程在Unity3d中的应用，线程的基础知识与基本概念。</h2>
+    
+
+    
+
+    <div class="container">
+        
+<div class="submenu hidden">
+
+</div>
+        <div class="contents">
+            <article class="markdown-body post">
+                
+
+
+                <h2 id="多线程概念">多线程概念</h2>
+
+<p>  现代应用程序可能要同时处理数据计算、画面渲染、文件读写等操作，同时要求操作系统要满足运行多个应用程序，后来随着现代CPU的从单核进化到多核，从物理核心进化到逻辑核心。就逐渐有了多任务执行概念。</p>
+
+<h3 id="什么是多线程">什么是多线程？</h3>
+
+<p>  Intel提出了<a href="https://www.intel.cn/content/www/cn/zh/gaming/resources/hyper-threading.html" rel="nofollow" target="_blank" class="extlinks">超线程技术（Hyper-Threading）</a>，将单个物理核心虚拟为多个逻辑核心。逻辑核心共享同一物理核心的硬件资源（如ALU、缓存），但拥有独立的寄存器组和线程状态‌，当某个线程因等待数据（如内存访问）暂停时，物理核心立即切换至另一线程执行，复用闲置资源以提升利用率‌。<strong>线程是操作系统调度的最小执行单元，是进程中的一条执行路径，每个线程有自己的代码执行路径和独立的堆栈空间，线程之间可以共享程序的数据段和代码段</strong>。一个进程中可以启动多个线程，实现‌并发‌（Concurrency）或‌并行‌（Parallelism）。</p>
+
+<h3 id="线程的目标是什么">线程的目标是什么？</h3>
+
+<p>  为了防止一个应用程序控制CPU而导致其他应用程序和操作系统本身永远被挂起这一可能情况，操作系统不得不使用某种方式将物理计算单元分割为一些虚拟的进程，并给予每个执行程序一定量的计算能力。此外，操作系统必须始终能够优先访问CPU，并能调整不同程序访问CPU的优先级。线程正是这一概念的实现。可以认为线程是一个虚拟进程，用于独立运行一个特定的程序。<strong>提高程序的响应速度，实现并行计算，以及提高CPU利用率。它可以让一个程序同时执行多个任务，从而更有效地利用系统资源，加快程序运行速度，并提升用户体验。</strong></p>
+
+<h3 id="程序进程线程协程">程序、进程、线程、协程</h3>
+
+<p>进程和线程是操作系统领域的两个重要概念，两者既有区别又有联系。</p>
+
+<h4 id="可执行程序">可执行程序</h4>
+
+<p>  C/C++源文件经过编译器（编译+链接）处理后，会产生可执行程序文件，不同系统有不同格式，比如Linux系统的ELF格式、Windows系统的EXE格式，可执行程序文件是一个静态的概念。</p>
+
+<h4 id="进程是什么">进程是什么</h4>
+
+<p>  可执行程序在操作系统上的一次执行对应一个进程，进程是一个动态的概念：<strong>进程是执行中的程序</strong>。同一份可执行文件执行多次，会产生多个进程，这跟一个类可以创建多个实例一样。进程是资源分配的基本单位。</p>
+
+<h4 id="线程是什么">线程是什么</h4>
+
+<p>  一个进程内的多个线程代表着多个执行流，这些线程以并发模式独立执行。操作系统中，被调度执行的最小单位是线程而非进程。进程是通过共享存储空间对用户呈现的逻辑概念，同一进程内的多个线程共享地址空间和文件描述符，共享地址空间意味着进程的代码（函数）区域、全局变量、堆、栈都被进程内的多个线程共享。</p>
+
+<h4 id="进程和线程的关系">进程和线程的关系</h4>
+
+<p>  启动一个程序，系统会在内存自动创建一个新的进程，进程是构成程序运行的资源集合，包括虚拟地址空间、文件句柄等。在进程内部系统会创建一个线程对象开始执行Main方法，该线程也被称为主线程。因此进程也是线程的一个集合。</p>
+
+<ol>
+  <li>默认情况下，一个进程只包含一个线程，从程序的开始一直执行到结束。</li>
+  <li>主线程也可以继续派生线程，进程内可能含有不同状态的线程</li>
+  <li>如果一个进程拥有多个线程，它们将共享进程资源</li>
+  <li><strong>线程是操作系统调度的最小执行单元，是进程中的一条执行路径</strong></li>
+</ol>
+
+<h4 id="协程">协程</h4>
+
+<p>  用户态的多执行流，上下文切换成本比线程更低，微信用协程改造后台系统后，获得了更大吞吐能力和更高稳定性。如今，协程库也进了C++20新标准。Unity的协程并非多线程，而是完全运行在Unity主线程上，通过迭代器（IEnumerator）和yield指令实现逻辑分帧执行，避免阻塞主线程的UI响应‌。</p>
+
+<h2 id="线程简介">线程简介</h2>
+
+<p>  现在的C#代码直接使用New Thread()创建线程，这是比较老旧的用法，C#更推荐使用Task、async/awit方式。但是要了解线程知识就要从c#的Thread线程说起。</p>
+
+<h3 id="创建线程">创建线程</h3>
+
+<p>  要创建并启动 一个线程，需要首先实例化Thread对象并调用Start方法。Thread的最简单的构造器接收一个ThreadStart或ParameterizedThreadStart委托:一个无参数的方法，表示执行的起始位置，例如</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Test2</span><span class="p">(){</span>
+    <span class="c1">//主线程打印x</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"x"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">//子线程打印y</span>
+    <span class="k">new</span> <span class="nf">Thread</span><span class="p">(()=&gt;</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"y"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}).</span><span class="nf">Start</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="线程的生命周期">线程的生命周期</h3>
+
+<p>  线程有多个状态表示使用ThreadState表示，其中最重要的几个状态就是暂停等待(休眠)、终止<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">Thread</span> <span class="n">thread</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="p">(()</span> <span class="p">=&gt;{});</span>
+    <span class="n">thread</span><span class="p">.</span><span class="n">IsBackground</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="n">thread</span><span class="p">.</span><span class="n">Priority</span> <span class="p">=</span> <span class="n">ThreadPriority</span><span class="p">.</span><span class="n">Highest</span><span class="p">;</span>
+    <span class="n">thread</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
+    <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
+    <span class="n">thread</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
+    <span class="n">thread</span><span class="p">.</span><span class="nf">Interrupt</span><span class="p">();</span>
+    <span class="n">thread</span><span class="p">.</span><span class="nf">Abort</span><span class="p">();</span>
+</code></pre></div></div>
+
+<ol>
+  <li>
+<strong>新建状态(New)</strong>‌ new Thread()创建线程对象时，线程处于新建状态，此时尚未分配系统资源‌。</li>
+  <li>
+<strong>前台/后台线程</strong> 显式创建的线程是前台线程，通过线程对象的IsBackground属性可以控制。<strong>进程会等待所有的前台线程完成后再结束工作，但是如果只剩下后台线程，则会直接结東工作。</strong>
+</li>
+  <li>
+<strong>线程的优先级</strong> 前台线程的优先级大于后台线程，如果线程优先级设置过大，则可能会干涉到系统运行，如磁盘写入、鼠标点击等都是高速运转的，如果程序中有太多高优先级的线程，那么系统需要分配大量CPU时间运行这些线程的代码，可能会导致系统无响应或响应缓慢。</li>
+  <li>
+<strong>‌就绪状态(Runnable)</strong>‌ Start()方法调用后线程进入就绪队列，等待CPU调度执行‌。</li>
+  <li>
+<strong>‌运行状态(Running)‌</strong> 当线程获得CPU时间片时开始执行，示例中由于Lambda表达式为空，实际不执行操作‌。‌</li>
+  <li>
+<strong>阻塞状态(Blocked)‌</strong> Thread.Sleep(1000)使主线程休眠1秒，此时主线程处于定时等待状态‌。</li>
+  <li>
+<strong>阻塞状态(Blocked)‌</strong> Join(1000)使主线程等待目标线程完成，最多阻塞1秒‌。</li>
+  <li>‌<strong>中断状态(Interrupted)‌</strong> Interrupt()向线程发送中断信号，若线程处于阻塞状态会抛出InterruptedException‌。</li>
+  <li>‌<strong>终止状态(Aborted/Terminated)‌</strong> Abort()强制终止线程，会抛出ThreadAbortException异常‌。注意该方法在.NET中已过时，推荐使用协作式取消模式‌。</li>
+</ol>
+
+<!--url1 url2 url3 url4 url5
+    代表一次加载多少张图
+-->
+<center class="half">
+<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts\2025\month6\thread_state.png" width="250"><font size="2.5">
+            <i>线程生命周期图示.</i>
+        </font>
+</center>
+
+<div class="premonition warning"> <div class="header"> <svg class="icon warning" aria-hidden="true"> <use xlink:href="#icon-warning"></use> </svg> <div class="title"> 线程终止警告 </div> </div> <div class="content"> <p>Interrupt()和Abort()的调用时机会影响线程状态转换结果，若线程已终止则这些操作无效‌。在多线程编程中应谨慎使用强制终止方法，可能引发资源未释放等问题‌。</p>
+
+
+
+ </div> </div>
+<h3 id="线程的同步和互斥">线程的同步和互斥</h3>
+
+<p>  CLR为每一个线程分配了独立的内存栈，从而保证了局部变量的隔离。如果不同的线程拥有同一个对象的引用，则这些线程之间就共享了数据，编译器也会将Lambda表达式捕获的局部变量或匿名委托转换为字段，因此它们也可以被共享。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="n">ThreadTest</span><span class="p">{</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(){</span>
+        <span class="kt">bool</span> <span class="n">done</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="n">ThreadStart</span> <span class="n">aciont</span> <span class="p">=</span> <span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">done</span><span class="p">)</span> <span class="p">{</span> <span class="n">Console</span> <span class="nf">WriteLine</span> <span class="p">(</span><span class="s">"Done"</span><span class="p">);</span> <span class="n">done</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span> <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">new</span> <span class="nf">Thread</span> <span class="p">(</span><span class="n">action</span><span class="p">).</span><span class="nf">Start</span><span class="p">();</span>
+        <span class="nf">action</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>  上述代码，主线程调用了action，同时new了一个子线程绑定了匿名函数捕获了外部变量done，这个“Done”是有可能输出两次的。主线程正在打印“Done”时，子线程可能已经进入到匿名函数正在判定。</p>
+
+<h4 id="lock线程锁">lock线程锁</h4>
+
+<p>  锁有三种结构：Lock、Mutex和SpinLock，其中Lock是最常用最方便的锁结构。锁允许多个线程在同一时间内只有一个能够访问被锁定的资源，从而避免竞态条件和数据不一致的问题。</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">Program</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="kt">object</span> <span class="n">lockObject</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">object</span><span class="p">();</span> <span class="c1">// 锁对象</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">sharedValue</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Thread</span> <span class="n">thread1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">IncrementSharedValue</span><span class="p">);</span>
+        <span class="n">Thread</span> <span class="n">thread2</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">IncrementSharedValue</span><span class="p">);</span>
+
+        <span class="n">thread1</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
+        <span class="n">thread2</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
+
+        <span class="n">thread1</span><span class="p">.</span><span class="nf">Join</span><span class="p">();</span>
+        <span class="n">thread2</span><span class="p">.</span><span class="nf">Join</span><span class="p">();</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Final shared value: "</span> <span class="p">+</span> <span class="n">sharedValue</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">IncrementSharedValue</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="k">lock</span> <span class="p">(</span><span class="n">lockObject</span><span class="p">)</span> <span class="c1">// 使用锁</span>
+            <span class="p">{</span>
+                <span class="n">sharedValue</span><span class="p">++;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  两个线程分别对sharedValue进行了100000次的增加操作，但由于使用了锁机制，它们不会交叉并发地修改sharedValue，从而确保了数据一致性。thread1.Join()与thread2.Join()简单理解就是把thread1/2合并到主线程，主线程默认是前台线程需要等待thread1/2执行完成后才能继续执行。如果不调用Join那么直接打印了Final shared value结果会不准确。</p>
+
+<div class="premonition info"> <div class="header"> <svg class="icon info" aria-hidden="true"> <use xlink:href="#icon-info"></use> </svg> <div class="title"> 锁的开销提示 </div> </div> <div class="content"> <p>使用锁机制可能会引入性能开销，因为在一个线程访问锁定代码块时，其他线程会被阻塞。因此，在设计多线程应用时，应根据实际需求和性能要求合理地使用锁机制，避免锁的过度使用导致性能问题。</p>
+
+
+
+ </div> </div>
+<p>  死锁将导致程序停止工作是最常见的多线程错误，下面是一个死锁示例：</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">object</span> <span class="n">locker1</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">object</span><span class="p">();</span>
+<span class="kt">object</span> <span class="n">locker2</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">object</span><span class="p">();</span> 
+<span class="k">new</span> <span class="nf">Thread</span> <span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">lock</span> <span class="p">(</span><span class="n">locker1</span><span class="p">){</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
+        <span class="k">lock</span> <span class="p">(</span><span class="n">locker2</span><span class="p">);</span> <span class="c1">//Deadlock</span>
+    <span class="p">}</span>
+    
+<span class="p">}).</span><span class="nf">Start</span><span class="p">();</span>
+
+<span class="k">lock</span> <span class="p">(</span><span class="n">locker2</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span> <span class="p">(</span><span class="m">1000</span><span class="p">);</span>
+    <span class="k">lock</span> <span class="p">(</span><span class="n">locker1</span><span class="p">);</span> <span class="c1">//Deadlock</span>
+<span class="p">}</span>
+
+<span class="c1">//使用三个或者更多的线程则可能形成更加复杂的死锁链。</span>
+</code></pre></div></div>
+
+<h4 id="monitor锁定资源">Monitor锁定资源</h4>
+
+<p>  Monitor是C#中用于实现线程同步和互斥的另一种机制，同时lock关键字是Monitor类的一种语法糖。它提供了更高级的方法TryEenter()。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">acquiredLock</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span> 
+<span class="k">try</span><span class="p">{</span>
+    <span class="n">Monitor</span><span class="p">.</span><span class="nf">Enter</span><span class="p">(</span><span class="n">lockObject</span><span class="p">,</span> <span class="k">ref</span> <span class="n">acquiredLock</span><span class="p">);</span>
+    <span class="c1">// Code that accesses resources that are protected by the lock.</span>
+<span class="p">}</span>
+<span class="k">finally</span><span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">acquiredLock</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Monitor</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="n">lockObject</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  Monitor类的使用方式相对于lock锁机制更灵活。以下是使用Monitor类的一个示例，展示如何在多个线程之间控制访问顺序：</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Program</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="kt">object</span> <span class="n">syncLock</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">object</span><span class="p">();</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">currentThread</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span> <span class="c1">// 1表示线程1，2表示线程2</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">thread1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">Worker</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">thread2</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">Worker</span><span class="p">);</span>
+
+        <span class="n">thread1</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+        <span class="n">thread2</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+
+        <span class="n">thread1</span><span class="p">.</span><span class="nf">Join</span><span class="p">();</span>
+        <span class="n">thread2</span><span class="p">.</span><span class="nf">Join</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Worker</span><span class="p">(</span><span class="kt">object</span> <span class="n">threadIdObj</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">threadId</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">threadIdObj</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="k">lock</span> <span class="p">(</span><span class="n">syncLock</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">while</span> <span class="p">(</span><span class="n">currentThread</span> <span class="p">!=</span> <span class="n">threadId</span><span class="p">)</span>
+                    <span class="n">Monitor</span><span class="p">.</span><span class="nf">Wait</span><span class="p">(</span><span class="n">syncLock</span><span class="p">);</span>
+
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Thread </span><span class="p">{</span><span class="n">threadId</span><span class="p">}</span><span class="s">: </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">currentThread</span> <span class="p">=</span> <span class="n">threadId</span> <span class="p">==</span> <span class="m">1</span> <span class="p">?</span> <span class="m">2</span> <span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+                <span class="n">Monitor</span><span class="p">.</span><span class="nf">Pulse</span><span class="p">(</span><span class="n">syncLock</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>  两个线程同时访问Worker时通过判定线程ID是否一致确定该线程是否继续执行，不一致就使用Monitor.Wait()方法会使当前线程等待，直到其它线程完成访问Worker通过Monitor.Pulse()方法通知其他等待的线程可以继续执行。</p>
+
+<div class="premonition warning"> <div class="header"> <svg class="icon warning" aria-hidden="true"> <use xlink:href="#icon-warning"></use> </svg> <div class="title"> Monitor也会有死锁 </div> </div> <div class="content"> <p>使用Monitor类可以在更复杂的情况下控制线程之间的访问顺序，但也需要小心避免死锁等问题。这种方法需要线程之间相互配合，以确保正确的执行顺序。</p>
+
+
+
+ </div> </div>
+<h4 id="mutex同步">Mutex同步</h4>
+
+<p>  Mutex和lock类似，但是它可以支持多个进程。其只对一个线程授予对共享资源的独占访问。Mutex类的WaitOne方法将获得该锁，ReleaseMutex方法将释放该锁。Mutex只能在获得锁的线程释放锁。释放Mutex需要大约一微秒的时间，大概比1ock要慢20倍<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="kt">string</span> <span class="n">MutexName</span> <span class="p">=</span> <span class="s">"CSharpThreadingCookbook"</span><span class="p">;</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">m</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Mutex</span><span class="p">(</span><span class="k">false</span><span class="p">,</span> <span class="n">MutexName</span><span class="p">)){</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">m</span><span class="p">.</span><span class="nf">WaitOne</span><span class="p">(</span><span class="n">TimeSpan</span><span class="p">.</span><span class="nf">FromSeconds</span><span class="p">(</span><span class="m">5</span><span class="p">),</span> <span class="k">false</span><span class="p">)){</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Second instance is running!"</span><span class="p">);</span>    
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Running!"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+        <span class="n">m</span><span class="p">.</span><span class="nf">ReleaseMutex</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="semaphore信号量">Semaphore信号量</h4>
+
+<p>  信号量是一种计数器，用于限制同时访问某个资源的线程数量。信号量可用于限制并发性，防止太多的线程同时执行特定的代码。在C#4.0引入了轻量级Semaphoreslim信号量，Semaphore在调用WaitOne和Release方法时大概会消耗1微秒的时间，而Semaphoreslim的开销只有前者的十分之一<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Program</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="n">Semaphoreslim</span> <span class="n">semaphore</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Semaphoreslim</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="n">Thread</span> <span class="n">thread</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">DoWork</span><span class="p">);</span>
+            <span class="n">thread</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">DoWork</span><span class="p">(</span><span class="kt">object</span> <span class="n">id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">semaphore</span><span class="p">.</span><span class="nf">WaitOne</span><span class="p">();</span> <span class="c1">// 等待获取信号量</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Thread "</span> <span class="p">+</span> <span class="n">id</span> <span class="p">+</span> <span class="s">" is working..."</span><span class="p">);</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Thread "</span> <span class="p">+</span> <span class="n">id</span> <span class="p">+</span> <span class="s">" finished."</span><span class="p">);</span>
+        <span class="n">semaphore</span><span class="p">.</span><span class="nf">Release</span><span class="p">();</span> <span class="c1">// 释放信号量</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="使用线程池">使用线程池</h2>
+
+<p>  每当启动一个线程时，都需要一定时间(上百毫秒)来创建新的局部变量栈。如果使用线程池预先创建可回收线程可大幅降低创建开销。但是<strong>线程池的线程都是后台线程，阻塞线程池将会影响性能</strong>。Thread.CurrentThread.IsThreadPoolThread属性可确认当前线程是否属于线程池。</p>
+
+<div class="premonition warning"> <div class="header"> <svg class="icon warning" aria-hidden="true"> <use xlink:href="#icon-warning"></use> </svg> <div class="title"> 线程池警告 </div> </div> <div class="content"> <ol>
+  <li>线程池适合短时任务，不适合长时间运行且计算密集型操作。</li>
+  <li>线程是被CLR管理的作为系统级资源，如果应用大量占用线程池线程阻塞，会显著拖慢所有进程的响应速度。</li>
+</ol>
+
+
+
+ </div> </div>
+<h3 id="线程池简介">线程池简介</h3>
+<h3 id="线程池的使用">线程池的使用</h3>
+
+<h2 id="线程的性能问题">线程的性能问题</h2>
+
+<p>  一个进程空间内可能有多个线程(多个执行流)，不同执行流切换就是是上下文切换。操作系统会为每个线程划分时间片来模拟并发执行。</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//顺序执行，先打印10个x，再打印10个y</span>
+<span class="k">void</span> <span class="nf">Test1</span><span class="p">(){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">,</span> <span class="n">i</span><span class="p">++){</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"x"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">,</span> <span class="n">i</span><span class="p">++){</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"y"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//x与y不规则顺序打印</span>
+<span class="k">void</span> <span class="nf">Test2</span><span class="p">(){</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="k">new</span> <span class="nf">Thread</span><span class="p">(()=&gt;</span>
+        <span class="p">{</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"x"</span><span class="p">);</span>
+        <span class="p">}).</span><span class="nf">Start</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="k">new</span> <span class="nf">Thread</span><span class="p">(()=&gt;</span>
+        <span class="p">{</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"y"</span><span class="p">);</span>
+        <span class="p">}).</span><span class="nf">Start</span><span class="p">();</span>   
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>著作权归作者所有。
+商业转载请联系作者获得授权,非商业转载请注明出处。
+原文: http://127.0.0.1:4000/tech/new-theme-h2o-ac.html</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>参考书籍：C#多线程编程实战。 <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>参考书籍：C#7.0本质论lock部分。 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>参考书籍：C#7.0本质论信号量。 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+  </ol>
+</div>
+
+                <div class="post-copyright">
+                    <p>
+                        <span>版权声明：</span>
+                        如无特别声明，本文版权归
+                        <a href="https://www.damonc.top" class="cplink">编程散记</a>
+                        所有，转载请注明本文链接。
+                    </p>
+                    
+                    <p>
+                        （采用 
+                        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="extlinks">CC
+                            BY-NC-SA 4.0</a>
+                        许可协议进行授权）
+                    </p>
+                    
+                    <p><span>本文标题：</span>《 多线程编程基础篇(一) 》</p>
+                    <p><span>本文链接：</span><a href="https://www.damonc.top/csharp/CSharp_Thread_Base.html" class="cplink">https://www.damonc.top/csharp/CSharp_Thread_Base.html</a></p>
+                    <p class="tips">本文最后一次更新为 <span></span> 天前，文章中的某些内容可能已过时！
+                    </p>
+                </div>
+            </article>
+        </div>
+        
+        
+        
+        
+            <div class="table-of-contents">
+                <div class="toc-header"><h2>目录</h2></div>
+                <div class="toc-body">
+                    <ul><li><a onclick="scrollToAdjust('多线程概念')">1. 多线程概念</a><ul><li><a onclick="scrollToAdjust('什么是多线程？')">1.1 什么是多线程？</a></li><li><a onclick="scrollToAdjust('线程的目标是什么？')">1.2 线程的目标是什么？</a></li><li><a onclick="scrollToAdjust('程序、进程、线程、协程')">1.3 程序、进程、线程、协程</a><ul><li><a onclick="scrollToAdjust('可执行程序')">1.3.1 可执行程序</a></li><li><a onclick="scrollToAdjust('进程是什么')">1.3.2 进程是什么</a></li><li><a onclick="scrollToAdjust('线程是什么')">1.3.3 线程是什么</a></li><li><a onclick="scrollToAdjust('进程和线程的关系')">1.3.4 进程和线程的关系</a></li><li><a onclick="scrollToAdjust('协程')">1.3.5 协程</a></li></ul></li></ul></li><li><a onclick="scrollToAdjust('线程简介')">2. 线程简介</a><ul><li><a onclick="scrollToAdjust('创建线程')">2.1 创建线程</a></li><li><a onclick="scrollToAdjust('线程的生命周期')">2.2 线程的生命周期</a></li><li><a onclick="scrollToAdjust('线程的同步和互斥')">2.3 线程的同步和互斥</a><ul><li><a onclick="scrollToAdjust('lock线程锁')">2.3.1 lock线程锁</a></li><li><a onclick="scrollToAdjust('monitor锁定资源')">2.3.2 Monitor锁定资源</a></li><li><a onclick="scrollToAdjust('mutex同步')">2.3.3 Mutex同步</a></li><li><a onclick="scrollToAdjust('semaphore信号量')">2.3.4 Semaphore信号量</a></li></ul></li></ul></li><li><a onclick="scrollToAdjust('使用线程池')">3. 使用线程池</a><ul><li><a onclick="scrollToAdjust('线程池简介')">3.1 线程池简介</a></li><li><a onclick="scrollToAdjust('线程池的使用')">3.2 线程池的使用</a></li></ul></li><li><a onclick="scrollToAdjust('线程的性能问题')">4. 线程的性能问题</a></li></ul>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+        
+<div class="social-share-wrapper">
+    <div class="social-share"></div>
+</div>
+
+</main>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
+        </div>
+        <div class="author-name" rel="author">编程散记</div>
+        <div class="bio">
+            <p>Developer & Maintainer</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="https://github.com/damonc-top" target="_blank" aria-label="github">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                </a>
+            </li>
+            
+            <li>
+                <a href="https://segmentfault.com/u/junyidebocai" target="_blank" aria-label="segmentfault">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-segmentfault"></use>
+                    </svg>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        <div class="read-next-item">
+            <a href="/csharp/CSharp_Thread_Pattern.html" class="read-next-link" aria-label="多线程编程模型篇(二)"></a>
+            <section>
+                <span>多线程编程模型篇(二)</span>
+                <p>多线程的演进</p>
+            </section>
+            
+        </div>
+        
+
+        
+        <div class="read-next-item">
+            <a href="/unity3d/Unity_Addressable_Build.html" class="read-next-link"
+                aria-label="Unity Addressable System使用分析(三)"></a>
+            <section>
+                <span>Unity Addressable System使用分析(三)</span>
+                <p>Addressable初始化</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+
+<script src="https://unpkg.com/@waline/client@3.3.2/dist/waline.umd.js" async></script>
+<script>
+    $(document).ready(function () {
+        Waline.init({
+            el: '#waline',
+            serverURL: "https://comments.damonc.top",
+            reaction: "true",
+            comment: true,
+            locale: "{reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}",
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ($("#comments-switch").length > 0) {
+            var comment_status = $("#cmn-toggle-4")[0].checked;
+            if (comment_status) {
+                $("#waline").addClass("active");
+            } else {
+                $("#disqus_thread").addClass("active");
+            }
+            $("#cmn-toggle-4").click(function () {
+                $("#disqus_thread").toggleClass("active");
+                $("#waline").toggleClass("active");
+            })
+        } else {
+            if ($("#disqus_thread").length > 0) {
+                $("#disqus_thread").addClass("active");
+            } else if ($("#waline").length > 0) {
+                $("#waline").addClass("active");
+            }
+        }
+    })
+</script>
+    
+
+
+    
+        
+<section class="post-footer-item comment">
+    <div class="comments-headline">
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-comment"></use>
+        </svg>
+        <span>评论</span>
+    </div>
+    
+        
+    
+</section>
+
+    
+
+
+
+    
+    
+    <section class="post-footer-item comment">
+        <div id="waline"></div>
+    </section>
+    
+
+</section>
+            
+
+
+<footer class="g-footer">
+  <div class="g-container">
+    <div class="g-left">
+      <section class="links">
+        本站由 <a href="//jekyllrb.com" target="_blank" class="extlinks">Jekyll</a> 和 基于 <a href="https://github.com/kaeyleo/jekyll-theme-H2O" target="_blank" class="extlinks">H2O主题模版</a> 强力驱动
+          
+        
+      </section>
+      <section class="links">编程散记 ©
+        
+        
+          2016
+          -
+        
+        2025
+        
+          <a href="https://icp.gov.moe/?keyword=20240160" target="_blank" class="extlinks">萌ICP备20240160号</a>
+        
+        <a href="/rss.xml" target="_blank" aria-label="Terms of Service" class="others">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-rss"></use>
+          </svg> RSS  
+        </a>
+        <a href="/tos" target="_blank" aria-label="Terms of Service" class="others">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-tos"></use>
+          </svg> 使用条款  
+        </a>
+      </section>
+      
+      <section class="links">
+        <span id="busuanzi_container_site_pv">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-pv"></use>
+          </svg> 总浏览量 <span id="busuanzi_value_site_pv"></span> <b>·</b>
+        </span>
+        <span id="busuanzi_container_site_uv">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-user"></use>
+          </svg> 总访问量 <span id="busuanzi_value_site_uv"></span>
+        </span>
+      </section>
+      
+      <section>
+        
+          本站已运行 
+          <span class="alivetime_days"></span> 天
+          <span class="alivetime_hours"></span> 小时
+          <span class="alivetime_minutes"></span> 分
+          <span class="alivetime_seconds"></span> 秒
+        
+      </section>
+    </div>
+    <div class="g-right">
+      
+      
+      <section class="badges">
+        
+          <a href="https://www.foreverblog.cn/" target="_blank" class="foreverblog" aria-label="foreverblog"> 
+            <img loading="lazy" src="https://img.foreverblog.cn/logo_en_default.png" alt=""> 
+          </a>
+        
+        
+          <a href="https://www.foreverblog.cn/go.html" target="_blank" class="wormhole" aria-label="wormhole"> 
+            <img loading="lazy" src="https://img.foreverblog.cn/wormhole_3.gif" alt="" title="穿梭虫洞-随机访问十年之约友链博客">
+          </a>
+        
+        
+          <a href="https://www.travellings.cn/go.html" target="_blank" class="travelling-badge" aria-label="Travelling" rel="noopener" title="开往-友链接力">
+            <img loading="lazy" src="https://cdn.jsdelivr.net/gh/travellings-link/travellings/assets/logo.gif" alt="开往-友链接力">
+          </a>
+        
+        
+          <a href="https://notbyai.fyi/" target="_blank" class="notbyAI" aria-label="notbyAI"> 
+            <img loading="lazy" src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI">
+          </a>
+        
+      </section>
+      
+    </div>
+    
+  </div>
+</footer>
+<div class="cookie-tip">
+   为了提升本站的使用体验和必要功能的正常使用，本站会使用本地 Cookie。详细请查看「 <a href="/tos.html">本站使用条款</a> 」了解更多。
+
+  <button id="accept-tos">同意</button>
+</div>
+
+<section id="tools">
+  
+  
+  <div class="tool toc">
+    <svg class="icon b1 active" aria-hidden="true">
+      <use xlink:href="#icon-toc"></use>
+    </svg>
+    <svg class="icon b2" aria-hidden="true">
+      <use xlink:href="#icon-exit"></use>
+    </svg>
+  </div>
+  
+</section>
+<section id="bttb" aria-label="Scroll back to top" class="bttb">
+  <div class="tool">
+    <svg class="icon top" aria-hidden="true">
+      <use xlink:href="#icon-top"></use>
+    </svg>
+  </div>
+</section>
+        </div>
+        
+<div class="modal">
+    <div class="modal-content">
+        <header>
+            <span class="close">&times;</span>
+        </header>
+        <div class="container"></div>
+    </div>
+</div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" async></script>
+        
+            <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/customParseFormat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/relativeTime.js"></script>
+<script>
+    $(document).ready(function () {
+        var time_formats = ['YYYY-MM-DD HH:mm:ss ZZ', 'YYYY DD MMM HH:mm:ss ZZ', 'YYYY年MM月DD日 HH:mm:ss ZZ'];
+        function dateFormat(date, format) {
+            var date_org = dayjs(date, time_formats[format]);
+            var date = date_org.format(time_formats[format]);
+            return { "date_org": date_org, "date": date }
+        }
+
+        dayjs.extend(window.dayjs_plugin_customParseFormat);
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        var post_date = $("meta[property='post-date']").attr('content');
+        var post_date_format = $("meta[property='post-date-format']").attr('content');
+        var local_post_date = dateFormat(post_date, post_date_format);
+
+        $(".post time span.create-at").html(local_post_date["date"]);
+
+        // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2025/downloader/2025-06-01-CSharp_Thread_Base.md", {
+        //     headers: {
+        //         'Authorization': 'token ',
+        //         'Accept': 'application/vnd.github.v3+json'
+        //     }
+        // }).then((response) => {
+        //     return response.json();
+        fetch("https://winter-meadow-170b.damoncbl.workers.dev?" + new URLSearchParams({
+            owner: "damonc-top",
+            repo: "blog",
+            path: "post_project/_posts/2025/downloader/2025-06-01-CSharp_Thread_Base.md"
+        })).then((response) => {
+            return response.json();
+        }).then((commits) => {
+            if (commits.length != 0) {
+                var update_at = dayjs(commits[0]['commit']['committer']['date']);
+            } else {
+                var update_at = post_date
+            }
+
+            var local_update_at = dateFormat(update_at, post_date_format);
+            $('.post time span.update-at').html(local_update_at["date"]);
+
+            var relative_time = dayjs().diff(local_update_at["date_org"], 'day');
+            $(".post-copyright .tips span").append(relative_time);
+            if (relative_time > 365) {
+                $(".post-copyright .tips").addClass("active");
+            }
+        });
+    });
+</script>
+            <script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: [
+            
+            'wechat', 
+            
+            'weibo', 
+            
+            'douban', 
+            
+            'twitter'
+            
+        ],
+    wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+      });
+    $("a.social-share-icon").each(function () {
+        $(this).attr("aria-label", $(this).attr("class").split(' ')[1])
+    });
+</script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script>
+        <script>
+            /**
+            * Better Scroll Experience
+            */
+            function scrollToAdjust(id){
+              var element = document.getElementById(id);
+              var headerOffset = 90;
+              var elementPosition = element.getBoundingClientRect().top;
+              var offsetPosition = elementPosition + window.scrollY - headerOffset;
+              window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth"
+              });
+            }
+        </script>
+        <script src="/assets/js/app.min.js"></script>
+        <script src="https://at.alicdn.com/t/c/font_3046306_ujr2yq34hw.js"></script>
+        
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WN45VXRK"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'GTM-WN45VXRK');
+</script>
+
+
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+	<script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+		jax: ["input/TeX", "output/HTML-CSS"],
+		tex2jax: {
+			inlineMath: [['$', '$'], ["\\(", "\\)"]],
+			processEscapes: true,
+			skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+		},
+		"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+      });
+    </script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var baseurl = $("meta[property='og:baseurl']").attr('content');
+        $("center img").each(function () {
+            $(this).attr('data-src', $(this).attr('src')).removeAttr('src').addClass("lazyload").attr('src', baseurl + '/assets/img/loading.gif');
+            var strA = "<a data-fancybox='gallery' ref='gallery' href='" + $(this).attr('data-src') + "' data-caption='" + $(this).attr('alt') + "'></a>";
+            $(this).wrapAll(strA);
+            var caption = $(this)[0].alt;
+            $(this).parent().after('<span class="caption">' + caption + '</span>');
+        });
+        Fancybox.bind('[data-fancybox]', {
+            on: {
+                load: (fancybox, slide) => {
+                    var gray = $("meta[property='og:gray']").attr('content');
+                    if (gray == "true") {
+                        $(".fancybox__content img").addClass("gray");
+                        $(".carousel__track .fancybox__thumb").addClass("gray");
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var previous_url = $("meta[property='og:previous_url']").attr('content');
+        var next_url = $("meta[property='og:next_url']").attr('content');
+
+        hotkeys('left', function (event, handler) {
+            // Prevent the default refresh event under WINDOWS system
+            event.preventDefault();
+            if (previous_url) {
+                console.log('you pressed left!');
+                window.location.href = previous_url;
+            } else {
+                $("#no-previous").addClass("active");
+                setTimeout(function () { $("#no-previous").removeClass("active"); }, 1500);
+            }
+        });
+
+        hotkeys('right', function (event, handler) {
+            // Prevent the default refresh event under WINDOWS system
+            event.preventDefault();
+            if (next_url) {
+                console.log('you pressed right!');
+                window.location.href = next_url;
+            } else {
+                $("#no-next").addClass("active");
+                setTimeout(function () { $("#no-next").removeClass("active"); }, 1500);
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
+<script>
+    $(document).ready(function () {
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: "default",
+        });
+        mermaid.init(undefined, $('.mermaid2'));
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+        <script>
+    if ("serviceWorker" in navigator) {
+        if (navigator.serviceWorker.controller) {
+            console.log("An active service worker found, no need to register");
+        } else {
+            // Register the service worker
+            navigator.serviceWorker
+            .register("/sw.js", {
+                scope: "/"
+            })
+            .then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    }
+
+// 检测浏览器是否支持SW
+// if(navigator.serviceWorker != null){
+//     navigator.serviceWorker.register("/sw.js")
+//         .then(function(registartion){
+//             console.log('支持sw:',registartion.scope)
+//         })
+// } else {
+//     console.log('不支持sw')
+// }
+</script>
+        
+        
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+<script type="text/javascript">
+    docsearch({
+        appId: "NCUJ5WJECO",
+        apiKey: "b625a4b91a45af033cbdb526694e9e65",
+        indexName: "damonc",
+        lang: " ", // 显式设置语言
+        insights: true,
+        debug: false,
+        container: 'li#search',
+    });
+</script>
+
+  </body>
+
+</html>
