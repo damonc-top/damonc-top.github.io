@@ -1,353 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="zh-Hans">
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity 纹理高级用法(翻译六) - 编程散记</title>
-    <meta name="author" content="编程散记">
-    
-    <meta name="description" content="Unity 纹理高级用法(翻译六)">
-    <meta name="keywords"
-        content="Shader">
-    
-    <meta property="og:previous_url" content="/Unity_Shadows.html">
-    
-    
-    <meta property="og:next_url" content="/Unity_Multi_Light.html">
-    
-    
-    <meta property="post-date-format" content="0">
-    
-    <meta property="post-date" content="2018-01-04 20:00:00 +0800" />
-    
-    
-    <meta property="calendar-scale" content="year" />
-    <meta property="calendar-scheme" content="null" />
-    <meta property="calendar-color" content="null" />
-    
-    <!-- Open Graph -->
-    <meta property="og:title"
-        content="Unity 纹理高级用法(翻译六) - 编程散记">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.damonc.top/Unity_Advance_Texture.html">
-    <meta property="og:baseurl" content="">
-    <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="编程散记">
-    <meta property="og:gray" content="false">
-    <meta property="og:lang" content="zh-Hans">
-    
-    <meta name="alivestart" content="12/23/2020">
-    
-    
-    <meta name="theme-color" content="#81BBFF" />
-    <meta name="algolia-site-verification" content="5E91324370E1262B" />
-    <title>Algolia Verification</title>
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="manifest" href="/manifest.json" async>
-    <link rel="apple-touch-icon" href="/assets/img/touch/apple-touch-icon.png" />
-    <link rel="Shortcut Icon" href="/favicon.ico">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="bookmark" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.min.css" async>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" async>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css" async>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
-
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.min.css" />
-    
-    
-
-
-<link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-one-light.min.css" />
-
-
-<link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/line-numbers/prism-line-numbers.min.css">
-
-    
-<link rel="stylesheet" href="https://unpkg.com/@waline/client@3.3.2/dist/waline.css" async>
-
-
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async>
-
-    <link rel="stylesheet" href="/assets/css/app.min.css" async>
-</head>
-    
-    <body class="line-numbers" ontouchstart="">
-    
-    <!--[if lt IE 10]>
-    <div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
-    <![endif]-->
-        
-        
-        <div id="all" class="post" data-theme="default">
-        
-            
-            
-            <div class="alert-tip" id="no-previous">已经是最新一篇文章了！</div>
-            <div class="alert-tip" id="no-next">已经是最后一篇文章了！</div>
-        
-            <input id="nm-switch" type="hidden" value="false">
-            <header class="g-header" data-theme="default">
-    <div class="g-logo">
-      <a href="/" aria-label="logo"></a>
-    </div>
-    <!-- <i id="menu-toggle" class="iconfont icon-menu"></i> -->
-    
-        <div id="search-toggle"></div>
-    
-    
-    <div id="travelling-toggle">
-        <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank">
-            <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-train-subway"></use>
-            </svg>
-        </a>
-    </div>
-    
-    <div id="mode-toggle">
-        <svg class="icon icon-day" aria-hidden="true">
-            <use xlink:href="#icon-day"></use>
-        </svg>
-        <svg class="icon icon-night" aria-hidden="true">
-            <use xlink:href="#icon-night"></use>
-        </svg>
-    </div>
-    <svg id="menu-toggle" class="icon-menu" aria-hidden="true">
-        <use xlink:href="#icon-menu"></use>
-    </svg>
-    <nav class="g-nav">
-        <ul>
-            
-                
-                <li>
-                    <a href="/" aria-label="home">
-                        home
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/blog/index.html" aria-label="blog">
-                        blog
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/archives.html" aria-label="archives">
-                        archives
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a href="/tags.html" aria-label="tags">
-                        tags
-                    </a>
-                </li>
-                
-            
-                
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#"> about </a>
-                    <ul class="dropdown-menu">
-                    
-                        <li>
-                            <a href="/feed.xml" aria-label="RSS">
-                                RSS
-                            </a>
-                        </li>
-                    
-                    </ul> 
-                </li>
-                
-            
-            
-            <li class="travelling">
-                <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-train-subway"></use>
-                    </svg>
-                </a>
-            </li>
-            
-            <li class="mode">
-                <svg class="icon day" aria-hidden="true">
-                    <use xlink:href="#icon-day"></use>
-                </svg>
-                <svg class="icon night" aria-hidden="true">
-                    <use xlink:href="#icon-night"></use>
-                </svg>
-            </li>
-            
-            <li id="search"></li>
-            
-        </ul>
-    </nav>
-</header>
-
-            
-
-
-<div class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover"
-    data-theme="default">
-    <div class="post-wrapper">
-        <div class="post-tags">
-            
-            
-            <a href="/%20/tags.html#Shader" class="post-tag">Shader</a>
-            
-            
-        </div>
-        <h1>Unity 纹理高级用法(翻译六)</h1>
-        <div class="post-meta">
-            <span class="post-meta-item">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-user"></use>
-                </svg>
-                catlikecoding
-            </span>
-            <time class="post-meta-item" datetime=" 18-01-04">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-calendar"></use>
-                </svg>
-                <span class="create-at"></span>
-            </time>
-            <time class="post-meta-item" datetime=" 18-01-04">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-update"></use>
-                </svg>
-                <span class="update-at"></span>
-            </time>
-            <span class="post-meta-item">
-                <svg class="icon words" aria-hidden="true">
-                    <use xlink:href="#icon-words"></use>
-                </svg>
-                
-                本文总共  9.0k  字 </span>
-                    <span class="post-meta-item">
-                        <svg class="icon time" aria-hidden="true">
-                            <use xlink:href="#icon-time"></use>
-                        </svg>
-                        阅读全文大约需要 26 分钟
-                    </span>
-                    
-                    <span class="post-meta-item">
-                        <svg class="icon pv" aria-hidden="true">
-                            <use xlink:href="#icon-pv"></use>
-                        </svg>
-                        本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
-                    </span>
-                    
-                    
-        </div>
-    </div>
-    
-</div>
-
-<main class="post-content visible">
-    
-
-    
-
-    <div class="container">
-        
-<div class="submenu hidden">
-
-</div>
-        <div class="contents">
-            <article class="markdown-body post">
-                
-
-
-                <p>本篇摘要:</p>
-<ul>
-  <li>扰动法线以模拟凹凸视觉</li>
-  <li>从高度场计算法线</li>
-  <li>采样和混合法线贴图</li>
-  <li>从切线空间转换到世界空间</li>
-</ul>
-
-<h2 id="bump-map凹凸贴图">Bump Map(凹凸贴图):</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Bump Map Type</th>
-      <th>Describe</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>NormalMap</td>
-      <td>法线图，映射公式：normal=pixel*2-1,反映射：pixel=(normal+1)/2. 法线存储既可以在<br>模型空间，也可以在切线空间。//unity顶点输入结构带切线变量，一般存在切线空间更佳</td>
-    </tr>
-    <tr>
-      <td>HeightMap</td>
-      <td>灰度图(黑白纹理-强度值)，颜色越浅该表面越向外凸起，颜色深越凹。视差映射技术，与<br>Occlusion Map搭配使用体验更佳，计算昂贵</td>
-    </tr>
-    <tr>
-      <td>Occlusion Map</td>
-      <td>灰度图，表面细节更丰富。颜色值白色表示应该接收完全间接照明的区域，黑色表示没有<br>间接照明。如裂缝或褶皱，实际上不会接收到太多的间接光，可与高度图一起使用</td>
-    </tr>
-    <tr>
-      <td>Detail Maps</td>
-      <td>参考StandardShader:第二细节纹理，应用第二反照率图和第二法线图，在近距离观察时<br>有清晰的细节，比如毛孔、细小的裂缝等。计算昂贵</td>
-    </tr>
-  </tbody>
-</table>
-
-<blockquote class="prompt-tip">
-  <p>常用纹理<br>
-NormalMap 法线纹理：比较常用<br>
-HeightMap 高度纹理(视差映射)：手机平台不常用，使用法线纹理替代<br>
-Occlusion Map：细节纹理<br>
-Secondary Maps (Detail Maps) &amp; Detail Mask：细节纹理<br></p>
-</blockquote>
-
-<h3 id="高度图-heightmap">高度图-HeightMap</h3>
-
-<p>高度图为了模拟平面的凹凸程度，将高度(黑白色)数据存储在纹理中，由于纹理数据是二维的，即u轴和v轴，那为了得到这些数据为每个片段生成法向量，可分别在u轴和v轴上采样。先从U轴计算\(f(u)=h\) ,如果知道了斜率就能求得u轴上所有点的法向量，但斜率由h的变化程度高低决定。为了近似得到从一个点到下一个点的高度差：</p>
-
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
--->
-<center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender6/1692664-20191105100150635-879071241.png" width="250"><font size="2.5">
-            <i>斜率采样示意图，从$f(0) \rightarrow f(1)$.</i>
-        </font>
-</center>
-
-<p>这是对切向量的一个粗略的估算，它把整张纹理作为线性的斜率。那为了避免这种粗略计算，可以采样两个靠的更近点的。例如，从\(0 \rightarrow {1\over2}\)，那这两点的斜率\(f=f({1 \over 2})-f(0)\)，同时f因子被缩小，需要乘以相应的倍数。\(2f({1 \over 2})-f(0)\)。扩展开来，可以得到如下的函数：δ值越小越精确，必须大于0小于1.</p>
-
-<p>差分函数:</p>
-
-\[f^`(u) = {f(u+δ) - f(u) \over δ}\]
-
-<p>有限差分函数:</p>
-
-\[f^`(u)= lim_{(δ\rightarrow 0)} {f(u+δ) - f(u) \over δ}\]
-
-<p>那么切向量就是
-\(\begin{bmatrix}
-    1&amp;f`(u)&amp;0
-\end{bmatrix}^\mathrm{T}\)
-，从切向量计算法向量
-\(\begin{bmatrix}
- f’(u)&amp;1&amp;0
-\end{bmatrix}^\mathrm{T}\)</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_HeightMap</span><span class="p">;</span>
+<!DOCTYPE html><html lang="zh-Hans"> <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Unity 纹理高级用法(翻译六) - 编程散记</title><meta name="author" content="编程散记"><meta name="description" content="Unity 纹理高级用法(翻译六)"><meta name="keywords" content="Shader"><meta property="og:previous_url" content="/Unity_Shadows.html"><meta property="og:next_url" content="/Unity_Multi_Light.html"><meta property="post-date-format" content="0"><meta property="post-date" content="2018-01-04 20:00:00 +0800" /><meta property="calendar-scale" content="year" /><meta property="calendar-scheme" content="null" /><meta property="calendar-color" content="null" /><meta property="og:title" content="Unity 纹理高级用法(翻译六) - 编程散记"><meta property="og:type" content="website"><meta property="og:url" content="https://www.damonc.top/Unity_Advance_Texture.html"><meta property="og:baseurl" content=""><meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。"><meta property="og:site_name" content="编程散记"><meta property="og:gray" content="false"><meta property="og:lang" content="zh-Hans"><meta name="alivestart" content="12/23/2020"><meta name="theme-color" content="#81BBFF" /><meta name="algolia-site-verification" content="5E91324370E1262B" /><title>Algolia Verification</title><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="manifest" href="/manifest.json" async><link rel="apple-touch-icon" href="/assets/img/touch/apple-touch-icon.png" /><link rel="Shortcut Icon" href="/favicon.ico"><link rel="icon" href="/favicon.ico" type="image/x-icon" /><link rel="bookmark" href="/favicon.ico" type="image/x-icon" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.min.css" async><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" async><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown-light.min.css" async><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-one-light.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/line-numbers/prism-line-numbers.min.css"><link rel="stylesheet" href="https://unpkg.com/@waline/client@3.3.2/dist/waline.css" async><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" async><link rel="stylesheet" href="/assets/css/app.min.css" async><body class="line-numbers" ontouchstart=""><div id="all" class="post" data-theme="default"><div class="alert-tip" id="no-previous">已经是最新一篇文章了！</div><div class="alert-tip" id="no-next">已经是最后一篇文章了！</div><input id="nm-switch" type="hidden" value="false"><header class="g-header" data-theme="default"><div class="g-logo"> <a href="/" aria-label="logo"></a></div><div id="search-toggle"></div><div id="travelling-toggle"> <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-train-subway"></use> </svg> </a></div><div id="mode-toggle"> <svg class="icon icon-day" aria-hidden="true"> <use xlink:href="#icon-day"></use> </svg> <svg class="icon icon-night" aria-hidden="true"> <use xlink:href="#icon-night"></use> </svg></div><svg id="menu-toggle" class="icon-menu" aria-hidden="true"> <use xlink:href="#icon-menu"></use> </svg><nav class="g-nav"><ul><li> <a href="/" aria-label="home"> home </a><li> <a href="/blog/index.html" aria-label="blog"> blog </a><li> <a href="/archives.html" aria-label="archives"> archives </a><li> <a href="/tags.html" aria-label="tags"> tags </a><li class="dropdown"> <a class="dropdown-toggle" href="#"> about </a><ul class="dropdown-menu"><li> <a href="/feed.xml" aria-label="RSS"> RSS </a></ul><li class="travelling"> <a href="https://www.travellings.cn/go.html" aria-label="Travelings" target="_blank"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-train-subway"></use> </svg> </a><li class="mode"> <svg class="icon day" aria-hidden="true"> <use xlink:href="#icon-day"></use> </svg> <svg class="icon night" aria-hidden="true"> <use xlink:href="#icon-night"></use> </svg><li id="search"></ul></nav></header><div class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default"><div class="post-wrapper"><div class="post-tags"> <a href="/%20/tags.html#Shader" class="post-tag">Shader</a></div><h1>Unity 纹理高级用法(翻译六)</h1><div class="post-meta"> <span class="post-meta-item"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-user"></use> </svg> catlikecoding </span> <time class="post-meta-item" datetime=" 18-01-04"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-calendar"></use> </svg> <span class="create-at"></span> </time> <time class="post-meta-item" datetime=" 18-01-04"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-update"></use> </svg> <span class="update-at"></span> </time> <span class="post-meta-item"> <svg class="icon words" aria-hidden="true"> <use xlink:href="#icon-words"></use> </svg> 本文总共 9.0k 字 </span> <span class="post-meta-item"> <svg class="icon time" aria-hidden="true"> <use xlink:href="#icon-time"></use> </svg> 阅读全文大约需要 26 分钟 </span> <span class="post-meta-item"> <svg class="icon pv" aria-hidden="true"> <use xlink:href="#icon-pv"></use> </svg> 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次 </span></div></div></div><main class="post-content visible"><div class="container"><div class="submenu hidden"></div><div class="contents"><article class="markdown-body post"><p>本篇摘要:</p><ul><li>扰动法线以模拟凹凸视觉<li>从高度场计算法线<li>采样和混合法线贴图<li>从切线空间转换到世界空间</ul><h2 id="bump-map凹凸贴图">Bump Map(凹凸贴图):</h2><table><thead><tr><th>Bump Map Type<th>Describe<tbody><tr><td>NormalMap<td>法线图，映射公式：normal=pixel*2-1,反映射：pixel=(normal+1)/2. 法线存储既可以在<br>模型空间，也可以在切线空间。//unity顶点输入结构带切线变量，一般存在切线空间更佳<tr><td>HeightMap<td>灰度图(黑白纹理-强度值)，颜色越浅该表面越向外凸起，颜色深越凹。视差映射技术，与<br>Occlusion Map搭配使用体验更佳，计算昂贵<tr><td>Occlusion Map<td>灰度图，表面细节更丰富。颜色值白色表示应该接收完全间接照明的区域，黑色表示没有<br>间接照明。如裂缝或褶皱，实际上不会接收到太多的间接光，可与高度图一起使用<tr><td>Detail Maps<td>参考StandardShader:第二细节纹理，应用第二反照率图和第二法线图，在近距离观察时<br>有清晰的细节，比如毛孔、细小的裂缝等。计算昂贵</table><blockquote class="prompt-tip"><p>常用纹理<br> NormalMap 法线纹理：比较常用<br> HeightMap 高度纹理(视差映射)：手机平台不常用，使用法线纹理替代<br> Occlusion Map：细节纹理<br> Secondary Maps (Detail Maps) &amp; Detail Mask：细节纹理<br></p></blockquote><h3 id="高度图-heightmap">高度图-HeightMap</h3><p>高度图为了模拟平面的凹凸程度，将高度(黑白色)数据存储在纹理中，由于纹理数据是二维的，即u轴和v轴，那为了得到这些数据为每个片段生成法向量，可分别在u轴和v轴上采样。先从U轴计算\(f(u)=h\) ,如果知道了斜率就能求得u轴上所有点的法向量，但斜率由h的变化程度高低决定。为了近似得到从一个点到下一个点的高度差：</p><center class="half"> <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender6/1692664-20191105100150635-879071241.png" width="250"><font size="2.5"> <i>斜率采样示意图，从$f(0) \rightarrow f(1)$.</i> </font> </center><p>这是对切向量的一个粗略的估算，它把整张纹理作为线性的斜率。那为了避免这种粗略计算，可以采样两个靠的更近点的。例如，从\(0 \rightarrow {1\over2}\)，那这两点的斜率\(f=f({1 \over 2})-f(0)\)，同时f因子被缩小，需要乘以相应的倍数。\(2f({1 \over 2})-f(0)\)。扩展开来，可以得到如下的函数：δ值越小越精确，必须大于0小于1.</p><p>差分函数:</p>\[f^`(u) = {f(u+δ) - f(u) \over δ}\]<p>有限差分函数:</p>\[f^`(u)= lim_{(δ\rightarrow 0)} {f(u+δ) - f(u) \over δ}\]<p>那么切向量就是 \(\begin{bmatrix} 1&amp;f`(u)&amp;0 \end{bmatrix}^\mathrm{T}\) ，从切向量计算法向量 \(\begin{bmatrix} f’(u)&amp;1&amp;0 \end{bmatrix}^\mathrm{T}\)</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampler2D</span> <span class="n">_HeightMap</span><span class="p">;</span>
 <span class="n">float4</span> <span class="n">_HeightMap_TexelSize</span><span class="p">;</span><span class="c1">//xy是纹素坐标(uv)，zw是整张纹理宽高</span>
 <span class="n">float2</span> <span class="n">delta</span> <span class="p">=</span> <span class="nf">float2</span><span class="p">(</span><span class="n">_HeightMap_TexelSize</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span><span class="c1">//u轴</span>
 <span class="kt">float</span> <span class="n">h1</span> <span class="p">=</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_HeightMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span><span class="c1">//模型uv在高度图采样</span>
@@ -363,30 +14,11 @@ Secondary Maps (Detail Maps) &amp; Detail Mask：细节纹理<br></p>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">float3</span><span class="p">(</span> <span class="n">h1</span> <span class="p">-</span> <span class="n">h2</span><span class="p">,</span> <span class="m">1</span> <span class="p">,</span> <span class="m">0</span><span class="p">);</span>
 
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>有限差分只在一个方向近似求值，为了更好近似可以在两个方向线性逼近.</p>
-
-<p>中心差分:</p>
-
-\[f^`(u)= lim_{(δ\rightarrow 0)} {f(u+{δ\over 2}) - f(u - {δ\over 2}) \over δ}\]
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float2</span> <span class="n">delta</span> <span class="p">=</span> <span class="nf">float2</span><span class="p">(</span><span class="n">_HeightMap_TexelSize</span><span class="p">.</span><span class="n">x</span> <span class="p">*</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+</code></pre></div></div><p>有限差分只在一个方向近似求值，为了更好近似可以在两个方向线性逼近.</p><p>中心差分:</p>\[f^`(u)= lim_{(δ\rightarrow 0)} {f(u+{δ\over 2}) - f(u - {δ\over 2}) \over δ}\]<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float2</span> <span class="n">delta</span> <span class="p">=</span> <span class="nf">float2</span><span class="p">(</span><span class="n">_HeightMap_TexelSize</span><span class="p">.</span><span class="n">x</span> <span class="p">*</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
 <span class="kt">float</span> <span class="n">h1</span> <span class="p">=</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_HeightMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="p">-</span> <span class="n">delta</span><span class="p">);</span>
 <span class="kt">float</span> <span class="n">h2</span> <span class="p">=</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_HeightMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="p">+</span> <span class="n">delta</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">float3</span><span class="p">(</span><span class="n">h1</span> <span class="p">-</span> <span class="n">h2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>那么$f’(u, v)$计算$f’(v)$同理,切向量
-\(\begin{bmatrix}
- 0&amp;f’(v)&amp;1
-\end{bmatrix}^\mathrm{T}\)
-法向量是
-\(\begin{bmatrix}
- 0&amp;1&amp;f’(v)
-\end{bmatrix}^\mathrm{T}\)</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float2</span> <span class="n">du</span> <span class="p">=</span> <span class="nf">float2</span><span class="p">(</span><span class="n">_HeightMap_TexelSize</span><span class="p">.</span><span class="n">x</span> <span class="p">*</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+</code></pre></div></div><p>那么$f’(u, v)$计算$f’(v)$同理,切向量 \(\begin{bmatrix} 0&amp;f’(v)&amp;1 \end{bmatrix}^\mathrm{T}\) 法向量是 \(\begin{bmatrix} 0&amp;1&amp;f’(v) \end{bmatrix}^\mathrm{T}\)</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float2</span> <span class="n">du</span> <span class="p">=</span> <span class="nf">float2</span><span class="p">(</span><span class="n">_HeightMap_TexelSize</span><span class="p">.</span><span class="n">x</span> <span class="p">*</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
 <span class="kt">float</span> <span class="n">u1</span> <span class="p">=</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_HeightMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="p">-</span> <span class="n">du</span><span class="p">);</span>
 <span class="kt">float</span> <span class="n">u2</span> <span class="p">=</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_HeightMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span> <span class="p">+</span> <span class="n">du</span><span class="p">);</span>
 <span class="c1">//float3 tu = float3(1, u2 - u1, 0);</span>
@@ -398,41 +30,7 @@ Secondary Maps (Detail Maps) &amp; Detail Mask：细节纹理<br></p>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">float3</span><span class="p">(</span><span class="n">u1</span> <span class="p">-</span> <span class="n">u2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">v1</span> <span class="p">-</span> <span class="n">v2</span><span class="p">);</span>
 
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>\(\begin{bmatrix} 0\\f’(v)\\1 \end{bmatrix}\)
-x
-\(\begin{bmatrix} 1\\f’(u)\\0 \end{bmatrix}\)
-=
-\(\begin{bmatrix} -f’(u)\\1\\-f’(v) \end{bmatrix}\)</p>
-
-<h3 id="法线-normal-map">法线-Normal Map</h3>
-
-<p>高度图是每帧采样实时计算法线，为了避免高额计算量，采用预制法线纹理代替。
-<!--url1 url2 url3 url4 url5
-    代表一次加载多少张图
---></p>
-<center class="half">
-<img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender6/1692664-20191105100152927-1516726103.png" width="250"><font size="2.5">
-            <i>Unity中使用高度图.</i>
-        </font>
-</center>
-
-<p>导入高度图作为法线贴图预先计算法线纹理必须勾选Create from Grayscale，白色表示相对更高，黑色表示相对更低。</p>
-
-<p>像素分量范围是[0,1]，而法线分量范围[-1,1]。相互映射转换公式为：</p>
-
-\[pixel = {(normal+1)\over 2}\]
-
-\[normal = pixel \cdot 2 – 1\]
-
-<p>法线纹理呈现淡蓝色，这是因为法向映射最常见的约定是将向上的方向存储在Z分量中(垂直于表面外侧)，又由于DXT5nm纹理压缩格式的原因，只存储了X与Y分量舍弃了Z分量(Y分量存储在G通道，X分量存储在A通道，RB通道被舍弃)。通过推导法向量的单位向量可得Z分量：</p>
-
-\[|N| = |N|^2 = N_x{^2} + N_y{^2} + N_z{^2} = 1\]
-
-\[Nz = \sqrt{1 - N_x{^2} - N_y{^2}}\]
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//第一种方法</span>
+</code></pre></div></div><p>\(\begin{bmatrix} 0\\f’(v)\\1 \end{bmatrix}\) x \(\begin{bmatrix} 1\\f’(u)\\0 \end{bmatrix}\) = \(\begin{bmatrix} -f’(u)\\1\\-f’(v) \end{bmatrix}\)</p><h3 id="法线-normal-map">法线-Normal Map</h3><p>高度图是每帧采样实时计算法线，为了避免高额计算量，采用预制法线纹理代替。</p><center class="half"> <img loading="lazy" src="https://damonc-top2.github.io/web-assets/posts/2018/month1/catRender6/1692664-20191105100152927-1516726103.png" width="250"><font size="2.5"> <i>Unity中使用高度图.</i> </font> </center><p>导入高度图作为法线贴图预先计算法线纹理必须勾选Create from Grayscale，白色表示相对更高，黑色表示相对更低。</p><p>像素分量范围是[0,1]，而法线分量范围[-1,1]。相互映射转换公式为：</p>\[pixel = {(normal+1)\over 2}\] \[normal = pixel \cdot 2 – 1\]<p>法线纹理呈现淡蓝色，这是因为法向映射最常见的约定是将向上的方向存储在Z分量中(垂直于表面外侧)，又由于DXT5nm纹理压缩格式的原因，只存储了X与Y分量舍弃了Z分量(Y分量存储在G通道，X分量存储在A通道，RB通道被舍弃)。通过推导法向量的单位向量可得Z分量：</p>\[|N| = |N|^2 = N_x{^2} + N_y{^2} + N_z{^2} = 1\] \[Nz = \sqrt{1 - N_x{^2} - N_y{^2}}\]<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//第一种方法</span>
 <span class="c1">// Unpack normal as DXT5nm (1, y, 1, x) or BC5 (x, y, 0, 1)</span>
 <span class="c1">//dxt5压缩对应的位置取wy</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xy</span> <span class="p">=</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">).</span><span class="n">wy</span> <span class="p">*</span> <span class="m">2</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
@@ -446,76 +44,40 @@ x
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xzy</span><span class="p">;</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
-</code></pre></div></div>
-
-<h3 id="细节纹理与细节法线-detail-mapssecond-texture-与-detail-normals">细节纹理与细节法线-Detail Maps(Second Texture) 与 Detail Normals</h3>
-
-<p>第二细节纹理与MainTexture合并，简要代码如下：</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//顶点uv坐标映射到纹理uv</span>
+</code></pre></div></div><h3 id="细节纹理与细节法线-detail-mapssecond-texture-与-detail-normals">细节纹理与细节法线-Detail Maps(Second Texture) 与 Detail Normals</h3><p>第二细节纹理与MainTexture合并，简要代码如下：</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//顶点uv坐标映射到纹理uv</span>
 <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span>  <span class="p">=</span> <span class="nf">TRANSFORM_TEX</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">,</span> <span class="n">_MainTex</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">zw</span> <span class="p">=</span> <span class="nf">TRANSFORM_TEX</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">,</span> <span class="n">_DetailTex</span><span class="p">);</span>
 <span class="c1">//计算第二纹理的影响</span>
 <span class="n">float3</span> <span class="n">albedo</span> <span class="p">=</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">).</span><span class="n">rgb</span> <span class="p">*</span> <span class="n">_Tint</span><span class="p">.</span><span class="n">rgb</span><span class="p">;</span>
 <span class="n">albedo</span> <span class="p">*=</span> <span class="nf">tex2D</span><span class="p">(</span><span class="n">_DetailTex</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">zw</span><span class="p">)</span> <span class="p">*</span> <span class="n">unity_ColorSpaceDouble</span><span class="p">;</span><span class="c1">//颜色空间转换</span>
-</code></pre></div></div>
-
-<p>第二细节纹理的法线映射</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
+</code></pre></div></div><p>第二细节纹理的法线映射</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_DetailNormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">zw</span><span class="p">),</span> <span class="n">_DetailBumpScale</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xzy</span><span class="p">;</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
-</code></pre></div></div>
-
-<h3 id="法线融合-blending-normals">法线融合-Blending Normals</h3>
-
-<p>方式一：(main.normal + details.normal) * 0.5; 简单容易，但结果不是很好。主纹理和细节纹理都变得平坦。理想情况下，当其中一个是平的，期望它不会影响到另一个。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">mainNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
+</code></pre></div></div><h3 id="法线融合-blending-normals">法线融合-Blending Normals</h3><p>方式一：(main.normal + details.normal) * 0.5; 简单容易，但结果不是很好。主纹理和细节纹理都变得平坦。理想情况下，当其中一个是平的，期望它不会影响到另一个。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">mainNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
 <span class="n">float3</span> <span class="n">detailNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_DetailNormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">zw</span><span class="p">),</span> <span class="n">_DetailBumpScale</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="p">(</span><span class="n">mainNormal</span> <span class="p">+</span> <span class="n">detailNormal</span><span class="p">)</span> <span class="p">*</span> <span class="m">0.5</span><span class="p">;</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xzy</span><span class="p">;</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>方式二：用z分量做缩放因子求偏导函数，然后相加。[Mx, My, Mz]T = [Mx/Mz, My/Mz, 1]T 同理求得detail偏导函数，然后相加：[Mx/Mz + Dx/Dz, My/Mz + Dy/Dz, 1]T .效果很好，但是在合并陡峭时仍将失去细节。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">mainNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
+</code></pre></div></div><p>方式二：用z分量做缩放因子求偏导函数，然后相加。[Mx, My, Mz]T = [Mx/Mz, My/Mz, 1]T 同理求得detail偏导函数，然后相加：[Mx/Mz + Dx/Dz, My/Mz + Dy/Dz, 1]T .效果很好，但是在合并陡峭时仍将失去细节。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">mainNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
 <span class="n">float3</span> <span class="n">detailNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_DetailNormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">zw</span><span class="p">),</span> <span class="n">_DetailBumpScale</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">float3</span><span class="p">(</span><span class="n">mainNormal</span><span class="p">.</span><span class="n">xy</span> <span class="p">/</span> <span class="n">mainNormal</span><span class="p">.</span><span class="n">z</span> <span class="p">+</span> <span class="n">detailNormal</span><span class="p">.</span><span class="n">xy</span> <span class="p">/</span> <span class="n">detailNormal</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xzy</span><span class="p">;</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>方式三：白色调和，对上一步合并法线分别乘以MzDz,然后再去掉x和y的缩放因子夸大缩放，使陡峭更加明显，同时平坦的法线，它不会影响到另一个了。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">mainNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
+</code></pre></div></div><p>方式三：白色调和，对上一步合并法线分别乘以MzDz,然后再去掉x和y的缩放因子夸大缩放，使陡峭更加明显，同时平坦的法线，它不会影响到另一个了。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">mainNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
 <span class="n">float3</span> <span class="n">detailNormal</span> <span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_DetailNormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">zw</span><span class="p">),</span> <span class="n">_DetailBumpScale</span><span class="p">);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">float3</span><span class="p">(</span><span class="n">mainNormal</span><span class="p">.</span><span class="n">xy</span> <span class="p">+</span> <span class="n">detailNormal</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="n">mainNormal</span><span class="p">.</span><span class="n">z</span> <span class="p">*</span> <span class="n">detailNormal</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
 <span class="c1">//UnityStandardUtils包含了混合函数</span>
 <span class="c1">//i.normal = BlendNormals(mainNormal, detailNormal);</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">xzy</span><span class="p">;</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span><span class="n">View</span> <span class="n">Code</span>
-</code></pre></div></div>
-
-<h3 id="切线空间-tangent-space">切线空间-Tangent Space</h3>
-
-<p>切线空间的法线纹理：顶点为原点，z轴为法线方向，x轴为切线方向，y轴为垂直于xz的副切线方向。Unity导入模型计算切线默认使用了mikktspace(在顶点着色器计算)，也可以在片元着色器计算cross得到副切线向量。</p>
-
-<p>顶点下计算：</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">VertexData</span> <span class="p">{</span>
+</code></pre></div></div><h3 id="切线空间-tangent-space">切线空间-Tangent Space</h3><p>切线空间的法线纹理：顶点为原点，z轴为法线方向，x轴为切线方向，y轴为垂直于xz的副切线方向。Unity导入模型计算切线默认使用了mikktspace(在顶点着色器计算)，也可以在片元着色器计算cross得到副切线向量。</p><p>顶点下计算：</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">VertexData</span> <span class="p">{</span>
 	<span class="n">float4</span> <span class="n">tangent</span> <span class="p">:</span> <span class="n">TANGENT</span><span class="p">;</span>
 <span class="p">};</span>
 <span class="k">struct</span> <span class="nc">Interpolators</span> <span class="p">{</span>
 	<span class="n">float4</span> <span class="n">tangent</span> <span class="p">:</span> <span class="n">TEXCOORD2</span><span class="p">;</span>
 <span class="p">};</span>
-</code></pre></div></div>
-
-<p>使用UnityCG中的UnityObjectToWorldDir在顶点程序中将切线转换为世界空间。 当然，这仅适用于切线的XYZ部分。 它的W分量需要不加修改地传递。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Interpolators</span> <span class="nf">MyVertexProgram</span> <span class="p">(</span><span class="n">VertexData</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div><p>使用UnityCG中的UnityObjectToWorldDir在顶点程序中将切线转换为世界空间。 当然，这仅适用于切线的XYZ部分。 它的W分量需要不加修改地传递。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Interpolators</span> <span class="nf">MyVertexProgram</span> <span class="p">(</span><span class="n">VertexData</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
 	<span class="n">Interpolators</span> <span class="n">i</span><span class="p">;</span>
 	<span class="n">i</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="nf">mul</span><span class="p">(</span><span class="n">UNITY_MATRIX_MVP</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
 	<span class="n">i</span><span class="p">.</span><span class="n">worldPos</span> <span class="p">=</span> <span class="nf">mul</span><span class="p">(</span><span class="n">unity_ObjectToWorld</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
@@ -526,21 +88,13 @@ x
 	<span class="nf">ComputeVertexLightColor</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 	<span class="k">return</span> <span class="n">i</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>现在我们可以将法线从切线空间转换为世界空间。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">binormal</span> <span class="p">=</span> <span class="nf">cross</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">xyz</span><span class="p">)</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
+</code></pre></div></div><p>现在我们可以将法线从切线空间转换为世界空间。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">binormal</span> <span class="p">=</span> <span class="nf">cross</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">xyz</span><span class="p">)</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span>
 	<span class="n">tangentSpaceNormal</span><span class="p">.</span><span class="n">x</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span> <span class="p">+</span>
 	<span class="n">tangentSpaceNormal</span><span class="p">.</span><span class="n">y</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">+</span>
 	<span class="n">tangentSpaceNormal</span><span class="p">.</span><span class="n">z</span> <span class="p">*</span> <span class="n">binormal</span>
 <span class="p">);</span>
-</code></pre></div></div>
-
-<p>去掉显式YZ交换，将其与空间转换结合在一起。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//tangentSpaceNormal = tangentSpaceNormal.xzy;	</span>
+</code></pre></div></div><p>去掉显式YZ交换，将其与空间转换结合在一起。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//tangentSpaceNormal = tangentSpaceNormal.xzy;	</span>
 <span class="n">float3</span> <span class="n">binormal</span> <span class="p">=</span> <span class="nf">cross</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">xyz</span><span class="p">)</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
 <span class="n">i</span><span class="p">.</span><span class="n">normal</span> <span class="p">=</span> <span class="nf">normalize</span><span class="p">(</span>
 	<span class="n">tangentSpaceNormal</span><span class="p">.</span><span class="n">x</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span> <span class="p">+</span>
@@ -548,18 +102,8 @@ x
 	<span class="n">tangentSpaceNormal</span><span class="p">.</span><span class="n">z</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span>
 <span class="err">）</span><span class="p">;</span>
 
-</code></pre></div></div>
-
-<p>在构造副法线时，还有一个额外的细节。假设一个对象的scale设置为(- 1,1,1)，这意味着它是镜像的。在这种情况下，我们必须翻转副法线，来正确地镜像切线空间。事实上，当奇数维数为负时，我们必须这样做。_UnityShaderVariables_通过定义float4 unity_WorldTransformParams变量来帮助我们完成这个任务。当需要翻转副法线时，它的第四个分量为- 1，否则为1。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">binormal</span> <span class="p">=</span> <span class="nf">cross</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">xyz</span><span class="p">)</span> <span class="p">*(</span><span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">w</span> <span class="p">*</span> <span class="n">unity_WorldTransformParams</span><span class="p">.</span><span class="n">w</span><span class="p">);</span>
-</code></pre></div></div>
-
-<h2 id="转换空间">转换空间</h2>
-
-<p>在世界空间下计算</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fixed4</span> <span class="nf">MyFrag</span><span class="p">(</span><span class="n">v2f</span> <span class="n">v</span><span class="p">)</span> <span class="p">:</span> <span class="n">SV_TARGET</span><span class="p">{</span>
+</code></pre></div></div><p>在构造副法线时，还有一个额外的细节。假设一个对象的scale设置为(- 1,1,1)，这意味着它是镜像的。在这种情况下，我们必须翻转副法线，来正确地镜像切线空间。事实上，当奇数维数为负时，我们必须这样做。_UnityShaderVariables_通过定义float4 unity_WorldTransformParams变量来帮助我们完成这个任务。当需要翻转副法线时，它的第四个分量为- 1，否则为1。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">binormal</span> <span class="p">=</span> <span class="nf">cross</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">xyz</span><span class="p">)</span> <span class="p">*(</span><span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">w</span> <span class="p">*</span> <span class="n">unity_WorldTransformParams</span><span class="p">.</span><span class="n">w</span><span class="p">);</span>
+</code></pre></div></div><h2 id="转换空间">转换空间</h2><p>在世界空间下计算</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fixed4</span> <span class="nf">MyFrag</span><span class="p">(</span><span class="n">v2f</span> <span class="n">v</span><span class="p">)</span> <span class="p">:</span> <span class="n">SV_TARGET</span><span class="p">{</span>
 	<span class="c1">//...</span>
 	<span class="n">float3</span> <span class="n">tangentSpaceNormal</span><span class="p">=</span> <span class="nf">UnpackScaleNormal</span><span class="p">(</span><span class="nf">tex2D</span><span class="p">(</span><span class="n">_NormalMap</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">xy</span><span class="p">),</span> <span class="n">_BumpScale</span><span class="p">);</span>
 	<span class="err">#</span><span class="k">if</span> <span class="nf">defined</span><span class="p">(</span><span class="n">BINORMAL_PER_FRAGMENT</span><span class="p">)</span>
@@ -576,22 +120,12 @@ x
 	<span class="p">);</span>
 	<span class="c1">//...</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>在切线空间计算</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//计算副切线</span>
+</code></pre></div></div><p>在切线空间计算</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//计算副切线</span>
 <span class="n">float3</span> <span class="n">binormal</span> <span class="p">=</span> <span class="nf">cross</span><span class="p">(</span><span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">),</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">xyz</span><span class="p">))</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
 <span class="c1">//切线空间矩阵//行优先的填充</span>
 <span class="n">float3x3</span> <span class="n">t_matrix</span> <span class="p">=</span> <span class="nf">float3x3</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">tangent</span><span class="p">.</span><span class="n">xyz</span><span class="p">,</span> <span class="n">binormal</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
 <span class="c1">//把各种信息转到切线空间下参与计算</span>
-</code></pre></div></div>
-
-<h3 id="副切线在哪算合适">副切线在哪算合适</h3>
-
-<p>在顶点计算不必计算叉乘函数，通过宏定义开启。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Interpolators</span> <span class="p">{</span>
+</code></pre></div></div><h3 id="副切线在哪算合适">副切线在哪算合适</h3><p>在顶点计算不必计算叉乘函数，通过宏定义开启。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Interpolators</span> <span class="p">{</span>
 	<span class="n">float4</span> <span class="n">position</span> <span class="p">:</span> <span class="n">SV_POSITION</span><span class="p">;</span>
 	<span class="n">float4</span> <span class="n">uv</span> <span class="p">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
 	<span class="n">float3</span> <span class="n">normal</span> <span class="p">:</span> <span class="n">TEXCOORD1</span><span class="p">;</span>
@@ -609,11 +143,7 @@ x
 		<span class="n">float3</span> <span class="n">vertexLightColor</span> <span class="p">:</span> <span class="n">TEXCOORD5</span><span class="p">;</span>
 	<span class="err">#</span><span class="n">endif</span>
 <span class="p">};</span>
-</code></pre></div></div>
-
-<p>如果不确定在哪里计算比较好，可以同时支持这两种方法。假设定义了BINORMAL_PER_FRAGMENT，我们逐像素计算每个片段的副法线。否则，逐顶点计算。在前一种情况下，我们保持我们的float4 tangent变量 。在后者中，我们需要两个float3变量。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="nf">CreateBinormal</span> <span class="p">(</span><span class="n">float3</span> <span class="n">normal</span><span class="p">,</span> <span class="n">float3</span> <span class="n">tangent</span><span class="p">,</span> <span class="kt">float</span> <span class="n">binormalSign</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div><p>如果不确定在哪里计算比较好，可以同时支持这两种方法。假设定义了BINORMAL_PER_FRAGMENT，我们逐像素计算每个片段的副法线。否则，逐顶点计算。在前一种情况下，我们保持我们的float4 tangent变量 。在后者中，我们需要两个float3变量。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="nf">CreateBinormal</span> <span class="p">(</span><span class="n">float3</span> <span class="n">normal</span><span class="p">,</span> <span class="n">float3</span> <span class="n">tangent</span><span class="p">,</span> <span class="kt">float</span> <span class="n">binormalSign</span><span class="p">)</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="nf">cross</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">tangent</span><span class="p">.</span><span class="n">xyz</span><span class="p">)</span> <span class="p">*</span>
 		<span class="p">(</span><span class="n">binormalSign</span> <span class="p">*</span> <span class="n">unity_WorldTransformParams</span><span class="p">.</span><span class="n">w</span><span class="p">);</span>
 <span class="p">}</span>
@@ -656,534 +186,4 @@ x
 		<span class="n">tangentSpaceNormal</span><span class="p">.</span><span class="n">z</span> <span class="p">*</span> <span class="n">i</span><span class="p">.</span><span class="n">normal</span>
 	<span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<p>要对所有Pass块生效，需要使用CGINCLUDE … ENDCG包含</p>
-
-                <div class="post-copyright">
-                    <p>
-                        <span>版权声明：</span>
-                        如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">编程散记</a>
-                        所有，转载请注明本文链接。
-                    </p>
-                    
-                    <p>
-                        （采用 
-                        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="extlinks">CC
-                            BY-NC-SA 4.0</a>
-                        许可协议进行授权）
-                    </p>
-                    
-                    <p><span>本文标题：</span>《 Unity 纹理高级用法(翻译六) 》</p>
-                    <p><span>本文链接：</span><a href="https://www.damonc.top/Unity_Advance_Texture.html" class="cplink">https://www.damonc.top/Unity_Advance_Texture.html</a></p>
-                    <p class="tips">本文最后一次更新为 <span></span> 天前，文章中的某些内容可能已过时！
-                    </p>
-                </div>
-            </article>
-        </div>
-        
-        
-        
-        
-            <div class="table-of-contents">
-                <div class="toc-header"><h2>目录</h2></div>
-                <div class="toc-body">
-                    <ul><li><a onclick="scrollToAdjust('bump-map(凹凸贴图):')">1. Bump Map(凹凸贴图):</a><ul><li><a onclick="scrollToAdjust('高度图-heightmap')">1.1 高度图-HeightMap</a></li><li><a onclick="scrollToAdjust('法线-normal-map')">1.2 法线-Normal Map</a></li><li><a onclick="scrollToAdjust('细节纹理与细节法线-detail-maps(second-texture)-与-detail-normals')">1.3 细节纹理与细节法线-Detail Maps(Second Texture) 与 Detail Normals</a></li><li><a onclick="scrollToAdjust('法线融合-blending-normals')">1.4 法线融合-Blending Normals</a></li><li><a onclick="scrollToAdjust('切线空间-tangent-space')">1.5 切线空间-Tangent Space</a></li></ul></li><li><a onclick="scrollToAdjust('转换空间')">2. 转换空间</a><ul><li><a onclick="scrollToAdjust('副切线在哪算合适')">2.1 副切线在哪算合适</a></li></ul></li></ul>
-                </div>
-            </div>
-        
-            </div>
-        </div>
-        
-<div class="social-share-wrapper">
-    <div class="social-share"></div>
-</div>
-
-</main>
-
-<section class="author-detail">
-    <section class="post-footer-item author-card">
-        <div class="avatar">
-            <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
-        </div>
-        <div class="author-name" rel="author">编程散记</div>
-        <div class="bio">
-            <p>Developer & Maintainer</p>
-        </div>
-        
-        <ul class="sns-links">
-            
-            <li>
-                <a href="https://github.com/damonc-top" target="_blank" aria-label="github">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-github"></use>
-                    </svg>
-                </a>
-            </li>
-            
-            <li>
-                <a href="https://segmentfault.com/u/junyidebocai" target="_blank" aria-label="segmentfault">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-segmentfault"></use>
-                    </svg>
-                </a>
-            </li>
-            
-        </ul>
-        
-    </section>
-    <section class="post-footer-item read-next">
-        
-        <div class="read-next-item">
-            <a href="/Unity_Shadows.html" class="read-next-link" aria-label="Unity Shadow 阴影(翻译七)"></a>
-            <section>
-                <span>Unity Shadow 阴影(翻译七)</span>
-                <p>本篇摘要:  探索Unity中的阴影渲染  投射一个方向光阴影  接收一个方向光阴影  支持对聚光源和点光源阴影</p>
-            </section>
-            
-        </div>
-        
-
-        
-        <div class="read-next-item">
-            <a href="/Unity_Multi_Light.html" class="read-next-link"
-                aria-label="Unity 基础光照多光源采样(翻译五)"></a>
-            <section>
-                <span>Unity 基础光照多光源采样(翻译五)</span>
-                <p>本篇摘要：  使用多个光源渲染  支持多光源类型  使用光照信息  计算顶点光照  了解球谐函数</p>
-            </section>
-            
-        </div>
-        
-    </section>
-    
-
-<script src="https://unpkg.com/@waline/client@3.3.2/dist/waline.umd.js" async></script>
-<script>
-    $(document).ready(function () {
-        Waline.init({
-            el: '#waline',
-            serverURL: "https://comments.damonc.top",
-            reaction: "true",
-            comment: true,
-            locale: "{reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}",
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        if ($("#comments-switch").length > 0) {
-            var comment_status = $("#cmn-toggle-4")[0].checked;
-            if (comment_status) {
-                $("#waline").addClass("active");
-            } else {
-                $("#disqus_thread").addClass("active");
-            }
-            $("#cmn-toggle-4").click(function () {
-                $("#disqus_thread").toggleClass("active");
-                $("#waline").toggleClass("active");
-            })
-        } else {
-            if ($("#disqus_thread").length > 0) {
-                $("#disqus_thread").addClass("active");
-            } else if ($("#waline").length > 0) {
-                $("#waline").addClass("active");
-            }
-        }
-    })
-</script>
-    
-
-
-    
-        
-<section class="post-footer-item comment">
-    <div class="comments-headline">
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-comment"></use>
-        </svg>
-        <span>评论</span>
-    </div>
-    
-        
-    
-</section>
-
-    
-
-
-
-    
-    
-    <section class="post-footer-item comment">
-        <div id="waline"></div>
-    </section>
-    
-
-</section>
-            
-
-
-<footer class="g-footer">
-  <div class="g-container">
-    <div class="g-left">
-      <section class="links">
-        本站由 <a href="//jekyllrb.com" target="_blank" class="extlinks">Jekyll</a> 和 基于 <a href="https://github.com/kaeyleo/jekyll-theme-H2O" target="_blank" class="extlinks">H2O主题模版</a> 强力驱动
-          
-        
-      </section>
-      <section class="links">编程散记 ©
-        
-        
-          2016
-          -
-        
-        2025
-        
-          <a href="https://icp.gov.moe/?keyword=20240160" target="_blank" class="extlinks">萌ICP备20240160号</a>
-        
-        <a href="/rss.xml" target="_blank" aria-label="Terms of Service" class="others">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-rss"></use>
-          </svg> RSS  
-        </a>
-        <a href="/tos" target="_blank" aria-label="Terms of Service" class="others">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-tos"></use>
-          </svg> 使用条款  
-        </a>
-      </section>
-      
-      <section class="links">
-        <span id="busuanzi_container_site_pv">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-pv"></use>
-          </svg> 总浏览量 <span id="busuanzi_value_site_pv"></span> <b>·</b>
-        </span>
-        <span id="busuanzi_container_site_uv">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-user"></use>
-          </svg> 总访问量 <span id="busuanzi_value_site_uv"></span>
-        </span>
-      </section>
-      
-      <section>
-        
-          本站已运行 
-          <span class="alivetime_days"></span> 天
-          <span class="alivetime_hours"></span> 小时
-          <span class="alivetime_minutes"></span> 分
-          <span class="alivetime_seconds"></span> 秒
-        
-      </section>
-    </div>
-    <div class="g-right">
-      
-      
-      <section class="badges">
-        
-          <a href="https://www.foreverblog.cn/" target="_blank" class="foreverblog" aria-label="foreverblog"> 
-            <img loading="lazy" src="https://img.foreverblog.cn/logo_en_default.png" alt=""> 
-          </a>
-        
-        
-          <a href="https://www.foreverblog.cn/go.html" target="_blank" class="wormhole" aria-label="wormhole"> 
-            <img loading="lazy" src="https://img.foreverblog.cn/wormhole_3.gif" alt="" title="穿梭虫洞-随机访问十年之约友链博客">
-          </a>
-        
-        
-          <a href="https://www.travellings.cn/go.html" target="_blank" class="travelling-badge" aria-label="Travelling" rel="noopener" title="开往-友链接力">
-            <img loading="lazy" src="https://cdn.jsdelivr.net/gh/travellings-link/travellings/assets/logo.gif" alt="开往-友链接力">
-          </a>
-        
-        
-          <a href="https://notbyai.fyi/" target="_blank" class="notbyAI" aria-label="notbyAI"> 
-            <img loading="lazy" src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI">
-          </a>
-        
-      </section>
-      
-    </div>
-    
-  </div>
-</footer>
-<div class="cookie-tip">
-   为了提升本站的使用体验和必要功能的正常使用，本站会使用本地 Cookie。详细请查看「 <a href="/tos.html">本站使用条款</a> 」了解更多。
-
-  <button id="accept-tos">同意</button>
-</div>
-
-<section id="tools">
-  
-  
-  <div class="tool toc">
-    <svg class="icon b1 active" aria-hidden="true">
-      <use xlink:href="#icon-toc"></use>
-    </svg>
-    <svg class="icon b2" aria-hidden="true">
-      <use xlink:href="#icon-exit"></use>
-    </svg>
-  </div>
-  
-</section>
-<section id="bttb" aria-label="Scroll back to top" class="bttb">
-  <div class="tool">
-    <svg class="icon top" aria-hidden="true">
-      <use xlink:href="#icon-top"></use>
-    </svg>
-  </div>
-</section>
-        </div>
-        
-<div class="modal">
-    <div class="modal-content">
-        <header>
-            <span class="close">&times;</span>
-        </header>
-        <div class="container"></div>
-    </div>
-</div>
-
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" async></script>
-        
-            <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/dayjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/customParseFormat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/relativeTime.js"></script>
-<script>
-    $(document).ready(function () {
-        var time_formats = ['YYYY-MM-DD HH:mm:ss ZZ', 'YYYY DD MMM HH:mm:ss ZZ', 'YYYY年MM月DD日 HH:mm:ss ZZ'];
-        function dateFormat(date, format) {
-            var date_org = dayjs(date, time_formats[format]);
-            var date = date_org.format(time_formats[format]);
-            return { "date_org": date_org, "date": date }
-        }
-
-        dayjs.extend(window.dayjs_plugin_customParseFormat);
-        dayjs.extend(window.dayjs_plugin_relativeTime);
-        var post_date = $("meta[property='post-date']").attr('content');
-        var post_date_format = $("meta[property='post-date-format']").attr('content');
-        var local_post_date = dateFormat(post_date, post_date_format);
-
-        $(".post time span.create-at").html(local_post_date["date"]);
-
-        // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2018/ShaderTranslate/2018-01-04-Unity_Advance_Texture.md", {
-        //     headers: {
-        //         'Authorization': 'token ',
-        //         'Accept': 'application/vnd.github.v3+json'
-        //     }
-        // }).then((response) => {
-        //     return response.json();
-        fetch("https://winter-meadow-170b.damoncbl.workers.dev?" + new URLSearchParams({
-            owner: "damonc-top",
-            repo: "blog",
-            path: "post_project/_posts/2018/ShaderTranslate/2018-01-04-Unity_Advance_Texture.md"
-        })).then((response) => {
-            return response.json();
-        }).then((commits) => {
-            if (commits.length != 0) {
-                var update_at = dayjs(commits[0]['commit']['committer']['date']);
-            } else {
-                var update_at = post_date
-            }
-
-            var local_update_at = dateFormat(update_at, post_date_format);
-            $('.post time span.update-at').html(local_update_at["date"]);
-
-            var relative_time = dayjs().diff(local_update_at["date_org"], 'day');
-            $(".post-copyright .tips span").append(relative_time);
-            if (relative_time > 365) {
-                $(".post-copyright .tips").addClass("active");
-            }
-        });
-    });
-</script>
-            <script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
-<script>
-    socialShare('.social-share', {
-        sites: [
-            
-            'wechat', 
-            
-            'weibo', 
-            
-            'douban', 
-            
-            'twitter'
-            
-        ],
-    wechatQrcodeTitle: "分享到微信朋友圈",
-        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
-      });
-    $("a.social-share-icon").each(function () {
-        $(this).attr("aria-label", $(this).attr("class").split(' ')[1])
-    });
-</script>
-        
-        <script src="https://cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script>
-        <script>
-            /**
-            * Better Scroll Experience
-            */
-            function scrollToAdjust(id){
-              var element = document.getElementById(id);
-              var headerOffset = 90;
-              var elementPosition = element.getBoundingClientRect().top;
-              var offsetPosition = elementPosition + window.scrollY - headerOffset;
-              window.scrollTo({
-                  top: offsetPosition,
-                  behavior: "smooth"
-              });
-            }
-        </script>
-        <script src="/assets/js/app.min.js"></script>
-        <script src="https://at.alicdn.com/t/c/font_3046306_ujr2yq34hw.js"></script>
-        
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WN45VXRK"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'GTM-WN45VXRK');
-</script>
-
-
-
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-        
-	<script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-		jax: ["input/TeX", "output/HTML-CSS"],
-		tex2jax: {
-			inlineMath: [['$', '$'], ["\\(", "\\)"]],
-			processEscapes: true,
-			skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-		},
-		"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
-      });
-    </script>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var baseurl = $("meta[property='og:baseurl']").attr('content');
-        $("center img").each(function () {
-            $(this).attr('data-src', $(this).attr('src')).removeAttr('src').addClass("lazyload").attr('src', baseurl + '/assets/img/loading.gif');
-            var strA = "<a data-fancybox='gallery' ref='gallery' href='" + $(this).attr('data-src') + "' data-caption='" + $(this).attr('alt') + "'></a>";
-            $(this).wrapAll(strA);
-            var caption = $(this)[0].alt;
-            $(this).parent().after('<span class="caption">' + caption + '</span>');
-        });
-        Fancybox.bind('[data-fancybox]', {
-            on: {
-                load: (fancybox, slide) => {
-                    var gray = $("meta[property='og:gray']").attr('content');
-                    if (gray == "true") {
-                        $(".fancybox__content img").addClass("gray");
-                        $(".carousel__track .fancybox__thumb").addClass("gray");
-                    }
-                }
-            }
-        });
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var previous_url = $("meta[property='og:previous_url']").attr('content');
-        var next_url = $("meta[property='og:next_url']").attr('content');
-
-        hotkeys('left', function (event, handler) {
-            // Prevent the default refresh event under WINDOWS system
-            event.preventDefault();
-            if (previous_url) {
-                console.log('you pressed left!');
-                window.location.href = previous_url;
-            } else {
-                $("#no-previous").addClass("active");
-                setTimeout(function () { $("#no-previous").removeClass("active"); }, 1500);
-            }
-        });
-
-        hotkeys('right', function (event, handler) {
-            // Prevent the default refresh event under WINDOWS system
-            event.preventDefault();
-            if (next_url) {
-                console.log('you pressed right!');
-                window.location.href = next_url;
-            } else {
-                $("#no-next").addClass("active");
-                setTimeout(function () { $("#no-next").removeClass("active"); }, 1500);
-            }
-        });
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
-<script>
-    $(document).ready(function () {
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: "default",
-        });
-        mermaid.init(undefined, $('.mermaid2'));
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-        <script>
-    if ("serviceWorker" in navigator) {
-        if (navigator.serviceWorker.controller) {
-            console.log("An active service worker found, no need to register");
-        } else {
-            // Register the service worker
-            navigator.serviceWorker
-            .register("/sw.js", {
-                scope: "/"
-            })
-            .then(function (reg) {
-                console.log("Service worker has been registered for scope: " + reg.scope);
-            });
-        }
-    }
-
-// 检测浏览器是否支持SW
-// if(navigator.serviceWorker != null){
-//     navigator.serviceWorker.register("/sw.js")
-//         .then(function(registartion){
-//             console.log('支持sw:',registartion.scope)
-//         })
-// } else {
-//     console.log('不支持sw')
-// }
-</script>
-        
-        
-<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
-<script type="text/javascript">
-    docsearch({
-        appId: "NCUJ5WJECO",
-        apiKey: "b625a4b91a45af033cbdb526694e9e65",
-        indexName: "damonc",
-        lang: " ", // 显式设置语言
-        insights: true,
-        debug: false,
-        container: 'li#search',
-    });
-</script>
-
-  </body>
-
-</html>
+</code></pre></div></div><p>要对所有Pass块生效，需要使用CGINCLUDE … ENDCG包含</p><div class="post-copyright"><p> <span>版权声明：</span> 如无特别声明，本文版权归 <a href="https://www.damonc.top" class="cplink">编程散记</a> 所有，转载请注明本文链接。</p><p> （采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="extlinks">CC BY-NC-SA 4.0</a> 许可协议进行授权）</p><p><span>本文标题：</span>《 Unity 纹理高级用法(翻译六) 》</p><p><span>本文链接：</span><a href="https://www.damonc.top/Unity_Advance_Texture.html" class="cplink">https://www.damonc.top/Unity_Advance_Texture.html</a></p><p class="tips">本文最后一次更新为 <span></span> 天前，文章中的某些内容可能已过时！</p></div></article></div><div class="table-of-contents"><div class="toc-header"><h2>目录</h2></div><div class="toc-body"><ul><li><a onclick="scrollToAdjust('bump-map(凹凸贴图):')">1. Bump Map(凹凸贴图):</a><ul><li><a onclick="scrollToAdjust('高度图-heightmap')">1.1 高度图-HeightMap</a><li><a onclick="scrollToAdjust('法线-normal-map')">1.2 法线-Normal Map</a><li><a onclick="scrollToAdjust('细节纹理与细节法线-detail-maps(second-texture)-与-detail-normals')">1.3 细节纹理与细节法线-Detail Maps(Second Texture) 与 Detail Normals</a><li><a onclick="scrollToAdjust('法线融合-blending-normals')">1.4 法线融合-Blending Normals</a><li><a onclick="scrollToAdjust('切线空间-tangent-space')">1.5 切线空间-Tangent Space</a></ul><li><a onclick="scrollToAdjust('转换空间')">2. 转换空间</a><ul><li><a onclick="scrollToAdjust('副切线在哪算合适')">2.1 副切线在哪算合适</a></ul></ul></div></div></div></div><div class="social-share-wrapper"><div class="social-share"></div></div></main><section class="author-detail"><section class="post-footer-item author-card"><div class="avatar"> <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt=""></div><div class="author-name" rel="author">编程散记</div><div class="bio"><p>Developer & Maintainer</p></div><ul class="sns-links"><li> <a href="https://github.com/damonc-top" target="_blank" aria-label="github"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-github"></use> </svg> </a><li> <a href="https://segmentfault.com/u/junyidebocai" target="_blank" aria-label="segmentfault"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-segmentfault"></use> </svg> </a></ul></section><section class="post-footer-item read-next"><div class="read-next-item"> <a href="/Unity_Shadows.html" class="read-next-link" aria-label="Unity Shadow 阴影(翻译七)"></a><section> <span>Unity Shadow 阴影(翻译七)</span><p>本篇摘要: 探索Unity中的阴影渲染 投射一个方向光阴影 接收一个方向光阴影 支持对聚光源和点光源阴影</p></section></div><div class="read-next-item"> <a href="/Unity_Multi_Light.html" class="read-next-link" aria-label="Unity 基础光照多光源采样(翻译五)"></a><section> <span>Unity 基础光照多光源采样(翻译五)</span><p>本篇摘要： 使用多个光源渲染 支持多光源类型 使用光照信息 计算顶点光照 了解球谐函数</p></section></div></section><script src="https://unpkg.com/@waline/client@3.3.2/dist/waline.umd.js" async></script> <script> $(document).ready(function () { Waline.init({ el: '#waline', serverURL: "https://comments.damonc.top", reaction: "true", comment: true, locale: "{reaction0: '赞一个', reaction1: '踩一下', reaction2: '有点酷', reaction3: '看不懂', reaction4: '啥玩意', reaction5: '想睡觉'}", }); }); </script> <script> $(document).ready(function () { if ($("#comments-switch").length > 0) { var comment_status = $("#cmn-toggle-4")[0].checked; if (comment_status) { $("#waline").addClass("active"); } else { $("#disqus_thread").addClass("active"); } $("#cmn-toggle-4").click(function () { $("#disqus_thread").toggleClass("active"); $("#waline").toggleClass("active"); }) } else { if ($("#disqus_thread").length > 0) { $("#disqus_thread").addClass("active"); } else if ($("#waline").length > 0) { $("#waline").addClass("active"); } } }) </script><section class="post-footer-item comment"><div class="comments-headline"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-comment"></use> </svg> <span>评论</span></div></section><section class="post-footer-item comment"><div id="waline"></div></section></section><footer class="g-footer"><div class="g-container"><div class="g-left"><section class="links"> 本站由 <a href="//jekyllrb.com" target="_blank" class="extlinks">Jekyll</a> 和 基于 <a href="https://github.com/kaeyleo/jekyll-theme-H2O" target="_blank" class="extlinks">H2O主题模版</a> 强力驱动</section><section class="links">编程散记 © 2016 - 2025 <a href="https://icp.gov.moe/?keyword=20240160" target="_blank" class="extlinks">萌ICP备20240160号</a> <a href="/rss.xml" target="_blank" aria-label="Terms of Service" class="others"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-rss"></use> </svg> RSS </a> <a href="/tos" target="_blank" aria-label="Terms of Service" class="others"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-tos"></use> </svg> 使用条款 </a></section><section class="links"> <span id="busuanzi_container_site_pv"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-pv"></use> </svg> 总浏览量 <span id="busuanzi_value_site_pv"></span> <b>·</b> </span> <span id="busuanzi_container_site_uv"> <svg class="icon" aria-hidden="true"> <use xlink:href="#icon-user"></use> </svg> 总访问量 <span id="busuanzi_value_site_uv"></span> </span></section><section> 本站已运行 <span class="alivetime_days"></span> 天 <span class="alivetime_hours"></span> 小时 <span class="alivetime_minutes"></span> 分 <span class="alivetime_seconds"></span> 秒</section></div><div class="g-right"><section class="badges"> <a href="https://www.foreverblog.cn/" target="_blank" class="foreverblog" aria-label="foreverblog"> <img loading="lazy" src="https://img.foreverblog.cn/logo_en_default.png" alt=""> </a> <a href="https://www.foreverblog.cn/go.html" target="_blank" class="wormhole" aria-label="wormhole"> <img loading="lazy" src="https://img.foreverblog.cn/wormhole_3.gif" alt="" title="穿梭虫洞-随机访问十年之约友链博客"> </a> <a href="https://www.travellings.cn/go.html" target="_blank" class="travelling-badge" aria-label="Travelling" rel="noopener" title="开往-友链接力"> <img loading="lazy" src="https://cdn.jsdelivr.net/gh/travellings-link/travellings/assets/logo.gif" alt="开往-友链接力"> </a> <a href="https://notbyai.fyi/" target="_blank" class="notbyAI" aria-label="notbyAI"> <img loading="lazy" src="/assets/icons/notbyAI-white.png" alt="Written by Human, Not by AI"> </a></section></div></div></footer><div class="cookie-tip"> 为了提升本站的使用体验和必要功能的正常使用，本站会使用本地 Cookie。详细请查看「 <a href="/tos.html">本站使用条款</a> 」了解更多。 <button id="accept-tos">同意</button></div><section id="tools"><div class="tool toc"> <svg class="icon b1 active" aria-hidden="true"> <use xlink:href="#icon-toc"></use> </svg> <svg class="icon b2" aria-hidden="true"> <use xlink:href="#icon-exit"></use> </svg></div></section><section id="bttb" aria-label="Scroll back to top" class="bttb"><div class="tool"> <svg class="icon top" aria-hidden="true"> <use xlink:href="#icon-top"></use> </svg></div></section></div><div class="modal"><div class="modal-content"><header> <span class="close">&times;</span></header><div class="container"></div></div></div><script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" async></script> <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/dayjs.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/customParseFormat.js"></script> <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.2/plugin/relativeTime.js"></script> <script> $(document).ready(function () { var time_formats = ['YYYY-MM-DD HH:mm:ss ZZ', 'YYYY DD MMM HH:mm:ss ZZ', 'YYYY年MM月DD日 HH:mm:ss ZZ']; function dateFormat(date, format) { var date_org = dayjs(date, time_formats[format]); var date = date_org.format(time_formats[format]); return { "date_org": date_org, "date": date } } dayjs.extend(window.dayjs_plugin_customParseFormat); dayjs.extend(window.dayjs_plugin_relativeTime); var post_date = $("meta[property='post-date']").attr('content'); var post_date_format = $("meta[property='post-date-format']").attr('content'); var local_post_date = dateFormat(post_date, post_date_format); $(".post time span.create-at").html(local_post_date["date"]); // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2018/ShaderTranslate/2018-01-04-Unity_Advance_Texture.md", { // headers: { // 'Authorization': 'token ', // 'Accept': 'application/vnd.github.v3+json' // } // }).then((response) => { // return response.json(); fetch("https://winter-meadow-170b.damoncbl.workers.dev?" + new URLSearchParams({ owner: "damonc-top", repo: "blog", path: "post_project/_posts/2018/ShaderTranslate/2018-01-04-Unity_Advance_Texture.md" })).then((response) => { return response.json(); }).then((commits) => { if (commits.length != 0) { var update_at = dayjs(commits[0]['commit']['committer']['date']); } else { var update_at = post_date } var local_update_at = dateFormat(update_at, post_date_format); $('.post time span.update-at').html(local_update_at["date"]); var relative_time = dayjs().diff(local_update_at["date_org"], 'day'); $(".post-copyright .tips span").append(relative_time); if (relative_time > 365) { $(".post-copyright .tips").addClass("active"); } }); }); </script> <script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script> <script> socialShare('.social-share', { sites: [ 'wechat', 'weibo', 'douban', 'twitter' ], wechatQrcodeTitle: "分享到微信朋友圈", wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>' }); $("a.social-share-icon").each(function () { $(this).attr("aria-label", $(this).attr("class").split(' ')[1]) }); </script> <script src="https://cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script> <script> /** * Better Scroll Experience */ function scrollToAdjust(id){ var element = document.getElementById(id); var headerOffset = 90; var elementPosition = element.getBoundingClientRect().top; var offsetPosition = elementPosition + window.scrollY - headerOffset; window.scrollTo({ top: offsetPosition, behavior: "smooth" }); } </script> <script src="/assets/js/app.min.js"></script> <script src="https://at.alicdn.com/t/c/font_3046306_ujr2yq34hw.js"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WN45VXRK"></script> <script> window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'GTM-WN45VXRK'); </script> <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script> <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ jax: ["input/TeX", "output/HTML-CSS"], tex2jax: { inlineMath: [['$', '$'], ["\\(", "\\)"]], processEscapes: true, skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }, "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] } }); </script> <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.min.js"></script> <script> $(document).ready(function () { var baseurl = $("meta[property='og:baseurl']").attr('content'); $("center img").each(function () { $(this).attr('data-src', $(this).attr('src')).removeAttr('src').addClass("lazyload").attr('src', baseurl + '/assets/img/loading.gif'); var strA = "<a data-fancybox='gallery' ref='gallery' href='" + $(this).attr('data-src') + "' data-caption='" + $(this).attr('alt') + "'></a>"; $(this).wrapAll(strA); var caption = $(this)[0].alt; $(this).parent().after('<span class="caption">' + caption + '</span>'); }); Fancybox.bind('[data-fancybox]', { on: { load: (fancybox, slide) => { var gray = $("meta[property='og:gray']").attr('content'); if (gray == "true") { $(".fancybox__content img").addClass("gray"); $(".carousel__track .fancybox__thumb").addClass("gray"); } } } }); }); </script> <script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script> <script> $(document).ready(function () { var previous_url = $("meta[property='og:previous_url']").attr('content'); var next_url = $("meta[property='og:next_url']").attr('content'); hotkeys('left', function (event, handler) { // Prevent the default refresh event under WINDOWS system event.preventDefault(); if (previous_url) { console.log('you pressed left!'); window.location.href = previous_url; } else { $("#no-previous").addClass("active"); setTimeout(function () { $("#no-previous").removeClass("active"); }, 1500); } }); hotkeys('right', function (event, handler) { // Prevent the default refresh event under WINDOWS system event.preventDefault(); if (next_url) { console.log('you pressed right!'); window.location.href = next_url; } else { $("#no-next").addClass("active"); setTimeout(function () { $("#no-next").removeClass("active"); }, 1500); } }); }); </script> <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script> <script> $(document).ready(function () { mermaid.initialize({ startOnLoad: true, theme: "default", }); mermaid.init(undefined, $('.mermaid2')); }); </script> <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script> <script> if ("serviceWorker" in navigator) { if (navigator.serviceWorker.controller) { console.log("An active service worker found, no need to register"); } else { // Register the service worker navigator.serviceWorker .register("/sw.js", { scope: "/" }) .then(function (reg) { console.log("Service worker has been registered for scope: " + reg.scope); }); } } // 检测浏览器是否支持SW // if(navigator.serviceWorker != null){ // navigator.serviceWorker.register("/sw.js") // .then(function(registartion){ // console.log('支持sw:',registartion.scope) // }) // } else { // console.log('不支持sw') // } </script> <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script> <script type="text/javascript"> docsearch({ appId: "NCUJ5WJECO", apiKey: "b625a4b91a45af033cbdb526694e9e65", indexName: "damonc", lang: " ", // 显式设置语言 insights: true, debug: false, container: 'li#search', }); </script>
