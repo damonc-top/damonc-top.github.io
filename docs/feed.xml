@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2025-08-25T23:56:56+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">编程散记</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>编程散记</name></author><entry><title type="html">多线程编程模型篇(二)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html" rel="alternate" type="text/html" title="多线程编程模型篇(二)" /><published>2025-06-06T10:00:00+08:00</published><updated>2025-06-06T10:00:00+08:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Pattern</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html"><![CDATA[<h2 id="多线程的演进">多线程的演进</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2025-08-26T12:20:45+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">编程散记</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>编程散记</name></author><entry><title type="html">多线程编程模型篇(二)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html" rel="alternate" type="text/html" title="多线程编程模型篇(二)" /><published>2025-06-06T10:00:00+08:00</published><updated>2025-06-06T10:00:00+08:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Pattern</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html"><![CDATA[## 多线程的演进
 
-<h2 id="apm模式">APM模式</h2>
+## APM模式
 
-<h2 id="eap模式">EAP模式</h2>
+## EAP模式
 
-<h2 id="tap模式">TAP模式</h2>
+## TAP模式
 
-<h2 id="asyncawait异步模式">async/await异步模式</h2>
+## async/await异步模式
 
-<h2 id="tpl并行库">TPL并行库</h2>]]></content><author><name>编程散记</name></author><category term="CSharp" /><category term="Thread" /><summary type="html"><![CDATA[多线程的演进]]></summary></entry><entry><title type="html">多线程编程基础篇(一)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Base.html" rel="alternate" type="text/html" title="多线程编程基础篇(一)" /><published>2025-06-03T20:00:00+08:00</published><updated>2025-06-03T20:00:00+08:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Base</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Base.html"><![CDATA[<h2 id="多线程概念">多线程概念</h2>
+## TPL并行库]]></content><author><name>编程散记</name></author><category term="CSharp" /><category term="Thread" /><summary type="html"><![CDATA[多线程的演进]]></summary></entry><entry><title type="html">多线程编程基础篇(一)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Base.html" rel="alternate" type="text/html" title="多线程编程基础篇(一)" /><published>2025-06-03T20:00:00+08:00</published><updated>2025-06-03T20:00:00+08:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Base</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Base.html"><![CDATA[<h2 id="多线程概念">多线程概念</h2>
 
 <p>  现代应用程序可能要同时处理数据计算、画面渲染、文件读写等操作，同时要求操作系统要满足运行多个应用程序，后来随着现代CPU的从单核进化到多核，从物理核心进化到逻辑核心。就逐渐有了多任务执行概念。</p>
 
