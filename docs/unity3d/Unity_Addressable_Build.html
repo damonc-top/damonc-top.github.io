@@ -5,12 +5,14 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Addressable System使用分析(三) - 仗剑天涯</title>
-    <meta name="author" content="仗剑天涯">
+    <title>Unity Addressable System使用分析(三) - 编程散记</title>
+    <meta name="author" content="编程散记">
     
     <meta name="description" content="Unity Addressable System使用分析(三)">
     <meta name="keywords"
         content="Addressable System">
+    
+    <meta property="og:previous_url" content="/csharp/CSharp_Thread_Base.html">
     
     
     <meta property="og:next_url" content="/unity3d/Unity_Addressabel_Group.html">
@@ -27,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity Addressable System使用分析(三) - 仗剑天涯">
+        content="Unity Addressable System使用分析(三) - 编程散记">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/unity3d/Unity_Addressable_Build.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="仗剑天涯">
+    <meta property="og:site_name" content="编程散记">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -213,7 +215,7 @@
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-user"></use>
                 </svg>
-                仗剑天涯
+                编程散记
             </span>
             <time class="post-meta-item" datetime=" 24-07-15">
                 <svg class="icon" aria-hidden="true">
@@ -504,7 +506,7 @@
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
+                        <a href="https://www.damonc.top" class="cplink">编程散记</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -523,11 +525,15 @@
             </article>
         </div>
         
+        
+        
+        
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
                     <ul><li><a onclick="scrollToAdjust('addressable初始化')">1. Addressable初始化</a><ul><li><a onclick="scrollToAdjust('catalog结构')">1.1 Catalog结构</a></li></ul></li><li><a onclick="scrollToAdjust('加载远程catalog')">2. 加载远程Catalog</a><ul><li><a onclick="scrollToAdjust('更新assetbundle')">2.1 更新AssetBundle</a></li></ul></li><li><a onclick="scrollToAdjust('复杂的更新策略')">3. 复杂的更新策略</a></li><li><a onclick="scrollToAdjust('踩坑')">4. 踩坑</a></li></ul>
                 </div>
+            </div>
         
             </div>
         </div>
@@ -543,7 +549,7 @@
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">仗剑天涯</div>
+        <div class="author-name" rel="author">编程散记</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -570,6 +576,15 @@
         
     </section>
     <section class="post-footer-item read-next">
+        
+        <div class="read-next-item">
+            <a href="/csharp/CSharp_Thread_Base.html" class="read-next-link" aria-label="多线程编程基础篇(一)"></a>
+            <section>
+                <span>多线程编程基础篇(一)</span>
+                <p>多线程概念</p>
+            </section>
+            
+        </div>
         
 
         
@@ -661,7 +676,7 @@
           
         
       </section>
-      <section class="links">仗剑天涯 ©
+      <section class="links">编程散记 ©
         
         
           2016
@@ -799,7 +814,7 @@
 
         // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2024/Addressable System/2024-07-15-Unity_Addressable_Build.md", {
         //     headers: {
-        //         'Authorization': 'token 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',
+        //         'Authorization': 'token ',
         //         'Accept': 'application/vnd.github.v3+json'
         //     }
         // }).then((response) => {
@@ -883,7 +898,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
         
-	<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({

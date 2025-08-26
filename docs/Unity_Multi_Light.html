@@ -5,8 +5,8 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity 基础光照多光源采样(翻译五) - 仗剑天涯</title>
-    <meta name="author" content="仗剑天涯">
+    <title>Unity 基础光照多光源采样(翻译五) - 编程散记</title>
+    <meta name="author" content="编程散记">
     
     <meta name="description" content="Unity 基础光照多光源采样(翻译五)">
     <meta name="keywords"
@@ -29,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity 基础光照多光源采样(翻译五) - 仗剑天涯">
+        content="Unity 基础光照多光源采样(翻译五) - 编程散记">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_Multi_Light.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="仗剑天涯">
+    <meta property="og:site_name" content="编程散记">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -1411,7 +1411,7 @@ m|}cosθ,l∈N, –l ≤ m ≤ l\)
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
+                        <a href="https://www.damonc.top" class="cplink">编程散记</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -1430,11 +1430,15 @@ m|}cosθ,l∈N, –l ≤ m ≤ l\)
             </article>
         </div>
         
+        
+        
+        
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
                     <ul><li><a onclick="scrollToAdjust('include-files')">1. Include Files</a></li><li><a onclick="scrollToAdjust('第二光源-direction')">2. 第二光源-Direction</a><ul><li><a onclick="scrollToAdjust('增加第二个pass')">2.1 增加第二个Pass</a></li><li><a onclick="scrollToAdjust('合批-draw-call-batches')">2.2 合批-Draw Call Batches</a></li><li><a onclick="scrollToAdjust('帧调试-frame-debugger')">2.3 帧调试-Frame Debugger</a></li></ul></li><li><a onclick="scrollToAdjust('点光源point-lights')">3. 点光源Point Lights</a><ul><li><a onclick="scrollToAdjust('光照函数-light-function')">3.1 光照函数-Light Function</a></li><li><a onclick="scrollToAdjust('光照位置-light-position')">3.2 光照位置-Light Position</a></li><li><a onclick="scrollToAdjust('光的衰减-light-attenuation')">3.3 光的衰减-Light Attenuation</a></li><li><a onclick="scrollToAdjust('光源范围-light-range')">3.4 光源范围-Light Range</a></li></ul></li><li><a onclick="scrollToAdjust('混合光源-mixing-light')">4. 混合光源-Mixing Light</a><ul><li><a onclick="scrollToAdjust('变体-shader-variants')">4.1 变体-Shader Variants</a></li><li><a onclick="scrollToAdjust('使用关键字-keywords')">4.2 使用关键字-KeyWords</a></li></ul></li><li><a onclick="scrollToAdjust('聚光源-spotlights')">5. 聚光源-Spotlights</a><ul><li><a onclick="scrollToAdjust('聚光源衰减')">5.1 聚光源衰减</a></li></ul></li><li><a onclick="scrollToAdjust('光斑阴影-light-cookies')">6. 光斑阴影-Light Cookies</a><ul><li><a onclick="scrollToAdjust('聚光灯光斑阴影-spotlight-cookie')">6.1 聚光灯光斑阴影-Spotlight cookie</a></li><li><a onclick="scrollToAdjust('方向光斑阴影-directon-light-cookie')">6.2 方向光斑阴影-Directon light Cookie</a></li><li><a onclick="scrollToAdjust('电光源光斑阴影-point-light-cookie')">6.3 电光源光斑阴影-Point Light cookie</a></li></ul></li><li><a onclick="scrollToAdjust('顶点光照计算-vertex-lights')">7. 顶点光照计算-Vertex Lights</a><ul><li><a onclick="scrollToAdjust('一个顶点光-one-vertex-light')">7.1 一个顶点光-One Vertex Light</a></li><li><a onclick="scrollToAdjust('四个顶点光-four-vertex-light')">7.2 四个顶点光-Four Vertex Light</a></li></ul></li><li><a onclick="scrollToAdjust('球谐函数-spherical-harmonics')">8. 球谐函数-Spherical Harmonics</a><ul><li><a onclick="scrollToAdjust('球谐函数频率-spherical-harmonics-bands')">8.1 球谐函数频率-Spherical Harmonics Bands</a></li><li><a onclick="scrollToAdjust('实际运用球谐函数-using-spherical-harmonics')">8.2 实际运用球谐函数-Using Spherical Harmonics</a></li><li><a onclick="scrollToAdjust('球谐采样skybox')">8.3 球谐采样Skybox</a></li></ul></li></ul>
                 </div>
+            </div>
         
             </div>
         </div>
@@ -1450,7 +1454,7 @@ m|}cosθ,l∈N, –l ≤ m ≤ l\)
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">仗剑天涯</div>
+        <div class="author-name" rel="author">编程散记</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -1577,7 +1581,7 @@ m|}cosθ,l∈N, –l ≤ m ≤ l\)
           
         
       </section>
-      <section class="links">仗剑天涯 ©
+      <section class="links">编程散记 ©
         
         
           2016
@@ -1715,7 +1719,7 @@ m|}cosθ,l∈N, –l ≤ m ≤ l\)
 
         // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2018/ShaderTranslate/2018-01-03-Unity_Multi_Light.md", {
         //     headers: {
-        //         'Authorization': 'token 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',
+        //         'Authorization': 'token ',
         //         'Accept': 'application/vnd.github.v3+json'
         //     }
         // }).then((response) => {
@@ -1799,7 +1803,7 @@ m|}cosθ,l∈N, –l ≤ m ≤ l\)
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
         
-	<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({

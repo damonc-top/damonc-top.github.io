@@ -5,8 +5,8 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity 光照烘焙(翻译十六) - 仗剑天涯</title>
-    <meta name="author" content="仗剑天涯">
+    <title>Unity 光照烘焙(翻译十六) - 编程散记</title>
+    <meta name="author" content="编程散记">
     
     <meta name="description" content="Unity 光照烘焙(翻译十六)">
     <meta name="keywords"
@@ -29,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity 光照烘焙(翻译十六) - 仗剑天涯">
+        content="Unity 光照烘焙(翻译十六) - 编程散记">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_Static_Lightting.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="仗剑天涯">
+    <meta property="og:site_name" content="编程散记">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -1263,7 +1263,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
+                        <a href="https://www.damonc.top" class="cplink">编程散记</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -1282,11 +1282,15 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
             </article>
         </div>
         
+        
+        
+        
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
                     <ul><li><a onclick="scrollToAdjust('光照贴图-lightingmapping')">1. 光照贴图-Lightingmapping</a><ul><li><a onclick="scrollToAdjust('烘焙光源-baked-lights')">1.1 烘焙光源-Baked Lights</a></li><li><a onclick="scrollToAdjust('静态几何体')">1.2 静态几何体</a></li><li><a onclick="scrollToAdjust('光照贴图设置-lightingmapping-setting')">1.3 光照贴图设置-Lightingmapping Setting</a></li><li><a onclick="scrollToAdjust('间接光源')">1.4 间接光源</a></li><li><a onclick="scrollToAdjust('透明度-transparency')">1.5 透明度-Transparency</a></li></ul></li><li><a onclick="scrollToAdjust('使用光照贴图')">2. 使用光照贴图</a><ul><li><a onclick="scrollToAdjust('光照贴图的着色器变体')">2.1 光照贴图的着色器变体</a></li><li><a onclick="scrollToAdjust('光照贴图的坐标')">2.2 光照贴图的坐标</a></li><li><a onclick="scrollToAdjust('对光照贴图进行采样-sampling-lightmap')">2.3 对光照贴图进行采样-Sampling Lightmap</a></li></ul></li><li><a onclick="scrollToAdjust('创建光照贴图')">3. 创建光照贴图</a><ul><li><a onclick="scrollToAdjust('半透明的阴影-semitransparent-shadow')">3.1 半透明的阴影-Semitransparent Shadow</a></li><li><a onclick="scrollToAdjust('镂空部分的阴影-cutout-shadow')">3.2 镂空部分的阴影-Cutout Shadow</a></li><li><a onclick="scrollToAdjust('添加一个meta渲染通道-add-meta-pass')">3.3 添加一个Meta渲染通道-Add Meta Pass</a></li><li><a onclick="scrollToAdjust('顶点程序-vertex-program')">3.4 顶点程序-Vertex Program</a></li><li><a onclick="scrollToAdjust('片段程序-fragment-program')">3.5 片段程序-Fragment Program</a></li><li><a onclick="scrollToAdjust('粗糙的金属-rough-metals')">3.6 粗糙的金属-Rough Metals</a></li></ul></li><li><a onclick="scrollToAdjust('方向光照贴图-directinal-lightmap')">4. 方向光照贴图-Directinal Lightmap</a><ul><li><a onclick="scrollToAdjust('方向性-directionality')">4.1 方向性-Directionality</a></li><li><a onclick="scrollToAdjust('对方向进行采样')">4.2 对方向进行采样</a></li><li><a onclick="scrollToAdjust('使用方向贴图')">4.3 使用方向贴图</a></li></ul></li><li><a onclick="scrollToAdjust('光照探针-light-probes')">5. 光照探针-Light Probes</a><ul><li><a onclick="scrollToAdjust('创建光照探针组')">5.1 创建光照探针组</a></li><li><a onclick="scrollToAdjust('放置光照探针')">5.2 放置光照探针</a></li></ul></li></ul>
                 </div>
+            </div>
         
             </div>
         </div>
@@ -1302,7 +1306,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">仗剑天涯</div>
+        <div class="author-name" rel="author">编程散记</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -1429,7 +1433,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
           
         
       </section>
-      <section class="links">仗剑天涯 ©
+      <section class="links">编程散记 ©
         
         
           2016
@@ -1567,7 +1571,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 
         // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2018/ShaderTranslate/2018-01-19-Unity_Static_Lightting.md", {
         //     headers: {
-        //         'Authorization': 'token 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',
+        //         'Authorization': 'token ',
         //         'Accept': 'application/vnd.github.v3+json'
         //     }
         // }).then((response) => {
@@ -1651,7 +1655,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
         
-	<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({

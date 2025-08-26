@@ -5,8 +5,8 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Shader 基本语法(翻译二) - 仗剑天涯</title>
-    <meta name="author" content="仗剑天涯">
+    <title>Unity Shader 基本语法(翻译二) - 编程散记</title>
+    <meta name="author" content="编程散记">
     
     <meta name="description" content="Unity Shader 基本语法(翻译二)">
     <meta name="keywords"
@@ -29,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity Shader 基本语法(翻译二) - 仗剑天涯">
+        content="Unity Shader 基本语法(翻译二) - 编程散记">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_Shader_Fundamentals.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="仗剑天涯">
+    <meta property="og:site_name" content="编程散记">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -1272,7 +1272,7 @@
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
+                        <a href="https://www.damonc.top" class="cplink">编程散记</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -1291,11 +1291,15 @@
             </article>
         </div>
         
+        
+        
+        
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
                     <ul><li><a onclick="scrollToAdjust('场景初始化')">1. 场景初始化</a><ul><li><a onclick="scrollToAdjust('剥离天空盒')">1.1 剥离天空盒</a></li></ul></li><li><a onclick="scrollToAdjust('图像渲染')">2. 图像渲染</a><ul><li><a onclick="scrollToAdjust('创建一个shader')">2.1 创建一个Shader</a></li><li><a onclick="scrollToAdjust('shader程序')">2.2 Shader程序</a></li><li><a onclick="scrollToAdjust('shader汇编')">2.3 Shader汇编</a></li><li><a onclick="scrollToAdjust('引入其他文件')">2.4 引入其他文件</a></li><li><a onclick="scrollToAdjust('产生输出(输出语义)')">2.5 产生输出(输出语义)</a></li><li><a onclick="scrollToAdjust('顶点变换')">2.6 顶点变换</a></li></ul></li><li><a onclick="scrollToAdjust('像素颜色')">3. 像素颜色</a><ul><li><a onclick="scrollToAdjust('使用shader属性properties')">3.1 使用Shader属性Properties</a></li><li><a onclick="scrollToAdjust('从顶点到片元')">3.2 从顶点到片元</a></li><li><a onclick="scrollToAdjust('结构体')">3.3 结构体</a></li><li><a onclick="scrollToAdjust('调整颜色')">3.4 调整颜色</a></li></ul></li><li><a onclick="scrollToAdjust('纹理')">4. 纹理</a><ul><li><a onclick="scrollToAdjust('使用uv坐标')">4.1 使用UV坐标</a></li><li><a onclick="scrollToAdjust('添加纹理')">4.2 添加纹理</a></li><li><a onclick="scrollToAdjust('平铺和偏移')">4.3 平铺和偏移</a></li></ul></li><li><a onclick="scrollToAdjust('纹理设置')">5. 纹理设置</a><ul><li><a onclick="scrollToAdjust('mipmap和filter')">5.1 Mipmap和Filter</a></li><li><a onclick="scrollToAdjust('aniso-level')">5.2 Aniso Level</a></li></ul></li></ul>
                 </div>
+            </div>
         
             </div>
         </div>
@@ -1311,7 +1315,7 @@
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">仗剑天涯</div>
+        <div class="author-name" rel="author">编程散记</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -1438,7 +1442,7 @@
           
         
       </section>
-      <section class="links">仗剑天涯 ©
+      <section class="links">编程散记 ©
         
         
           2016
@@ -1576,7 +1580,7 @@
 
         // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2018/ShaderTranslate/2018-01-02-Unity_Shader_Fundamentals.md", {
         //     headers: {
-        //         'Authorization': 'token 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',
+        //         'Authorization': 'token ',
         //         'Accept': 'application/vnd.github.v3+json'
         //     }
         // }).then((response) => {
@@ -1660,7 +1664,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
         
-	<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({

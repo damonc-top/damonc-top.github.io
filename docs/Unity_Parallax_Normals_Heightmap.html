@@ -5,8 +5,8 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>视差和法线、高度图回顾(翻译二十) - 仗剑天涯</title>
-    <meta name="author" content="仗剑天涯">
+    <title>视差和法线、高度图回顾(翻译二十) - 编程散记</title>
+    <meta name="author" content="编程散记">
     
     <meta name="description" content="视差和法线、高度图回顾(翻译二十)">
     <meta name="keywords"
@@ -29,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="视差和法线、高度图回顾(翻译二十) - 仗剑天涯">
+        content="视差和法线、高度图回顾(翻译二十) - 编程散记">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_Parallax_Normals_Heightmap.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="仗剑天涯">
+    <meta property="og:site_name" content="编程散记">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -1171,7 +1171,7 @@ t = (a - c) / (a - c + d - b)
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
+                        <a href="https://www.damonc.top" class="cplink">编程散记</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -1190,11 +1190,15 @@ t = (a - c) / (a - c + d - b)
             </article>
         </div>
         
+        
+        
+        
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
                     <ul><li><a onclick="scrollToAdjust('视差纹理')">1. 视差纹理</a><ul><li><a onclick="scrollToAdjust('法线贴图效果回顾')">1.1 法线贴图效果回顾</a></li><li><a onclick="scrollToAdjust('shader参数')">1.2 Shader参数</a></li><li><a onclick="scrollToAdjust('坐标匹配')">1.3 坐标匹配</a></li><li><a onclick="scrollToAdjust('随视角方向移动')">1.4 随视角方向移动</a></li><li><a onclick="scrollToAdjust('基于高度滑动')">1.5 基于高度滑动</a></li><li><a onclick="scrollToAdjust('偏移视差映射算法')">1.6 偏移视差映射算法</a></li><li><a onclick="scrollToAdjust('parallax-configuration')">1.7 Parallax Configuration</a></li><li><a onclick="scrollToAdjust('detail-uv')">1.8 Detail UV</a></li></ul></li><li><a onclick="scrollToAdjust('ray-marching-光线步进')">2. Ray Marching-光线步进</a><ul><li><a onclick="scrollToAdjust('自定义视差函数')">2.1 自定义视差函数</a></li><li><a onclick="scrollToAdjust('相交计算')">2.2 相交计算</a></li><li><a onclick="scrollToAdjust('更多步进')">2.3 更多步进</a></li><li><a onclick="scrollToAdjust('步长之间插值')">2.4 步长之间插值</a></li><li><a onclick="scrollToAdjust('步长搜索')">2.5 步长搜索</a></li><li><a onclick="scrollToAdjust('缩放对象和动态批处理')">2.6 缩放对象和动态批处理</a></li></ul></li></ul>
                 </div>
+            </div>
         
             </div>
         </div>
@@ -1210,7 +1214,7 @@ t = (a - c) / (a - c + d - b)
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">仗剑天涯</div>
+        <div class="author-name" rel="author">编程散记</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -1337,7 +1341,7 @@ t = (a - c) / (a - c + d - b)
           
         
       </section>
-      <section class="links">仗剑天涯 ©
+      <section class="links">编程散记 ©
         
         
           2016
@@ -1475,7 +1479,7 @@ t = (a - c) / (a - c + d - b)
 
         // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2018/ShaderTranslate/2018-01-25-Unity_Parallax_Normals_Heightmap.md", {
         //     headers: {
-        //         'Authorization': 'token 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',
+        //         'Authorization': 'token ',
         //         'Accept': 'application/vnd.github.v3+json'
         //     }
         // }).then((response) => {
@@ -1559,7 +1563,7 @@ t = (a - c) / (a - c + d - b)
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
         
-	<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({

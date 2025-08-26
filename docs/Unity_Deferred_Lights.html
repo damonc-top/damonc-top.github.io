@@ -5,8 +5,8 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Deferred Lights-延迟光照(翻译十五) - 仗剑天涯</title>
-    <meta name="author" content="仗剑天涯">
+    <title>Unity Deferred Lights-延迟光照(翻译十五) - 编程散记</title>
+    <meta name="author" content="编程散记">
     
     <meta name="description" content="Unity Deferred Lights-延迟光照(翻译十五)">
     <meta name="keywords"
@@ -29,12 +29,12 @@
     
     <!-- Open Graph -->
     <meta property="og:title"
-        content="Unity Deferred Lights-延迟光照(翻译十五) - 仗剑天涯">
+        content="Unity Deferred Lights-延迟光照(翻译十五) - 编程散记">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.damonc.top/Unity_Deferred_Lights.html">
     <meta property="og:baseurl" content="">
     <meta property="og:description" content="个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。">
-    <meta property="og:site_name" content="仗剑天涯">
+    <meta property="og:site_name" content="编程散记">
     <meta property="og:gray" content="false">
     <meta property="og:lang" content="zh-Hans">
     
@@ -1158,7 +1158,7 @@
                     <p>
                         <span>版权声明：</span>
                         如无特别声明，本文版权归
-                        <a href="https://www.damonc.top" class="cplink">仗剑天涯</a>
+                        <a href="https://www.damonc.top" class="cplink">编程散记</a>
                         所有，转载请注明本文链接。
                     </p>
                     
@@ -1177,11 +1177,15 @@
             </article>
         </div>
         
+        
+        
+        
             <div class="table-of-contents">
                 <div class="toc-header"><h2>目录</h2></div>
                 <div class="toc-body">
                     <ul><li><a onclick="scrollToAdjust('光照light-shader')">1. 光照Light Shader</a><ul><li><a onclick="scrollToAdjust('using-a-custom-shader')">1.1 Using a Custom Shader</a></li><li><a onclick="scrollToAdjust('第二个passa-second-pass')">1.2 第二个PassA Second Pass</a></li><li><a onclick="scrollToAdjust('avoiding-the-sky')">1.3 Avoiding the Sky</a></li><li><a onclick="scrollToAdjust('颜色转换converting-colors')">1.4 颜色转换Converting Colors</a></li></ul></li><li><a onclick="scrollToAdjust('directional-lights')">2. Directional Lights</a><ul><li><a onclick="scrollToAdjust('g-buffer-uv-coordinates')">2.1 G-Buffer UV Coordinates</a></li><li><a onclick="scrollToAdjust('坐标转换world-position')">2.2 坐标转换World Position</a></li><li><a onclick="scrollToAdjust('读取g-buff-reading-g-buffer-data')">2.3 读取G-Buff Reading G-Buffer Data</a></li><li><a onclick="scrollToAdjust('计算brd-computing-brdf')">2.4 计算BRD Computing BRDF</a></li><li><a onclick="scrollToAdjust('光源配置-configuring-the-light')">2.5 光源配置 Configuring the Light</a></li><li><a onclick="scrollToAdjust('阴影-shadows')">2.6 阴影 Shadows</a></li><li><a onclick="scrollToAdjust('fading-shadows')">2.7 Fading Shadows</a></li><li><a onclick="scrollToAdjust('light-cookies')">2.8 Light Cookies</a></li><li><a onclick="scrollToAdjust('支持ldr-supporting-ldr')">2.9 支持LDR Supporting LDR</a></li></ul></li><li><a onclick="scrollToAdjust('聚光源-spotlights')">3. 聚光源 Spotlights</a><ul><li><a onclick="scrollToAdjust('drawing-a-pyramid')">3.1 Drawing a Pyramid</a></li><li><a onclick="scrollToAdjust('支持多光源-supporting-multiple-light-types')">3.2 支持多光源 Supporting Multiple Light Types</a></li><li><a onclick="scrollToAdjust('world-position-agin')">3.3 World Position Agin</a></li><li><a onclick="scrollToAdjust('锥形衰减-cookie-attenuation')">3.4 锥形衰减 Cookie Attenuation</a></li><li><a onclick="scrollToAdjust('距离衰减-distance-attenuation')">3.5 距离衰减 Distance Attenuation</a></li><li><a onclick="scrollToAdjust('shadows')">3.6 Shadows</a></li><li><a onclick="scrollToAdjust('点光源-point-lights')">3.7 点光源 Point Lights</a></li><li><a onclick="scrollToAdjust('shadows')">3.8 Shadows</a></li><li><a onclick="scrollToAdjust('cookies')">3.9 Cookies</a></li><li><a onclick="scrollToAdjust('skipping-shadows')">3.10 Skipping Shadows</a></li></ul></li></ul>
                 </div>
+            </div>
         
             </div>
         </div>
@@ -1197,7 +1201,7 @@
         <div class="avatar">
             <img src="https://damonc-top2.github.io/web-assets/commons/avatar.png" alt="">
         </div>
-        <div class="author-name" rel="author">仗剑天涯</div>
+        <div class="author-name" rel="author">编程散记</div>
         <div class="bio">
             <p>Developer & Maintainer</p>
         </div>
@@ -1324,7 +1328,7 @@
           
         
       </section>
-      <section class="links">仗剑天涯 ©
+      <section class="links">编程散记 ©
         
         
           2016
@@ -1462,7 +1466,7 @@
 
         // fetch("https://api.github.com/repos/damonc-top/blog/commits?path=post_project/_posts/2018/ShaderTranslate/2018-01-17-Unity_Deferred_Lights.md", {
         //     headers: {
-        //         'Authorization': 'token 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',
+        //         'Authorization': 'token ',
         //         'Accept': 'application/vnd.github.v3+json'
         //     }
         // }).then((response) => {
@@ -1546,7 +1550,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
         
-	<script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script async src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax-full@3.2.2/es5/tex-mml-svg.min.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
