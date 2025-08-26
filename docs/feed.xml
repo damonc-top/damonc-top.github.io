@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2025-08-26T14:30:10+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">编程散记</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>编程散记</name></author><entry><title type="html">多线程编程模型篇(二)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html" rel="alternate" type="text/html" title="多线程编程模型篇(二)" /><published>2025-06-06T10:00:00+08:00</published><updated>2025-06-06T10:00:00+08:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Pattern</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html"><![CDATA[<h2 id="多线程的演进">多线程的演进</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2025-08-26T23:52:27+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">编程散记</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>编程散记</name></author><entry><title type="html">多线程编程模型篇(二)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html" rel="alternate" type="text/html" title="多线程编程模型篇(二)" /><published>2025-06-06T10:00:00+08:00</published><updated>2025-06-06T10:00:00+08:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Pattern</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html"><![CDATA[<h2 id="多线程的演进">多线程的演进</h2>
 
 <h2 id="apm模式">APM模式</h2>
 
@@ -309,58 +309,73 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="使用线程池">使用线程池</h2>
+<h2 id="线程池">线程池</h2>
 
 <p>  每当启动一个线程时，都需要一定时间(上百毫秒)来创建新的局部变量栈。如果使用线程池预先创建可回收线程可大幅降低创建开销。但是<strong>线程池的线程都是后台线程，阻塞线程池将会影响性能</strong>。Thread.CurrentThread.IsThreadPoolThread属性可确认当前线程是否属于线程池。</p>
 
+<h3 id="线程池简介">线程池简介</h3>
+
+<p>  线程池线程是后台线程。 每个线程使用默认堆栈大小，以默认优先级运行，并且位于多线程单元中。 线程池中的线程完成其任务后，它将返回到等待线程的队列。 从此刻起，可以重复使用它。 这样，应用程序就可以避免为每个任务创建新线程的成本。</p>
+
+<p>  <strong>每个进程只有一个线程池实例。</strong></p>
+
+<h3 id="线程池的使用">线程池的使用</h3>
+
+<p>  通过System.Threading.ThreadPool类可以获取线程池中的线程，通过QueueUserWorkItem静态方法将任务添加到线程池队列中，该方法接受一个委托表示一个自定义的异步操作。在调用QueueUserWorkItem方法时，如果线程池中没有空闲线程，则该方法会创建一个新的线程来执行委托任务。如果过快调用QueueUserWorkItem方法，则线程池会创建过多的线程，新的委托操作将在队列中等待直到线程池中线程空闲，所以过快的调用会导致性能下降。</p>
+
 <div class="premonition warning"> <div class="header"> <svg class="icon warning" aria-hidden="true"> <use xlink:href="#icon-warning"></use> </svg> <div class="title"> 线程池警告 </div> </div> <div class="content"> <ol>
   <li>线程池适合短时任务，不适合长时间运行且计算密集型操作。</li>
-  <li>线程是被CLR管理的作为系统级资源，如果应用大量占用线程池线程阻塞，会显著拖慢所有进程的响应速度。</li>
+  <li>线程是被CLR管理的作为系统级资源，如果应用大量占用线程池线程导致阻塞，会显著拖慢进程的响应速度。</li>
 </ol>
 
 
 
  </div> </div>
-<h3 id="线程池简介">线程池简介</h3>
-<h3 id="线程池的使用">线程池的使用</h3>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">delegate</span> <span class="kt">string</span> <span class="nf">RunTestThreadPool</span><span class="p">(</span><span class="k">out</span> <span class="kt">int</span> <span class="n">threadId</span><span class="p">);</span>
 
-<h2 id="线程的性能问题">线程的性能问题</h2>
-
-<p>  一个进程空间内可能有多个线程(多个执行流)，不同执行流切换就是是上下文切换。操作系统会为每个线程划分时间片来模拟并发执行。</p>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//顺序执行，先打印10个x，再打印10个y</span>
-<span class="k">void</span> <span class="nf">Test1</span><span class="p">(){</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">,</span> <span class="n">i</span><span class="p">++){</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"x"</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">,</span> <span class="n">i</span><span class="p">++){</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"y"</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Callback</span><span class="p">(</span><span class="n">IAsyncResult</span> <span class="n">result</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"callback called"</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"线程状态=</span><span class="p">{</span><span class="n">result</span><span class="p">.</span><span class="n">AsyncState</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"线程Id</span><span class="p">{</span><span class="n">Thread</span><span class="p">.</span><span class="n">CurrentThread</span><span class="p">.</span><span class="n">ManagedThreadId</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="c1">//x与y不规则顺序打印</span>
-<span class="k">void</span> <span class="nf">Test2</span><span class="p">(){</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-    <span class="p">{</span>
-        <span class="k">new</span> <span class="nf">Thread</span><span class="p">(()=&gt;</span>
-        <span class="p">{</span>
-            <span class="nf">print</span><span class="p">(</span><span class="s">"x"</span><span class="p">);</span>
-        <span class="p">}).</span><span class="nf">Start</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="k">private</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">Test</span><span class="p">(</span><span class="k">out</span> <span class="kt">int</span> <span class="n">threadId</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"Thread starting"</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"Thread id = </span><span class="p">{</span><span class="n">Thread</span><span class="p">.</span><span class="n">CurrentThread</span><span class="p">.</span><span class="n">ManagedThreadId</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
+    <span class="n">threadId</span> <span class="p">=</span> <span class="n">Thread</span><span class="p">.</span><span class="n">CurrentThread</span><span class="p">.</span><span class="n">ManagedThreadId</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="s">$"Thread id = </span><span class="p">{</span><span class="n">threadId</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-    <span class="p">{</span>
-        <span class="k">new</span> <span class="nf">Thread</span><span class="p">(()=&gt;</span>
-        <span class="p">{</span>
-            <span class="nf">print</span><span class="p">(</span><span class="s">"y"</span><span class="p">);</span>
-        <span class="p">}).</span><span class="nf">Start</span><span class="p">();</span>   
-    <span class="p">}</span>
+<span class="c1">//入口函数</span>
+<span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">ThreadPoolStart</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">threadId</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="c1">// 使用Thread创建线程</span>
+    <span class="kt">var</span> <span class="n">thread1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="p">((()</span> <span class="p">=&gt;</span> <span class="nf">Test</span><span class="p">(</span><span class="k">out</span> <span class="n">threadId</span><span class="p">)));</span>
+    <span class="n">thread1</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
+    <span class="c1">//创建线程id确定不是来自线程池的线程id</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"new Thread id </span><span class="p">{</span><span class="n">thread1</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="c1">// 使用线程池运行委托</span>
+    <span class="n">RunTestThreadPool</span> <span class="n">poolDelegate</span> <span class="p">=</span> <span class="n">Test</span><span class="p">;</span>
+    <span class="c1">// 接受一个回调函数和自定义参数，并理解返回IAsyncResult对象</span>
+    <span class="n">IAsyncResult</span> <span class="n">thread2</span> <span class="p">=</span> <span class="n">poolDelegate</span><span class="p">.</span><span class="nf">BeginInvoke</span><span class="p">(</span><span class="k">out</span> <span class="n">threadId</span><span class="p">,</span> <span class="n">Callback</span><span class="p">,</span> <span class="s">"delegate async callback"</span><span class="p">);</span>
+    <span class="c1">// 等待线程池线程完成，后面的代码开始挂起，允许继续其他工作</span>
+    <span class="n">thread2</span><span class="p">.</span><span class="n">AsyncWaitHandle</span><span class="p">.</span><span class="nf">WaitOne</span><span class="p">();</span>
+    <span class="c1">// 获取线程池线程返回值</span>
+    <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">poolDelegate</span><span class="p">.</span><span class="nf">EndInvoke</span><span class="p">(</span><span class="k">out</span> <span class="n">threadId</span><span class="p">,</span> <span class="n">thread2</span><span class="p">);</span>
+    <span class="c1">// 打印线程池线程id</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"thread pool threaId </span><span class="p">{</span><span class="n">threadId</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="c1">// 打印线程池线程返回值</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+    <span class="c1">// 等待1秒</span>
+    <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>著作权归作者所有。
-商业转载请联系作者获得授权,非商业转载请注明出处。
-原文: http://127.0.0.1:4000/tech/new-theme-h2o-ac.html</p>
+<p>  使用Begin/End方法和IAsyncResult对象可以实现异步调用被称为异步编程模型<a href="../CSharp/CSharp_Thread_Pattern.html#2">APM模型</a>。<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
@@ -372,6 +387,9 @@
     </li>
     <li id="fn:3" role="doc-endnote">
       <p>参考书籍：C#7.0本质论信号量。 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>参考<a href="https://learn.microsoft.com/zh-cn/dotnet/navigate/advanced-programming/">微软文档</a>。 <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>]]></content><author><name>编程散记</name></author><category term="CSharp" /><category term="多线程" /><summary type="html"><![CDATA[现代应用程序可能要同时处理数据计算、画面渲染、文件读写等操作，同时要求操作系统要满足运行多个应用程序，后来随着现代CPU的从单核进化到多核，从物理核心进化到逻辑核心。就逐渐有了多任务执行概念。]]></summary></entry><entry><title type="html">Unity Addressable System使用分析(三)</title><link href="https://www.damonc.top/unity3d/Unity_Addressable_Build.html" rel="alternate" type="text/html" title="Unity Addressable System使用分析(三)" /><published>2024-07-15T20:00:00+08:00</published><updated>2024-07-15T20:00:00+08:00</updated><id>https://www.damonc.top/unity3d/Unity_Addressable_Build</id><content type="html" xml:base="https://www.damonc.top/unity3d/Unity_Addressable_Build.html"><![CDATA[<h2 id="addressable初始化">Addressable初始化</h2>
