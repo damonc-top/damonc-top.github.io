@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2025-08-26T23:52:27+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">编程散记</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>编程散记</name></author><entry><title type="html">多线程编程模型篇(二)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html" rel="alternate" type="text/html" title="多线程编程模型篇(二)" /><published>2025-06-06T10:00:00+08:00</published><updated>2025-06-06T10:00:00+08:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Pattern</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html"><![CDATA[<h2 id="多线程的演进">多线程的演进</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2025-08-28T19:40:54+08:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">编程散记</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>编程散记</name></author><entry><title type="html">多线程编程模型篇(二)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html" rel="alternate" type="text/html" title="多线程编程模型篇(二)" /><published>2025-06-06T10:00:00+08:00</published><updated>2025-06-06T10:00:00+08:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Pattern</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html"><![CDATA[<h2 id="多线程的演进">多线程的演进</h2>
 
 <h2 id="apm模式">APM模式</h2>
 
@@ -57,7 +57,19 @@
 
 <h3 id="创建线程">创建线程</h3>
 
-<p>  要创建并启动 一个线程，需要首先实例化Thread对象并调用Start方法。Thread的最简单的构造器接收一个ThreadStart或ParameterizedThreadStart委托:一个无参数的方法，表示执行的起始位置，例如</p>
+<p>  要创建并启动 一个线程，需要首先实例化Thread对象并调用Start方法。Thread的最简单的构造器接收一个ThreadStart无参委托或ParameterizedThreadStart有参委托。</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">ThreadStart</span> <span class="n">start</span><span class="p">);</span>
+<span class="k">public</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">ParameterizedThreadStart</span> <span class="n">start</span><span class="p">);</span>
+<span class="k">public</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">ThreadStart</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">maxStackSize</span><span class="p">);</span>
+<span class="k">public</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">ParameterizedThreadStart</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">maxStackSize</span><span class="p">);</span>
+
+<span class="c1">//c#1.0</span>
+<span class="k">public</span> <span class="k">delegate</span> <span class="k">void</span> <span class="nf">ThreadStart</span><span class="p">();</span>
+<span class="c1">//c#2.0</span>
+<span class="k">public</span> <span class="k">delegate</span> <span class="k">void</span> <span class="nf">ParameterizedThreadStart</span><span class="p">(</span><span class="kt">object</span> <span class="n">obj</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>:一个无参数的方法，表示执行的起始位置，例如</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Test2</span><span class="p">(){</span>
     <span class="c1">//主线程打印x</span>
     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
@@ -72,9 +84,38 @@
             <span class="nf">print</span><span class="p">(</span><span class="s">"y"</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}).</span><span class="nf">Start</span><span class="p">();</span>
+
+    <span class="k">new</span> <span class="nf">Thread</span><span class="p">((</span><span class="n">y</span><span class="p">)=&gt;{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}).</span><span class="nf">Start</span><span class="p">(</span><span class="s">"y"</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
+<div class="premonition warning"> <div class="header"> <svg class="icon warning" aria-hidden="true"> <use xlink:href="#icon-warning"></use> </svg> <div class="title"> 线程的参数传递 </div> </div> <div class="content"> <p>线程的参数传递需要使用ParameterizedThreadStart委托，并且需要将参数传递给Start方法。</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 如果使用这种方式会异常</span>
+<span class="k">new</span> <span class="nf">Thread</span><span class="p">(()=&gt;{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}).</span><span class="nf">Start</span><span class="p">(</span><span class="s">"y"</span><span class="p">);</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">(</span><span class="kt">object</span> <span class="n">parameter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// 如果m_Delegate是ThreadStart委托，则抛出异常</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">m_Delegate</span> <span class="k">is</span> <span class="n">ThreadStart</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="nf">GetResourceString</span><span class="p">(</span><span class="s">""</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+
+
+ </div> </div>
 <h3 id="线程的生命周期">线程的生命周期</h3>
 
 <p>  线程有多个状态表示使用ThreadState表示，其中最重要的几个状态就是暂停等待(休眠)、终止<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>。</p>
@@ -175,17 +216,20 @@
 
 
  </div> </div>
+<h4 id="死锁">死锁</h4>
+
 <p>  死锁将导致程序停止工作是最常见的多线程错误，下面是一个死锁示例：</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">object</span> <span class="n">locker1</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">object</span><span class="p">();</span>
 <span class="kt">object</span> <span class="n">locker2</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">object</span><span class="p">();</span> 
-<span class="k">new</span> <span class="nf">Thread</span> <span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">Thread</span> <span class="n">threadA</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span> <span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="k">lock</span> <span class="p">(</span><span class="n">locker1</span><span class="p">){</span>
         <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
         <span class="k">lock</span> <span class="p">(</span><span class="n">locker2</span><span class="p">);</span> <span class="c1">//Deadlock</span>
     <span class="p">}</span>
     
-<span class="p">}).</span><span class="nf">Start</span><span class="p">();</span>
+<span class="p">});</span>
+<span class="n">threadA</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
 
 <span class="k">lock</span> <span class="p">(</span><span class="n">locker2</span><span class="p">)</span>
 <span class="p">{</span>
@@ -195,6 +239,50 @@
 
 <span class="c1">//使用三个或者更多的线程则可能形成更加复杂的死锁链。</span>
 </code></pre></div></div>
+
+<p>  死锁的形成过程如下：</p>
+
+<p><strong>初始状态</strong>：</p>
+<ol>
+  <li>创建了两个锁对象：locker1和locker2</li>
+  <li>有两个线程：线程A（新创建的线程）和主线程</li>
+</ol>
+
+<p><strong>步骤1</strong>：线程启动（t=0ms）</p>
+<ol>
+  <li>线程A 开始执行，进入第一个lock(locker1)</li>
+  <li>线程A 成功获取lock(locker1)的锁</li>
+  <li>同时，主线程 执行到lock(locker2)</li>
+  <li>主线程 成功获取lock(locker2)的锁</li>
+</ol>
+
+<p><strong>步骤2</strong>：延时阶段（t=0-1000ms）</p>
+<ol>
+  <li>线程A 持有lock(locker1)，执行Thread.Sleep(1000)</li>
+  <li>主线程 持有lock(locker2)，执行Thread.Sleep(1000)</li>
+  <li>此时两个线程都在睡眠，各自持有一个锁</li>
+</ol>
+
+<p><strong>步骤3</strong>：死锁形成（t=1000ms后）</p>
+<ol>
+  <li>线程A 从睡眠中醒来，尝试获取lock(locker2)，但是locker2已经被主线程持有，线程A被阻塞，等待lock(locker2)释放</li>
+  <li>主线程 从睡眠中醒来，尝试获取lock(locker1)，但是locker1 已经被线程A持有，主线程被阻塞，等待lock(locker1)释放</li>
+</ol>
+
+<pre><code class="language-mermaid2">graph LR
+    A[线程A] --&gt; |持有| L1[locker1]
+    A --&gt; |等待| L2[locker2]
+    B[主线程] --&gt; |持有| L2
+    B --&gt; |等待| L1
+    
+    L1 -.-&gt; |阻塞| B
+    L2 -.-&gt; |阻塞| A
+    
+    style A fill:#ff9999
+    style B fill:#99ccff
+    style L1 fill:#ffcc99
+    style L2 fill:#ffcc99
+</code></pre>
 
 <h4 id="monitor锁定资源">Monitor锁定资源</h4>
 
@@ -333,7 +421,9 @@
  </div> </div>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">delegate</span> <span class="kt">string</span> <span class="nf">RunTestThreadPool</span><span class="p">(</span><span class="k">out</span> <span class="kt">int</span> <span class="n">threadId</span><span class="p">);</span>
 
-<span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Callback</span><span class="p">(</span><span class="n">IAsyncResult</span> <span class="n">result</span><span class="p">)</span>
+<span class="c1">//public delegate void AsyncCallback(IAsyncResult ar);</span>
+<span class="c1">//只要跟AsyncCallback委托的签名一致即可</span>
+<span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">FinishCallback</span><span class="p">(</span><span class="n">IAsyncResult</span> <span class="n">result</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"callback called"</span><span class="p">);</span>
     <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"线程状态=</span><span class="p">{</span><span class="n">result</span><span class="p">.</span><span class="n">AsyncState</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
@@ -361,11 +451,11 @@
     <span class="c1">// 使用线程池运行委托</span>
     <span class="n">RunTestThreadPool</span> <span class="n">poolDelegate</span> <span class="p">=</span> <span class="n">Test</span><span class="p">;</span>
     <span class="c1">// 接受一个回调函数和自定义参数，并理解返回IAsyncResult对象</span>
-    <span class="n">IAsyncResult</span> <span class="n">thread2</span> <span class="p">=</span> <span class="n">poolDelegate</span><span class="p">.</span><span class="nf">BeginInvoke</span><span class="p">(</span><span class="k">out</span> <span class="n">threadId</span><span class="p">,</span> <span class="n">Callback</span><span class="p">,</span> <span class="s">"delegate async callback"</span><span class="p">);</span>
+    <span class="n">IAsyncResult</span> <span class="n">thread2</span> <span class="p">=</span> <span class="n">poolDelegate</span><span class="p">.</span><span class="nf">BeginInvoke</span><span class="p">(</span><span class="k">out</span> <span class="n">threadId</span><span class="p">,</span> <span class="n">FinishCallback</span><span class="p">,</span> <span class="s">"delegate async callback"</span><span class="p">);</span>
     <span class="c1">// 等待线程池线程完成，后面的代码开始挂起，允许继续其他工作</span>
     <span class="n">thread2</span><span class="p">.</span><span class="n">AsyncWaitHandle</span><span class="p">.</span><span class="nf">WaitOne</span><span class="p">();</span>
     <span class="c1">// 获取线程池线程返回值</span>
-    <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">poolDelegate</span><span class="p">.</span><span class="nf">EndInvoke</span><span class="p">(</span><span class="k">out</span> <span class="n">threadId</span><span class="p">,</span> <span class="n">thread2</span><span class="p">);</span>
+    <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">poolDelegate</span><span class="p">.</span><span class="nf">EndInvoke</span><span class="p">(</span><span class="n">thread2</span><span class="p">);</span>
     <span class="c1">// 打印线程池线程id</span>
     <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"thread pool threaId </span><span class="p">{</span><span class="n">threadId</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
     <span class="c1">// 打印线程池线程返回值</span>
@@ -375,7 +465,52 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>  使用Begin/End方法和IAsyncResult对象可以实现异步调用被称为异步编程模型<a href="../CSharp/CSharp_Thread_Pattern.html#2">APM模型</a>。<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></p>
+<p>  BeginInvoke/EndInvoke的前x个参数与委托的签名参数是要一致的，然后后一个参数是完成回调，最后是自定义object参数是在EndInvoke的返回值。使用Begin/End方法和IAsyncResult对象可以实现异步调用被称为异步编程模型<a href="../CSharp/CSharp_Thread_Pattern.html#2">APM模型</a>。<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></p>
+
+<div class="premonition error"> <div class="header"> <svg class="icon error" aria-hidden="true"> <use xlink:href="#icon-error"></use> </svg> <div class="title"> Thread已过时 </div> </div> <div class="content"> <p>现代C#不再推荐直接操作使用Thread、ThreadPool，C#在4.0以后推出了一套抽象程度更高的TPL的API将ThreadPool作为底层实现包装起来。</p>
+
+
+
+ </div> </div>
+<h4 id="线程池创建">线程池创建</h4>
+
+<p>  观察创建线程需要的时间，线程池创建线程的效率比new Thread()创建线程的效率要高，因为线程池创建线程是可复用的，而new Thread()创建线程是每次都创建新的线程。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Stopwatch</span> <span class="n">stopwatch</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Stopwatch</span><span class="p">();</span>
+<span class="n">stopwatch</span><span class="p">.</span><span class="nf">Start</span><span class="p">();;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+<span class="p">{</span>
+    <span class="c1">// new Thread(() =&gt; { }).Start();</span>
+    <span class="n">ThreadPool</span><span class="p">.</span><span class="nf">QueueUserWorkItem</span><span class="p">((</span><span class="n">a</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">});</span>
+<span class="p">}</span>
+<span class="n">stopwatch</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+<span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"创建100个线程需要花费时间(毫秒)："</span> <span class="p">+</span> <span class="n">stopwatch</span><span class="p">.</span><span class="n">ElapsedMilliseconds</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
+</code></pre></div></div>
+<p>  用我的Mac intel 6核CPU测试到直接New Thread创建消耗260ms，而线程池创建100个可复用的线程消耗只有3ms。</p>
+
+<h4 id="线程池数量">线程池数量</h4>
+
+<p>  线程池的线程数量是根据CPU核心数来决定的，默认情况下线程池的线程数量为CPU核心数，但是可以通过SetMinThreads()和 SetMaxThreads()设置线程池工作的最小和最大线程数。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">SetMinThreads</span> <span class="p">(</span><span class="kt">int</span> <span class="n">workerThreads</span><span class="p">,</span> <span class="kt">int</span> <span class="n">completionPortThreads</span><span class="p">);</span>
+<span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">SetMaxThreads</span> <span class="p">(</span><span class="kt">int</span> <span class="n">workerThreads</span><span class="p">,</span> <span class="kt">int</span> <span class="n">completionPortThreads</span><span class="p">);</span>
+
+<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">GetMinThreads</span> <span class="p">(</span><span class="k">out</span> <span class="kt">int</span> <span class="n">workerThreads</span><span class="p">,</span> <span class="k">out</span> <span class="kt">int</span> <span class="n">completionPortThreads</span><span class="p">);</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">GetMaxThreads</span> <span class="p">(</span><span class="k">out</span> <span class="kt">int</span> <span class="n">workerThreads</span><span class="p">,</span> <span class="k">out</span> <span class="kt">int</span> <span class="n">completionPortThreads</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>  <code class="language-plaintext highlighter-rouge">**workerThreads**</code>：工作线程数，这些线程用于处理一般的CPU密集型任务和普通的异步操作，默认值通常等于CPU核心数。</p>
+
+<p>  <code class="language-plaintext highlighter-rouge">**completionPortThreads**</code>：I/O完成端口线程数，这些线程专门用于处理异步I/O操作的完成通知，处理文件读写、网络请求等I/O密集型操作的回调。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">workerThreads</span><span class="p">;</span> <span class="kt">int</span> <span class="n">completionPortThreads</span><span class="p">;</span>
+<span class="n">ThreadPool</span><span class="p">.</span><span class="nf">GetMaxThreads</span><span class="p">(</span><span class="k">out</span> <span class="n">workerThreads</span><span class="p">,</span> <span class="k">out</span> <span class="n">completionPortThreads</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"线程池最大线程数=</span><span class="p">{</span><span class="n">workerThreads</span><span class="p">}</span><span class="s"> completeiong=</span><span class="p">{</span><span class="n">completionPortThreads</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+<span class="n">ThreadPool</span><span class="p">.</span><span class="nf">GetMinThreads</span><span class="p">(</span><span class="k">out</span> <span class="n">workerThreads</span><span class="p">,</span> <span class="k">out</span> <span class="n">completionPortThreads</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"线程池最小线程数=</span><span class="p">{</span><span class="n">workerThreads</span><span class="p">}</span><span class="s"> completeiong=</span><span class="p">{</span><span class="n">completionPortThreads</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
+</code></pre></div></div>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
