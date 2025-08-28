@@ -33,9 +33,12 @@ self.addEventListener("fetch", function (event) {
 
             return response;
         })
-        .catch(function (error) {        
-            // console.log("Network request Failed. Serving content from cache: " + error);
-            return fromCache(event.request);
+        .catch(function () {
+            return fromCache(event.request).catch(function () {
+                return caches.open(CACHE).then(function (cache) {
+                    return cache.match(offlineFallbackPage);
+                });
+            });
         })
     );
 });

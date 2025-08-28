@@ -5,8 +5,8 @@
     <description>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</description>
     <link>https://www.damonc.top//</link>
     <atom:link href="https://www.damonc.top/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 28 Aug 2025 19:40:54 +0800</pubDate>
-    <lastBuildDate>Thu, 28 Aug 2025 19:40:54 +0800</lastBuildDate>
+    <pubDate>Thu, 28 Aug 2025 21:45:37 +0800</pubDate>
+    <lastBuildDate>Thu, 28 Aug 2025 21:45:37 +0800</lastBuildDate>
     <generator>Jekyll v4.3.4</generator>
     
       <item>
@@ -557,7 +557,7 @@
   &lt;/ol&gt;
 &lt;/div&gt;
 </description>
-        <pubDate>Tue, 03 Jun 2025 20:00:00 +0800</pubDate>
+        <pubDate>Wed, 04 Jun 2025 04:00:00 +0800</pubDate>
         <link>https://www.damonc.top/csharp/CSharp_Thread_Base.html</link>
         <guid isPermaLink="true">https://www.damonc.top/csharp/CSharp_Thread_Base.html</guid>
         
@@ -797,7 +797,7 @@
 
 &lt;p&gt;  3. 游戏重启，如果是在游戏内重启就不能再次初始化&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InstantiateAsync&lt;/code&gt;了，内部标记了&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hasStartedInitialization&lt;/code&gt;。&lt;/p&gt;
 </description>
-        <pubDate>Mon, 15 Jul 2024 20:00:00 +0800</pubDate>
+        <pubDate>Tue, 16 Jul 2024 04:00:00 +0800</pubDate>
         <link>https://www.damonc.top/unity3d/Unity_Addressable_Build.html</link>
         <guid isPermaLink="true">https://www.damonc.top/unity3d/Unity_Addressable_Build.html</guid>
         
@@ -1077,7 +1077,7 @@ public string ContentStateFilePath { get; internal set; }
 
 &lt;p&gt;  这一步在Bundle压缩写入后。创建下载信息AssetBundleRequestOptions是提供给AssetBundleProvider下载时使用。根据BundleNaming模式重构AssetBundleName，重构命名这一步会影响bundle命名格式，尤其会破坏&lt;a href=&quot;#jump1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1.3处理Group&lt;/code&gt;&lt;/a&gt;这一步的预命名。&lt;/p&gt;
 </description>
-        <pubDate>Fri, 12 Jul 2024 20:00:00 +0800</pubDate>
+        <pubDate>Sat, 13 Jul 2024 04:00:00 +0800</pubDate>
         <link>https://www.damonc.top/unity3d/Unity_Addressabel_Group.html</link>
         <guid isPermaLink="true">https://www.damonc.top/unity3d/Unity_Addressabel_Group.html</guid>
         
@@ -1397,7 +1397,7 @@ if (schema.BundleMode ~= packMode)
   &lt;li&gt;&lt;strong&gt;(4) BuildScriptVirtualMode&lt;/strong&gt;：对应&lt;strong&gt;Simulate Groups (advanced)&lt;/strong&gt;按钮，不用打AB包可模拟加载AB模式。&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Wed, 10 Jul 2024 00:00:00 +0800</pubDate>
+        <pubDate>Thu, 11 Jul 2024 04:00:00 +0800</pubDate>
         <link>https://www.damonc.top/unity3d/Unity_Addressable_Editor.html</link>
         <guid isPermaLink="true">https://www.damonc.top/unity3d/Unity_Addressable_Editor.html</guid>
         
