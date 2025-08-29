@@ -5,8 +5,8 @@
     <description>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</description>
     <link>https://www.damonc.top//</link>
     <atom:link href="https://www.damonc.top/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 28 Aug 2025 23:47:59 +0800</pubDate>
-    <lastBuildDate>Thu, 28 Aug 2025 23:47:59 +0800</lastBuildDate>
+    <pubDate>Fri, 29 Aug 2025 14:15:42 +0800</pubDate>
+    <lastBuildDate>Fri, 29 Aug 2025 14:15:42 +0800</lastBuildDate>
     <generator>Jekyll v4.3.4</generator>
     
       <item>
@@ -173,7 +173,7 @@
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts\2025\month6\thread_state.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts\2025\month6\thread_state.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;线程生命周期图示.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -493,7 +493,7 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;  BeginInvoke/EndInvoke的前x个参数与委托的签名参数是要一致的，然后后一个参数是完成回调，最后是自定义object参数是在EndInvoke的返回值。使用Begin/End方法和IAsyncResult对象可以实现异步调用被称为异步编程模型&lt;a href=&quot;../CSharp/CSharp_Thread_Pattern.html#2&quot;&gt;APM模型&lt;/a&gt;。&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;  BeginInvoke/EndInvoke的前x个参数与委托的签名参数是要一致的，然后后一个参数是完成回调，最后是自定义object参数是在EndInvoke的返回值。使用Begin/End方法和IAsyncResult对象可以实现异步调用被称为异步编程模型&lt;a href=&quot;../CSharp/CSharp_Thread_Pattern.html#apm模式&quot;&gt;APM模型&lt;/a&gt;。&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;div class=&quot;premonition error&quot;&gt; &lt;div class=&quot;header&quot;&gt; &lt;svg class=&quot;icon error&quot; aria-hidden=&quot;true&quot;&gt; &lt;use xlink:href=&quot;#icon-error&quot;&gt;&lt;/use&gt; &lt;/svg&gt; &lt;div class=&quot;title&quot;&gt; Thread已过时 &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;content&quot;&gt; &lt;p&gt;现代C#不再推荐直接操作使用Thread、ThreadPool，C#在4.0以后推出了一套抽象程度更高的TPL的API将ThreadPool作为底层实现包装起来。&lt;/p&gt;
 
@@ -528,17 +528,46 @@
 &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;GetMaxThreads&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;workerThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completionPortThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;**workerThreads**&lt;/code&gt;：工作线程数，这些线程用于处理一般的CPU密集型任务和普通的异步操作，默认值通常等于CPU核心数。&lt;/p&gt;
+&lt;p&gt;  &lt;strong&gt;workerThreads&lt;/strong&gt;：工作线程数，这些线程用于处理一般的CPU密集型任务和普通的异步操作，默认值通常等于CPU核心数。&lt;/p&gt;
 
-&lt;p&gt;  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;**completionPortThreads**&lt;/code&gt;：I/O完成端口线程数，这些线程专门用于处理异步I/O操作的完成通知，处理文件读写、网络请求等I/O密集型操作的回调。&lt;/p&gt;
+&lt;p&gt;  &lt;strong&gt;completionPortThreads&lt;/strong&gt;：I/O完成端口线程数，这些线程专门用于处理异步I/O操作的完成通知，处理文件读写、网络请求等I/O密集型操作的回调。
+  &lt;strong&gt;返回值&lt;/strong&gt;：Set工作线程数量返回值bool为true表示成功，失败false(系统参数为负、内存不足、超过受限值)。&lt;/p&gt;
 
-&lt;div class=&quot;language-csharp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;workerThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completionPortThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ThreadPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetMaxThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;workerThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completionPortThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$&quot;线程池最大线程数=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;workerThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; completeiong=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;completionPortThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ThreadPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetMinThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;workerThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completionPortThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$&quot;线程池最小线程数=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;workerThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; completeiong=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;completionPortThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;div class=&quot;language-csharp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 检查当前设置&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ThreadPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetMaxThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$&quot;线程池最大线程数=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;currentWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; completionPortThreads=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;currentIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ThreadPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetMinThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$&quot;线程池最小线程数=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maxWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; completionPortThreads=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maxIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// 安全设置最小线程数，不超过最大值&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;desiredWorker&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;desiredIO&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ThreadPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SetMinThreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;desiredWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;desiredIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// 处理失败情况&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ReadKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;线程池调度&quot;&gt;线程池调度&lt;/h4&gt;
+
+&lt;p&gt;  &lt;strong&gt;线程池使用的一些注意事项：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;SetMaxThreads()设置的最大工作线程数或I/O线程数，不能小于SetMinThreads()设置的最小工作线程数或I/O线程数。&lt;/li&gt;
+  &lt;li&gt;SetMaxThreads()设置的工作线程或I/O完成线程数目不能设置为小于计算机上的处理器数。&lt;/li&gt;
+  &lt;li&gt;如果将线程池最小数设置得过大(SetMinThreads())，会导致任务切换开销变大，消耗更多得性能资源。&lt;/li&gt;
+  &lt;li&gt;如果加入的任务大于设置的最大线程数，那么将会进入等待队列。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;  线程池调度算法&lt;sup id=&quot;fnref:5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;，这个搜索了Google和AI：&lt;/p&gt;
+
+&lt;div class=&quot;premonition info&quot;&gt; &lt;div class=&quot;header&quot;&gt; &lt;svg class=&quot;icon info&quot; aria-hidden=&quot;true&quot;&gt; &lt;use xlink:href=&quot;#icon-info&quot;&gt;&lt;/use&gt; &lt;/svg&gt; &lt;div class=&quot;title&quot;&gt; 线程调度 &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;content&quot;&gt; &lt;p&gt;如果线程数设置过小，那么任务很多时，队列会有大量任务需要等待，这样可能会导致我们要执行的任务不能马上完成，很多要执行的函数阻塞等待。
+ c#线程池调度算法有工作窃取法演进到爬山算法。&lt;/p&gt;
+
+
+
+ &lt;/div&gt; &lt;/div&gt;
 
 &lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
@@ -553,6 +582,9 @@
     &lt;/li&gt;
     &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
       &lt;p&gt;参考&lt;a href=&quot;https://learn.microsoft.com/zh-cn/dotnet/navigate/advanced-programming/&quot;&gt;微软文档&lt;/a&gt;。 &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:5&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;参考AI搜索不细究了。 &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -694,7 +726,7 @@
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/simulator_server.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/simulator_server.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;模拟文件服务器.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;p&gt;  下载好之后就能获取到远程&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ResourceLocationMap&lt;/code&gt;。现在有了本地和远程Location信息，通过对比就能知道有哪些AssetBundle产生变化。&lt;/p&gt;
@@ -847,7 +879,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/bundle_field_id.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/bundle_field_id.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Debug模式查看到BundleFileId.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;p&gt;  进入到&lt;strong&gt;&lt;em&gt;BuildPlayerContentImpl&lt;/em&gt;&lt;/strong&gt;函数，主要做了三块工作。&lt;/p&gt;
@@ -876,7 +908,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/build_play_scripts.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Data Builders列表就是这个Scripts列表.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1098,7 +1130,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/addressable_win_pkg_mgr.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/addressable_win_pkg_mgr.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Addressable Version Seleclt.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1107,15 +1139,15 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/addressable_version.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/addressable_version.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Addressable Version List.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;p&gt;  Unity这里分了两个分支维护Addressable，其中一个分支是1.21版本对应的Unity版本是2019+，另一个分支是2.0版本对应的Unity版本是2023+：
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/addressable_1_21.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/addressable_2_0.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/addressable_1_21.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/addressable_2_0.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Addressable Branch.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1125,14 +1157,14 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/addressable_deps.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/addressable_deps.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Addressable Dependencies.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;p&gt;  Addressable最重要的依赖是ScriptableBuildPipeline，SBP这个包要更新到1.21.23或2.1.x以上，旧版SBP对SpriteAtlas图集打包会有冗余。打开Packages/manifest.json，强制指定SBP版本”com.unity.scriptablebuildpipeline”:”1.21.23”,
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/sbp_upgrade.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/sbp_upgrade.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;SBP指定版本.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1178,7 +1210,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/addressable_assets_settings.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/addressable_assets_settings.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;AddressableAssetSettings预览.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;p&gt;  AA的全局配置文件，涉及一些打包配置、热更配置、下载配置等等，下面是每项参数配置说明。&lt;/p&gt;
@@ -1191,14 +1223,14 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/profile_in_use.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/profile_in_use.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Profile预览.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;p&gt;Profile In Use可以选择系统自带或自定义，其中自定义使用Manager按钮打开Profile Window，点击Create按钮新增变量等参数。
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/profile_window.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/profile_window.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Profile Window.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1208,7 +1240,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/catalog_attribute.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/catalog_attribute.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Catalog设置面板.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;p&gt;  Catalog类似于根bundle，记录了当前构建bundle时的依赖和AA的各项设置。&lt;/p&gt;
@@ -1225,7 +1257,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/update_download.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/update_download.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Update Downloads设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1238,7 +1270,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/modify_update_remote.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/modify_update_remote.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;修改过的group列表.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1258,7 +1290,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/setting_build.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/setting_build.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Build设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;ul&gt;
@@ -1278,9 +1310,9 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/build_play_scripts.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/play_mode.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/build_mode.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/build_play_scripts.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/play_mode.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/build_mode.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Build Bundle设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;p&gt;  Play mode指定在编辑器是怎么加载资源，本地测试用&lt;/p&gt;
@@ -1298,7 +1330,7 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/group_view.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/group_view.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Group设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1336,14 +1368,14 @@ public string ContentStateFilePath { get; internal set; }
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/group_serialize.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/group_serialize.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Group Debug模式.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/schema_serialize1.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2024/month7/addressable_system/schema_serialize2.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/schema_serialize1.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2024/month7/addressable_system/schema_serialize2.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Schema Debug模式.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1423,8 +1455,8 @@ if (schema.BundleMode ~= packMode)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200615181223145-1229624244.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200615181223966-473200226.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200615181223145-1229624244.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200615181223966-473200226.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;albedo map 和 normal map.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1433,7 +1465,7 @@ if (schema.BundleMode ~= packMode)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200616191420845-1957506928.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200616191420845-1957506928.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;平坦的视角.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1442,7 +1474,7 @@ if (schema.BundleMode ~= packMode)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200616191421654-712293996.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200616191421654-712293996.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;法线贴图的光线变化.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1451,7 +1483,7 @@ if (schema.BundleMode ~= packMode)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200616191422519-1710373191.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200616191422519-1710373191.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;高度图.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1507,7 +1539,7 @@ if (schema.BundleMode ~= packMode)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200616191423089-347056836.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200616191423089-347056836.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
 
 &lt;h3 id=&quot;坐标匹配&quot;&gt;坐标匹配&lt;/h3&gt;
 
@@ -1548,7 +1580,7 @@ if (schema.BundleMode ~= packMode)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012938981-982216259.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012938981-982216259.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;u坐标移动.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1559,7 +1591,7 @@ if (schema.BundleMode ~= packMode)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192759952-594530144.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192759952-594530144.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;varies across a surface.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1639,7 +1671,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192800432-1757806048.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192800432-1757806048.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;影视图方向用作UV偏移.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1648,7 +1680,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012940748-384205609.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012940748-384205609.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;随投影视角方向移动UV.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1665,7 +1697,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012942351-290008046.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012942351-290008046.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;由高度调整的移动.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1679,7 +1711,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012944095-1997194416.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012944095-1997194416.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;视差贴图效果 由合理到过量.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1696,7 +1728,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192800958-1980748310.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192800958-1980748310.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;光线投射到底部，有限且正确.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1714,7 +1746,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192802151-218582125.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192802151-218582125.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;视差贴图像标准着色器.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1723,7 +1755,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192802555-2049613835.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192802555-2049613835.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;球面视差贴图.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1732,7 +1764,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192803371-1931947503.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192803371-1931947503.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;阴影不受视差影响.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1783,7 +1815,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192803893-1797850325.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192803893-1797850325.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;细节网格纹理.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1792,8 +1824,8 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192804491-290326603.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192805295-1360127209.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192804491-290326603.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192805295-1360127209.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;细节UV不受影响.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1820,7 +1852,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192806533-2106069113.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192806533-2106069113.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;正确的UV.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1831,7 +1863,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192807160-2024700857.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192807160-2024700857.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;实际与预测的高度对比.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1842,7 +1874,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200617192807679-1545265192.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200617192807679-1545265192.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;随视图射线前进.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -1968,7 +2000,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012945572-448280189.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012945572-448280189.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Raymarching 步进10次 无偏差, 无限制.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2016,7 +2048,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012948054-536464296.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012948054-536464296.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Raymarching 100次采样.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2033,7 +2065,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012948690-1598196626.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012948690-1598196626.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Raymarching 100次采样.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2046,7 +2078,7 @@ model 1与model 2都只支持8个Texture Coordinate Register -&amp;gt;Texcoord[0
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012949277-977122761.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012949277-977122761.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;执行直线交叉.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2081,7 +2113,7 @@ t = (a - c) / (a - c + d - b)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012950193-51635460.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012950193-51635460.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;线段交点.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2094,7 +2126,7 @@ t = (a - c) / (a - c + d - b)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012951620-360864955.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012951620-360864955.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
 
 &lt;p&gt;效果看起来好多了。我们现在假设表面在样本点之间是线性的，这可以防止最明显的分层假象。然而，它不能帮助我们检测我们是否错过了步骤之间的交集。我们仍然需要很多的样本来处理小的特征，轮廓和浅角度。&lt;/p&gt;
 
@@ -2126,7 +2158,7 @@ t = (a - c) / (a - c + d - b)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012952340-10743193.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012952340-10743193.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;越来越接近交点.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2197,7 +2229,7 @@ t = (a - c) / (a - c + d - b)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012953271-1061541462.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012953271-1061541462.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;10步长加上3个二分查找的最终效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2212,7 +2244,7 @@ t = (a - c) / (a - c + d - b)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/1692664-20200618012954391-1540920343.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/1692664-20200618012954391-1540920343.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;动态批处理会产生奇怪的结果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2247,7 +2279,7 @@ t = (a - c) / (a - c + d - b)
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender20/batched-correct.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender20/batched-correct.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;动态批量与正确的结果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 </description>
@@ -2309,7 +2341,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010902826-821880737.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010902826-821880737.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;5000 draw call.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2318,7 +2350,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010904552-338192039.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010904552-338192039.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;6 draw call.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2342,8 +2374,8 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010905493-1524350499.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010906722-1492830859.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010905493-1524350499.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010906722-1492830859.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;合并了，但是显示有错误.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2374,7 +2406,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010908398-221325174.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010908398-221325174.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;矩阵替换内部实现？.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2431,7 +2463,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010909964-776430193.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010909964-776430193.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;批处理爆炸.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2452,7 +2484,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010911627-1161944067.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010911627-1161944067.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;instanced 阴影.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2463,7 +2495,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010913312-1389275661.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010913312-1389275661.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;批处理爆炸.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2476,7 +2508,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010914967-1310775534.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010914967-1310775534.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;多光源instance.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2501,7 +2533,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010916576-490651101.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010916576-490651101.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;球体与随机的颜色，没有批量和阴影.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2577,7 +2609,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010918398-38688989.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010918398-38688989.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
 
 &lt;p&gt;现在，我们的颜色随机的球再次被批处理。 我们&lt;strong&gt;可以用相同的方式使其他属性可变。 对于颜色，浮点数，矩阵和四分量浮点向量，这是可能的&lt;/strong&gt;。 &lt;strong&gt;如果要改变纹理，可以使用单独的纹理数组&lt;/strong&gt;，并将索引添加到实例化缓冲区。其他属性修改类似。&lt;/p&gt;
 
@@ -2648,7 +2680,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010919954-2006515171.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010919954-2006515171.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
 
 &lt;p&gt;不幸的是没有有效的批处理。Unity能够对以相同的LOD颜色球体进行批处理，但是如果可以像往常一样进行批处理会更好。 我们可以通过用缓冲数组替换unity_LODFade来实现。可以通过为支持实例化的每个过程添加lodfade实例化选项来指示Unity的着色器代码执行此操作。&lt;/p&gt;
 
@@ -2659,7 +2691,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender19/1692664-20200612010921540-656727216.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender19/1692664-20200612010921540-656727216.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;instance LOD fading.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 </description>
@@ -2700,7 +2732,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605003217232-1241081746.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605003217232-1241081746.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;实时全局光照和烘焙光照同时启用的状态.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2709,7 +2741,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605003333043-1240937953.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605003333043-1240937953.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;主光源设置为实时模式.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2718,7 +2750,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605003421685-903339628.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605003421685-903339628.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;只有动态对象能接收实时的全局光照.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2731,7 +2763,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605003617860-357493611.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605003617860-357493611.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;实时光照贴图，屋顶被选中时候的状态.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2867,7 +2899,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013216623-414124444.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013216623-414124444.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;把实时全局光照应用于一切物体之上.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2876,7 +2908,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013217805-1029939389.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013217805-1029939389.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;禁用混合光源以后，间接光照仍然被保留.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2885,7 +2917,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013219337-640958770.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013219337-640958770.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;切换实时光与实时GI.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2894,8 +2926,8 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013220298-1170450196.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013221104-52400640.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013220298-1170450196.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013221104-52400640.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;没有影响的间接光源和实时的聚光光源.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2908,7 +2940,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013222060-1153434303.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013222060-1153434303.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;用自发光球来烘焙全局光照.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -2948,8 +2980,8 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013222795-276798177.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013223641-2073252267.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013222795-276798177.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013223641-2073252267.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;带有自发光球的实时全局光照效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3003,7 +3035,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013226755-1065411582.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013226755-1065411582.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;动画控制实时GI.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3022,7 +3054,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013229006-1893115114.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013229006-1893115114.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;对于大型动态物体来说，光照效果不好.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3031,7 +3063,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013229758-553683463.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013229758-553683463.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;启用了LPPV（光照探针代理体）支持.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3042,7 +3074,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013230509-1112003195.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013230509-1112003195.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;光照探针代理体组件.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3053,7 +3085,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013231203-999964017.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013231203-999964017.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用一个光照探针代理体而不是常规的探针器.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3062,8 +3094,8 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013231870-1652713364.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013232779-1496013065.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013231870-1652713364.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013232779-1496013065.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;自定义探针器分辨率以适应拉伸的立方体.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3083,7 +3115,7 @@ test test test!!dfS:FDFH&amp;amp;*YER#.
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013233601-1847365803.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013233601-1847365803.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;没有更多球面谐波的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3165,7 +3197,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013235369-787618137.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013235369-787618137.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;采样后的LPPV（光照探针代理体）的效果，在伽马空间中的效果太暗.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3185,7 +3217,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013236310-749557848.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013236310-749557848.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;采样后的LPPV（光照探针代理体）的效果，带有正确的颜色.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3202,8 +3234,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013237093-2016130218.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013237695-361227834.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013237093-2016130218.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013237695-361227834.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;球体和立方体作为一个对象.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3212,7 +3244,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013238446-1711254101.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013238446-1711254101.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;组件LOD组.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3223,7 +3255,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013239110-167141319.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013239110-167141319.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;让球这个子物体使用LOD 0等级.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3245,7 +3277,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013240110-283978428.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013240110-283978428.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;让球这个子物体使用LOD 0等级.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3256,7 +3288,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013241019-1435398902.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013241019-1435398902.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;没有光照探针时候的烘焙光照.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3269,7 +3301,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013242971-183808454.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013242971-183808454.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;LOD 1使用光照探针来计算实时全局光照.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3278,7 +3310,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013243831-1402316420.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013243831-1402316420.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;仅对LOD 1等级使用烘焙光照，使用的是低强度的主光源.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3287,7 +3319,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013244794-1245713384.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013244794-1245713384.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;LOD 1强制使用光照探针.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3300,7 +3332,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013245526-1175118666.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013245526-1175118666.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;带有0.5变换宽度的淡入淡出.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3366,7 +3398,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013246331-642394563.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013246331-642394563.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;通过抖动方法得到的淡入淡出几何体.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3390,8 +3422,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013247225-2138491287.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender18/1692664-20200605013249358-581600268.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013247225-2138491287.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender18/1692664-20200605013249358-581600268.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;对几何体和阴影都做了淡入淡出处理.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3433,8 +3465,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002309942-1932595350.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002311276-1707091650.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002309942-1932595350.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002311276-1707091650.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;完全实时和完全烘焙光照.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3445,7 +3477,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002312394-324532807.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002312394-324532807.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;混合光照，烘焙间接.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3454,7 +3486,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002313374-471117722.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002313374-471117722.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;混合模式的主光源.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3465,8 +3497,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002314496-2053721233.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002315595-1655913714.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002314496-2053721233.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002315595-1655913714.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;完全烘焙的光照贴图 vs 只有间接光的光照贴图.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3475,7 +3507,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002316908-68636833.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002316908-68636833.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;混合光照，实时直接光照烘焙间接光.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3491,8 +3523,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002318408-928334072.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002319957-145579115.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002318408-928334072.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002319957-145579115.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;阴影衰减，标准着色器vs我们的着色器.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3606,7 +3638,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002321275-2134383138.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002321275-2134383138.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;Shadowmask模式.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3615,7 +3647,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002322323-849349388.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002322323-849349388.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;烘焙的强度以及阴影蒙版.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3624,7 +3656,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002323536-1775535799.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002323536-1775535799.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;没有烘焙阴影.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3711,7 +3743,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002325094-888038969.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002325094-888038969.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;实时阴影和阴影蒙版阴影.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3720,7 +3752,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002326606-1972314102.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002326606-1972314102.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;只有实时阴影衰减了.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3857,7 +3889,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002327719-433885054.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002327719-433885054.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;距离阴影蒙版模式.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3868,7 +3900,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002329008-1483902900.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002329008-1483902900.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;所有物体都有实时阴影.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3883,7 +3915,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002330331-1413395037.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002330331-1413395037.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;四个光源，都是混合光.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3894,8 +3926,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002332758-586177298.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002333778-925731185.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002332758-586177298.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002333778-925731185.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;5个重叠的光照，其中一个为完全烘焙光.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3906,7 +3938,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002335110-966052747.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002335110-966052747.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;两个方向光源产生错误的衰减.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3973,7 +4005,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002336571-896877423.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002336571-896877423.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;两个定向光源正确的衰减.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3984,7 +4016,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002337701-173459592.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002337701-173459592.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;消减模式.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -3993,7 +4025,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002338965-1025220581.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002338965-1025220581.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;静态物体受到两次光照.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4040,7 +4072,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002340399-1575340233.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002340399-1575340233.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;静态物体只有烘焙光.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4114,7 +4146,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002341952-1577870051.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002341952-1577870051.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;减去后得到的光照.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4135,7 +4167,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002343602-223725225.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002343602-223725225.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;有颜色的阴影.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4148,7 +4180,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002345136-2052798411.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002345136-2052798411.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;正确的消减阴影.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4157,7 +4189,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender17/1692664-20200603002346714-785287043.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender17/1692664-20200603002346714-785287043.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;多重光照错误的消减.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 </description>
@@ -4180,7 +4212,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;&lt;/p&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224543545-885823133.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;针对光照贴图的一个测试场景.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4191,7 +4223,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224544162-1495985851.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用烘焙模式的主方向光源.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4200,7 +4232,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224544847-451474149.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;没有直接光照的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4209,7 +4241,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224545646-2048168292.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;烘培间接光照模式.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4227,7 +4259,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224546220-2118005287.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;静态标签设定.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4236,7 +4268,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224546912-1870383195.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;对于光照贴图来说是静态的物体.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4245,7 +4277,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224547954-1770311194.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用烘焙光照的场景.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4258,7 +4290,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224548501-1138122298.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;自动烘焙.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4269,7 +4301,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224549324-867042323.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;默认的光照贴图设置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4278,7 +4310,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224549936-119016943.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用“Non-directional”模式的光照贴图.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4287,7 +4319,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224550735-1332475026.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;得到光照贴图.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4296,8 +4328,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224551453-953456979.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224552186-1643111793.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;光照贴图的分辨率的不同会带来很大的差异.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4312,8 +4344,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224552903-1416086887.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224553660-737254829.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;没有环境光照，realtime vs. lightmapped.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4322,8 +4354,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224554555-1690717767.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224555273-1136371525.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;绿色的地面，realtime vs. lightmapped.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4332,8 +4364,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224556002-270644308.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224556791-2131078685.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;自发光的地面，realtime vs. lightmapped.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4342,8 +4374,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224557440-355583450.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224558173-2138402443.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用环境遮挡的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4352,7 +4384,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224558930-1992313410.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;显然是错误的环境遮挡效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4363,7 +4395,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224559715-1180880317.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;半透明的屋顶.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4372,7 +4404,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224600513-791335188.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;镂空的屋顶.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4381,7 +4413,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224601275-358793307.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;四边形上有一个错误.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4394,7 +4426,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224602678-564328235.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;指示这是透明的.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4405,8 +4437,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224603354-539689204.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224604232-1056111478.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;为透明四边形使用自定义参数.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4419,7 +4451,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224605139-922193658.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用我们的白色材质的球体.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4527,7 +4559,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224605941-2016281613.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用原始光照图数据的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4542,7 +4574,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224606764-748268587.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用解码后光照图数据的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4559,7 +4591,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224607620-2057696906.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;半透明的屋顶，效果不正确.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4579,7 +4611,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224608540-1659292184.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;半透明的屋顶，正确的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4590,7 +4622,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224609483-570537720.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;镂空的屋顶，效果不正确.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4599,7 +4631,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224611382-1243752544.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;镂空的屋顶，正确的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4610,7 +4642,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224612151-595484578.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;绿色的地板，效果不正确.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4795,7 +4827,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224612936-832867814.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;间接光照设置为0的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4819,7 +4851,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224613700-1556141393.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;间接光照着色的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4845,8 +4877,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224614488-83217782.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224615215-1831739305.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;粗糙的绿色金属，standard vs. our.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4872,7 +4904,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224616025-563552905.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;调整反照率后的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4883,8 +4915,8 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
-        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224616867-1000562908.png&quot; width=&quot;250&quot; /&gt;&lt;body&gt;&lt;/body&gt;
+        &lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224617705-756171309.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用了法线贴图，standard vs. our.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4897,7 +4929,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224618490-889208576.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;再次启用定向光照贴图.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4906,7 +4938,7 @@ _顾名思义，该函数仅包括前两个球面谐波带L0和L1。 Unity不使
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224619243-972818284.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;强度图和方向图.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -4979,7 +5011,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224620025-25891459.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;使用带有方向的光照贴图的效果.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -5013,7 +5045,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224620869-2011940708.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
 
 &lt;p&gt;为了更好地混合静态和动态对象，我们必须以某种方式将烘焙的光照应用于动态对象。为了解决这个问题，Unity有光照探针。 光照探针是对空间中的一个点包含该位置的光照信息。 它是用球面谐波来存储这些信息而不是用纹理。 如果可用的话，这些光照探针将用于动态对象，而不是全局环境数据。所以我们要做的就是创建一些探针，等到烘焙的时候，我们的着色器就会自动使用它们。&lt;/p&gt;
 
@@ -5024,7 +5056,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224621611-72687147.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;一个新的光探测器组.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -5033,7 +5065,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224622328-105716559.png&quot; width=&quot;250&quot; /&gt;&lt;/center&gt;
 
 &lt;h3 id=&quot;放置光照探针&quot;&gt;放置光照探针&lt;/h3&gt;
 
@@ -5042,7 +5074,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224623082-2091379510.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;封装区域.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -5051,7 +5083,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224623843-1380403562.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;放置更多的探测器.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -5060,7 +5092,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224624739-928043347.png&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;调整探测器的位置.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
@@ -5069,7 +5101,7 @@ Unity 4使用了一种与以后的版本不同的延迟渲染管线。 在Unity 
 &lt;!--url1 url2 url3 url4 url5
     代表一次加载多少张图
 --&gt;
-&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/web-assets/posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
+&lt;center class=&quot;half&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;https://img.damonc.top/posts/2018/month1/catRender16/1692664-20200601224702732-797999005.gif&quot; width=&quot;250&quot; /&gt;&lt;font size=&quot;2.5&quot;&gt;
             &lt;i&gt;移动动态对象.&lt;/i&gt;
         &lt;/font&gt;&lt;/center&gt;
 
