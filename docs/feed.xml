@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2025-08-31T16:59:46+00:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">编程散记</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>编程散记</name></author><entry><title type="html">多线程编程模型篇-Task(二)</title><link href="https://www.damonc.top/csharp/Csharp_Task_Base.html" rel="alternate" type="text/html" title="多线程编程模型篇-Task(二)" /><published>2025-06-06T10:00:00+00:00</published><updated>2025-06-06T10:00:00+00:00</updated><id>https://www.damonc.top/csharp/Csharp_Task_Base</id><content type="html" xml:base="https://www.damonc.top/csharp/Csharp_Task_Base.html"><![CDATA[<h2 id="什么是task">什么是Task</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://www.damonc.top/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.damonc.top/" rel="alternate" type="text/html" /><updated>2025-09-01T09:39:04+00:00</updated><id>https://www.damonc.top/feed.xml</id><title type="html">编程散记</title><subtitle>个人的一个技术博客站点，记录生活、工作、学习中的一些小事，以及一些比较有趣的事情，留点什么东西也挺不错的，偶尔会在这里停留。</subtitle><author><name>编程散记</name></author><entry><title type="html">多线程编程模型篇(三)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html" rel="alternate" type="text/html" title="多线程编程模型篇(三)" /><published>2025-06-07T10:00:00+00:00</published><updated>2025-06-07T10:00:00+00:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Pattern</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html"><![CDATA[<h2 id="多线程的演进">多线程的演进</h2>
+
+<h2 id="apm模式">APM模式</h2>
+
+<h2 id="eap模式">EAP模式</h2>
+
+<h2 id="tap模式">TAP模式</h2>
+
+<h2 id="asyncawait异步模式">async/await异步模式</h2>
+
+<h2 id="tpl并行库">TPL并行库</h2>]]></content><author><name>编程散记</name></author><category term="CSharp" /><category term="Thread" /><summary type="html"><![CDATA[多线程的演进]]></summary></entry><entry><title type="html">多线程编程模型篇-Task(二)</title><link href="https://www.damonc.top/csharp/Csharp_Task_Base.html" rel="alternate" type="text/html" title="多线程编程模型篇-Task(二)" /><published>2025-06-06T10:00:00+00:00</published><updated>2025-06-06T10:00:00+00:00</updated><id>https://www.damonc.top/csharp/Csharp_Task_Base</id><content type="html" xml:base="https://www.damonc.top/csharp/Csharp_Task_Base.html"><![CDATA[<h2 id="什么是task">什么是Task</h2>
 
 <p>  任务是对象，其中封装了以异步方式执行的工作。这听起来有点儿耳熟，委托不也是封装了代码的对象吗？区别在于委托是同步的而任务是异步的。如果执行一个委托(例如一个Action)，当前线程的控制点会立即转移到委托的代码；除非委托结束，否则控制不会返回调用者。简单地说，<strong>任务是将委托从同步执行模式转变成异步执行</strong>。</p>
 
@@ -313,6 +323,19 @@
         <span class="kt">double</span> <span class="n">result</span> <span class="p">=</span> <span class="n">numerator</span> <span class="p">/</span> <span class="n">denominator</span><span class="p">;</span>
         <span class="k">return</span> <span class="n">Task</span><span class="p">.</span><span class="nf">FromResult</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
     <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 不好 - 不必要的线程切换v</span>
+<span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">BadExample</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="s">"Hello"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 好 - 直接返回</span>
+<span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">GoodExample</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">Task</span><span class="p">.</span><span class="nf">FromResult</span><span class="p">(</span><span class="s">"Hello"</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -1419,17 +1442,7 @@
         <span class="k">return</span> <span class="k">new</span> <span class="n">ValueTask</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;(</span><span class="nf">LoadValueAsync</span><span class="p">(</span><span class="n">key</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>编程散记</name></author><category term="CSharp" /><category term="Task" /><summary type="html"><![CDATA[任务是对象，其中封装了以异步方式执行的工作。这听起来有点儿耳熟，委托不也是封装了代码的对象吗？区别在于委托是同步的而任务是异步的。如果执行一个委托(例如一个Action)，当前线程的控制点会立即转移到委托的代码。]]></summary></entry><entry><title type="html">多线程编程模型篇(三)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html" rel="alternate" type="text/html" title="多线程编程模型篇(三)" /><published>2025-06-06T10:00:00+00:00</published><updated>2025-06-06T10:00:00+00:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Pattern</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Pattern.html"><![CDATA[<h2 id="多线程的演进">多线程的演进</h2>
-
-<h2 id="apm模式">APM模式</h2>
-
-<h2 id="eap模式">EAP模式</h2>
-
-<h2 id="tap模式">TAP模式</h2>
-
-<h2 id="asyncawait异步模式">async/await异步模式</h2>
-
-<h2 id="tpl并行库">TPL并行库</h2>]]></content><author><name>编程散记</name></author><category term="CSharp" /><category term="Thread" /><summary type="html"><![CDATA[多线程的演进]]></summary></entry><entry><title type="html">多线程编程基础篇-Thread(一)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Base.html" rel="alternate" type="text/html" title="多线程编程基础篇-Thread(一)" /><published>2025-06-03T20:00:00+00:00</published><updated>2025-06-03T20:00:00+00:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Base</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Base.html"><![CDATA[<h2 id="多线程概念">多线程概念</h2>
+</code></pre></div></div>]]></content><author><name>编程散记</name></author><category term="CSharp" /><category term="Task" /><summary type="html"><![CDATA[任务是对象，其中封装了以异步方式执行的工作。这听起来有点儿耳熟，委托不也是封装了代码的对象吗？区别在于委托是同步的而任务是异步的。如果执行一个委托(例如一个Action)，当前线程的控制点会立即转移到委托的代码。]]></summary></entry><entry><title type="html">多线程编程基础篇-Thread(一)</title><link href="https://www.damonc.top/csharp/CSharp_Thread_Base.html" rel="alternate" type="text/html" title="多线程编程基础篇-Thread(一)" /><published>2025-06-03T20:00:00+00:00</published><updated>2025-06-03T20:00:00+00:00</updated><id>https://www.damonc.top/csharp/CSharp_Thread_Base</id><content type="html" xml:base="https://www.damonc.top/csharp/CSharp_Thread_Base.html"><![CDATA[<h2 id="多线程概念">多线程概念</h2>
 
 <p>  现代应用程序可能要同时处理数据计算、画面渲染、文件读写等操作，同时要求操作系统要满足运行多个应用程序，后来随着现代CPU的从单核进化到多核，从物理核心进化到逻辑核心。就逐渐有了多任务执行概念。</p>
 
