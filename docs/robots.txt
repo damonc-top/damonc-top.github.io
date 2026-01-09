@@ -1,6 +1,0 @@
-# Algolia-Crawler-Verif: 5E91324370E1262B
-
-Sitemap: https://www.damonc.top/sitemap.xml
-
-User-agent: *
-Allow: /
