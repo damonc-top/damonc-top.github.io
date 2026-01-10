@@ -125,7 +125,7 @@
 
   <!-- Scripts -->
 
-  <script src="/assets/js/dist/theme.min.js"></script>
+  <script type="module" src="/assets/js/dist/theme.min.js"></script>
 
   <script>
     /* Apply sidebar collapsed state as early as possible to prevent flickering */
@@ -237,7 +237,7 @@
 
 
 
-<script defer src="/assets/js/dist/post.min.js"></script>
+<script type="module" defer src="/assets/js/dist/post.min.js"></script>
 
 
 
@@ -248,25 +248,12 @@
   
     
         
-          <!-- Display GoatCounter pageviews -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const pv = document.getElementById('pageviews');
+          <script type="module">
+  import { pageviewCount } from '/assets/js/dist/waline.min.js';
 
-    if (pv !== null) {
-      const uri = location.pathname.replace(/\/$/, '');
-      const url = `https://afeng.goatcounter.com/counter/${encodeURIComponent(uri)}.json`;
-
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          const count = data.count.replace(/\D/g, '');
-          pv.innerText = new Intl.NumberFormat().format(count);
-        })
-        .catch((error) => {
-          pv.innerText = '1';
-        });
-    }
+  pageviewCount({
+    serverURL: 'https://comments.damonc.top',
+    update: true
   });
 </script>
 
@@ -1052,12 +1039,14 @@
         <div>
           <!-- pageviews -->
           
-            <span>
-              <em id="pageviews">
-                <i class="fas fa-spinner fa-spin small"></i>
-              </em>
-              views
-            </span>
+            
+              <span>
+                <em class="waline-pageview-count" data-path="/posts/write-a-new-post/">
+                  <i class="fas fa-spinner fa-spin small"></i>
+                </em>
+                views
+              </span>
+            
           
 
           <!-- read time -->
@@ -2434,6 +2423,36 @@ If you are building the site via <code class="language-plaintext highlighter-rou
   </style>
 
             
+              
+              <!-- The comments switcher -->
+
+  
+  <!-- Waline Comment System -->
+<div id="waline-container" class="mt-5 pt-4" style="border-top: 1px dashed #ccc; padding-top: 20px;">
+  <div id="waline"></div>
+</div>
+
+<link rel="stylesheet" href="/assets/css/waline.css">
+<script type="module">
+  import { init } from '/assets/js/dist/waline.min.js';
+  
+  init({
+    el: '#waline',
+    serverURL: 'https://comments.damonc.top',
+    dark: 'html[data-mode="dark"]',
+    emoji: [
+      '//unpkg.com/@waline/emojis@1.4.0/qq',
+      '//unpkg.com/@waline/emojis@1.4.0/tw-emoji',
+      '//unpkg.com/@waline/emojis@1.4.0/soul-emoji'
+    ],
+    reaction: true,
+    pageview: false
+  });
+</script>
+
+
+
+            
 
             <!-- The Footer -->
 
@@ -2633,11 +2652,6 @@ If you are building the site via <code class="language-plaintext highlighter-rou
     
 
     <!-- Embedded scripts -->
-
-    
-      
-      <!-- The comments switcher -->
-
 
     
 

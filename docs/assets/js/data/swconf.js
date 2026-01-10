@@ -1,6 +1,6 @@
 const swconf = {
   
-    cacheName: 'chirpy-1767989523',resources: [
+    cacheName: 'chirpy-1768069451',resources: [
       '/assets/css/jekyll-theme.css',
       '/',
       
@@ -20,8 +20,6 @@ const swconf = {
     interceptor: {paths: [
         
       ],urlPrefixes: [
-        
-          'https://afeng.goatcounter.com/counter/'
         
       ]
     },
