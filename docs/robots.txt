@@ -2,4 +2,6 @@ User-agent: *
 
 Disallow: /norobots/
 
+Allow: /ads.txt
+
 Sitemap: www.damonc.top/sitemap.xml
