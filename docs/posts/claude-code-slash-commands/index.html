@@ -1,0 +1,186 @@
+<!doctype html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover" ><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁" /><meta name="author" content="afeng" /><meta property="og:locale" content="en" /><meta name="description" content="深入解析 Claude Code 的斜杠命令（Slash Commands）。探索如何通过结构化指令绕过自然语言的模糊性，精准控制 Token 消耗、会话状态与系统配置，将 AI Agent 转化为高效的终端生产力工具。" /><meta property="og:description" content="深入解析 Claude Code 的斜杠命令（Slash Commands）。探索如何通过结构化指令绕过自然语言的模糊性，精准控制 Token 消耗、会话状态与系统配置，将 AI Agent 转化为高效的终端生产力工具。" /><link rel="canonical" href="www.damonc.top/posts/claude-code-slash-commands/" /><meta property="og:url" content="www.damonc.top/posts/claude-code-slash-commands/" /><meta property="og:site_name" content="仗剑天涯" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2026-01-16T22:08:10+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁" /><meta name="twitter:site" content="@elonmusk" /><meta name="twitter:creator" content="@afeng" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"afeng","url":"https://github.com/damonc-top/"},"dateModified":"2026-01-23T00:51:29+08:00","datePublished":"2026-01-16T22:08:10+08:00","description":"深入解析 Claude Code 的斜杠命令（Slash Commands）。探索如何通过结构化指令绕过自然语言的模糊性，精准控制 Token 消耗、会话状态与系统配置，将 AI Agent 转化为高效的终端生产力工具。","headline":"Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁","mainEntityOfPage":{"@type":"WebPage","@id":"www.damonc.top/posts/claude-code-slash-commands/"},"url":"www.damonc.top/posts/claude-code-slash-commands/"}</script><meta name="fediverse:creator" content="@damonc@mastodon.social"><title>Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁 | 仗剑天涯</title><link rel="icon" type="image/png" href="/assets/img/favicons/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/svg+xml" href="/assets/img/favicons/favicon.svg"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="/assets/css/jekyll-theme.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"> <script type="module" src="/assets/js/dist/theme.min.js"></script> <script> /* Apply sidebar collapsed state as early as possible to prevent flickering */ if (localStorage.getItem('sidebar-collapsed') === 'true') { document.documentElement.setAttribute('data-sidebar-collapsed', 'true'); } </script> <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.18/dayjs.min.js,npm/dayjs@1.11.18/locale/en.js,npm/dayjs@1.11.18/plugin/relativeTime.js,npm/dayjs@1.11.18/plugin/localizedFormat.js,npm/tocbot@4.36.4/dist/tocbot.min.js,npm/mermaid@11.12.0/dist/mermaid.min.js"></script> <script type="module" defer src="/assets/js/dist/post.min.js"></script> <script type="module"> window.WalinePrefix = "/pro"; import { pageviewCount } from '/assets/js/dist/waline.min.js'; pageviewCount({ serverURL: 'https://comments.damonc.top', update: true }); </script> <script type="module" defer src="/app.min.js?baseurl=&register=true" ></script><body><aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"> <button type="button" id="sidebar-collapse-btn" class="btn" aria-label="Toggle Sidebar"> <i class="fas fa-bars-staggered"></i> </button><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="https://img.damonc.top/commons/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">仗剑天涯</a><p class="site-subtitle fst-italic mb-0">听说读写看做忘摊手</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a></ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/damonc-top" aria-label="github" target="_blank" rel="noopener noreferrer" > <i class="fab fa-github"></i> </a> <a href="https://twitter.com/elonmusk" aria-label="twitter" target="_blank" rel="noopener noreferrer" > <i class="fa-brands fa-x-twitter"></i> </a> <a href="javascript:location.href = 'mailto:' + ['damoncbl','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></aside><div id="main-wrapper" class="d-flex justify-content-center"><div class="container d-flex flex-column px-xxl-5"><header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100" ><nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div><button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..." > </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button></div></header><div class="row flex-grow-1"><main aria-label="Main Content" class="col-12 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁</h1><p class="post-desc fw-light mb-4">深入解析 Claude Code 的斜杠命令（Slash Commands）。探索如何通过结构化指令绕过自然语言的模糊性，精准控制 Token 消耗、会话状态与系统配置，将 AI Agent 转化为高效的终端生产力工具。</p><div class="post-meta text-muted"> <span> Posted <time data-ts="1768572490" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom" > Jan 16, 2026 </time> </span> <span> Updated <time data-ts="1769100689" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom" > Jan 23, 2026 </time> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/damonc-top/">afeng</a> </em> </span><div> <span> <em class="waline-pageview-count" data-path="/posts/claude-code-slash-commands/"> <i class="fas fa-spinner fa-spin small"></i> </em> views </span> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="2695 words" > <em>14 min</em> read</span></div></div></div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button></div><button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between"><div class="label text-truncate py-2 ms-4">Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁</div><button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75"> <i class="fas fa-close"></i> </button></div><div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content"><p>在前几章中，我探讨了 Claude Code 的<a href="../claude-code-config">配置</a>与<a href="../claude-code-hooks">Hooks 机制</a>。如果说 Hooks 是 AI 的”神经系统”，那么 <strong>斜杠命令（Slash Commands）</strong> 就是它的”控制面板”。</p><p>虽然我习惯用自然语言与 AI 交流，但在 CLI（命令行界面）环境中，我发现效率往往来自于<strong>确定性</strong>和<strong>简洁性</strong>。斜杠命令既包括 Claude Code <strong>内置的系统命令</strong>，也包括我可以自定义的<strong>项目命令</strong>和<strong>个人命令</strong>。它们正是连接”模糊对话”与”精准操作”的桥梁。</p><h2 id="background--problem为什么需要斜杠命令"><span class="me-2">Background / Problem：为什么需要斜杠命令？</span><a href="#background--problem为什么需要斜杠命令" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>我曾经问自己：”我直接跟 Claude 说’清理会话’不就行了吗？”</p><p>虽然自然语言非常灵活，但在以下场景中，我发现斜杠命令具有不可替代的优势：</p><ol><li><strong>原子操作（Atomicity）</strong>：斜杠命令是由终端程序（Claude Code Client）直接解析的，<strong>不经过 LLM 处理</strong>（针对内置命令）。这意味着它响应极快，且 100% 成功，无需等待 AI 推理。<li><strong>Token 经济学（Token Economy）</strong>：当我发送 <code class="language-plaintext highlighter-rouge">/compact</code> 时，我不需要写一段长长的指令解释为什么要压缩上下文，从而节省了输入 Token。<li><strong>状态隔离（State Isolation）</strong>：某些操作（如 <code class="language-plaintext highlighter-rouge">/login</code> 或 <code class="language-plaintext highlighter-rouge">/config</code>）涉及系统敏感信息，不应该作为上下文喂给 AI。<li><strong>工作流自动化（Workflow Automation）</strong>：自定义命令可以编码复杂的多步骤操作，提升重复性任务的效率。<li><strong>跨项目一致性（Consistency）</strong>：项目命令（<code class="language-plaintext highlighter-rouge">.claude/commands/</code>）可被团队共享，确保标准化的开发流程。</ol><blockquote class="prompt-tip"><p><strong>核心哲学</strong>： 我将<strong>管理权</strong>留给斜杠命令，将<strong>创造权</strong>留给自然语言。</p></blockquote><hr /><h2 id="deep-analysis斜杠命令的执行机制"><span class="me-2">Deep Analysis：斜杠命令的执行机制</span><a href="#deep-analysis斜杠命令的执行机制" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>理解斜杠命令在系统中的位置，有助于我更好地使用它。斜杠命令不仅仅是文本替换，它是一个<strong>客户端路由（Client-side Router）</strong>。</p><h3 id="执行流全景图"><span class="me-2">执行流全景图</span><a href="#执行流全景图" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><pre><code class="language-mermaid">graph TD
+    A[用户输入] --&gt; B{输入路由层}
+    B -- 以 / 开头 --&gt; C{命令解析器}
+    B -- 普通文本 --&gt; D[LLM 推理引擎]
+
+    C -- 内置系统命令 --&gt; E[本地执行环境]
+    C -- 自定义命令 --&gt; F[命令加载器]
+
+    E -- "/compact" --&gt; G[Context Manager: 压缩历史]
+    E -- "/config" --&gt; H[Config Manager: 读写配置]
+    
+    F --&gt; I{元数据解析}
+    I -- disable-model-invocation: true --&gt; J[本地工具执行器]
+    I -- 默认模式 --&gt; K[Prompt 组装器]
+    
+    K --&gt; L[注入 System Prompt &amp; Context]
+    L --&gt; D
+
+    G --&gt; M[CLI 界面反馈]
+    H --&gt; M
+    J --&gt; M
+    D --&gt; N[生成 Tool Calls / 文本回复]
+    N --&gt; M
+</code></pre><p><strong>关键技术点解析</strong>：</p><ol><li><p><strong>零延迟路由（Zero-latency Routing）</strong>： 内置命令（如 <code class="language-plaintext highlighter-rouge">/clear</code>, <code class="language-plaintext highlighter-rouge">/cost</code>）在本地被拦截和执行。这避免了网络往返延迟（RTT），使得操作手感如原生 Shell 命令般流畅。</p><li><p><strong>上下文无污染（Context Hygiene）</strong>： 许多内置命令执行后，不会在 AI 的上下文窗口中留下痕迹（或者只留下精简的结果）。这对于维持 Agent 的长期专注力至关重要。</p><li><p><strong>混合执行模式（Hybrid Execution）</strong>： 自定义命令非常灵活。我可以通过设置 <code class="language-plaintext highlighter-rouge">disable-model-invocation: true</code> 让它变成一个纯粹的 Bash 脚本封装器（不消耗 LLM Token），或者让它携带 Prompt 进入 LLM 进行智能处理。</p></ol><hr /><h2 id="core-principles核心命令全景图"><span class="me-2">Core Principles：核心命令全景图</span><a href="#core-principles核心命令全景图" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="内置系统命令built-in-commands"><span class="me-2">内置系统命令（Built-in Commands）</span><a href="#内置系统命令built-in-commands" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>这些命令由 Claude Code 直接提供，开箱即用。</p><h4 id="会话控制类"><span class="me-2">会话控制类</span><a href="#会话控制类" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><ul><li><strong><code class="language-plaintext highlighter-rouge">/clear</code></strong>：<ul><li><strong>作用</strong>：彻底清空当前会话的对话历史，回到初始状态。<li><strong>注意</strong>：这会擦除 AI 对当前任务的所有短期记忆，但不会删除物理文件。</ul><li><strong><code class="language-plaintext highlighter-rouge">/compact [instructions]</code></strong>：<ul><li><strong>作用</strong>：智能压缩会话历史。它会总结之前的对话，只保留关键信息和文件变更摘要。<li><strong>场景</strong>：当感觉 Claude 开始变得反应迟钝，或者收到”Context window near limit”警告时使用。</ul><li><strong><code class="language-plaintext highlighter-rouge">/rewind</code></strong>：<ul><li><strong>作用</strong>：回退到之前的会话状态，同时可选地恢复代码更改。</ul></ul><h4 id="代码审查与开发"><span class="me-2">代码审查与开发</span><a href="#代码审查与开发" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><ul><li><strong><code class="language-plaintext highlighter-rouge">/review</code></strong>：<ul><li><strong>作用</strong>：请求 Claude 对当前代码或最近的更改进行代码审查。<li><strong>关注点</strong>：自动分析代码质量、最佳实践、潜在问题。</ul></ul><h4 id="上下文与成本追踪"><span class="me-2">上下文与成本追踪</span><a href="#上下文与成本追踪" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><ul><li><strong><code class="language-plaintext highlighter-rouge">/context</code></strong>：<ul><li><strong>作用</strong>：可视化当前会话的上下文使用情况，显示各部分（对话、文件、工具调用）对 Token 的占用。</ul><li><strong><code class="language-plaintext highlighter-rouge">/cost</code></strong>：<ul><li><strong>作用</strong>：显示当前会话的 Token 消耗统计。<li><strong>场景</strong>：当我需要评估一个重构任务的成本，或者优化自己的 Prompt 策略时。</ul></ul><h4 id="配置与系统"><span class="me-2">配置与系统</span><a href="#配置与系统" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><ul><li><strong><code class="language-plaintext highlighter-rouge">/config</code></strong>：查看或修改全局配置。<li><strong><code class="language-plaintext highlighter-rouge">/model</code></strong>：切换 AI 模型（如 Haiku/Sonnet/Opus）。<li><strong><code class="language-plaintext highlighter-rouge">/init</code></strong>：初始化 <code class="language-plaintext highlighter-rouge">.claude</code> 环境。</ul><hr /><h2 id="practical-implementation自定义命令实战"><span class="me-2">Practical Implementation：自定义命令实战</span><a href="#practical-implementation自定义命令实战" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>除了内置命令，Claude Code 真正的威力在于<strong>自定义命令</strong>。通过定义 Markdown 文件，我可以将特定的 Prompt 工程固化为可复用的工具。</p><h3 id="基础结构"><span class="me-2">基础结构</span><a href="#基础结构" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>自定义命令存储在 <code class="language-plaintext highlighter-rouge">.claude/commands/</code>（项目级）或 <code class="language-plaintext highlighter-rouge">~/.claude/commands/</code>（用户级）。</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">命令描述</span>
+<span class="na">argument-hint</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">参数提示</span><span class="pi">]</span>
+<span class="na">allowed-tools</span><span class="pi">:</span> <span class="s">Bash(git add:*), Bash(git commit:*)</span> <span class="c1"># 权限控制</span>
+<span class="na">model</span><span class="pi">:</span> <span class="s">claude-3-5-sonnet-20241022</span> <span class="c1"># 指定模型</span>
+<span class="nn">---</span>
+
+这里是具体的 Prompt 内容。可以使用 $1, $2 引用参数，或者使用 <span class="sb">`@filename`</span> 引用文件。
+</pre></table></code></div></div><h3 id="场景-1git-workflow-自动化-create-pr"><span class="me-2">场景 1：Git Workflow 自动化 (<code class="language-plaintext highlighter-rouge">/create-pr</code>)</span><a href="#场景-1git-workflow-自动化-create-pr" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>创建 <code class="language-plaintext highlighter-rouge">.claude/commands/create-pr.md</code>：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Create a pull request with automatic commits</span>
+<span class="na">argument-hint</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">branch-name</span><span class="pi">]</span> <span class="pi">[</span><span class="nv">title</span><span class="pi">]</span>
+<span class="na">allowed-tools</span><span class="pi">:</span> <span class="s">Bash(git add:*), Bash(git commit:*), Bash(git push:*)</span>
+<span class="nn">---</span>
+
+<span class="gu">## 任务</span>
+基于当前的代码变更创建 PR。
+
+<span class="gu">## 步骤</span>
+<span class="p">1.</span> 分析 @. 中所有修改过的文件
+<span class="p">2.</span> 将相关更改按逻辑分组（特性、组件、关注点）
+<span class="p">3.</span> 为每个逻辑单元创建独立的 commit（遵循 Conventional Commits）
+<span class="p">4.</span> 推送分支到远程
+<span class="p">5.</span> 生成 PR 摘要
+
+<span class="gu">## PR 摘要格式</span>
+<span class="p">```</span><span class="nl">text
+</span>## 功能描述
+&lt;简要说明&gt;
+
+## 关键变更
+- &lt;列表&gt;
+
+## 测试计划
+- [ ] &lt;测试项&gt;
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre>
+### 场景 2：代码质量卫士 (`/lint-custom`)
+
+创建 `.claude/commands/lint-custom.md`：
+
+```markdown
+---
+description: Check code against project standards
+argument-hint: [file-path]
+---
+
+检查 @$1 是否符合项目编码规范：
+
+### 检查清单
+- [ ] **命名规范**：变量驼峰，类名帕斯卡
+- [ ] **函数复杂度**：圈复杂度 &lt; 10
+- [ ] **错误处理**：避免空的 catch 块
+- [ ] **类型安全**：TypeScript 避免使用 any
+
+输出具体的违规实例和改进后的代码片段。
+</pre></table></code></div></div><h3 id="场景-3游戏开发资产管线-process-asset"><span class="me-2">场景 3：游戏开发资产管线 (<code class="language-plaintext highlighter-rouge">/process-asset</code>)</span><a href="#场景-3游戏开发资产管线-process-asset" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p><strong>Game Dev Context</strong>: 游戏开发中常涉及繁琐的资源导入设置或格式转换。我们可以用命令简化这一流程。</p></blockquote><p>创建 <code class="language-plaintext highlighter-rouge">.claude/commands/process-asset.md</code>：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Pre-process game assets for Unity/Unreal</span>
+<span class="na">argument-hint</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">asset-path</span><span class="pi">]</span> <span class="pi">[</span><span class="nv">target-platform</span><span class="pi">]</span>
+<span class="na">allowed-tools</span><span class="pi">:</span> <span class="s">Bash(magick:*), Bash(ffmpeg:*)</span>
+<span class="na">model</span><span class="pi">:</span> <span class="s">claude-3-5-haiku-20241022</span>
+<span class="nn">---</span>
+
+<span class="gu">## 资产预处理任务</span>
+
+你是一个技术美术（TA）助手。请处理位于 @$1 的资源文件，目标平台为 $2。
+
+<span class="gu">### 处理逻辑</span>
+<span class="p">1.</span> <span class="gs">**如果是图片 (.png, .tga)**</span>:
+<span class="p">   -</span> 检查分辨率是否为 2 的幂次（POT）。如果不是，调整为最近的 POT。
+<span class="p">   -</span> 如果目标是 Mobile，转换为 ASTC 友好的格式（去除 Alpha 通道如果未使用）。
+<span class="p">   -</span> 使用 ImageMagick 执行操作。
+<span class="p">
+2.</span> <span class="gs">**如果是音频 (.wav)**</span>:
+<span class="p">   -</span> 转换为 44.1kHz, 16-bit Mono (对于语音) 或 Stereo (对于 BGM)。
+<span class="p">   -</span> 使用 FFmpeg 执行。
+<span class="p">
+3.</span> <span class="gs">**生成 .meta 建议**</span>:
+<span class="p">   -</span> 如果是 Unity 项目，分析对应的 <span class="sb">`.meta`</span> 文件设置是否合理（如压缩算法）。
+
+请先输出分析结果，再执行转换命令。
+</pre></table></code></div></div><hr /><h2 id="advanced-topics高级技巧与-faq"><span class="me-2">Advanced Topics：高级技巧与 FAQ</span><a href="#advanced-topics高级技巧与-faq" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="1-快捷键与别名"><span class="me-2">1. 快捷键与别名</span><a href="#1-快捷键与别名" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>在 <code class="language-plaintext highlighter-rouge">.zshrc</code> 或 <code class="language-plaintext highlighter-rouge">.bashrc</code> 中，我可以结合 <code class="language-plaintext highlighter-rouge">echo</code> 管道来创建系统级快捷键：</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="c"># 快速查看开销</span>
+<span class="nb">alias </span><span class="nv">ccost</span><span class="o">=</span><span class="s2">"echo '/cost' | claude"</span>
+</pre></table></code></div></div><h3 id="2-区分-slash-commands-与-agent-skills"><span class="me-2">2. 区分 Slash Commands 与 Agent Skills</span><a href="#2-区分-slash-commands-与-agent-skills" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>这是很多开发者的困惑点，两者看似相似，实则定位不同：</p><div class="table-wrapper"><table><thead><tr><th style="text-align: left">特性<th style="text-align: left">Slash Commands (斜杠命令)<th style="text-align: left">Agent Skills (技能)<tbody><tr><td style="text-align: left"><strong>定位</strong><td style="text-align: left"><strong>快速指令</strong>，单次交互为主<td style="text-align: left"><strong>复杂能力</strong>，包含逻辑、知识库和多步工具调用<tr><td style="text-align: left"><strong>触发方式</strong><td style="text-align: left">用户显式输入 <code class="language-plaintext highlighter-rouge">/command</code><td style="text-align: left">AI 根据上下文<strong>自动决策</strong>调用，或通过命令触发<tr><td style="text-align: left"><strong>文件结构</strong><td style="text-align: left">单个 Markdown 文件<td style="text-align: left">包含 <code class="language-plaintext highlighter-rouge">SKILL.md</code>、脚本、参考文档的目录结构<tr><td style="text-align: left"><strong>复杂度</strong><td style="text-align: left">适合原子操作（Git 提交、Lint 检查）<td style="text-align: left">适合复杂工作流（编写整个模块、重构遗留系统）</table></div><p><strong>结论</strong>：我通常用 Slash Command 封装高频的、简单的动作；用 Agent Skills 封装复杂的、需要领域知识的业务逻辑。</p><h3 id="faq"><span class="me-2">FAQ</span><a href="#faq" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><strong>Q: 自定义命令可以调用其他命令吗？</strong> A: 目前不支持直接嵌套调用（如在命令 A 中写 <code class="language-plaintext highlighter-rouge">/command-b</code>）。但我可以通过 Prompt 指引 AI 去按顺序执行一系列逻辑。</p><p><strong>Q: 如何在命令中嵌入动态的系统信息？</strong> A: 使用 Bash 插值。例如在命令文件中写：<code class="language-plaintext highlighter-rouge">当前 Git 分支状态：!git status</code>（注意：这是 Markdown 里的 Bash 块执行结果，或者使用反引号插值取决于具体实现版本）。Claude Code 的命令解析器通常会将 <code class="language-plaintext highlighter-rouge">`git status`</code> 的输出注入到 Prompt 中。</p><hr /><h2 id="结语"><span class="me-2">结语</span><a href="#结语" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>斜杠命令将 Claude Code 从一个”会聊天的机器人”转变为一个”听话的终端工具”。</p><ul><li><strong>内置命令</strong> 让我掌控全局（Session 管理、Cost 控制）。<li><strong>自定义命令</strong> 让我将个人经验固化为工具（Prompt as Code）。</ul><p>熟练掌握这些短指令，能让我在代码心流中保持专注，而不必纠结于如何措辞才能让 AI 明白我的管理意图。当我的需求超越了简单的命令，需要更复杂的逻辑判断和多工具协同运作时，我就需要下一章介绍的更强大的武器——Agent Skills。</p><blockquote><p><em>下一篇预告：<a href="../claude-code-agent-skills">Claude Code(六)AgentSkills：AI 技能系统实践详解</a> - 学习如何构建包含脚本、文档和复杂逻辑的 AI 技能包。</em></p></blockquote></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw me-1"></i> <a href="/categories/ai/">AI</a>, <a href="/categories/claude-code/">Claude Code</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw me-1"></i> <a href="/tags/ai/" class="post-tag no-text-decoration" >AI</a> <a href="/tags/cli-agent/" class="post-tag no-text-decoration" >CLI Agent</a></div><div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 " ><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Claude%20Code(%E4%BA%94)%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%EF%BC%9A%E4%BB%8E%E2%80%9C%E5%AF%B9%E8%AF%9D%E6%A1%86%E2%80%9D%E5%88%B0%E2%80%9C%E6%8E%A7%E5%88%B6%E5%8F%B0%E2%80%9D%E7%9A%84%E7%94%9F%E4%BA%A7%E5%8A%9B%E8%B7%83%E8%BF%81%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&url=www.damonc.top%2Fposts%2Fclaude-code-slash-commands%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Claude%20Code(%E4%BA%94)%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%EF%BC%9A%E4%BB%8E%E2%80%9C%E5%AF%B9%E8%AF%9D%E6%A1%86%E2%80%9D%E5%88%B0%E2%80%9C%E6%8E%A7%E5%88%B6%E5%8F%B0%E2%80%9D%E7%9A%84%E7%94%9F%E4%BA%A7%E5%8A%9B%E8%B7%83%E8%BF%81%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&u=www.damonc.top%2Fposts%2Fclaude-code-slash-commands%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=www.damonc.top%2Fposts%2Fclaude-code-slash-commands%2F&text=Claude%20Code(%E4%BA%94)%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%EF%BC%9A%E4%BB%8E%E2%80%9C%E5%AF%B9%E8%AF%9D%E6%A1%86%E2%80%9D%E5%88%B0%E2%80%9C%E6%8E%A7%E5%88%B6%E5%8F%B0%E2%80%9D%E7%9A%84%E7%94%9F%E4%BA%A7%E5%8A%9B%E8%B7%83%E8%BF%81%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!" > <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span></div></div></div></article></main><aside aria-label="Panel" id="panel-wrapper" class="ps-2 text-muted"><div class="access"><section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2><ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2"><li class="text-truncate lh-lg"> <a href="/posts/claude-code-config/">Claude Code(二)环境配置</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-context-window/">Claude Code(三)核心解密：从提示词工程到上下文引擎</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-hooks/">Claude Code(四)Hooks及用法：构建 Agent 的确定性神经系统</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-slash-commands/">Claude Code(五)斜杠命令：从“对话框”到“控制台”的生产力跃迁</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-agent-skills/">Claude Code(六)AgentSkills：构建高可信 AI 技能系统</a></ul></section><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/architecture/">Architecture</a> <a class="post-tag btn btn-outline-primary" href="/tags/configuration/">Configuration</a> <a class="post-tag btn btn-outline-primary" href="/tags/context-engine/">Context Engine</a> <a class="post-tag btn btn-outline-primary" href="/tags/favicon/">favicon</a> <a class="post-tag btn btn-outline-primary" href="/tags/getting-started/">getting started</a> <a class="post-tag btn btn-outline-primary" href="/tags/git-worktree/">git-worktree</a> <a class="post-tag btn btn-outline-primary" href="/tags/mcp/">MCP</a></div></section></div><div class="toc-border-cover z-3"></div><section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2><nav id="toc"></nav></section></aside></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4"><aside id="related-posts" aria-labelledby="related-label"><h3 class="mb-4" id="related-label">Further Reading</h3><nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4"><article class="col"> <a href="/posts/claude-code-plugins/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1769002210" data-df="ll" > Jan 21, 2026 </time><h4 class="pt-0 my-2">Claude Code(九)Plugins：扩展功能的无限可能</h4><div class="text-muted"><p>探索 Claude Code 的插件生态。解析 Plugins 与 MCP、Subagents 的区别，以及如何通过社区插件快速增强 Agent 的各项能力。</p></div></div></a></article><article class="col"> <a href="/posts/claude-code-mcp-server/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1768838710" data-df="ll" > Jan 20, 2026 </time><h4 class="pt-0 my-2">Claude Code(八)MCP Server：连接万物的通用协议</h4><div class="text-muted"><p>深入解析 Model Context Protocol (MCP)。打破 AI 的沙箱孤岛，通过标准化协议连接 GitHub、数据库与浏览器，构建无边界的智能工作流。</p></div></div></a></article><article class="col"> <a href="/posts/claude-code-subagents/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1768834869" data-df="ll" > Jan 19, 2026 </time><h4 class="pt-0 my-2">Claude Code(七)Subagents：构建分工协作的多智能体系统</h4><div class="text-muted"><p>深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。</p></div></div></a></article></nav></aside><nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/claude-code-hooks/" class="btn btn-outline-primary" aria-label="Older" ><p>Claude Code(四)Hooks及用法：构建 Agent 的确定性神经系统</p></a> <a href="/posts/claude-code-agent-skills/" class="btn btn-outline-primary" aria-label="Newer" ><p>Claude Code(六)AgentSkills：构建高可信 AI 技能系统</p></a></nav><div id="waline-container" class="mt-5 pt-4" style="border-top: 1px dashed #ccc; padding-top: 20px;"><div id="waline"></div></div><link rel="stylesheet" href="/assets/css/waline.css"> <script type="module"> window.WalinePrefix = "/pro"; import { init } from '/assets/js/dist/waline.min.js'; init({ el: '#waline', serverURL: 'https://comments.damonc.top', dark: 'html[data-mode="dark"]', emoji: [ '//unpkg.com/@waline/emojis@1.4.0/qq', '//unpkg.com/@waline/emojis@1.4.0/tw-emoji', '//unpkg.com/@waline/emojis@1.4.0/soul-emoji' ], reaction: true, pageview: false }); </script><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 " ><p>© <time>2026</time> <a href="https://github.com/damonc-top">仗剑天涯</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author." >Some rights reserved.</span></p><p>The blog is powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer></div></div><div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content"><div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/architecture/">Architecture</a> <a class="post-tag btn btn-outline-primary" href="/tags/configuration/">Configuration</a> <a class="post-tag btn btn-outline-primary" href="/tags/context-engine/">Context Engine</a> <a class="post-tag btn btn-outline-primary" href="/tags/favicon/">favicon</a> <a class="post-tag btn btn-outline-primary" href="/tags/getting-started/">getting started</a> <a class="post-tag btn btn-outline-primary" href="/tags/git-worktree/">git-worktree</a> <a class="post-tag btn btn-outline-primary" href="/tags/mcp/">MCP</a></div></section></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside></div><div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div><aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false" ><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close" ></button></div><div class="toast-body text-center pt-0"><p class="px-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
