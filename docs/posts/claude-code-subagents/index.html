@@ -1,24 +1,19 @@
-<!doctype html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover" ><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Claude Code(七)Subagents：构建分工协作的多智能体系统" /><meta name="author" content="afeng" /><meta property="og:locale" content="en" /><meta name="description" content="深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。" /><meta property="og:description" content="深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。" /><link rel="canonical" href="www.damonc.top/posts/claude-code-subagents/" /><meta property="og:url" content="www.damonc.top/posts/claude-code-subagents/" /><meta property="og:site_name" content="仗剑天涯" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2026-01-19T23:01:09+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Claude Code(七)Subagents：构建分工协作的多智能体系统" /><meta name="twitter:site" content="@elonmusk" /><meta name="twitter:creator" content="@afeng" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"afeng","url":"https://github.com/damonc-top/"},"dateModified":"2026-02-13T00:06:41+08:00","datePublished":"2026-01-19T23:01:09+08:00","description":"深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。","headline":"Claude Code(七)Subagents：构建分工协作的多智能体系统","mainEntityOfPage":{"@type":"WebPage","@id":"www.damonc.top/posts/claude-code-subagents/"},"url":"www.damonc.top/posts/claude-code-subagents/"}</script><meta name="fediverse:creator" content="@damonc@mastodon.social"><title>Claude Code(七)Subagents：构建分工协作的多智能体系统 | 仗剑天涯</title><link rel="icon" type="image/png" href="/assets/img/favicons/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/svg+xml" href="/assets/img/favicons/favicon.svg"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="/assets/css/jekyll-theme.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"> <script type="module" src="/assets/js/dist/theme.min.js"></script> <script> /* Apply sidebar collapsed state as early as possible to prevent flickering */ if (localStorage.getItem('sidebar-collapsed') === 'true') { document.documentElement.setAttribute('data-sidebar-collapsed', 'true'); } </script> <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.18/dayjs.min.js,npm/dayjs@1.11.18/locale/en.js,npm/dayjs@1.11.18/plugin/relativeTime.js,npm/dayjs@1.11.18/plugin/localizedFormat.js,npm/tocbot@4.36.4/dist/tocbot.min.js,npm/mermaid@11.12.0/dist/mermaid.min.js"></script> <script type="module" defer src="/assets/js/dist/post.min.js"></script> <script src="/assets/js/data/mathjax.js"></script> <script async src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script> <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script> <script type="module"> window.WalinePrefix = "/pro"; import { pageviewCount } from '/assets/js/dist/waline.min.js'; pageviewCount({ serverURL: 'https://comments.damonc.top', update: true }); </script> <script type="module" defer src="/app.min.js?baseurl=&register=true" ></script><body><aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"> <button type="button" id="sidebar-collapse-btn" class="btn" aria-label="Toggle Sidebar"> <i class="fas fa-bars-staggered"></i> </button><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="https://img.damonc.top/commons/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">仗剑天涯</a><p class="site-subtitle fst-italic mb-0">听说读写看做忘摊手</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a></ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/damonc-top" aria-label="github" target="_blank" rel="noopener noreferrer" > <i class="fab fa-github"></i> </a> <a href="https://twitter.com/elonmusk" aria-label="twitter" target="_blank" rel="noopener noreferrer" > <i class="fa-brands fa-x-twitter"></i> </a> <a href="javascript:location.href = 'mailto:' + ['damoncbl','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></aside><div id="main-wrapper" class="d-flex justify-content-center"><div class="container d-flex flex-column px-xxl-5"><header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100" ><nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>Claude Code(七)Subagents：构建分工协作的多智能体系统</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div><button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..." > </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button></div></header><div class="row flex-grow-1"><main aria-label="Main Content" class="col-12 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>Claude Code(七)Subagents：构建分工协作的多智能体系统</h1><p class="post-desc fw-light mb-4">深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。</p><div class="post-meta text-muted"> <span> Posted <time data-ts="1768834869" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom" > Jan 19, 2026 </time> </span> <span> Updated <time data-ts="1770912401" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom" > Feb 13, 2026 </time> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/damonc-top/">afeng</a> </em> </span><div> <span> <em class="waline-pageview-count" data-path="/posts/claude-code-subagents/"> <i class="fas fa-spinner fa-spin small"></i> </em> views </span> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="1379 words" > <em>7 min</em> read</span></div></div></div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">Claude Code(七)Subagents：构建分工协作的多智能体系统</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button></div><button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between"><div class="label text-truncate py-2 ms-4">Claude Code(七)Subagents：构建分工协作的多智能体系统</div><button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75"> <i class="fas fa-close"></i> </button></div><div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content"><p>随着我对 Claude Code 使用的深入，我发现一个问题：当任务变得过于复杂时，单一的通用 Agent 开始显露出疲态。</p><p>比如，当我要求它”重构整个后端 API 并同步更新前端组件和文档”时，它往往会顾此失彼——要么改了后端忘了前端，要么更新了代码忘了文档。这是因为通用大模型的注意力（Attention）是有限的，试图让一个大脑同时处理三个截然不同的领域（SQL、React、Markdown），很容易导致幻觉和遗漏。</p><p>这促使我开始探索 <strong>Subagents（子智能体）</strong> 机制。这不仅仅是功能的堆叠，而是<strong>组织架构的变革</strong>。</p><h2 id="core-principles为什么需要-subagents"><span class="me-2">Core Principles：为什么需要 Subagents？</span><a href="#core-principles为什么需要-subagents" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>在软件团队中，我们不会让一个人既做产品经理，又做后端架构师，还兼职前端切图。专业分工是提高效率的根本。</p><p>Subagent 的核心逻辑也是如此：<strong>将复杂任务解耦，分配给拥有特定上下文和工具的专家。</strong></p><h3 id="单体-vs-多智能体"><span class="me-2">单体 vs 多智能体</span><a href="#单体-vs-多智能体" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th style="text-align: left">维度<th style="text-align: left">单体 Agent (Generalist)<th style="text-align: left">多智能体系统 (Subagents)<tbody><tr><td style="text-align: left"><strong>上下文</strong><td style="text-align: left">试图装入整个项目的所有细节<td style="text-align: left">仅关注特定领域的上下文（如仅加载 <code class="language-plaintext highlighter-rouge">/frontend</code> 目录）<tr><td style="text-align: left"><strong>Prompt</strong><td style="text-align: left">冗长的通用指令<td style="text-align: left">精简的专用指令（Expert Persona）<tr><td style="text-align: left"><strong>工具集</strong><td style="text-align: left">访问所有工具（风险高）<td style="text-align: left">仅访问特定工具（如 DB Agent 只能用 SQL 工具）<tr><td style="text-align: left"><strong>稳定性</strong><td style="text-align: left">容易受到干扰信息影响<td style="text-align: left">专注度高，幻觉少</table></div><h2 id="architecture编排与分发"><span class="me-2">Architecture：编排与分发</span><a href="#architecture编排与分发" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>在 Claude Code 的 Subagent 架构中，我观察到它采用的是 <strong>Orchestrator-Workers（指挥官-工兵）</strong> 模式。</p><pre><code class="language-mermaid">graph TD
-    User[我 (User)] --&gt; Main[主 Agent (Orchestrator)]
-    
-    Main -- 任务分发 --&gt; FE[前端专家 (Subagent A)]
-    Main -- 任务分发 --&gt; BE[后端专家 (Subagent B)]
-    Main -- 任务分发 --&gt; QA[测试专家 (Subagent C)]
-    
-    subgraph Context_A
-    FE --&gt; React[React 组件库]
-    FE --&gt; CSS[Tailwind 配置]
+<!doctype html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover" ><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Claude Code(七)Subagents：构建分工协作的多智能体系统" /><meta name="author" content="afeng" /><meta property="og:locale" content="en" /><meta name="description" content="深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。" /><meta property="og:description" content="深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。" /><link rel="canonical" href="www.damonc.top/posts/claude-code-subagents/" /><meta property="og:url" content="www.damonc.top/posts/claude-code-subagents/" /><meta property="og:site_name" content="仗剑天涯" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2026-01-19T23:01:09+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Claude Code(七)Subagents：构建分工协作的多智能体系统" /><meta name="twitter:site" content="@elonmusk" /><meta name="twitter:creator" content="@afeng" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"afeng","url":"https://github.com/damonc-top/"},"dateModified":"2026-02-13T21:21:17+08:00","datePublished":"2026-01-19T23:01:09+08:00","description":"深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。","headline":"Claude Code(七)Subagents：构建分工协作的多智能体系统","mainEntityOfPage":{"@type":"WebPage","@id":"www.damonc.top/posts/claude-code-subagents/"},"url":"www.damonc.top/posts/claude-code-subagents/"}</script><meta name="fediverse:creator" content="@damonc@mastodon.social"><title>Claude Code(七)Subagents：构建分工协作的多智能体系统 | 仗剑天涯</title><link rel="icon" type="image/png" href="/assets/img/favicons/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/svg+xml" href="/assets/img/favicons/favicon.svg"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="/assets/css/jekyll-theme.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"> <script type="module" src="/assets/js/dist/theme.min.js"></script> <script> /* Apply sidebar collapsed state as early as possible to prevent flickering */ if (localStorage.getItem('sidebar-collapsed') === 'true') { document.documentElement.setAttribute('data-sidebar-collapsed', 'true'); } </script> <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.18/dayjs.min.js,npm/dayjs@1.11.18/locale/en.js,npm/dayjs@1.11.18/plugin/relativeTime.js,npm/dayjs@1.11.18/plugin/localizedFormat.js,npm/tocbot@4.36.4/dist/tocbot.min.js,npm/mermaid@11.12.0/dist/mermaid.min.js"></script> <script type="module" defer src="/assets/js/dist/post.min.js"></script> <script src="/assets/js/data/mathjax.js"></script> <script async src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script> <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script> <script type="module"> window.WalinePrefix = "/pro"; import { pageviewCount } from '/assets/js/dist/waline.min.js'; pageviewCount({ serverURL: 'https://comments.damonc.top', update: true }); </script> <script type="module" defer src="/app.min.js?baseurl=&register=true" ></script><body><aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"> <button type="button" id="sidebar-collapse-btn" class="btn" aria-label="Toggle Sidebar"> <i class="fas fa-bars-staggered"></i> </button><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="https://img.damonc.top/commons/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">仗剑天涯</a><p class="site-subtitle fst-italic mb-0">听说读写看做忘摊手</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a></ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/damonc-top" aria-label="github" target="_blank" rel="noopener noreferrer" > <i class="fab fa-github"></i> </a> <a href="https://twitter.com/elonmusk" aria-label="twitter" target="_blank" rel="noopener noreferrer" > <i class="fa-brands fa-x-twitter"></i> </a> <a href="javascript:location.href = 'mailto:' + ['damoncbl','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></aside><div id="main-wrapper" class="d-flex justify-content-center"><div class="container d-flex flex-column px-xxl-5"><header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100" ><nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>Claude Code(七)Subagents：构建分工协作的多智能体系统</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div><button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..." > </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button></div></header><div class="row flex-grow-1"><main aria-label="Main Content" class="col-12 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>Claude Code(七)Subagents：构建分工协作的多智能体系统</h1><p class="post-desc fw-light mb-4">深入探索 Claude Code 的 Subagent 机制。从单体 Agent 到多智能体编排，解析如何通过专业分工突破上下文瓶颈，实现复杂任务的并行处理与高效交付。</p><div class="post-meta text-muted"> <span> Posted <time data-ts="1768834869" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom" > Jan 19, 2026 </time> </span> <span> Updated <time data-ts="1770988877" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom" > Feb 13, 2026 </time> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/damonc-top/">afeng</a> </em> </span><div> <span> <em class="waline-pageview-count" data-path="/posts/claude-code-subagents/"> <i class="fas fa-spinner fa-spin small"></i> </em> views </span> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="6802 words" > <em>37 min</em> read</span></div></div></div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">Claude Code(七)Subagents：构建分工协作的多智能体系统</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button></div><button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between"><div class="label text-truncate py-2 ms-4">Claude Code(七)Subagents：构建分工协作的多智能体系统</div><button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75"> <i class="fas fa-close"></i> </button></div><div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content"><p>随着我对 Claude Code 使用的深入，我发现一个问题：当任务变得过于复杂时，单一的通用 Agent 开始显露出疲态。</p><p>比如，当我要求它”重构整个后端 API 并同步更新前端组件和文档”时，它往往会顾此失彼——要么改了后端忘了前端，要么更新了代码忘了文档。这是因为通用大模型的注意力（Attention）是有限的，试图让一个大脑同时处理三个截然不同的领域（SQL、React、Markdown），很容易导致幻觉和遗漏。</p><p>这促使我开始探索 <strong>Subagents（子智能体）</strong> 机制。这不仅仅是功能的堆叠，而是<strong>组织架构的变革</strong>，标志着我们将从随性的 “Vibe Coding” 转向更严谨的 <strong>“Spec-Driven Development” (规格驱动开发)</strong>。</p><h2 id="core-principles为什么需要-subagents"><span class="me-2">Core Principles：为什么需要 Subagents？</span><a href="#core-principles为什么需要-subagents" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>在软件团队中，我们不会让一个人既做产品经理，又做后端架构师，还兼职前端切图。专业分工是提高效率的根本。</p><p>Subagent 的核心逻辑也是如此：<strong>将复杂任务解耦，分配给拥有特定上下文和工具的专家。</strong></p><h3 id="单体-vs-多智能体"><span class="me-2">单体 vs 多智能体</span><a href="#单体-vs-多智能体" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th style="text-align: left">维度<th style="text-align: left">单体 Agent (Generalist)<th style="text-align: left">多智能体系统 (Subagents)<tbody><tr><td style="text-align: left"><strong>上下文</strong><td style="text-align: left">试图装入整个项目的所有细节<td style="text-align: left"><strong>独立上下文窗口</strong>（每个 Agent 可达 200k Tokens），互不污染<tr><td style="text-align: left"><strong>Prompt</strong><td style="text-align: left">冗长的通用指令<td style="text-align: left">精简的专用指令（Expert Persona）<tr><td style="text-align: left"><strong>工具集</strong><td style="text-align: left">访问所有工具（风险高）<td style="text-align: left">仅访问特定工具（如 DB Agent 只能用 SQL 工具）<tr><td style="text-align: left"><strong>执行模式</strong><td style="text-align: left">串行阻塞<td style="text-align: left">支持 <strong>并行/后台执行</strong> (<code class="language-plaintext highlighter-rouge">Ctrl + B</code>)</table></div><h2 id="architecture编排与分发"><span class="me-2">Architecture：编排与分发</span><a href="#architecture编排与分发" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>在 Claude Code 的 Subagent 架构中，我观察到它采用的是 <strong>Orchestrator-Workers（指挥官-工兵）</strong> 模式。</p><pre><code class="language-mermaid">graph TD
+    User["我"] --&gt; Main["主 Agent Orchestrator"]
+    Main -- 任务分发 --&gt; FE["前端专家 Subagent A"]
+    Main -- 任务分发 --&gt; BE["后端专家 Subagent B"]
+    Main -- 任务分发 --&gt; QA["测试专家 Subagent C"]
+    subgraph Context_A["前端上下文"]
+    FE --&gt; React["React 组件库"]
+    FE --&gt; CSS["Tailwind 配置"]
     end
-    
-    subgraph Context_B
-    BE --&gt; DB[Schema 定义]
-    BE --&gt; API[Controller 代码]
+    subgraph Context_B["后端上下文"]
+    BE --&gt; DB["Schema 定义"]
+    BE --&gt; API["Controller 代码"]
     end
-    
     FE -- 交付代码 --&gt; Main
     BE -- 交付接口 --&gt; Main
     QA -- 交付报告 --&gt; Main
-    
     Main -- 最终整合 --&gt; User
 </code></pre><ol><li><strong>Main Agent</strong>：作为入口，它负责理解我的高层意图（Intent），规划任务路径，并决定调用哪个 Subagent。它就像是一个 Technical Lead。<li><strong>Subagent</strong>：作为执行者，它们拥有独立的 System Prompt 和 Context Window。它们看不见彼此的工作细节，只通过 Main Agent 交换必要的信息。</ol><h2 id="practical-implementation定义我的专家团队"><span class="me-2">Practical Implementation：定义我的专家团队</span><a href="#practical-implementation定义我的专家团队" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Claude Code 允许我通过配置文件定义 Subagent。</p><h3 id="目录结构"><span class="me-2">目录结构</span><a href="#目录结构" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>通常我会建立 <code class="language-plaintext highlighter-rouge">.claude/agents/</code> 目录：</p><div class="language-text highlighter-rouge"><div class="code-header"> <span data-label-text="Text"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -27,8 +22,8 @@
 </pre><td class="rouge-code"><pre>.claude/agents/
 ├── sql-optimizer.md    # SQL 优化专家
 ├── frontend-dev.md     # 前端开发专家
-└── doc-writer.md       # 文档撰写专家
-</pre></table></code></div></div><h3 id="定义专家-sql-optimizer"><span class="me-2">定义专家 (SQL Optimizer)</span><a href="#定义专家-sql-optimizer" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>在 <code class="language-plaintext highlighter-rouge">sql-optimizer.md</code> 中，我这样定义：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+└── design-enforcer.md  # 设计系统执行者
+</pre></table></code></div></div><h3 id="定义专家-1-sql-optimizer-特定领域专家"><span class="me-2">定义专家 1: SQL Optimizer (特定领域专家)</span><a href="#定义专家-1-sql-optimizer-特定领域专家" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>在 <code class="language-plaintext highlighter-rouge">sql-optimizer.md</code> 中，我这样定义：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -62,4 +57,642 @@
 
 <span class="gu">## 上下文</span>
 只关注 <span class="sb">`src/database/schema.sql`</span> 和 <span class="sb">`src/queries/`</span> 目录。
-</pre></table></code></div></div><h3 id="调用流程"><span class="me-2">调用流程</span><a href="#调用流程" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>当我在主对话框中输入：</p><blockquote><p>“User 表的查询变慢了，请优化一下。”</p></blockquote><p>Main Agent 会分析这个请求，识别到关键词 “查询” 和 “User 表”，然后：</p><ol><li>挂起当前状态。<li>唤醒 <code class="language-plaintext highlighter-rouge">sql-expert</code>。<li>将任务传递给 <code class="language-plaintext highlighter-rouge">sql-expert</code>。<li><code class="language-plaintext highlighter-rouge">sql-expert</code> 加载它的专用 Prompt，读取数据库文件，给出优化方案。<li><code class="language-plaintext highlighter-rouge">sql-expert</code> 退出，将结果返回给 Main Agent。<li>Main Agent 向我汇报：”已优化 User 表查询，添加了联合索引…”</ol><h2 id="实战心得什么时候用-subagent"><span class="me-2">实战心得：什么时候用 Subagent？</span><a href="#实战心得什么时候用-subagent" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>并不是所有任务都需要 Subagent。经过多次实践，我总结了以下标准：</p><ul><li><strong>❌ 不用 Subagent</strong>：<ul><li>简单的 Bug 修复。<li>单文件的逻辑修改。<li>跨度很小的任务。<li><em>理由</em>：切换 Agent 有上下文切换成本（Context Switching Cost），杀鸡焉用牛刀。</ul><li><strong>✅ 使用 Subagent</strong>：<ul><li><strong>独立性强的模块</strong>：如完全独立的微服务，或与业务逻辑分离的 UI 组件库。<li><strong>高风险操作</strong>：如数据库迁移，我希望限制 Agent 只能运行只读命令，不能运行 DROP TABLE。通过 Subagent 的权限管控可以完美实现。<li><strong>特定领域知识</strong>：如编写复杂的正则，或撰写符合特定法律法规的条款。</ul></ul><h2 id="结语"><span class="me-2">结语</span><a href="#结语" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Subagents 是 AI 迈向”群体智能”的第一步。通过构建这套分工体系，我实际上是在组建一个<strong>虚拟的软件开发团队</strong>。</p><p>在这个团队中，我不再是唯一的编码者，而是架构师和决策者。我定义每个 Agent 的职责边界（Role）和交互协议（Protocol），让它们协同工作，从而突破了单体模型的智力上限。</p><hr /><p><em>下一篇预告：<a href="../claude-code-mcp-server">Claude Code(八)MCP Server：连接万物的通用协议</a></em></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw me-1"></i> <a href="/categories/ai/">AI</a>, <a href="/categories/claude-code/">Claude Code</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw me-1"></i> <a href="/tags/ai/" class="post-tag no-text-decoration" >ai</a> <a href="/tags/cli-agent/" class="post-tag no-text-decoration" >cli agent</a> <a href="/tags/multi-agent/" class="post-tag no-text-decoration" >multi-agent</a></div><div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 " ><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Claude%20Code(%E4%B8%83)Subagents%EF%BC%9A%E6%9E%84%E5%BB%BA%E5%88%86%E5%B7%A5%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&url=www.damonc.top%2Fposts%2Fclaude-code-subagents%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Claude%20Code(%E4%B8%83)Subagents%EF%BC%9A%E6%9E%84%E5%BB%BA%E5%88%86%E5%B7%A5%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&u=www.damonc.top%2Fposts%2Fclaude-code-subagents%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=www.damonc.top%2Fposts%2Fclaude-code-subagents%2F&text=Claude%20Code(%E4%B8%83)Subagents%EF%BC%9A%E6%9E%84%E5%BB%BA%E5%88%86%E5%B7%A5%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!" > <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span></div></div></div></article></main><aside aria-label="Panel" id="panel-wrapper" class="ps-2 text-muted"><div class="access"><section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2><ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2"><li class="text-truncate lh-lg"> <a href="/posts/claude-code-agent-skills/">Claude Code(六)AgentSkills：构建高可信 AI 技能系统</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-subagents/">Claude Code(七)Subagents：构建分工协作的多智能体系统</a><li class="text-truncate lh-lg"> <a href="/posts/git-worktree-parallel-development/">Git Worktree并行开发：原理、实践与最佳实践</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-config/">Claude Code(二)环境配置</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-context-window/">Claude Code(三)核心解密：从提示词工程到上下文引擎</a></ul></section><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">ai</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">cli agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/architecture/">Architecture</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">best practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/configuration/">Configuration</a> <a class="post-tag btn btn-outline-primary" href="/tags/context-engine/">Context Engine</a> <a class="post-tag btn btn-outline-primary" href="/tags/git-worktree/">git-worktree</a></div></section></div><div class="toc-border-cover z-3"></div><section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2><nav id="toc"></nav></section></aside></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4"><aside id="related-posts" aria-labelledby="related-label"><h3 class="mb-4" id="related-label">Further Reading</h3><nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4"><article class="col"> <a href="/posts/claude-code-agent-skills/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1768648860" data-df="ll" > Jan 17, 2026 </time><h4 class="pt-0 my-2">Claude Code(六)AgentSkills：构建高可信 AI 技能系统</h4><div class="text-muted"><p>深入解析 Agent Skills 开放标准，厘清 Skill 与 MCP、Prompt 的核心差异，掌握渐进式披露与权限控制架构，打造专业级 AI 辅助能力。</p></div></div></a></article><article class="col"> <a href="/posts/claude-code-plugins/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1769002210" data-df="ll" > Jan 21, 2026 </time><h4 class="pt-0 my-2">Claude Code(九)Plugins：扩展功能的无限可能</h4><div class="text-muted"><p>探索 Claude Code 的插件生态。解析 Plugins 与 MCP、Subagents 的区别，以及如何通过社区插件快速增强 Agent 的各项能力。</p></div></div></a></article><article class="col"> <a href="/posts/claude-code-mcp-server/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1768838710" data-df="ll" > Jan 20, 2026 </time><h4 class="pt-0 my-2">Claude Code(八)MCP Server：连接万物的通用协议</h4><div class="text-muted"><p>深入解析 Model Context Protocol (MCP)。打破 AI 的沙箱孤岛，通过标准化协议连接 GitHub、数据库与浏览器，构建无边界的智能工作流。</p></div></div></a></article></nav></aside><nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/claude-code-agent-skills/" class="btn btn-outline-primary" aria-label="Older" ><p>Claude Code(六)AgentSkills：构建高可信 AI 技能系统</p></a> <a href="/posts/claude-code-mcp-server/" class="btn btn-outline-primary" aria-label="Newer" ><p>Claude Code(八)MCP Server：连接万物的通用协议</p></a></nav><div id="waline-container" class="mt-5 pt-4" style="border-top: 1px dashed #ccc; padding-top: 20px;"><div id="waline"></div></div><link rel="stylesheet" href="/assets/css/waline.css"> <script type="module"> window.WalinePrefix = "/pro"; import { init } from '/assets/js/dist/waline.min.js'; init({ el: '#waline', serverURL: 'https://comments.damonc.top', dark: 'html[data-mode="dark"]', emoji: [ '//unpkg.com/@waline/emojis@1.4.0/qq', '//unpkg.com/@waline/emojis@1.4.0/tw-emoji', '//unpkg.com/@waline/emojis@1.4.0/soul-emoji' ], reaction: true, pageview: false }); </script><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 " ><p>© <time>2026</time> <a href="https://github.com/damonc-top">仗剑天涯</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author." >Some rights reserved.</span></p><p>The blog is powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer></div></div><div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content"><div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">ai</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">cli agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/architecture/">Architecture</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">best practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/configuration/">Configuration</a> <a class="post-tag btn btn-outline-primary" href="/tags/context-engine/">Context Engine</a> <a class="post-tag btn btn-outline-primary" href="/tags/git-worktree/">git-worktree</a></div></section></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside></div><div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div><aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false" ><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close" ></button></div><div class="toast-body text-center pt-0"><p class="px-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
+</pre></table></code></div></div><h3 id="示例game-performance-profiler-游戏性能分析专家"><span class="me-2">示例Game Performance Profiler (游戏性能分析专家)</span><a href="#示例game-performance-profiler-游戏性能分析专家" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>性能优化是游戏开发的核心需求，这个 Subagent 专门用于分析 Unity Profiler 数据，定位性能瓶颈。</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">game-profiler</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">游戏性能分析专家，分析 Unity Profiler 数据，定位 CPU/GPU/内存瓶颈。</span>
+<span class="s">使用场景：帧率下降、内存泄漏、CPU 占用过高、GC 过于频繁。</span>
+<span class="na">model</span><span class="pi">:</span> <span class="s">opus</span>
+<span class="na">color</span><span class="pi">:</span> <span class="s">red</span>
+<span class="na">tools</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Read</span><span class="pi">,</span> <span class="nv">Write</span><span class="pi">,</span> <span class="nv">Edit</span><span class="pi">,</span> <span class="nv">Bash</span><span class="pi">]</span>
+<span class="nn">---</span>
+
+你是一位游戏性能优化专家，精通 Unity Profiler 各模块的使用。
+
+<span class="gs">**Core Responsibilities:**</span>
+<span class="p">
+1.</span> CPU 分析
+<span class="p">   -</span> 识别高耗时函数（超过 1ms/帧）
+<span class="p">   -</span> 检查 Physics.FixedUpdate 频率
+<span class="p">   -</span> 分析脚本执行时间分布
+<span class="p">
+2.</span> Rendering 分析
+<span class="p">   -</span> 识别 Draw Calls 和 SetPass Calls
+<span class="p">   -</span> 检查 Overdraw（透明物体重叠渲染）
+<span class="p">   -</span> 分析 Shadow cascade 配置
+<span class="p">
+3.</span> Memory 分析
+<span class="p">   -</span> 识别内存泄漏（持续增长的 Texture/Mesh 数量）
+<span class="p">   -</span> 分析 GC Alloc 来源
+<span class="p">   -</span> 检查 Mono Heap 使用情况
+<span class="p">
+4.</span> Physics 分析
+<span class="p">   -</span> 识别碰撞体过多的问题
+<span class="p">   -</span> 检查 Rigidbody 设置是否合理
+<span class="p">   -</span> 分析物理计算开销
+
+<span class="gs">**Analysis Process:**</span>
+<span class="p">
+1.</span> 读取 Profiler 导出数据（.csv 或 .json）
+<span class="p">2.</span> 识别性能异常区间
+<span class="p">3.</span> 按类型（CPU/GPU/Memory）分类问题
+<span class="p">4.</span> 提供优化建议
+
+<span class="gs">**Output Format:**</span>
+<span class="p">
+1.</span> 性能摘要（平均 FPS、最低 FPS、主要瓶颈）
+<span class="p">2.</span> 问题列表（按严重程度排序）
+<span class="p">3.</span> 优化建议（具体到代码/资源修改）
+<span class="p">4.</span> 预估性能提升幅度
+
+<span class="gs">**Critical Rules:**</span>
+<span class="p">-</span> NEVER 建议使用 #pragma warning disable 来隐藏警告
+<span class="p">-</span> ALWAYS 先验证优化不会破坏功能
+<span class="p">-</span> 对于复杂的优化，建议分步骤实施
+
+<span class="nt">&lt;example&gt;</span>
+Context: Game drops to 15 FPS on mid-range devices
+user: "帮我分析一下为什么帧率这么低"
+assistant: "I'll use the game-profiler agent to analyze the performance data and identify the bottlenecks."
+<span class="nt">&lt;/example&gt;</span>
+</pre></table></code></div></div><h3 id="调用流程"><span class="me-2">调用流程</span><a href="#调用流程" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>当我在主对话框中输入：</p><blockquote><p>“User 表的查询变慢了，请优化一下。”</p></blockquote><p>Main Agent 会分析这个请求，识别到关键词 “查询” 和 “User 表”，然后：</p><ol><li>挂起当前状态。<li>唤醒 <code class="language-plaintext highlighter-rouge">sql-expert</code>。<li>将任务传递给 <code class="language-plaintext highlighter-rouge">sql-expert</code>。<li><code class="language-plaintext highlighter-rouge">sql-expert</code> 加载它的专用 Prompt，读取数据库文件，给出优化方案。<li><code class="language-plaintext highlighter-rouge">sql-expert</code> 退出，将结果返回给 Main Agent。<li>Main Agent 向我汇报：”已优化 User 表查询，添加了联合索引…”</ol><blockquote class="prompt-info"><p><strong>如何主动触发 Subagent</strong> Main Agent 的调度是<strong>语义驱动的</strong>，而非关键词匹配。要让它正确调用你的 Agent：</p><ul><li>在 <code class="language-plaintext highlighter-rouge">description</code> 中使用<strong>场景化描述</strong>而非简单列表<li>包含典型对话示例（<code class="language-plaintext highlighter-rouge">&lt;example&gt;</code> 块）<li>明确 Agent 的<strong>输入输出契约</strong></ul></blockquote><h2 id="step-by-step如何创建一个-subagent"><span class="me-2">Step-by-Step：如何创建一个 Subagent</span><a href="#step-by-step如何创建一个-subagent" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>在深入实战应用之前，让我先梳理一下 Subagent 的完整创建流程。经过多次实践，我发现创建一个高质量的 Subagent 其实非常直观——它本质上就是一个 Markdown 文件。</p><h3 id="文件结构解析"><span class="me-2">文件结构解析</span><a href="#文件结构解析" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Claude Code 的 Subagent 定义非常简洁：一个 Markdown 文件，包含 YAML Frontmatter 和 System Prompt 两部分。</p><div class="language-text highlighter-rouge"><div class="code-header"> <span data-label-text="Text"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>.claude/agents/
+└── my-specialist.md
+</pre></table></code></div></div><h3 id="anatomy-of-an-agentagent-解剖学"><span class="me-2">Anatomy of an Agent（Agent 解剖学）</span><a href="#anatomy-of-an-agentagent-解剖学" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>让我们从一个完整的例子开始，拆解每个部分的作用：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">code-refactor-master</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">专门负责代码重构的专家，用于重组文件结构、拆分大组件、更新导入路径等</span>
+<span class="na">model</span><span class="pi">:</span> <span class="s">opus</span>
+<span class="na">color</span><span class="pi">:</span> <span class="s">cyan</span>
+<span class="nn">---</span>
+
+You are the Code Refactor Master, an elite specialist in code organization...
+
+<span class="gu">## Core Responsibilities</span>
+<span class="p">
+1.</span> File Organization &amp; Structure
+<span class="p">2.</span> Dependency Tracking &amp; Import Management
+<span class="p">3.</span> Component Refactoring
+
+<span class="gu">## Your Refactoring Process</span>
+<span class="p">
+1.</span> Discovery Phase
+<span class="p">2.</span> Planning Phase
+<span class="p">3.</span> Execution Phase
+<span class="p">4.</span> Verification Phase
+
+<span class="gu">## Critical Rules</span>
+<span class="p">
+-</span> NEVER move a file without first documenting ALL its importers
+<span class="p">-</span> ALWAYS maintain backward compatibility
+</pre></table></code></div></div><h3 id="frontmatter配置元数据"><span class="me-2">Frontmatter：配置元数据</span><a href="#frontmatter配置元数据" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>YAML Frontmatter 定义了 Agent 的基本身份和能力：</p><div class="table-wrapper"><table><thead><tr><th>字段<th>必填<th>说明<th>示例<tbody><tr><td><code class="language-plaintext highlighter-rouge">name</code><td>✅<td>Agent 的唯一标识符，用于在对话中引用<td><code class="language-plaintext highlighter-rouge">code-refactor-master</code><tr><td><code class="language-plaintext highlighter-rouge">description</code><td>✅<td>详细描述 Agent 的用途和适用场景，包含使用示例<td>用于帮助主 Agent 识别何时调用此 Agent<tr><td><code class="language-plaintext highlighter-rouge">model</code><td>❌<td>指定使用的模型<td><code class="language-plaintext highlighter-rouge">opus</code>, <code class="language-plaintext highlighter-rouge">sonnet</code>, <code class="language-plaintext highlighter-rouge">haiku</code>, 或 <code class="language-plaintext highlighter-rouge">inherit</code>（继承主 Agent 模型）<tr><td><code class="language-plaintext highlighter-rouge">color</code><td>❌<td>UI 中显示的颜色标识<td><code class="language-plaintext highlighter-rouge">cyan</code>, <code class="language-plaintext highlighter-rouge">blue</code>, <code class="language-plaintext highlighter-rouge">green</code><tr><td><code class="language-plaintext highlighter-rouge">tools</code><td>❌<td>限制可用的工具列表<td><code class="language-plaintext highlighter-rouge">[Read, Write, Edit, Bash]</code></table></div><p><strong>实践心得</strong>：<code class="language-plaintext highlighter-rouge">description</code> 字段至关重要，它不仅是给人类看的，更是<strong>主 Agent 决策的依据</strong>。我在编写时会刻意包含 <code class="language-plaintext highlighter-rouge">&lt;example&gt;</code> 块，描述典型的使用场景和触发条件。</p><blockquote class="prompt-tip"><p><strong>编写有效的 Agent Description</strong> 一个好的 <code class="language-plaintext highlighter-rouge">description</code> 应该回答三个问题：</p><ol><li><strong>这个 Agent 做什么？</strong>（核心职责）<li><strong>什么时候调用它？</strong>（触发条件）<li><strong>和其他 Agent 有什么区别？</strong>（边界界定）</ol></blockquote><h3 id="system-prompt塑造-agent-的行为"><span class="me-2">System Prompt：塑造 Agent 的行为</span><a href="#system-prompt塑造-agent-的行为" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>这是 Agent 的”大脑”，决定了它如何思考和执行。一个高质量的 System Prompt 通常包含以下结构：</p><h4 id="角色定义persona"><span class="me-2">角色定义（Persona）</span><a href="#角色定义persona" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>You are the Code Refactor Master, an elite specialist in code organization,
+architecture improvement, and meticulous refactoring.
+</pre></table></code></div></div><p>明确 Agent 的身份，使用专业术语来界定它的能力边界。</p><h4 id="核心职责core-responsibilities"><span class="me-2">核心职责（Core Responsibilities）</span><a href="#核心职责core-responsibilities" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="gs">**Core Responsibilities:**</span>
+<span class="p">
+1.</span> File Organization &amp; Structure
+<span class="p">   -</span> Analyze existing file structures
+<span class="p">   -</span> Create logical directory hierarchies
+<span class="p">   -</span> Establish clear naming conventions
+<span class="p">
+2.</span> Dependency Tracking &amp; Import Management
+<span class="p">   -</span> Document every single import before moving files
+<span class="p">   -</span> Update all import paths systematically
+</pre></table></code></div></div><p>使用嵌套列表结构，清晰地定义 Agent 的能力范围。</p><h4 id="工作流程process"><span class="me-2">工作流程（Process）</span><a href="#工作流程process" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>这是 Agent 执行任务的”剧本”，确保它按照正确的方式工作：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="gs">**Your Refactoring Process:**</span>
+<span class="p">
+1.</span> Discovery Phase
+<span class="p">   -</span> Analyze current file structure
+<span class="p">   -</span> Map all dependencies
+<span class="p">   -</span> Document anti-patterns
+<span class="p">
+2.</span> Planning Phase
+<span class="p">   -</span> Design new organizational structure
+<span class="p">   -</span> Create dependency update matrix
+<span class="p">
+3.</span> Execution Phase
+<span class="p">   -</span> Execute in atomic steps
+<span class="p">   -</span> Update imports immediately
+<span class="p">
+4.</span> Verification Phase
+<span class="p">   -</span> Verify all imports resolve
+<span class="p">   -</span> Ensure no functionality broken
+</pre></table></code></div></div><h4 id="关键规则critical-rules"><span class="me-2">关键规则（Critical Rules）</span><a href="#关键规则critical-rules" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>使用强语气词（NEVER, ALWAYS）来强调不可违背的约束：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="gs">**Critical Rules:**</span>
+<span class="p">-</span> NEVER move a file without first documenting ALL its importers
+<span class="p">-</span> NEVER leave broken imports in the codebase
+<span class="p">-</span> ALWAYS maintain backward compatibility
+</pre></table></code></div></div><blockquote class="prompt-warning"><p><strong>约束的艺术</strong> Agent 的<strong>约束密度</strong>决定了其可靠性上限：</p><ul><li><strong>NEVER</strong> 用于<strong>安全边界</strong>（防止破坏性操作）<li><strong>ALWAYS</strong> 用于<strong>质量底线</strong>（确保输出一致性）<li>避免过度约束，否则会降低 Agent 的灵活性</ul></blockquote><h4 id="输出格式output-format"><span class="me-2">输出格式（Output Format）</span><a href="#输出格式output-format" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>定义 Agent 返回结果的标准格式：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="gs">**Output Format:**</span>
+When presenting refactoring plans, you provide:
+<span class="p">1.</span> Current structure analysis
+<span class="p">2.</span> Proposed new structure
+<span class="p">3.</span> Complete dependency map
+<span class="p">4.</span> Step-by-step migration plan
+</pre></table></code></div></div><blockquote class="prompt-tip"><p><strong>定义明确的交付契约</strong> Agent 的输出格式决定了它是否能<strong>无缝集成到你的工作流</strong>：</p><ul><li><strong>结构化输出</strong>优于自然语言（JSON/表格 &gt; 段落）<li>明确<strong>可执行步骤</strong>而非模糊建议<li>提供<strong>验证标准</strong>（如何判断成功）<li>包含<strong>回滚方案</strong>（高风险操作必选）</ul><p><strong>好的输出 = 主 Agent 可以直接执行，不需要进一步澄清</strong></p></blockquote><h3 id="创建流程从零到一"><span class="me-2">创建流程：从零到一</span><a href="#创建流程从零到一" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>让我用一个实际案例来演示完整的创建过程。</p><h4 id="场景我需要一个文档编写专家"><span class="me-2">场景：我需要一个”文档编写专家”</span><a href="#场景我需要一个文档编写专家" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>我发现自己经常需要为新功能编写文档，但主 Agent 的文档质量参差不齐——有时太简略，有时又太冗长。我决定创建一个专门的 <code class="language-plaintext highlighter-rouge">documentation-architect</code>。</p><p><strong>Step 1：定位存放位置</strong></p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="nb">mkdir</span> <span class="nt">-p</span> .claude/agents
+</pre></table></code></div></div><p><strong>Step 2：编写 Frontmatter</strong></p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">documentation-architect</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use this agent when you need to create, update, or enhance documentation</span>
+<span class="s">for any part of the codebase. This includes developer documentation, README files,</span>
+<span class="s">API documentation, data flow diagrams, testing documentation, or architectural overviews.</span>
+<span class="na">model</span><span class="pi">:</span> <span class="s">sonnet</span>
+<span class="na">color</span><span class="pi">:</span> <span class="s">blue</span>
+<span class="nn">---</span>
+</pre></table></code></div></div><p><strong>Step 3：设计 System Prompt</strong></p><p>我开始思考：什么样的文档才是好文档？</p><ul><li>需要理解完整的上下文，不只是刚修改的文件<li>应该查阅现有的文档，保持风格一致<li>要考虑目标读者的需求<li>需要包含代码示例和故障排除</ul><p>基于这些思考，我写出了 System Prompt：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre><td class="rouge-code"><pre>You are a documentation architect specializing in creating comprehensive,
+developer-focused documentation for complex software systems.
+
+<span class="gs">**Core Responsibilities:**</span>
+<span class="p">
+1.</span> Context Gathering:
+<span class="p">   -</span> Check memory MCP for stored knowledge
+<span class="p">   -</span> Examine /documentation/ directory
+<span class="p">   -</span> Analyze source files beyond current session
+<span class="p">
+2.</span> Documentation Creation:
+<span class="p">   -</span> Developer guides with code examples
+<span class="p">   -</span> README files with setup/troubleshooting
+<span class="p">   -</span> API documentation with endpoints and examples
+<span class="p">   -</span> Data flow diagrams and architectural overviews
+
+<span class="gs">**Methodology:**</span>
+<span class="p">
+1.</span> Discovery Phase:
+<span class="p">   -</span> Query memory MCP for relevant information
+<span class="p">   -</span> Scan /documentation/ and subdirectories
+<span class="p">   -</span> Identify all related source files
+<span class="p">
+2.</span> Analysis Phase:
+<span class="p">   -</span> Understand complete implementation
+<span class="p">   -</span> Identify key concepts needing explanation
+<span class="p">   -</span> Recognize patterns and edge cases
+<span class="p">
+3.</span> Documentation Phase:
+<span class="p">   -</span> Structure content logically
+<span class="p">   -</span> Write concise yet comprehensive
+<span class="p">   -</span> Include practical code examples
+</pre></table></code></div></div><p><strong>Step 4：添加约束和输出格式</strong></p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="gs">**Documentation Standards:**</span>
+<span class="p">
+-</span> Use clear technical language
+<span class="p">-</span> Include table of contents for longer documents
+<span class="p">-</span> Provide both quick start and detailed sections
+<span class="p">-</span> Cross-reference related documentation
+
+<span class="gs">**Output Format:**</span>
+<span class="p">
+1.</span> Explain documentation strategy before creating files
+<span class="p">2.</span> Provide summary of context gathered
+<span class="p">3.</span> Suggest documentation structure and get confirmation
+<span class="p">4.</span> Create documentation that developers will want to read
+</pre></table></code></div></div><p><strong>Step 5：测试和迭代</strong></p><p>在主对话中测试：</p><blockquote><p>“Use the documentation-architect agent to document the new authentication flow”</p></blockquote><p>观察返回结果，如果发现：</p><ul><li>文档太泛泛 → 在 Prompt 中增加 “Include specific code examples” 约束<li>文档风格不一致 → 添加 “Match existing documentation style in /docs/”<li>缺少重要信息 → 在 Discovery Phase 中增加检查点</ul><blockquote class="prompt-tip"><p><strong>Agent 的成长曲线</strong> 第一个版本永远不会完美，迭代是必经之路： | 迭代阶段 | 关注点 | 典型调整 | |———-|——–|———-| | <strong>V1</strong> | 基本可用 | 修复明显错误，补充遗漏职责 | | <strong>V2</strong> | 稳定性 | 添加约束，优化输出格式 | | <strong>V3</strong> | 鲁棒性 | 处理边缘情况，完善错误处理 |</p><p><strong>每次迭代后记录变化</strong>，这样你才能追踪 Agent 的进化轨迹。</p></blockquote><h3 id="advanced-patterns高级技巧"><span class="me-2">Advanced Patterns：高级技巧</span><a href="#advanced-patterns高级技巧" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><h4 id="技巧-1使用-example-块引导主-agent"><span class="me-2">技巧 1：使用 Example 块引导主 Agent</span><a href="#技巧-1使用-example-块引导主-agent" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>在 <code class="language-plaintext highlighter-rouge">description</code> 中嵌入示例，帮助主 Agent 识别调用时机：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>description: Use this agent when you need to document features.
+
+<span class="nt">&lt;example&gt;</span>
+Context: User just implemented JWT authentication.
+user: "I've finished implementing the auth flow. Can you document this?"
+assistant: "I'll use the documentation-architect agent to create comprehensive docs."
+<span class="nt">&lt;commentary&gt;</span>
+Since the user needs documentation for a newly implemented feature, use the documentation-architect agent.
+<span class="nt">&lt;/commentary&gt;</span>
+<span class="nt">&lt;/example&gt;</span>
+</pre></table></code></div></div><h4 id="技巧-2工具限制与安全"><span class="me-2">技巧 2：工具限制与安全</span><a href="#技巧-2工具限制与安全" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>对于高风险操作，显式限制可用工具：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">read-only-auditor</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Read-only code quality checker</span>
+<span class="na">tools</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Read</span><span class="pi">,</span> <span class="nv">Grep</span><span class="pi">,</span> <span class="nv">Glob</span><span class="pi">]</span>  <span class="c1"># 限制为只读工具</span>
+<span class="nn">---</span>
+</pre></table></code></div></div><blockquote class="prompt-danger"><p><strong>最小权限原则</strong> Agent 的工具访问范围应遵循<strong>最小必要原则</strong>：</p><ul><li>只读 Agent：<code class="language-plaintext highlighter-rouge">[Read, Grep, Glob]</code><li>代码审查 Agent：<code class="language-plaintext highlighter-rouge">[Read]</code>（完全不能写）<li>数据库 Agent：仅限 SQL 执行工具</ul><p><strong>工具越少，失误的代价越小</strong>。宁可多做几次确认，也不要给一个 Agent 赋予 “核武器”。</p></blockquote><h4 id="技巧-3版本特定的知识"><span class="me-2">技巧 3：版本特定的知识</span><a href="#技巧-3版本特定的知识" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>如果 Agent 需要了解特定版本的技术栈，在 Prompt 中明确：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>You are an expert in React 19 with TypeScript and TanStack Router.
+<span class="p">-</span> Use React 19's new hooks (use, useOptimistic)
+<span class="p">-</span> Follow TanStack Router's file-based routing patterns
+<span class="p">-</span> Apply MUI v7/v8 sx prop patterns
+</pre></table></code></div></div><h4 id="技巧-4返回父进程的协议"><span class="me-2">技巧 4：返回父进程的协议</span><a href="#技巧-4返回父进程的协议" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>对于需要审批的 Agent，定义返回给主 Agent 的协议：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="gs">**Return to Parent Process:**</span>
+<span class="p">-</span> Inform parent: "Code review saved to: ./dev/active/[task-name]/code-review.md"
+<span class="p">-</span> Include brief summary of critical findings
+<span class="p">-</span> IMPORTANT: Explicitly state "Please review findings and approve before I proceed"
+<span class="p">-</span> Do NOT implement fixes automatically
+</pre></table></code></div></div><blockquote class="prompt-tip"><p><strong>设计优雅的交接协议</strong> Subagent 与主 Agent 之间的<strong>接口契约</strong>是协作效率的关键：</p><ul><li><strong>摘要层</strong>：高层总结（3-5 句话）<li><strong>详细层</strong>：分项列出（表格/列表）<li><strong>证据层</strong>：引用具体文件和代码位置</ul><p><strong>好的交接 = 主 Agent 能在 10 秒内理解结果并继续工作</strong></p></blockquote><h3 id="模板速查表"><span class="me-2">模板速查表</span><a href="#模板速查表" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>为了快速上手，我总结了一个通用模板：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">name</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">agent-name</span><span class="pi">]</span>
+<span class="na">description</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Detailed description with usage examples</span><span class="pi">]</span>
+<span class="na">model</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">opus|sonnet|haiku|inherit</span><span class="pi">]</span>
+<span class="na">color</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">cyan|blue|green|yellow</span><span class="pi">]</span>
+<span class="na">tools</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Read</span><span class="pi">,</span> <span class="nv">Write</span><span class="pi">,</span> <span class="nv">Edit</span><span class="pi">,</span> <span class="nv">Bash</span><span class="pi">]</span>  <span class="c1"># Optional</span>
+<span class="nn">---</span>
+
+You are a [role], a specialist in [domain].
+
+<span class="gs">**Core Responsibilities:**</span>
+<span class="p">
+1.</span> [Responsibility 1]
+<span class="p">   -</span> Detail A
+<span class="p">   -</span> Detail B
+<span class="p">
+2.</span> [Responsibility 2]
+<span class="p">   -</span> Detail A
+
+<span class="gs">**Your Process:**</span>
+<span class="p">
+1.</span> [Phase Name]
+<span class="p">   -</span> Step 1
+<span class="p">   -</span> Step 2
+<span class="p">
+2.</span> [Phase Name]
+<span class="p">   -</span> Step 1
+
+<span class="gs">**Critical Rules:**</span>
+<span class="p">-</span> NEVER [prohibited action]
+<span class="p">-</span> ALWAYS [required action]
+
+<span class="gs">**Output Format:**</span>
+When completing tasks, provide:
+<span class="p">1.</span> [Output type 1]
+<span class="p">2.</span> [Output type 2]
+</pre></table></code></div></div><p>创建 Subagent 的本质是：<strong>将领域知识、工作流程和质量标准封装成一个可复用的指令集</strong>。一旦你写好一个专家 Agent，它就像雇了一个永远在线、不知疲倦的专家团队成员。</p><h2 id="实战心得什么时候用-subagent"><span class="me-2">实战心得：什么时候用 Subagent？</span><a href="#实战心得什么时候用-subagent" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>并不是所有任务都需要 Subagent。经过多次实践，我总结了以下标准：</p><blockquote class="prompt-warning"><p><strong>Subagent 判定矩阵</strong> 在决定是否创建 Subagent 前，问自己： | 维度 | 低复杂度任务 | 高复杂度任务 | |——|————-|————-| | <strong>领域专精</strong> | 通用模型足以应对 | 需要领域专家知识 | | <strong>安全风险</strong> | 操作可撤销 | 有破坏性后果 | | <strong>上下文密度</strong> | 单文件/局部修改 | 全局依赖分析 | | <strong>可复用性</strong> | 一次性需求 | 将重复使用 |</p><p><strong>满足 2+ 项</strong>？→ 创建 Subagent <strong>全部否决</strong>？→ 直接让主 Agent 处理</p></blockquote><ul><li><strong>❌ 不用 Subagent</strong>：<ul><li>简单的 Bug 修复。<li>单文件的逻辑修改。<li>跨度很小的任务。<li><em>理由</em>：切换 Agent 有上下文切换成本（Context Switching Cost），杀鸡焉用牛刀。</ul><li><strong>✅ 使用 Subagent</strong>：<ul><li><strong>独立性强的模块</strong>：如完全独立的微服务，或与业务逻辑分离的 UI 组件库。<li><strong>高风险操作</strong>：如数据库迁移，我希望限制 Agent 只能运行只读命令，不能运行 DROP TABLE。通过 Subagent 的权限管控可以完美实现。<li><strong>特定领域知识</strong>：如编写复杂的正则，或撰写符合特定法律法规的条款。<li><strong>上下文密集型任务</strong>：如”重构整个项目目录结构”，这类任务需要大量搜索和依赖分析，如果放在主对话中会瞬间撑爆上下文。Subagent 在独立环境中运行，只返回最终报告。</ul></ul><h2 id="advanced-configuration深度定制"><span class="me-2">Advanced Configuration：深度定制</span><a href="#advanced-configuration深度定制" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>除了基础的 Prompt 定义，Claude Code 还支持更高级的配置：</p><h3 id="权限与安全模型-security-model"><span class="me-2">权限与安全模型 (Security Model)</span><a href="#权限与安全模型-security-model" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>在 CLI 环境中，安全至关重要。我们可以通过 <code class="language-plaintext highlighter-rouge">permissionMode</code> 精确控制 Subagent 的行为边界：</p><ul><li><strong><code class="language-plaintext highlighter-rouge">default</code></strong>：标准模式，敏感操作（写文件、Shell 命令）会请求用户批准。<li><strong><code class="language-plaintext highlighter-rouge">bypassPermissions</code></strong>：<strong>慎用</strong>。跳过所有权限检查，适合完全受信任的自动化脚本。<li><strong><code class="language-plaintext highlighter-rouge">readOnly</code> 模式</strong>：通过 <code class="language-plaintext highlighter-rouge">disallowedTools: [Write, Edit]</code> 强制创建一个只读的”审计员” Agent。</ul><h3 id="记忆与学习-persistent-memory"><span class="me-2">记忆与学习 (Persistent Memory)</span><a href="#记忆与学习-persistent-memory" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>给 Agent 装上”海马体”。通过 <code class="language-plaintext highlighter-rouge">memory</code> 字段，我们可以让 Agent 记住跨 Session 的知识。</p><h4 id="工作原理"><span class="me-2">工作原理</span><a href="#工作原理" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>Persistent Memory 的机制是”自动加载，主动保存”：</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="na">memory</span><span class="pi">:</span> <span class="s">project</span> <span class="c1"># 将记忆存储在 .claude/projects/.../memory/ 下</span>
+</pre></table></code></div></div><p><strong>读取（自动）</strong>：当 Agent 启动时，系统会将 <code class="language-plaintext highlighter-rouge">MEMORY.md</code> 的内容<strong>自动注入</strong>到它的 System Prompt 中。这就像每次会议前都给 Agent 一张写满之前经验的小抄。</p><p><strong>保存（主动）</strong>：Agent 需要通过 <code class="language-plaintext highlighter-rouge">Write</code> 或 <code class="language-plaintext highlighter-rouge">Edit</code> 工具<strong>显式地</strong>更新 <code class="language-plaintext highlighter-rouge">MEMORY.md</code>。如果你没有在 Prompt 中告诉它”把学到的东西记下来”，它可能”心里明白”但下次就忘了。</p><h4 id="实践配置"><span class="me-2">实践配置</span><a href="#实践配置" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>在 System Prompt 中添加指令：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">sql-expert</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">SQL 优化专家</span>
+<span class="na">memory</span><span class="pi">:</span> <span class="s">project</span>
+<span class="nn">---</span>
+
+你是一个数据库专家。每次你学到新的优化经验或发现特定的数据库特性时，
+请将总结写入 <span class="sb">`MEMORY.md`</span> 文件，以便下次会话时使用。
+
+<span class="gs">**记忆格式示例：**</span>
+<span class="gu">## Project-specific Knowledge</span>
+<span class="gu">### User Table Optimization</span>
+<span class="p">-</span> User 表的 email 列查询频繁，确保有索引
+<span class="p">-</span> 避免在 User 表上使用 JOIN，考虑分表策略
+</pre></table></code></div></div><p><strong>重要提醒</strong>：Memory 不是自动记录所有对话的”黑匣子”。它是 Agent 的”笔记本”——需要你明确告诉 Agent “把这条信息记下来”。</p><blockquote class="prompt-info"><p><strong>让 Agent 学会”记笔记”</strong> Persistent Memory 的价值取决于<strong>写入质量</strong>：</p><ul><li>使用<strong>结构化格式</strong>（标题、分类、要点）<li>记录<strong>反模式</strong>和<strong>陷阱</strong>（比正确方案更有用）<li>包含<strong>可执行的具体信息</strong>（而非抽象总结）<li>定期<strong>回顾和清理</strong>过时知识</ul><p>Agent 的成长速度 ≈ 你的提示频率 × 记录质量</p></blockquote><h4 id="记忆存储位置"><span class="me-2">记忆存储位置</span><a href="#记忆存储位置" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-text highlighter-rouge"><div class="code-header"> <span data-label-text="Text"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>.claude/
+└── projects/
+    └── [project-id]/
+        └── memory/
+            └── MEMORY.md
+</pre></table></code></div></div><p>这意味着如果 <code class="language-plaintext highlighter-rouge">sql-expert</code> 昨天学到了”User 表不能用这个索引”，今天它依然记得——前提是昨天的对话中它把这条经验写进了 <code class="language-plaintext highlighter-rouge">MEMORY.md</code>。这对于长期维护的项目至关重要。</p><h3 id="生命周期钩子-lifecycle-hooks"><span class="me-2">生命周期钩子 (Lifecycle Hooks)</span><a href="#生命周期钩子-lifecycle-hooks" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>我们可以定义 <code class="language-plaintext highlighter-rouge">PreToolUse</code> 钩子来做更细粒度的控制。例如，在执行任何 SQL 之前，先运行一个脚本检查是否包含 <code class="language-plaintext highlighter-rouge">DROP</code> 或 <code class="language-plaintext highlighter-rouge">TRUNCATE</code> 关键字：</p><blockquote class="prompt-tip"><p><strong>自动化验证层</strong> Hooks 是 Agent 的<strong>最后一道防线</strong>，可用于：</p><ul><li><strong>PreToolUse</strong>：操作前验证（如 SQL 语法检查）<li><strong>PostToolUse</strong>：操作后审计（如记录文件修改）<li><strong>PreAgentLaunch</strong>：Agent 启动前环境检查</ul><p><strong>Hook 不应该替代 Prompt 约束</strong>，而是作为补充的安全网。</p></blockquote><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="na">hooks</span><span class="pi">:</span>
+  <span class="na">PreToolUse</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">matcher</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Bash"</span>
+      <span class="na">hooks</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">command</span>
+          <span class="na">command</span><span class="pi">:</span> <span class="s2">"</span><span class="s">./scripts/validate-sql-safety.sh"</span>
+</pre></table></code></div></div><h3 id="生产力技巧-pro-tips"><span class="me-2">生产力技巧 (Pro Tips)</span><a href="#生产力技巧-pro-tips" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ul><li><strong>后台执行</strong>：通过 <code class="language-plaintext highlighter-rouge">Ctrl + B</code> 可以让 Subagent 在后台运行。这对于运行耗时的测试套件或全库扫描非常有用，你可以继续在主线程做其他事情。<li><strong>自然语言配置</strong>：你可以直接告诉 Claude “创建一个专门写文档的 Agent”，它会帮你生成配置文件，无需手动编写 YAML。</ul><h2 id="case-study-隔离式-bug-修复"><span class="me-2">Case Study: 隔离式 Bug 修复</span><a href="#case-study-隔离式-bug-修复" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>这是 Subagent 最强大的使用场景之一：将”调试过程”封装在子线程，只将”修复结果”返回给主线程。这既能节省 Token，又能保持主上下文的整洁。</p><h3 id="场景描述"><span class="me-2">场景描述</span><a href="#场景描述" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>我在主 Agent 中开发一个新功能，遇到了一个复杂的报错。如果让主 Agent 直接尝试修复，可能会浪费 10-20 轮对话在试错上，而且这些试错记录会污染主上下文，让后续对话变得臃肿。</p><h3 id="解决方案委托给专门的-subagent"><span class="me-2">解决方案：委托给专门的 Subagent</span><a href="#解决方案委托给专门的-subagent" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>我创建了一个 <code class="language-plaintext highlighter-rouge">auto-error-resolver</code> 专门处理 TypeScript 编译错误：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">auto-error-resolver</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Automatically fix TypeScript compilation errors</span>
+<span class="na">tools</span><span class="pi">:</span> <span class="s">Read, Write, Edit, MultiEdit, Bash</span>
+<span class="nn">---</span>
+
+You are a specialized TypeScript error resolution agent.
+
+<span class="gu">## Your Process:</span>
+<span class="p">
+1.</span> <span class="gs">**Check for error information**</span>:
+<span class="p">   -</span> Read error cache at: <span class="sb">`~/.claude/tsc-cache/[session_id]/last-errors.txt`</span>
+<span class="p">   -</span> Get TSC commands at: <span class="sb">`~/.claude/tsc-cache/[session_id]/tsc-commands.txt`</span>
+<span class="p">
+2.</span> <span class="gs">**Analyze the errors**</span>:
+<span class="p">   -</span> Group by type (missing imports, type mismatches, etc.)
+<span class="p">   -</span> Prioritize errors that might cascade
+<span class="p">
+3.</span> <span class="gs">**Fix errors**</span>:
+<span class="p">   -</span> Start with import errors
+<span class="p">   -</span> Then fix type errors
+<span class="p">   -</span> Use MultiEdit for similar issues
+<span class="p">
+4.</span> <span class="gs">**Verify**</span>:
+<span class="p">   -</span> Run the correct tsc command after changes
+<span class="p">   -</span> Report success when all resolved
+
+<span class="gu">## Return Protocol:</span>
+<span class="p">-</span> Summarize what was fixed (file + issue type)
+<span class="p">-</span> Do NOT include detailed debug steps in return message
+<span class="p">-</span> Just report: "Fixed 5 type errors in src/components/<span class="err">*</span>.tsx"
+</pre></table></code></div></div><h3 id="执行流程"><span class="me-2">执行流程</span><a href="#执行流程" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><pre><code class="language-mermaid">graph LR
+    A["主 Agent 开发功能"] --&gt; B["遇到 Bug"]
+    B --&gt; C["调用 auto-error-resolver Subagent"]
+    C --&gt; D["Subagent 独立调试"]
+    D --&gt; E["多轮试错与修复"]
+    E --&gt; F["Subagent 完成任务"]
+    F --&gt; G["返回简短结果给主 Agent"]
+    G --&gt; H["主 Agent 继续开发"]
+
+    style D fill:#ff9999
+    style E fill:#ffcccc
+    style G fill:#99ff99
+</code></pre><h3 id="实际对话"><span class="me-2">实际对话</span><a href="#实际对话" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><strong>在主对话中</strong>：</p><blockquote><p>我：这个新功能有个 TypeScript 报错，请用 auto-error-resolver agent 去修复它，不要在当前会话中尝试。</p></blockquote><blockquote><p>主 Agent：I’ll use the auto-error-resolver agent to fix these TypeScript errors.</p></blockquote><blockquote><p>[主 Agent 调用 Task 工具，进入等待状态]</p></blockquote><p><strong>在 Subagent 对话中（独立上下文）</strong>：</p><blockquote><p>Subagent：Found 12 TypeScript errors in frontend service…</p><ul><li>Error 1: Property ‘onClick’ does not exist…<li>Error 2: Module not found… [Subagent 进行搜索、分析、修改、验证，可能需要 10 轮对话]</ul></blockquote><blockquote><p>Subagent：Fixed all errors. Modified 5 files:</p><ul><li>src/components/Button.tsx: Added onClick to ButtonProps<li>src/services/api.ts: Fixed import path</ul></blockquote><p><strong>回到主对话</strong>：</p><blockquote><p>主 Agent：auto-error-resolver has completed. Fixed 5 type errors in the frontend service. The build now passes.</p></blockquote><blockquote><p>我：太好了，继续完成这个功能的 UI 部分。</p></blockquote><h3 id="关键优势"><span class="me-2">关键优势</span><a href="#关键优势" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th>维度<th>主 Agent 直接修复<th>Subagent 委托修复<tbody><tr><td><strong>Token 消耗</strong><td>试错过程全部进入主上下文，持续累积<td>试错过程留在 Subagent，主上下文只有一行调用<tr><td><strong>上下文污染</strong><td>大量报错和试错记录影响后续对话<td>主上下文保持干净，只保留最终结果<tr><td><strong>注意力聚焦</strong><td>主 Agent 需要频繁切换任务模式<td>主 Agent 专注于高层逻辑，Subagent 专注调试<tr><td><strong>可追溯性</strong><td>难以区分哪些是开发内容，哪些是调试过程<td>调试历史独立记录，便于回顾</table></div><h3 id="返回协议设计"><span class="me-2">返回协议设计</span><a href="#返回协议设计" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>对于这种用例，Subagent 的返回格式至关重要。我建议遵循以下原则：</p><div class="language-markdown highlighter-rouge"><div class="code-header"> <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="gs">**Return Protocol:**</span>
+
+DO:
+<span class="p">-</span> Summarize what was fixed (high-level)
+<span class="p">-</span> List affected files
+<span class="p">-</span> Confirm verification passed
+
+DON'T:
+<span class="p">-</span> Include detailed error messages
+<span class="p">-</span> Show step-by-step debug process
+<span class="p">-</span> Return raw tsc output
+
+Example Return:
+"Fixed 5 type errors:
+<span class="p">  -</span> src/components/Button.tsx: Added missing onClick property
+<span class="p">  -</span> src/utils/helpers.ts: Fixed import path
+  Build verified with: npx tsc --noEmit ✓"
+</pre></table></code></div></div><p>这样，主 Agent 收到的是一条简洁的”任务完成通知”，而不是整个调试过程的转储。</p><h2 id="case-study-the-refactor-master"><span class="me-2">Case Study: The “Refactor Master”</span><a href="#case-study-the-refactor-master" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>让我们看一个终极案例：<strong>Code Refactor Master</strong>。重构是 LLM 最容易翻车的场景，因为它需要全局视野和极高的严谨性。</p><p>我定义了一个基于 <strong>Opus</strong> 模型的重构专家，它的工作流被严格限制为四步：</p><ol><li><strong>Discovery</strong>：扫描依赖，建立引用图谱（Dependency Map）。<li><strong>Planning</strong>：输出详细的迁移计划，包含所有受影响的文件列表。<li><strong>Execution</strong>：原子化操作，移动一个文件立即更新所有 Import。<li><strong>Verification</strong>：运行构建检查，确保无悬挂引用。</ol><p>这比直接让主 Agent “把这个文件夹整理一下” 要靠谱得多，因为它的 System Prompt 里写死了：”<strong>NEVER move a file without first documenting ALL its importers</strong>“。</p><h2 id="结语"><span class="me-2">结语</span><a href="#结语" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Subagents 是 AI 迈向”群体智能”的第一步。通过构建这套分工体系，我实际上是在组建一个<strong>虚拟的软件开发团队</strong>。</p><p>在这个团队中，我不再是唯一的编码者，而是架构师和决策者。我定义每个 Agent 的职责边界（Role）和交互协议（Protocol），让它们协同工作，从而突破了单体模型的智力上限。</p><hr /><p><em>下一篇预告：<a href="../claude-code-mcp-server">Claude Code(八)MCP Server：连接万物的通用协议</a></em></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw me-1"></i> <a href="/categories/ai/">AI</a>, <a href="/categories/claude-code/">Claude Code</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw me-1"></i> <a href="/tags/ai/" class="post-tag no-text-decoration" >AI</a> <a href="/tags/cli-agent/" class="post-tag no-text-decoration" >CLI Agent</a> <a href="/tags/multi-agent/" class="post-tag no-text-decoration" >Multi-agent</a></div><div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 " ><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Claude%20Code(%E4%B8%83)Subagents%EF%BC%9A%E6%9E%84%E5%BB%BA%E5%88%86%E5%B7%A5%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&url=www.damonc.top%2Fposts%2Fclaude-code-subagents%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Claude%20Code(%E4%B8%83)Subagents%EF%BC%9A%E6%9E%84%E5%BB%BA%E5%88%86%E5%B7%A5%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&u=www.damonc.top%2Fposts%2Fclaude-code-subagents%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=www.damonc.top%2Fposts%2Fclaude-code-subagents%2F&text=Claude%20Code(%E4%B8%83)Subagents%EF%BC%9A%E6%9E%84%E5%BB%BA%E5%88%86%E5%B7%A5%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!" > <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span></div></div></div></article></main><aside aria-label="Panel" id="panel-wrapper" class="ps-2 text-muted"><div class="access"><section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2><ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2"><li class="text-truncate lh-lg"> <a href="/posts/claude-code-agent-skills/">Claude Code(六)AgentSkills：构建高可信 AI 技能系统</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-subagents/">Claude Code(七)Subagents：构建分工协作的多智能体系统</a><li class="text-truncate lh-lg"> <a href="/posts/git-worktree-parallel-development/">Git Worktree并行开发：原理、实践与最佳实践</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-config/">Claude Code(二)环境配置</a><li class="text-truncate lh-lg"> <a href="/posts/claude-code-context-window/">Claude Code(三)核心解密：从提示词工程到上下文引擎</a></ul></section><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/architecture/">Architecture</a> <a class="post-tag btn btn-outline-primary" href="/tags/configuration/">Configuration</a> <a class="post-tag btn btn-outline-primary" href="/tags/context-engine/">Context Engine</a> <a class="post-tag btn btn-outline-primary" href="/tags/git-worktree/">git-worktree</a> <a class="post-tag btn btn-outline-primary" href="/tags/mcp/">MCP</a> <a class="post-tag btn btn-outline-primary" href="/tags/multi-agent/">Multi-agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/plugins/">Plugins</a></div></section></div><div class="toc-border-cover z-3"></div><section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2><nav id="toc"></nav></section></aside></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4"><aside id="related-posts" aria-labelledby="related-label"><h3 class="mb-4" id="related-label">Further Reading</h3><nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4"><article class="col"> <a href="/posts/claude-code-plugins/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1769002210" data-df="ll" > Jan 21, 2026 </time><h4 class="pt-0 my-2">Claude Code(九)Plugins：扩展功能的无限可能</h4><div class="text-muted"><p>探索 Claude Code 的插件生态。解析 Plugins 与 MCP、Subagents 的区别，以及如何通过社区插件快速增强 Agent 的各项能力。</p></div></div></a></article><article class="col"> <a href="/posts/claude-code-mcp-server/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1768838710" data-df="ll" > Jan 20, 2026 </time><h4 class="pt-0 my-2">Claude Code(八)MCP Server：连接万物的通用协议</h4><div class="text-muted"><p>深入解析 Model Context Protocol (MCP)。打破 AI 的沙箱孤岛，通过标准化协议连接 GitHub、数据库与浏览器，构建无边界的智能工作流。</p></div></div></a></article><article class="col"> <a href="/posts/claude-code-agent-skills/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1768648860" data-df="ll" > Jan 17, 2026 </time><h4 class="pt-0 my-2">Claude Code(六)AgentSkills：构建高可信 AI 技能系统</h4><div class="text-muted"><p>深入解析 Agent Skills 开放标准，厘清 Skill 与 MCP、Prompt 的核心差异，掌握渐进式披露与权限控制架构，打造专业级 AI 辅助能力。</p></div></div></a></article></nav></aside><nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/claude-code-agent-skills/" class="btn btn-outline-primary" aria-label="Older" ><p>Claude Code(六)AgentSkills：构建高可信 AI 技能系统</p></a> <a href="/posts/claude-code-mcp-server/" class="btn btn-outline-primary" aria-label="Newer" ><p>Claude Code(八)MCP Server：连接万物的通用协议</p></a></nav><div id="waline-container" class="mt-5 pt-4" style="border-top: 1px dashed #ccc; padding-top: 20px;"><div id="waline"></div></div><link rel="stylesheet" href="/assets/css/waline.css"> <script type="module"> window.WalinePrefix = "/pro"; import { init } from '/assets/js/dist/waline.min.js'; init({ el: '#waline', serverURL: 'https://comments.damonc.top', dark: 'html[data-mode="dark"]', emoji: [ '//unpkg.com/@waline/emojis@1.4.0/qq', '//unpkg.com/@waline/emojis@1.4.0/tw-emoji', '//unpkg.com/@waline/emojis@1.4.0/soul-emoji' ], reaction: true, pageview: false }); </script><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 " ><p>© <time>2026</time> <a href="https://github.com/damonc-top">仗剑天涯</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author." >Some rights reserved.</span></p><p>The blog is powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer></div></div><div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content"><div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/architecture/">Architecture</a> <a class="post-tag btn btn-outline-primary" href="/tags/configuration/">Configuration</a> <a class="post-tag btn btn-outline-primary" href="/tags/context-engine/">Context Engine</a> <a class="post-tag btn btn-outline-primary" href="/tags/git-worktree/">git-worktree</a> <a class="post-tag btn btn-outline-primary" href="/tags/mcp/">MCP</a> <a class="post-tag btn btn-outline-primary" href="/tags/multi-agent/">Multi-agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/plugins/">Plugins</a></div></section></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside></div><div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div><aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false" ><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close" ></button></div><div class="toast-body text-center pt-0"><p class="px-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
