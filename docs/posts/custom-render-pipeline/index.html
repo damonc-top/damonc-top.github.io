@@ -1,0 +1,859 @@
+<!doctype html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover" ><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="自定义渲染管线:初识渲染流程 (翻译一)" /><meta name="author" content="catlikecoding" /><meta property="og:locale" content="en" /><meta name="description" content="这是关于创建自定义脚本化渲染管线（Scriptable Render Pipeline, SRP）的系列教程的第一部分。它涵盖了我们将要在未来扩展的准系统渲染管线的初始创建。" /><meta property="og:description" content="这是关于创建自定义脚本化渲染管线（Scriptable Render Pipeline, SRP）的系列教程的第一部分。它涵盖了我们将要在未来扩展的准系统渲染管线的初始创建。" /><link rel="canonical" href="www.damonc.top/posts/custom-render-pipeline/" /><meta property="og:url" content="www.damonc.top/posts/custom-render-pipeline/" /><meta property="og:site_name" content="仗剑天涯" /><meta property="og:image" content="https://img.damonc.top/posts/SRP/srp1-2/tutorial-image1.jpg" /><meta property="og:image:alt" content="使用 custom render pipeline 进行渲染" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2019-09-26T00:00:00+08:00" /><meta name="twitter:card" content="summary_large_image" /><meta property="twitter:image" content="https://img.damonc.top/posts/SRP/srp1-2/tutorial-image1.jpg" /><meta name="twitter:image:alt" content="使用 custom render pipeline 进行渲染" /><meta property="twitter:title" content="自定义渲染管线:初识渲染流程 (翻译一)" /><meta name="twitter:site" content="@elonmusk" /><meta name="twitter:creator" content="@catlikecoding" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"catlikecoding","url":"https://catlikecoding.com/unity/tutorials"},"dateModified":"2019-09-26T00:00:00+08:00","datePublished":"2019-09-26T00:00:00+08:00","description":"这是关于创建自定义脚本化渲染管线（Scriptable Render Pipeline, SRP）的系列教程的第一部分。它涵盖了我们将要在未来扩展的准系统渲染管线的初始创建。","headline":"自定义渲染管线:初识渲染流程 (翻译一)","image":{"lqip":"data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwAwCdASoUAAoAP3Ggx1i0q6gjsAgCkC4JQAAIuqa8nEQAAMcUue+s/elJA4wh9LSWt0IwoftUHrxkZDuYQ9gL607kUUGTC9aHuAAA","alt":"使用 custom render pipeline 进行渲染","url":"https://img.damonc.top/posts/SRP/srp1-2/tutorial-image1.jpg","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"www.damonc.top/posts/custom-render-pipeline/"},"url":"www.damonc.top/posts/custom-render-pipeline/"}</script><meta name="fediverse:creator" content="@damonc@mastodon.social"><title>自定义渲染管线:初识渲染流程 (翻译一) | 仗剑天涯</title><link rel="icon" type="image/png" href="/assets/img/favicons/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/svg+xml" href="/assets/img/favicons/favicon.svg"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="preconnect" href="https://fonts.loli.net" ><link rel="dns-prefetch" href="https://fonts.loli.net" ><link rel="preconnect" href="https://gstatic.loli.net" crossorigin><link rel="dns-prefetch" href="https://gstatic.loli.net" ><link rel="preconnect" href="https://fastly.jsdelivr.net" ><link rel="dns-prefetch" href="https://fastly.jsdelivr.net" ><link rel="stylesheet" href="/assets/css/jekyll-theme.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"> <script type="module" src="/assets/js/dist/theme.min.js"></script> <script> /* Apply sidebar collapsed state as early as possible to prevent flickering */ if (localStorage.getItem('sidebar-collapsed') === 'true') { document.documentElement.setAttribute('data-sidebar-collapsed', 'true'); } </script> <script defer src="https://fastly.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.18/dayjs.min.js,npm/dayjs@1.11.18/locale/en.js,npm/dayjs@1.11.18/plugin/relativeTime.js,npm/dayjs@1.11.18/plugin/localizedFormat.js,npm/tocbot@4.36.4/dist/tocbot.min.js"></script> <script type="module" defer src="/assets/js/dist/post.min.js"></script> <script src="/assets/js/data/mathjax.js"></script> <script async src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script> <script id="MathJax-script" async src="https://fastly.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script> <script type="module"> window.WalinePrefix = "/pro"; import { pageviewCount } from '/assets/js/dist/waline.min.js'; pageviewCount({ serverURL: 'https://comments.damonc.top', update: true }); </script> <script type="module" defer src="/app.min.js?baseurl=&register=true" ></script><body><aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"> <button type="button" id="sidebar-collapse-btn" class="btn" aria-label="Toggle Sidebar"> <i class="fas fa-bars-staggered"></i> </button><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="https://img.damonc.top/commons/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">仗剑天涯</a><p class="site-subtitle fst-italic mb-0">听说读写看做忘摊手</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a></ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/damonc-top" aria-label="github" target="_blank" rel="noopener noreferrer" > <i class="fab fa-github"></i> </a> <a href="https://twitter.com/elonmusk" aria-label="twitter" target="_blank" rel="noopener noreferrer" > <i class="fa-brands fa-x-twitter"></i> </a> <a href="javascript:location.href = 'mailto:' + ['damoncbl','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></aside><div id="main-wrapper" class="d-flex justify-content-center"><div class="container d-flex flex-column px-xxl-5"><header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100" ><nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>自定义渲染管线:初识渲染流程 (翻译一)</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div><button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..." > </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button></div></header><div class="row flex-grow-1"><main aria-label="Main Content" class="col-12 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>自定义渲染管线:初识渲染流程 (翻译一)</h1><div class="post-meta text-muted"> <span> Posted <time data-ts="1569427200" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom" > Sep 26, 2019 </time> </span><div class="mt-3 mb-3"> <a href="https://img.damonc.top/posts/SRP/srp1-2/tutorial-image1.jpg" class="popup img-link preview-img blur"><img data-src="https://img.damonc.top/posts/SRP/srp1-2/tutorial-image1.jpg" alt="使用 custom render pipeline 进行渲染" width="1200" height="630" data-lqip="true" src="data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwAwCdASoUAAoAP3Ggx1i0q6gjsAgCkC4JQAAIuqa8nEQAAMcUue+s/elJA4wh9LSWt0IwoftUHrxkZDuYQ9gL607kUUGTC9aHuAAA"></a><figcaption class="text-center pt-2 pb-2">使用 custom render pipeline 进行渲染</figcaption></div><div class="d-flex justify-content-between"> <span> By <em> <a href="https://catlikecoding.com/unity/tutorials">catlikecoding</a> </em> </span><div> <span> <em class="waline-pageview-count" data-path="/posts/custom-render-pipeline/"> <i class="fas fa-spinner fa-spin small"></i> </em> views </span> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="9884 words" > <em>54 min</em> read</span></div></div></div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">自定义渲染管线:初识渲染流程 (翻译一)</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button></div><button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between"><div class="label text-truncate py-2 ms-4">自定义渲染管线:初识渲染流程 (翻译一)</div><button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75"> <i class="fas fa-close"></i> </button></div><div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content"><p>这是关于创建自定义脚本化渲染管线（Scriptable Render Pipeline, SRP）的系列教程的第一部分。它涵盖了我们将要在未来扩展的准系统渲染管线的初始创建。</p><ul><li>创建渲染管线资源和实例<li>渲染摄像机视图<li>执行剔除、过滤和排序<li>分离不透明、透明和无效阶段<li>处理多个摄像机。</ul><hr /><h2 id="1-render-pipeline"><span class="me-2">1 Render Pipeline</span><a href="#1-render-pipeline" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>为了渲染任何内容，Unity 必须确定需要绘制哪些形状，以及在何时、何地、使用何种设置进行绘制。根据涉及效果的多寡，这一过程可能会变得非常复杂。光照、阴影、透明度、图像效果、体积效果等都必须按正确的顺序处理，才能得到最终的图像。这就是 render pipeline 的职责。</p><p>过去，Unity 仅支持几种内置的渲染方式。Unity 2018 引入了 <code class="language-plaintext highlighter-rouge">scriptable render pipelines</code>（简称 RPs），使我们能够随心所欲地实现自定义渲染，同时仍能依靠 Unity 完成剔除（culling）等基础步骤。Unity 2018 还添加了两个使用这种新方法制作的实验性 RP：Lightweight RP 和 High Definition RP。在 Unity 2019 中，Lightweight RP 不再是实验性的，并在 Unity 2019.3 中更名为 Universal RP。</p><p>Universal RP 旨在取代当前的 legacy RP 成为默认选项。其理念是将其打造为一个适用于大多数场景且易于自定义的 RP。本系列教程不会去自定义该 RP，而是将从头开始创建一个完整的 RP。</p><p>本教程将通过一个使用 forward rendering 进行绘制 unlit 形状的最小化的最基础的RPs。一旦该流程正常运行，我们就可以在后续教程中扩展我们的 pipeline，添加光照、阴影、不同的渲染方法以及更高级的功能。</p><h3 id="11-项目设置"><span class="me-2">1.1 项目设置</span><a href="#11-项目设置" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>在 Unity 2022.3.5f1（以前是 2019.2.6）或更高版本中创建一个新的 3D 项目。我们将创建自己的管线，因此不要选择任何 RP 项目模板。项目打开后，你可以前往包管理器 (Package Manager) 并删除所有不需要的包。在本教程中，我们只会使用 Unity UI 包来试验绘制 UI，因此你可以保留该包。</p><p>我们将专门在线性颜色空间 <code class="language-plaintext highlighter-rouge">linear color space</code> 中工作，但 Unity 2019.2 仍将 Gamma 空间作为默认设置。通过 <strong>Edit / Project Settings</strong> 进入 Player 设置，然后在 <strong>Other Settings</strong> 部分下将 <strong>Color Space</strong> 切换为 <strong>Linear</strong>。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/color-space.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/color-space.png" alt="色彩空间设置" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">色彩空间设置</figcaption></figure><p>在默认场景中填充一些物体，混合使用标准、不透明无光照（unlit opaque）以及透明材质。由于 Unlit/Transparent shader 仅支持纹理，这里提供了一张用于该材质的 UV 球体贴图。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/sphere-alpha-map.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/sphere-alpha-map.png" alt="UV球体 Alpha 贴图，黑色背景" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">UV球体 Alpha 贴图，黑色背景</figcaption></figure><p>我在我的测试场景中放了几个不透明的立方体。红色的使用标准着色器材质，而绿色和黄色的使用 <code class="language-plaintext highlighter-rouge">Unlit/Color</code> 着色器材质。蓝色球体使用标准着色器，并将 <strong>Rendering Mode</strong> 设置为 <strong>Transparent</strong>，而白色球体使用 <code class="language-plaintext highlighter-rouge">Unlit/Transparent</code> 着色器。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/scene.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/scene.png" alt="测试场景" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">测试场景</figcaption></figure><h3 id="12-管线资源-pipeline-asset"><span class="me-2">1.2 管线资源 (Pipeline Asset)</span><a href="#12-管线资源-pipeline-asset" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>目前，Unity 使用默认渲染管线。要将其替换为自定义渲染管线，我们首先必须为其创建一个资产类型。我们将使用与 Unity 用于通用 RP 大致相同的文件夹结构。创建一个 <code class="language-plaintext highlighter-rouge">Custom RP</code> 资产文件夹，其中包含一个 <code class="language-plaintext highlighter-rouge">Runtime</code> 子文件夹。在其中放入一个新的 C# 脚本，用于 <code class="language-plaintext highlighter-rouge">CustomRenderPipelineAsset</code> 类型。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/folder-structure.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/folder-structure.png" alt="文件夹结构" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">文件夹结构</figcaption></figure><p>资产类型必须扩展 <code class="language-plaintext highlighter-rouge">UnityEngine.Rendering</code> 命名空间中的 <code class="language-plaintext highlighter-rouge">RenderPipelineAsset</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine.Rendering</span><span class="p">;</span>
+
+<span class="p">[</span><span class="nf">CreateAssetMenu</span><span class="p">(</span><span class="n">menuName</span> <span class="p">=</span> <span class="s">"Rendering/Custom Render Pipeline"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CustomRenderPipelineAsset</span> <span class="p">:</span> <span class="n">RenderPipelineAsset</span> <span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="n">RenderPipeline</span> <span class="nf">CreatePipeline</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>RP 资产的主要目的是让 Unity 能够获得负责渲染的管线对象实例。资产本身只是一个句柄和存储设置的地方。我们还没有任何设置，所以现在能做的就是先通过覆盖抽象的 <code class="language-plaintext highlighter-rouge">CreatePipeline</code> 方法来让 Unity 能够获取我们的管线对象实例。该方法应该返回一个 <code class="language-plaintext highlighter-rouge">RenderPipeline</code> 实例。但我们还没有定义自定义 RP 类型，所以先返回 <code class="language-plaintext highlighter-rouge">null</code>。</p><p><code class="language-plaintext highlighter-rouge">CreatePipeline</code> 方法使用 <code class="language-plaintext highlighter-rouge">protected</code> 访问修饰符定义，这意味着只有定义该方法的类（即 <code class="language-plaintext highlighter-rouge">RenderPipelineAsset</code>）以及扩展它的类才能访问它。</p><p>为了让创建该资产成为可能，我们将 <code class="language-plaintext highlighter-rouge">CreateAssetMenu</code> 属性添加到 <code class="language-plaintext highlighter-rouge">CustomRenderPipelineAsset</code>。</p><p>这将会在 <strong>Asset / Create</strong> 菜单中放置一个条目。让我们保持整洁，将其放在 <strong>Rendering</strong> 子菜单中。我们通过将属性的 <code class="language-plaintext highlighter-rouge">menuName</code> 属性设置为 <code class="language-plaintext highlighter-rouge">Rendering/Custom Render Pipeline</code> 来实现这一点。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="p">[</span><span class="nf">CreateAssetMenu</span><span class="p">(</span><span class="n">menuName</span> <span class="p">=</span> <span class="s">"Rendering/Custom Render Pipeline"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CustomRenderPipelineAsset</span> <span class="p">:</span> <span class="n">RenderPipelineAsset</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</pre></table></code></div></div><p>使用新的菜单项将资产添加到项目中，然后转到 <strong>Graphics</strong> 项目设置并在 <strong>Scriptable Render Pipeline Settings</strong> 下选择它。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/srp-settings.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/srp-settings.png" alt="选择了自定义RP" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">选择了自定义RP</figcaption></figure><p>替换默认 RP 改变了一些事情。首先，图形设置中消失了很多选项，这在信息面板中有所提及。其次，我们禁用了默认 RP 但没有提供有效的替代品，因此不再渲染任何内容。游戏窗口、场景窗口和材质预览不再起作用。如果你打开帧调试器 (Frame Debugger)——通过 <strong>Window / Analysis / Frame Debugger</strong>——并启用它，你会看到游戏窗口中确实没有绘制任何内容。</p><h3 id="13-渲染管线实例-render-pipeline-instance"><span class="me-2">1.3 渲染管线实例 (Render Pipeline Instance)</span><a href="#13-渲染管线实例-render-pipeline-instance" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>创建一个 <code class="language-plaintext highlighter-rouge">CustomRenderPipeline</code> 类，并将其脚本文件放在与 <code class="language-plaintext highlighter-rouge">CustomRenderPipelineAsset</code> 相同的文件夹中。这将是我们的资产返回的 RP 实例所使用的类型，因此它必须扩展 <code class="language-plaintext highlighter-rouge">RenderPipeline</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine.Rendering</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CustomRenderPipeline</span> <span class="p">:</span> <span class="n">RenderPipeline</span> <span class="p">{</span>
+    <span class="c1">//unity 2022之前的老版本API，每帧分配相机数组    </span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span>
+        <span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span><span class="p">[]</span> <span class="n">cameras</span>
+    <span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">RenderPipeline</code> 定义了一个受保护的抽象 <code class="language-plaintext highlighter-rouge">Render</code> 方法，我们必须覆盖它来创建一个具体的管线。它有两个参数：一个 <code class="language-plaintext highlighter-rouge">ScriptableRenderContext</code> 和一个<code class="language-plaintext highlighter-rouge">List&lt;Camera&gt;</code>,先让该方法保持为空。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span>
+        <span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">Generic</span><span class="p">.</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Camera</span><span class="p">&gt;</span> <span class="n">cameras</span>
+    <span class="p">)</span> <span class="p">{}</span>
+</pre></table></code></div></div><p>此方法曾是自定义 SRP 定义的入口点，但由于相机数组参数需要每帧分配内存，因此引入了一个使用列表参数的替代方案。我们可以在 Unity 2022 中使用该方案，但仍必须保留旧版本，因为它被声明为抽象方法，尽管它不会被使用。请注意，后续的 profiler 截图仍会包含旧版相机数组的内存分配。</p><p>让 <code class="language-plaintext highlighter-rouge">CustomRenderPipelineAsset.CreatePipeline</code> 返回 <code class="language-plaintext highlighter-rouge">CustomRenderPipeline</code> 的新实例。这将让我们获得一个有效且功能完备的管线，尽管它还不会渲染任何内容。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>    <span class="k">protected</span> <span class="k">override</span> <span class="n">RenderPipeline</span> <span class="nf">CreatePipeline</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">CustomRenderPipeline</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><h2 id="2-渲染-rendering"><span class="me-2">2 渲染 (Rendering)</span><a href="#2-渲染-rendering" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>每一帧 Unity 都会在 RP 实例上调用 <code class="language-plaintext highlighter-rouge">Render</code> 。它会传递一个 context 结构体，该结构体提供了与原生引擎的连接，我们可以使用它进行渲染。它还会传递一个 camera 数组，因为场景中可能存在多个处于激活状态的 camera。RP 的职责是按照提供的顺序渲染所有这些 camera。</p><h3 id="21-摄像机渲染器-camera-renderer"><span class="me-2">2.1 摄像机渲染器 (Camera Renderer)</span><a href="#21-摄像机渲染器-camera-renderer" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>每个 camera 都是独立渲染的。因此，我们不让 <code class="language-plaintext highlighter-rouge">CustomRenderPipeline</code> 渲染所有 camera，而是将该职责转发给一个专门负责渲染单个 camera 的新类。将其命名为 <code class="language-plaintext highlighter-rouge">CameraRenderer</code> ，并为其提供一个带有 context 和 camera 参数的公开 <code class="language-plaintext highlighter-rouge">Render</code> 方法。为了方便起见，我们将这些参数存储在字段中。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine.Rendering</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CameraRenderer</span> <span class="p">{</span>
+
+    <span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">;</span>
+
+    <span class="n">Camera</span> <span class="n">camera</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">camera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>让 <code class="language-plaintext highlighter-rouge">CustomRenderPipeline</code> 在创建时创建一个渲染器的实例，然后在循环中使用它来渲染所有摄像机。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">CustomRenderPipeline</span> <span class="p">:</span> <span class="n">RenderPipeline</span> <span class="p">{</span>
+
+    <span class="n">CameraRenderer</span> <span class="n">renderer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CameraRenderer</span><span class="p">();</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span>
+        <span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span><span class="p">[]</span> <span class="n">cameras</span>
+    <span class="p">)</span> <span class="p">{}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span>
+        <span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">Generic</span><span class="p">.</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Camera</span><span class="p">&gt;</span> <span class="n">cameras</span>
+    <span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">cameras</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+            <span class="n">renderer</span><span class="p">.</span><span class="nf">Render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">cameras</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>我们的 camera renderer 大致相当于 <code class="language-plaintext highlighter-rouge">Universal RP</code> 的 scriptable renderer。这种方法可以方便未来为每个 camera 支持不同的渲染方式，例如一个用于第一人称视角，另一个用于 3D 地图叠加，或者前向渲染与延迟渲染的对比。但目前我们将以相同的方式渲染所有 camera。</p><h3 id="22-绘制天空盒-drawing-the-skybox"><span class="me-2">2.2 绘制天空盒 (Drawing the Skybox)</span><a href="#22-绘制天空盒-drawing-the-skybox" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><code class="language-plaintext highlighter-rouge">CameraRenderer.Render</code> 的任务是绘制其 camera 可见的所有几何体。为了清晰起见，将该特定任务隔离在一个单独的 <code class="language-plaintext highlighter-rouge">DrawVisibleGeometry</code> 方法中。我们首先让它绘制默认的 skybox，这可以通过在 context 上调用 <code class="language-plaintext highlighter-rouge">DrawSkybox</code> 并将 camera 作为参数来实现。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">camera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">;</span>
+
+        <span class="c1">//这里默认场景只有一个相机，所以外部for循环调用Render后续再优化这个多相机流程 </span>
+        <span class="nf">DrawVisibleGeometry</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">DrawVisibleGeometry</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawSkybox</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>这还不能让 skybox 出现。这是因为我们向 context 发出的命令是缓冲处理的。我们必须通过调用 context 的 <code class="language-plaintext highlighter-rouge">Submit</code> 来提交排队的工作以执行。让我们在一个单独的 Submit 方法中完成此操作，该方法在 <code class="language-plaintext highlighter-rouge">DrawVisibleGeometry</code> 之后调用。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">camera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">;</span>
+
+        <span class="nf">DrawVisibleGeometry</span><span class="p">();</span>
+        <span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">Submit</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>skybox 终于出现在 game 窗口和 scene 窗口中了。启用 frame debugger 后，你也可以在其中看到它的条目。它被列为 <code class="language-plaintext highlighter-rouge">Camera.RenderSkybox</code> ，其下方有一个 <code class="language-plaintext highlighter-rouge">Draw Mesh</code> 项，代表实际的 draw call。这对应于 game 窗口的渲染。frame debugger 不会报告其他窗口的绘制情况。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/skybox.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/skybox.png" alt="天空盒绘制" width="100%" height="auto" loading="lazy"></a></div><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/skybox-debugger.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/skybox-debugger.png" alt="天空盒绘制" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">天空盒绘制</figcaption></figure><p>请注意，摄像机的方向目前不会影响天空盒的渲染方式。我们将摄像机传递给 <code class="language-plaintext highlighter-rouge">DrawSkybox</code>，但这仅用于根据摄像机的清除标志 (clear flags) 确定是否应该绘制天空盒。</p><p>为了正确渲染天空盒以及整个场景，我们必须设置视图投影矩阵（view-projection matrix）。该变换矩阵结合了摄像机的位置和朝向（即视图矩阵 view matrix）与摄像机的透视或正交投影（即投影矩阵 projection matrix）。在 shader 中，它被称为 <em>unity_MatrixVP</em> ，是绘制几何体时使用的 shader 属性之一。当选中某个 draw call 时，你可以在 frame debugger 的 <em>ShaderProperties</em> 部分检查该矩阵。</p><p>目前，<em>unity_MatrixVP</em> 矩阵始终保持不变。我们必须通过 <code class="language-plaintext highlighter-rouge">SetupCameraProperties</code> 方法将摄像机的属性应用于 context。该方法会设置矩阵以及其他一些属性。请在调用 <code class="language-plaintext highlighter-rouge">DrawVisibleGeometry</code> 之前，在一个独立的 <code class="language-plaintext highlighter-rouge">Setup</code> 方法中执行此操作。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">camera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">;</span>
+
+        <span class="nf">Setup</span><span class="p">();</span>
+        <span class="nf">DrawVisibleGeometry</span><span class="p">();</span>
+        <span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="c1">// 渲染之前把相机的属性传递给context </span>
+    <span class="k">void</span> <span class="nf">Setup</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">SetupCameraProperties</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/skybox-aligned.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/skybox-aligned.png" alt="天空盒，正确对齐" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">天空盒，正确对齐</figcaption></figure><h3 id="23-命令缓冲区-command-buffers"><span class="me-2">2.3 命令缓冲区 (Command Buffers)</span><a href="#23-命令缓冲区-command-buffers" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><code class="language-plaintext highlighter-rouge">Context</code> 会延迟实际的渲染，直到我们提交它。在此之前，我们会对其进行配置并添加命令以便稍后执行。某些任务（例如绘制 skybox）可以通过专用方法发布，但其他命令必须通过单独的 command buffer 间接发布。我们需要这样一个 buffer 来绘制场景中的其他几何体。</p><p>为了获取 buffer，我们必须创建一个新的 <code class="language-plaintext highlighter-rouge">CommandBuffer</code> 对象实例。我们只需要一个 buffer，因此默认在 <code class="language-plaintext highlighter-rouge">CameraRenderer</code> 中创建一个，并将其引用存储在字段中。同时给 buffer 起一个名字，以便我们在 frame debugger 中识别它。 命名<code class="language-plaintext highlighter-rouge">Custom Render Camera</code> 即可。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>    <span class="k">const</span> <span class="kt">string</span> <span class="n">bufferName</span> <span class="p">=</span> <span class="s">"Render Camera"</span><span class="p">;</span>
+
+    <span class="n">CommandBuffer</span> <span class="n">buffer</span> <span class="p">=</span> <span class="k">new</span> <span class="n">CommandBuffer</span> <span class="p">{</span>
+        <span class="n">name</span> <span class="p">=</span> <span class="n">bufferName</span>
+    <span class="p">};</span>
+</pre></table></code></div></div><p>我们可以使用 command buffers 来注入 (profiler samples)，这些样本将同时显示在profiler 和 frame debugger 中。这通过在适当的时间点调用 <code class="language-plaintext highlighter-rouge">BeginSample</code> 和 <code class="language-plaintext highlighter-rouge">EndSample</code> 来完成，在我们的例子中是在 <code class="language-plaintext highlighter-rouge">Setup</code> 和 <code class="language-plaintext highlighter-rouge">Submit</code> 的开头。这两个方法必须提供相同的 sample 名称，我们将使用 buffer 的名称。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">Setup</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">BeginSample</span><span class="p">(</span><span class="n">bufferName</span><span class="p">);</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">SetupCameraProperties</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">Submit</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">EndSample</span><span class="p">(</span><span class="n">bufferName</span><span class="p">);</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>若要执行 buffer，请调用 context 上的 <code class="language-plaintext highlighter-rouge">ExecuteCommandBuffer</code> 并将 buffer 作为参数传入。这会从 buffer 中拷贝命令，但不会将其清除，如果我们要重复使用它，之后必须显式地进行清除。<code class="language-plaintext highlighter-rouge">执行和清除操作总是连在一起</code>进行的，因此添加一个同时完成这两项操作的方法会很方便。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">Setup</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">BeginSample</span><span class="p">(</span><span class="n">bufferName</span><span class="p">);</span>
+        <span class="nf">ExecuteBuffer</span><span class="p">();</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">SetupCameraProperties</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">Submit</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">EndSample</span><span class="p">(</span><span class="n">bufferName</span><span class="p">);</span>
+        <span class="nf">ExecuteBuffer</span><span class="p">();</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">ExecuteBuffer</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">ExecuteCommandBuffer</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">Camera.RenderSkybox</code> 示例现在嵌套在 <code class="language-plaintext highlighter-rouge">Render Camera</code> 内部。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/render-camera-sample.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/render-camera-sample.png" alt="摄像机渲染截帧" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">摄像机渲染截帧</figcaption></figure><h3 id="24-清除渲染目标-clearing-the-render-target"><span class="me-2">2.4 清除渲染目标 (Clearing the Render Target)</span><a href="#24-清除渲染目标-clearing-the-render-target" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>我们绘制的所有内容最终都会渲染到摄像机的渲染目标中，默认情况下是帧缓冲区，但也可能是渲染纹理。之前绘制到该目标的内容仍然存在，这可能会干扰我们现在渲染的图像。为了保证正确的渲染，我们必须清除渲染目标以移除其旧内容。这是通过在 command buffer 上调用 <code class="language-plaintext highlighter-rouge">ClearRenderTarget</code> 来完成的，该调用应位于 <code class="language-plaintext highlighter-rouge">Setup</code> 方法中。</p><p><code class="language-plaintext highlighter-rouge">CommandBuffer.ClearRenderTarget</code> 至少需要三个参数。前两个指示是否应该清除深度和颜色数据，这两者都设置为 <code class="language-plaintext highlighter-rouge">true</code>。第三个参数是用于清除的颜色，我们将使用 <code class="language-plaintext highlighter-rouge">Color.clear</code>。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/clearing-nested-sample.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/clearing-nested-sample.png" alt="清除buff" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">清除buff</figcaption></figure><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">Setup</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">BeginSample</span><span class="p">(</span><span class="n">bufferName</span><span class="p">);</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">ClearRenderTarget</span><span class="p">(</span><span class="k">true</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">clear</span><span class="p">);</span>
+        <span class="nf">ExecuteBuffer</span><span class="p">();</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">SetupCameraProperties</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>Frame Debugger 现在会为清除操作显示一个 <code class="language-plaintext highlighter-rouge">Draw GL</code> 条目，该条目嵌套在额外一层的 <code class="language-plaintext highlighter-rouge">Render Camera</code> 中。这是因为 <code class="language-plaintext highlighter-rouge">ClearRenderTarget</code> 会使用 <code class="language-plaintext highlighter-rouge">Command Buffer</code> 的名称将清除操作包装在一个 <code class="language-plaintext highlighter-rouge">Sample</code> 中。我们可以通过在开始自定义 <code class="language-plaintext highlighter-rouge">Sample</code> 之前进行清除来消除冗余的嵌套。这样会产生两个相邻的 Render Camera Sample 作用域，它们会被合并。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">Setup</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//换一个位置</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">ClearRenderTarget</span><span class="p">(</span><span class="k">true</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">clear</span><span class="p">);</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">BeginSample</span><span class="p">(</span><span class="n">bufferName</span><span class="p">);</span>
+        <span class="nf">ExecuteBuffer</span><span class="p">();</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">SetupCameraProperties</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">Draw GL</code> 条目表示使用 <code class="language-plaintext highlighter-rouge">Hidden/InternalClear shader</code> 绘制一个全屏四边形并写入 render target，这并不是清除它的最有效方式。之所以采用这种方法，是因为我们在设置 camera 属性之前进行了清除操作。如果我们交换这两个步骤的顺序，就可以使用更快速的清除方式。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">Setup</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//把参数传递提前</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">SetupCameraProperties</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">ClearRenderTarget</span><span class="p">(</span><span class="k">true</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">clear</span><span class="p">);</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">BeginSample</span><span class="p">(</span><span class="n">bufferName</span><span class="p">);</span>
+        <span class="nf">ExecuteBuffer</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>现在我们看到 <code class="language-plaintext highlighter-rouge">Clear (color+Z+stencil)</code>，这表明颜色和深度缓冲区都被清除了。<code class="language-plaintext highlighter-rouge">Z</code> 代表深度缓冲区，模板数据是同一缓冲区的一部分。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/clearing-correct.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/clearing-correct.png" alt="正确清除" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">正确清除</figcaption></figure><aside class="collapsible-aside"><h3>Draw GL vs Clear (color+Z+stencil)</h3><div><div class="table-wrapper"><table><thead><tr><th>方式<th>显示<th>原理<th>性能<tbody><tr><td><strong>软件清除</strong><td><code class="language-plaintext highlighter-rouge">Draw GL</code> / <code class="language-plaintext highlighter-rouge">Hidden/InternalClear shader</code><td>绘制全屏四边形，每个像素走完整渲染管线（VS+FS+光栅化）<td>慢<tr><td><strong>硬件清除</strong><td><code class="language-plaintext highlighter-rouge">Clear (color+Z+stencil)</code><td>GPU 快速清除指令，直接操作帧缓冲区内存<td>快</table></div><p><strong>原理对比</strong>:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre># 软件清除（先 ClearRenderTarget）
+ClearRenderTarget → GPU 未配置 → 降级为绘制全屏四边形
+                     ↓
+              每个像素执行 shader
+
+# 硬件清除（先 SetupCameraProperties）
+SetupCameraProperties → 配置渲染目标（分辨率/格式/视口）
+                     ↓
+              ClearRenderTarget → 使用硬件 Fast-Clear 指令
+                     ↓
+              CPU 发送指令，GPU 直接填充内存
+</pre></table></code></div></div><p><strong>关键</strong>: <code class="language-plaintext highlighter-rouge">SetupCameraProperties(camera)</code> 必须先调用，为 GPU 提供渲染目标的完整配置信息，才能触发硬件快速清除指令。</p></div></aside><h3 id="25-剔除-culling"><span class="me-2">2.5 剔除 (Culling)</span><a href="#25-剔除-culling" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>我们目前可以看到天空盒，但看不到场景中放置的任何物体。与其绘制每一个物体，我们应该只渲染那些对摄像机可见的物体。为此，我们首先获取场景中所有带有 renderer 组件的物体，然后剔除那些位于摄像机视锥体 (view frustum) 之外的物体。</p><p>确定哪些物体可以被剔除需要我们跟踪多个摄像机设置和矩阵，为此我们可以使用 <code class="language-plaintext highlighter-rouge">ScriptableCullingParameters</code> 结构体。我们无需手动填充它，而是可以在摄像机上调用 <code class="language-plaintext highlighter-rouge">TryGetCullingParameters</code> 。它会返回参数是否成功获取，因为对于某些退化的摄像机设置可能会失败。为了获取参数数据，我们必须将其作为输出参数提供，即在它前面加上 out 。请在一个独立的 Cull 方法中执行此操作，该方法返回成功或失败。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>    <span class="kt">bool</span> <span class="nf">Cull</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="nf">TryGetCullingParameters</span><span class="p">(</span><span class="k">out</span> <span class="n">ScriptableCullingParameters</span> <span class="n">p</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>在 <code class="language-plaintext highlighter-rouge">Render</code> 中的 <code class="language-plaintext highlighter-rouge">Setup</code> 之前调用 <code class="language-plaintext highlighter-rouge">Cull</code>，如果失败则中止。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">camera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(!</span><span class="nf">Cull</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nf">Setup</span><span class="p">();</span>
+        <span class="nf">DrawVisibleGeometry</span><span class="p">();</span>
+        <span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>实际的剔除是通过在上下文上调用 <code class="language-plaintext highlighter-rouge">Cull</code> 来完成的，这会产生一个 <code class="language-plaintext highlighter-rouge">CullingResults</code> 结构。如果成功，在 <code class="language-plaintext highlighter-rouge">Cull</code> 中执行此操作并将结果存储在字段中。在这种情况下，我们必须通过在前面写 <code class="language-plaintext highlighter-rouge">ref</code> 将剔除参数作为引用参数传递。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>    <span class="n">CullingResults</span> <span class="n">cullingResults</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="nf">Cull</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="nf">TryGetCullingParameters</span><span class="p">(</span><span class="k">out</span> <span class="n">ScriptableCullingParameters</span> <span class="n">p</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">cullingResults</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">Cull</span><span class="p">(</span><span class="k">ref</span> <span class="n">p</span><span class="p">);</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><h3 id="26-绘制几何图形-drawing-geometry"><span class="me-2">2.6 绘制几何图形 (Drawing Geometry)</span><a href="#26-绘制几何图形-drawing-geometry" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>一旦我们知道了哪些物体是可见的，就可以开始渲染它们。这是通过调用 context 的 <code class="language-plaintext highlighter-rouge">DrawRenderers</code> 方法并传入 culling results 作为参数来完成的，以此告知它使用哪些 renderer。除此之外，我们还必须提供 drawing settings 和 filtering settings。两者都是结构体—— <code class="language-plaintext highlighter-rouge">DrawingSettings</code> 和 <code class="language-plaintext highlighter-rouge">FilteringSettings</code> ——最初我们将使用它们的默认构造函数。两者都必须以引用方式传递。请在 <code class="language-plaintext highlighter-rouge">DrawVisibleGeometry</code> 中，绘制 skybox 之前执行此操作。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">DrawVisibleGeometry</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">drawingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DrawingSettings</span><span class="p">();</span>
+        <span class="kt">var</span> <span class="n">filteringSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FilteringSettings</span><span class="p">();</span>
+
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawRenderers</span><span class="p">(</span>
+            <span class="n">cullingResults</span><span class="p">,</span> <span class="k">ref</span> <span class="n">drawingSettings</span><span class="p">,</span> <span class="k">ref</span> <span class="n">filteringSettings</span>
+        <span class="p">);</span>
+
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawSkybox</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>我们还看不到任何东西，因为我们还必须指示允许哪些类型的着色器通道 (shader passes)。由于我们在本教程中仅支持无光照 (unlit) 着色器，因此我们必须获取 <code class="language-plaintext highlighter-rouge">SRPDefaultUnlit</code> 通道的着色器标签 ID，我们可以执行一次并将其缓存在静态字段中。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>    <span class="k">static</span> <span class="n">ShaderTagId</span> <span class="n">unlitShaderTagId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ShaderTagId</span><span class="p">(</span><span class="s">"SRPDefaultUnlit"</span><span class="p">);</span>
+</pre></table></code></div></div><p>将其作为第一个参数传递给 <code class="language-plaintext highlighter-rouge">DrawingSettings</code> 构造函数，同时传入一个新的 <code class="language-plaintext highlighter-rouge">SortingSettings</code> 结构体值。将 camera 传递给排序设置的构造函数，因为它被用于确定是应用正交排序还是基于距离的排序。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">DrawVisibleGeometry</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">sortingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SortingSettings</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">drawingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DrawingSettings</span><span class="p">(</span>
+            <span class="n">unlitShaderTagId</span><span class="p">,</span> <span class="n">sortingSettings</span>
+        <span class="p">);</span>
+        <span class="kt">var</span> <span class="n">filteringSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FilteringSettings</span><span class="p">();</span>
+
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawRenderers</span><span class="p">(</span>
+            <span class="n">cullingResults</span><span class="p">,</span> <span class="k">ref</span> <span class="n">drawingSettings</span><span class="p">,</span> <span class="k">ref</span> <span class="n">filteringSettings</span>
+        <span class="p">);</span>
+
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawSkybox</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>除此之外，我们还必须指示允许哪些渲染队列（render queues）。将 <code class="language-plaintext highlighter-rouge">RenderQueueRange.all</code> 传递给 <code class="language-plaintext highlighter-rouge">FilteringSettings</code> 构造函数，以便我们包含所有内容。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>    <span class="kt">var</span> <span class="n">filteringSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FilteringSettings</span><span class="p">(</span><span class="n">RenderQueueRange</span><span class="p">.</span><span class="n">all</span><span class="p">);</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/drawing-unlit.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/drawing-unlit.png" alt="绘制无光照几何体" width="100%" height="auto" loading="lazy"></a></div><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/drawing-unlit-debugger.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/drawing-unlit-debugger.png" alt="绘制无光照几何体" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">绘制无光照几何体</figcaption></figure><p>只有使用了 unlit shader 的可见对象才会被绘制。所有的 draw calls 都会列在 frame debugger 中，并被分组在 <code class="language-plaintext highlighter-rouge">RenderLoop.Draw</code> 下。透明对象似乎出现了一些异常，但让我们先来看看对象的绘制顺序。frame debugger 会显示这一顺序，你可以通过依次选择或使用方向键来逐步查看各个 draw calls。</p><p> <video class="embed-video file" controls="" autoplay="" loop=""> <source src="https://catlikecoding.com/unity/tutorials/custom-srp/custom-render-pipeline/rendering/drawing-all-unlit.mp4" type="video/mp4" /> Your browser does not support the video tag. Here is a <a href="https://catlikecoding.com/unity/tutorials/custom-srp/custom-render-pipeline/rendering/drawing-all-unlit.mp4">link to the video file</a> instead. </video> <em>逐步查看 frame debugger</em></p><p>绘制顺序是杂乱无章的。我们可以通过设置排序设置的 <code class="language-plaintext highlighter-rouge">criteria</code> 属性来强制执行特定的绘制顺序。让我们使用 <code class="language-plaintext highlighter-rouge">SortingCriteria.CommonOpaque</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">DrawVisibleGeometry</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">sortingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SortingSettings</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">criteria</span> <span class="p">=</span> <span class="n">SortingCriteria</span><span class="p">.</span><span class="n">CommonOpaque</span>
+        <span class="p">};</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p> <video class="embed-video file" controls="" autoplay="" loop=""> <source src="https://catlikecoding.com/unity/tutorials/custom-srp/custom-render-pipeline/rendering/drawing-with-sorting.mp4" type="video/mp4" /> Your browser does not support the video tag. Here is a <a href="https://catlikecoding.com/unity/tutorials/custom-srp/custom-render-pipeline/rendering/drawing-with-sorting.mp4">link to the video file</a> instead. </video> <em>逐步查看 frame debugger</em></p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/sorting.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/sorting.png" alt="普通不透明排序" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">普通不透明排序</figcaption></figure><p>现在物体大致按照从前到后的顺序进行绘制，这对于不透明物体来说是最理想的。如果某个物体最终被绘制在另一个物体后面，其隐藏的片元（fragments）就可以被跳过，从而加快渲染速度。通用的不透明排序选项还会考虑其他一些标准，包括 render queue 和 materials。</p><h3 id="27-分别绘制不透明和透明几何体"><span class="me-2">2.7 分别绘制不透明和透明几何体</span><a href="#27-分别绘制不透明和透明几何体" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><code class="language-plaintext highlighter-rouge">Frame debugger</code> 显示透明对象已被绘制，但天空盒（skybox）却覆盖了所有未处于不透明对象前方的区域。天空盒在不透明几何体之后绘制，以便跳过所有被遮挡的片段，但它同时也会覆盖透明几何体。这是因为透明 shader 不会写入深度缓冲区（depth buffer）。它们不会遮挡背后的内容，因为我们可以看穿它们。解决方案是先绘制不透明对象，接着绘制天空盒，最后再绘制透明对象。</p><p>我们可以通过切换到 <code class="language-plaintext highlighter-rouge">RenderQueueRange.opaque</code> 来从初始的 <code class="language-plaintext highlighter-rouge">DrawRenderers</code> 调用中排除透明物体。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>    <span class="kt">var</span> <span class="n">filteringSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FilteringSettings</span><span class="p">(</span><span class="n">RenderQueueRange</span><span class="p">.</span><span class="n">opaque</span><span class="p">);</span>
+</pre></table></code></div></div><p>然后在绘制天空盒之后再次调用 <code class="language-plaintext highlighter-rouge">DrawRenderers</code>。但在这样做之前，将渲染队列范围更改为 <code class="language-plaintext highlighter-rouge">RenderQueueRange.transparent</code>。还要将排序标准更改为 <code class="language-plaintext highlighter-rouge">SortingCriteria.CommonTransparent</code> 并再次设置绘制设置的排序。这将反转透明对象的绘制顺序。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">DrawVisibleGeometry</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">sortingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SortingSettings</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">criteria</span> <span class="p">=</span> <span class="n">SortingCriteria</span><span class="p">.</span><span class="n">CommonOpaque</span>
+        <span class="p">};</span>
+        <span class="kt">var</span> <span class="n">drawingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DrawingSettings</span><span class="p">(</span>
+            <span class="n">unlitShaderTagId</span><span class="p">,</span> <span class="n">sortingSettings</span>
+        <span class="p">);</span>
+        <span class="kt">var</span> <span class="n">filteringSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FilteringSettings</span><span class="p">(</span><span class="n">RenderQueueRange</span><span class="p">.</span><span class="n">opaque</span><span class="p">);</span>
+
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawRenderers</span><span class="p">(</span>
+            <span class="n">cullingResults</span><span class="p">,</span> <span class="k">ref</span> <span class="n">drawingSettings</span><span class="p">,</span> <span class="k">ref</span> <span class="n">filteringSettings</span>
+        <span class="p">);</span>
+
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawSkybox</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+
+        <span class="n">sortingSettings</span><span class="p">.</span><span class="n">criteria</span> <span class="p">=</span> <span class="n">SortingCriteria</span><span class="p">.</span><span class="n">CommonTransparent</span><span class="p">;</span>
+        <span class="n">drawingSettings</span><span class="p">.</span><span class="n">sortingSettings</span> <span class="p">=</span> <span class="n">sortingSettings</span><span class="p">;</span>
+        <span class="n">filteringSettings</span><span class="p">.</span><span class="n">renderQueueRange</span> <span class="p">=</span> <span class="n">RenderQueueRange</span><span class="p">.</span><span class="n">transparent</span><span class="p">;</span>
+
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawRenderers</span><span class="p">(</span>
+            <span class="n">cullingResults</span><span class="p">,</span> <span class="k">ref</span> <span class="n">drawingSettings</span><span class="p">,</span> <span class="k">ref</span> <span class="n">filteringSettings</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p> <video class="embed-video file" controls="" autoplay="" loop=""> <source src="https://catlikecoding.com/unity/tutorials/custom-srp/custom-render-pipeline/rendering/draw-opaque-skybox-transparent.mp4" type="video/mp4" /> Your browser does not support the video tag. Here is a <a href="https://catlikecoding.com/unity/tutorials/custom-srp/custom-render-pipeline/rendering/draw-opaque-skybox-transparent.mp4">link to the video file</a> instead. </video> <em>逐步查看 frame debugger</em></p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/opaque-skybox-transparent.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/opaque-skybox-transparent.png" alt="不透明，然后天空盒，最后透明" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">不透明，然后天空盒，最后透明</figcaption></figure><blockquote class="prompt-warning"><p>不透明物体不会写入深度缓冲区，因此将它们从前到后排序没有性能优势。但当不透明物体在视觉上相互遮挡时，必须从后到前绘制以正确混合。</p><p>不幸的是，从后到前的排序并不能保证正确的混合，因为排序是针对单个物体，并且仅基于物体的位置。相交和大的不透明物体仍然可能产生错误的结果。这有时可以通过将几何体切割成更小的部分来解决。</p></blockquote><h2 id="3-编辑器渲染-editor-rendering"><span class="me-2">3 编辑器渲染 (Editor Rendering)</span><a href="#3-编辑器渲染-editor-rendering" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>我们的 RP 可以正确绘制 unlit 对象，但我们还可以做一些工作来提升在 Unity editor 中使用它的体验。</p><h3 id="31-绘制旧版着色器-drawing-legacy-shaders"><span class="me-2">3.1 绘制旧版着色器 (Drawing Legacy Shaders)</span><a href="#31-绘制旧版着色器-drawing-legacy-shaders" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>由于我们的 pipeline 仅支持 unlit shader pass，使用其他 pass 的对象将不会被渲染，从而变得不可见。虽然这在逻辑上是正确的，但它掩盖了场景中某些对象使用了错误 shader 的事实。因此，让我们还是渲染它们，但采用分开渲染的方式。</p><p>如果有人从默认的 Unity 项目开始，随后切换到我们的 RP，那么他们的场景中可能会存在使用错误 shader 的对象。为了涵盖所有 Unity 的默认 shader，我们需要为 <code class="language-plaintext highlighter-rouge">Always</code>, <code class="language-plaintext highlighter-rouge">ForwardBase</code>, <code class="language-plaintext highlighter-rouge">PrepassBase</code>, <code class="language-plaintext highlighter-rouge">Vertex</code>, <code class="language-plaintext highlighter-rouge">VertexLMRGBM</code>, 和 <code class="language-plaintext highlighter-rouge">VertexLM</code> 使用 shader tag ID。请在一个静态数组中记录这些 ID。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>    <span class="k">static</span> <span class="n">ShaderTagId</span><span class="p">[]</span> <span class="n">legacyShaderTagIds</span> <span class="p">=</span> <span class="p">{</span>
+        <span class="k">new</span> <span class="nf">ShaderTagId</span><span class="p">(</span><span class="s">"Always"</span><span class="p">),</span>
+        <span class="k">new</span> <span class="nf">ShaderTagId</span><span class="p">(</span><span class="s">"ForwardBase"</span><span class="p">),</span>
+        <span class="k">new</span> <span class="nf">ShaderTagId</span><span class="p">(</span><span class="s">"PrepassBase"</span><span class="p">),</span>
+        <span class="k">new</span> <span class="nf">ShaderTagId</span><span class="p">(</span><span class="s">"Vertex"</span><span class="p">),</span>
+        <span class="k">new</span> <span class="nf">ShaderTagId</span><span class="p">(</span><span class="s">"VertexLMRGBM"</span><span class="p">),</span>
+        <span class="k">new</span> <span class="nf">ShaderTagId</span><span class="p">(</span><span class="s">"VertexLM"</span><span class="p">)</span>
+    <span class="p">};</span>
+</pre></table></code></div></div><p>在绘制可见几何体之后，通过一个独立的方法绘制所有不支持的 shader，从第一个 pass 开始。由于这些是无效的 pass，结果无论如何都会是错误的，所以我们不需要关心其他设置。我们可以通过 <code class="language-plaintext highlighter-rouge">FilteringSettings.defaultValue</code> 属性获取默认的过滤设置。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">Setup</span><span class="p">();</span>
+        <span class="nf">DrawVisibleGeometry</span><span class="p">();</span>
+        <span class="nf">DrawUnsupportedShaders</span><span class="p">();</span>
+        <span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">DrawUnsupportedShaders</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">drawingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DrawingSettings</span><span class="p">(</span>
+            <span class="n">legacyShaderTagIds</span><span class="p">[</span><span class="m">0</span><span class="p">],</span> <span class="k">new</span> <span class="nf">SortingSettings</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+        <span class="p">);</span>
+        <span class="kt">var</span> <span class="n">filteringSettings</span> <span class="p">=</span> <span class="n">FilteringSettings</span><span class="p">.</span><span class="n">defaultValue</span><span class="p">;</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">DrawRenderers</span><span class="p">(</span>
+            <span class="n">cullingResults</span><span class="p">,</span> <span class="k">ref</span> <span class="n">drawingSettings</span><span class="p">,</span> <span class="k">ref</span> <span class="n">filteringSettings</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>我们可以通过在 drawing settings 上调用 <code class="language-plaintext highlighter-rouge">SetShaderPassName</code> 并传入绘制顺序索引和标签作为参数来绘制多个 pass。对数组中的所有 pass 执行此操作。因为我们在构建 drawing settings 已经设置了第一个 pass且同时设置了 SortingSettings，后面从第二个开始指定shader tag id。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>    <span class="kt">var</span> <span class="n">drawingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DrawingSettings</span><span class="p">(</span>
+        <span class="n">legacyShaderTagIds</span><span class="p">[</span><span class="m">0</span><span class="p">],</span> <span class="k">new</span> <span class="nf">SortingSettings</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+    <span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">legacyShaderTagIds</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="n">drawingSettings</span><span class="p">.</span><span class="nf">SetShaderPassName</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">legacyShaderTagIds</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/standard-black.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/standard-black.png" alt="标准着色器渲染为黑色" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">标准着色器渲染为黑色</figcaption></figure><p>使用 standard shader 渲染的对象会显示出来，但它们现在是纯黑色的，因为我们的 RP 尚未为它们设置所需的 shader 属性。</p><h3 id="32-错误材质-error-material"><span class="me-2">3.2 错误材质 (Error Material)</span><a href="#32-错误材质-error-material" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>为了清晰地标出哪些对象使用了不支持的 shader，我们将使用 Unity 的错误 shader 来绘制它们。通过调用 <code class="language-plaintext highlighter-rouge">Shader.Find</code> 并传入 <code class="language-plaintext highlighter-rouge">Hidden/InternalErrorShader</code> 字符串作为参数来查找该 shader，并以此构造一个新的材质。通过静态字段缓存该材质，以免每帧都创建新材质。然后将其赋值给绘制设置的 overrideMaterial 属性。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre>    <span class="k">static</span> <span class="n">Material</span> <span class="n">errorMaterial</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">DrawUnsupportedShaders</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">errorMaterial</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">errorMaterial</span> <span class="p">=</span>
+                <span class="k">new</span> <span class="nf">Material</span><span class="p">(</span><span class="n">Shader</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="s">"Hidden/InternalErrorShader"</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="kt">var</span> <span class="n">drawingSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DrawingSettings</span><span class="p">(</span>
+            <span class="n">legacyShaderTagIds</span><span class="p">[</span><span class="m">0</span><span class="p">],</span> <span class="k">new</span> <span class="nf">SortingSettings</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+        <span class="p">)</span> <span class="p">{</span>
+            <span class="n">overrideMaterial</span> <span class="p">=</span> <span class="n">errorMaterial</span>
+        <span class="p">};</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/standard-magenta.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/standard-magenta.png" alt="使用洋红色错误着色器进行渲染" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">使用洋红色错误着色器进行渲染</figcaption></figure><p>现在所有无效对象都已可见，且明显呈现错误状态。</p><h3 id="33-partial类"><span class="me-2">3.3 Partial类</span><a href="#33-partial类" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>绘制无效对象对开发很有用，但不适用于发布的应用程序。因此让我们将 <code class="language-plaintext highlighter-rouge">CameraRenderer</code> 的所有仅限编辑器的代码放在一个单独的分部类文件中。首先复制原始的 <code class="language-plaintext highlighter-rouge">CameraRenderer</code> 脚本资产并将其重命名为 <code class="language-plaintext highlighter-rouge">CameraRenderer.Editor</code>。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/two-assets.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/two-assets.png" alt="一个类，两个脚本资产" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">一个类，两个脚本资产</figcaption></figure><p>然后将原始的 <code class="language-plaintext highlighter-rouge">CameraRenderer</code> 更改为 partial class，并从中移除标签数组、错误材质以及 <code class="language-plaintext highlighter-rouge">DrawUnsupportedShaders</code> 方法。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">CameraRenderer</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</pre></table></code></div></div><p>清理另一个 partial class 文件，使其仅包含我们从原文件中移除的内容。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine.Rendering</span><span class="p">;</span>
+
+<span class="k">partial</span> <span class="k">class</span> <span class="nc">CameraRenderer</span> <span class="p">{</span>
+
+    <span class="k">static</span> <span class="n">ShaderTagId</span><span class="p">[]</span> <span class="n">legacyShaderTagIds</span> <span class="p">=</span> <span class="p">{</span> <span class="p">...</span> <span class="p">};</span>
+
+    <span class="k">static</span> <span class="n">Material</span> <span class="n">errorMaterial</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">DrawUnsupportedShaders</span> <span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>编辑器部分的内容仅需存在于编辑器中，因此请将其设置为以 <code class="language-plaintext highlighter-rouge">UNITY_EDITOR</code> 为条件。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="k">partial</span> <span class="k">class</span> <span class="nc">CameraRenderer</span> <span class="p">{</span>
+
+<span class="cp">#if UNITY_EDITOR
+</span>
+    <span class="k">static</span> <span class="n">ShaderTagId</span><span class="p">[]</span> <span class="n">legacyShaderTagIds</span> <span class="p">=</span> <span class="p">{</span> <span class="p">...</span> <span class="p">};</span>
+
+    <span class="k">static</span> <span class="n">Material</span> <span class="n">errorMaterial</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">DrawUnsupportedShaders</span> <span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="cp">#endif
+</span><span class="p">}</span>
+</pre></table></code></div></div><p>然而，此时进行 build 将会失败，因为另一部分始终包含对 <code class="language-plaintext highlighter-rouge">DrawUnsupportedShaders</code> 的调用，而该方法现在仅在 editor 模式下存在。为了解决这个问题，我们也需要将该方法设为 partial。具体做法是在方法签名之前始终加上 partial ，类似于抽象方法的声明。我们可以在类定义的任何部分执行此操作，所以让我们将其放在 editor 部分。完整的方法声明也必须标记为 partial 。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>    <span class="k">partial</span> <span class="k">void</span> <span class="nf">DrawUnsupportedShaders</span> <span class="p">();</span>
+
+<span class="cp">#if UNITY_EDITOR
+</span>
+    <span class="p">...</span>
+
+    <span class="k">partial</span> <span class="k">void</span> <span class="nf">DrawUnsupportedShaders</span> <span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="cp">#endif
+</span></pre></table></code></div></div><p>现在可以成功进行 build 编译了。编译器将自动移除所有未包含完整声明的 partial method 调用。</p><h3 id="34-绘制辅助线-drawing-gizmos"><span class="me-2">3.4 绘制辅助线 (Drawing Gizmos)</span><a href="#34-绘制辅助线-drawing-gizmos" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>目前我们的 RP 不绘制辅助线 (Gizmos)，无论是在场景窗口还是在启用了它们的游视窗口中。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/without-gizmos.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/without-gizmos.png" alt="没有辅助线的场景" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">没有辅助线的场景</figcaption></figure><p>我们可以通过调用 <code class="language-plaintext highlighter-rouge">UnityEditor.Handles.ShouldRenderGizmos</code> 来检查是否应该绘制 gizmos。如果是，我们必须在 context 上调用 <code class="language-plaintext highlighter-rouge">DrawGizmos</code> ，并将 camera 作为第一个参数，第二个参数用于指示应绘制哪个 gizmos 子集。共有两个子集，分别用于图像效果（image effects）之前和之后。由于我们目前不支持图像效果，我们将同时调用两者。请在一个新的仅限编辑器使用的 <code class="language-plaintext highlighter-rouge">DrawGizmos</code> 方法中执行此操作。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">UnityEditor</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine.Rendering</span><span class="p">;</span>
+
+<span class="k">partial</span> <span class="k">class</span> <span class="nc">CameraRenderer</span> <span class="p">{</span>
+
+    <span class="k">partial</span> <span class="k">void</span> <span class="nf">DrawGizmos</span> <span class="p">();</span>
+
+    <span class="k">partial</span> <span class="k">void</span> <span class="nf">DrawUnsupportedShaders</span> <span class="p">();</span>
+
+<span class="cp">#if UNITY_EDITOR
+</span>
+    <span class="p">...</span>
+
+    <span class="k">partial</span> <span class="k">void</span> <span class="nf">DrawGizmos</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Handles</span><span class="p">.</span><span class="nf">ShouldRenderGizmos</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">context</span><span class="p">.</span><span class="nf">DrawGizmos</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">GizmoSubset</span><span class="p">.</span><span class="n">PreImageEffects</span><span class="p">);</span>
+            <span class="n">context</span><span class="p">.</span><span class="nf">DrawGizmos</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">GizmoSubset</span><span class="p">.</span><span class="n">PostImageEffects</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">partial</span> <span class="k">void</span> <span class="nf">DrawUnsupportedShaders</span> <span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="cp">#endif
+</span><span class="p">}</span>
+</pre></table></code></div></div><p>Gizmos 应该在所有其他内容之后绘制。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">...</span>
+        <span class="nf">Setup</span><span class="p">();</span>
+        <span class="nf">DrawVisibleGeometry</span><span class="p">();</span>
+        <span class="nf">DrawUnsupportedShaders</span><span class="p">();</span>
+        <span class="nf">DrawGizmos</span><span class="p">();</span>
+        <span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/with-gizmos.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/with-gizmos.png" alt="带有辅助线的场景" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">带有辅助线的场景</figcaption></figure><h3 id="35-绘制-unity-ui"><span class="me-2">3.5 绘制 Unity UI</span><a href="#35-绘制-unity-ui" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>另外一件需要我们注意的事情是 Unity 的游戏内用户界面。例如，通过 <em>GameObject / UI / Button</em> 添加一个按钮来创建一个简单的 UI。它会显示在游戏窗口中，但不会出现在场景窗口中。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/ui-button.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/ui-button.png" alt="游戏窗口中的UI按钮" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">游戏窗口中的UI按钮</figcaption></figure><p>frame debugger 显示 UI 是单独渲染的，而不是由我们的 RP 渲染。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/ui-debugger.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/ui-debugger.png" alt="帧调试器中的UI" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">帧调试器中的UI</figcaption></figure><p>至少，当 Canvas 组件的 <strong>Render Mode</strong> 设置为 <strong>Screen Space - Overlay</strong> （这是默认值）时是这样的。将其更改为 <strong>Screen Space</strong> - Camera 并使用主摄像机作为其 Render Camera ，将使其成为透明几何体的一部分。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/ui-camera-debugger.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/ui-camera-debugger.png" alt="帧调试器中的屏幕空间摄像机UI" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">帧调试器中的屏幕空间摄像机UI</figcaption></figure><p>UI 在场景窗口中渲染时总是使用 <strong>World Space</strong> 模式，这就是为什么它通常看起来非常大。但虽然我们可以通过场景窗口编辑 UI，它却不会被绘制出来。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/invisible-ui-scene.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/invisible-ui-scene.png" alt="场景窗口中不可见的UI" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">场景窗口中不可见的UI</figcaption></figure><p>在为 scene 窗口进行渲染时，我们必须通过调用以相机为参数的 <code class="language-plaintext highlighter-rouge">ScriptableRenderContext.EmitWorldGeometryForSceneView</code> ，显式地将 UI 添加到世界几何体中。在一个新的仅限编辑器使用的 <code class="language-plaintext highlighter-rouge">PrepareForSceneWindow</code> 方法中执行此操作。当场景相机的 cameraType 属性等于 <code class="language-plaintext highlighter-rouge">CameraType.SceneView</code> 时，我们正在使用该相机进行渲染。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre>    <span class="k">partial</span> <span class="k">void</span> <span class="nf">PrepareForSceneWindow</span> <span class="p">();</span>
+
+<span class="cp">#if UNITY_EDITOR
+</span>
+    <span class="p">...</span>
+
+    <span class="k">partial</span> <span class="k">void</span> <span class="nf">PrepareForSceneWindow</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="n">cameraType</span> <span class="p">==</span> <span class="n">CameraType</span><span class="p">.</span><span class="n">SceneView</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ScriptableRenderContext</span><span class="p">.</span><span class="nf">EmitWorldGeometryForSceneView</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="cp">#endif
+</span></pre></table></code></div></div><p>由于这可能会向场景添加几何体，因此必须在剔除之前完成。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">camera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">;</span>
+
+        <span class="nf">PrepareForSceneWindow</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="nf">Cull</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/visible-ui-scene.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/visible-ui-scene.png" alt="场景窗口中可见的UI" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">场景窗口中可见的UI</figcaption></figure><h2 id="4-多个摄像机-multiple-cameras"><span class="me-2">4 多个摄像机 (Multiple Cameras)</span><a href="#4-多个摄像机-multiple-cameras" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>场景中可能会有多个处于激活状态的摄像机。如果是这样，我们必须确保它们能协同工作。</p><h3 id="41-两个摄像机"><span class="me-2">4.1 两个摄像机</span><a href="#41-两个摄像机" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>每个摄像机都有一个 <strong>Depth</strong> 值，默认主摄像机为 -1。它们按深度增加的顺序渲染。为了观察到这一点，请复制 <code class="language-plaintext highlighter-rouge">Main Camera</code> ，将其重命名为 <code class="language-plaintext highlighter-rouge">Secondary Camera</code> ，并将其 <code class="language-plaintext highlighter-rouge">Depth</code> 设置为 0。同时建议给它设置另一个标签，因为 <code class="language-plaintext highlighter-rouge">MainCamera</code> 应该只由单个摄像机使用。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/two-cameras-sample-sample.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/two-cameras-sample-sample.png" alt="两个摄像机分组在单个样本范围内" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">两个摄像机分组在单个样本范围内</figcaption></figure><p>场景现在被渲染了两次。结果图像仍然是相同的，因为渲染目标在两者之间被清除了。帧调试器显示了这一点，但由于具有相同名称的相邻样本范围会被合并，我们最终得到了一个单独的 <code class="language-plaintext highlighter-rouge">Render Camera</code> 范围。</p><p>如果每个摄像机都有自己的范围，那会更清晰。为了实现这一点，添加一个仅限编辑器的 <code class="language-plaintext highlighter-rouge">PrepareBuffer</code> 方法，使缓冲区的名称等于摄像机的名称。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>    <span class="k">partial</span> <span class="k">void</span> <span class="nf">PrepareBuffer</span> <span class="p">();</span>
+
+<span class="cp">#if UNITY_EDITOR
+</span>
+    <span class="p">...</span>
+
+    <span class="k">partial</span> <span class="k">void</span> <span class="nf">PrepareBuffer</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="cp">#endif
+</span></pre></table></code></div></div><p>在准备场景窗口之前调用它。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(</span><span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">camera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">;</span>
+
+        <span class="nf">PrepareBuffer</span><span class="p">();</span>
+        <span class="nf">PrepareForSceneWindow</span><span class="p">();</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/separate-samples.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/separate-samples.png" alt="每个摄像机分开的样本" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">每个摄像机分开的样本</figcaption></figure><h3 id="42-处理变化的缓冲区名称"><span class="me-2">4.2 处理变化的缓冲区名称</span><a href="#42-处理变化的缓冲区名称" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>虽然帧调试器（frame debugger）现在为每个摄像机显示了独立的采样层级，但当我们进入播放模式时，Unity 的控制台会充斥着警告消息，提示 BeginSample 和 EndSample 的计数必须匹配。这是因为我们为采样及其 buffer 使用了不同的名称，导致它产生了混淆。除此之外，每次访问摄像机的 name 属性时都会分配内存，因此我们不希望在构建版本（builds）中这样做。</p><p>为了解决这两个问题，我们将添加一个 SampleName 字符串属性。如果在编辑器中，我们在 PrepareBuffer 中将其与 buffer 的名称一起设置，否则它只是 Render Camera 字符串的一个常量别名。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="cp">#if UNITY_EDITOR
+</span>    <span class="kt">string</span> <span class="n">SampleName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">partial</span> <span class="k">void</span> <span class="nf">PrepareBuffer</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">SampleName</span> <span class="p">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">#else
+</span>    <span class="k">const</span> <span class="kt">string</span> <span class="n">SampleName</span> <span class="p">=</span> <span class="n">bufferName</span><span class="p">;</span>
+<span class="cp">#endif
+</span></pre></table></code></div></div><p>在 <code class="language-plaintext highlighter-rouge">Setup</code> 和 <code class="language-plaintext highlighter-rouge">Submit</code> 中为样本使用 <code class="language-plaintext highlighter-rouge">SampleName</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">Setup</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">SetupCameraProperties</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">ClearRenderTarget</span><span class="p">(</span><span class="k">true</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">clear</span><span class="p">);</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">BeginSample</span><span class="p">(</span><span class="n">SampleName</span><span class="p">);</span>
+        <span class="nf">ExecuteBuffer</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">Submit</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">EndSample</span><span class="p">(</span><span class="n">SampleName</span><span class="p">);</span>
+        <span class="nf">ExecuteBuffer</span><span class="p">();</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">Submit</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p>我们可以通过检查 profiler（通过 Window / Analysis / Profiler 打开）并先在编辑器中播放来查看差异。切换到 Hierarchy 模式并按 GC Alloc 列排序。你会看到两个 <code class="language-plaintext highlighter-rouge">GC.Alloc</code> 调用的条目，总共分配了 100 字节，这是由获取摄像机名称引起的。再往下看，你会看到这些名称作为采样显示： <code class="language-plaintext highlighter-rouge">Main Camera</code> 和 <code class="language-plaintext highlighter-rouge">Secondary Camera</code> 。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/profiler-cg-alloc.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/profiler-cg-alloc.png" alt="具有独立 sample 和 100B 分配的 Profiler" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">具有独立 sample 和 100B 分配的 Profiler</figcaption></figure><p>接下来，启用 <strong>Development Build</strong> 和 <strong>Autoconnect Profiler</strong> 进行构建。运行构建并确保分析器已连接并正在记录。在这种情况下，我们没有得到 100 字节的分配，我们得到了单个 <code class="language-plaintext highlighter-rouge">Render Camera</code> 样本。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/profiler-build.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/profiler-build.png" alt="构建的分析" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">构建的分析</figcaption></figure><p>我们可以通过将获取 camera 名称的代码包裹在名为 Editor Only 的 profiler 采样中，来明确我们仅在 editor 中分配内存，而不在 build 中分配。在这种情况下，我们需要调用 UnityEngine.Profiling 命名空间下的 Profiler.BeginSample 和 Profiler.EndSample。只有 BeginSample 需要传递名称参数。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>    <span class="k">partial</span> <span class="k">void</span> <span class="nf">PrepareBuffer</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">Profiler</span><span class="p">.</span><span class="nf">BeginSample</span><span class="p">(</span><span class="s">"Editor Only"</span><span class="p">);</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">SampleName</span> <span class="p">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+        <span class="n">Profiler</span><span class="p">.</span><span class="nf">EndSample</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/editor-only-allocations.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/editor-only-allocations.png" alt="编辑器特有分配变得明显" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">编辑器特有分配变得明显</figcaption></figure><h3 id="43-layers"><span class="me-2">4.3 Layers</span><a href="#43-layers" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Camera 也可以配置为仅观察特定层级（layer）上的物体。这可以通过调整它们的 Culling Mask 来实现。为了查看实际效果，让我们将所有使用 standard shader 的对象移动到 <strong>Ignore Raycast</strong> 层。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/ignore-raycast-layer.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/ignore-raycast-layer.png" alt="图层切换为Ignore Raycast" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">图层切换为Ignore Raycast</figcaption></figure><p>从 <strong>Main Camera</strong> 的剔除遮罩（culling mask）中排除该图层。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/culling-ignore-raycast.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/culling-ignore-raycast.png" alt="剔除Ignore Raycast图层" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">剔除Ignore Raycast图层</figcaption></figure><p>并使其成为 <strong>Secondary Camera</strong> 唯一可见的图层。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/only-ignore-raycast.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/only-ignore-raycast.png" alt="剔除除了Ignore Raycast之外的所有图层" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">剔除除了Ignore Raycast之外的所有图层</figcaption></figure><p>因为 <strong>Secondary Camera</strong> 最后渲染，我们最终只能看到无效对象。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/only-ignore-raycast-game.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/only-ignore-raycast-game.png" alt="游戏窗口中仅可见Ignore Raycast图层" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">游戏窗口中仅可见Ignore Raycast图层</figcaption></figure><h3 id="44-清除标志-clear-flags"><span class="me-2">4.4 清除标志 (Clear Flags)</span><a href="#44-清除标志-clear-flags" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>我们可以通过调整第二个渲染摄像机的清除标志（clear flags）来合并两个摄像机的结果。这些标志由 <code class="language-plaintext highlighter-rouge">CameraClearFlags</code> 枚举定义，我们可以通过摄像机的 clearFlags 属性获取。请在 Setup 方法中的清除操作之前执行此步骤。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>    <span class="k">void</span> <span class="nf">Setup</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">context</span><span class="p">.</span><span class="nf">SetupCameraProperties</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+        <span class="n">CameraClearFlags</span> <span class="n">flags</span> <span class="p">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">clearFlags</span><span class="p">;</span>
+        <span class="n">buffer</span><span class="p">.</span><span class="nf">ClearRenderTarget</span><span class="p">(</span><span class="k">true</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">clear</span><span class="p">);</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">CameraClearFlags</code> 枚举定义了四个值。从 1 到 4 分别是 <strong>Skybox</strong>, <strong>Color</strong>, <strong>Depth</strong>, 和 <strong>Nothing</strong>。这些实际上不是独立的标志值，而是代表递减的清除量。深度缓冲区在除了最后一种情况外的所有情况下都必须被清除，因此当标志值最多为 <strong>Depth</strong> 时。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>    <span class="n">buffer</span><span class="p">.</span><span class="nf">ClearRenderTarget</span><span class="p">(</span><span class="n">flags</span> <span class="p">&lt;=</span> <span class="n">CameraClearFlags</span><span class="p">.</span><span class="n">Depth</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">clear</span><span class="p">);</span>
+</pre></table></code></div></div><p>我们实际上只需要在 flags 设置为 <code class="language-plaintext highlighter-rouge">Color</code> 时清除 color buffer，因为在 <code class="language-plaintext highlighter-rouge">Skybox</code> 的情况下，我们最终都会替换掉所有之前的颜色数据。然而，</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>    <span class="n">buffer</span><span class="p">.</span><span class="nf">ClearRenderTarget</span><span class="p">(</span>
+        <span class="n">flags</span> <span class="p">&lt;=</span> <span class="n">CameraClearFlags</span><span class="p">.</span><span class="n">Depth</span><span class="p">,</span>
+        <span class="n">flags</span> <span class="p">&lt;=</span> <span class="n">CameraClearFlags</span><span class="p">.</span><span class="n">Color</span><span class="p">,</span>
+        <span class="n">Color</span><span class="p">.</span><span class="n">clear</span>
+    <span class="p">);</span>
+</pre></table></code></div></div><p>如果我们清除为纯色，我们必须使用摄像机的背景颜色。但因为我们在线性颜色空间中渲染，我们必须将该颜色转换为线性空间，所以我们最终需要 <code class="language-plaintext highlighter-rouge">camera.backgroundColor.linear</code>。在所有其他情况下，颜色并不重要，所以我们可以用 <code class="language-plaintext highlighter-rouge">Color.clear</code> 满足。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>    <span class="n">buffer</span><span class="p">.</span><span class="nf">ClearRenderTarget</span><span class="p">(</span>
+        <span class="n">flags</span> <span class="p">&lt;=</span> <span class="n">CameraClearFlags</span><span class="p">.</span><span class="n">Depth</span><span class="p">,</span>
+        <span class="n">flags</span> <span class="p">&lt;=</span> <span class="n">CameraClearFlags</span><span class="p">.</span><span class="n">Color</span><span class="p">,</span>
+        <span class="n">flags</span> <span class="p">==</span> <span class="n">CameraClearFlags</span><span class="p">.</span><span class="n">Color</span> <span class="p">?</span>
+            <span class="n">camera</span><span class="p">.</span><span class="n">backgroundColor</span><span class="p">.</span><span class="n">linear</span> <span class="p">:</span> <span class="n">Color</span><span class="p">.</span><span class="n">clear</span>
+    <span class="p">);</span>
+</pre></table></code></div></div><p>因为 <strong>Main Camera</strong> 是第一个渲染的，它的清除标志应该设置为 <strong>Skybox</strong> 或 <strong>Color</strong>。启用帧调试器时，我们总是从清除缓冲区开始，但这在一般情况下并不能保证。</p><p><strong>Secondary Camera</strong> 的 clear flags 决定了两个 camera 的渲染结果如何合并。在选择 skybox 或 color 的情况下，之前的渲染结果会被完全替换。当仅清除 depth 时， <strong>Secondary Camera</strong> 会正常渲染，但不绘制 skybox，因此之前的渲染结果会作为背景显示。当不清除任何内容（nothing）时，depth buffer 会被保留，因此 unlit 对象会像是由同一个 camera 绘制的一样遮挡无效对象。然而，由前一个 camera 绘制的 transparent 对象没有深度信息，因此会被覆盖，就像之前的 skybox 一样。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/clear-color.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/clear-color.png" alt="Image" width="100%" height="auto" loading="lazy"></a></div></div></figure><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/clear-depth.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/clear-depth.png" alt="Image" width="100%" height="auto" loading="lazy"></a></div></div></figure><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/clear-nothing.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/clear-nothing.png" alt="Clear color, depth-only, and nothing." width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">Clear color, depth-only, and nothing.</figcaption></figure><p>通过调整摄像机的 <em>Viewport Rect</em> ，还可以将渲染区域缩小到仅占整个渲染目标的一小部分。渲染目标的其余部分保持不变。在这种情况下，清除操作通过 <em>Hidden/InternalClear shader</em> 完成。stencil buffer 用于将渲染限制在 viewport 区域。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp1-2/reduced-viewport.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp1-2/reduced-viewport.png" alt="缩小次要摄像机的视口，清除颜色" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">缩小次要摄像机的视口，清除颜色</figcaption></figure><p>请注意，每帧渲染多个摄像机意味着剔除、设置、排序等也必须执行多次。使用一个摄像机处理每个独特的视点通常是最有效的方法。</p><p>下一篇教程是<a href="../drawcalls-shaders-batches">绘制调用</a>。</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw me-1"></i> <a href="/categories/unity3d/">Unity3D</a>, <a href="/categories/scriptrenderpipeline/">ScriptRenderPipeline</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw me-1"></i> <a href="/tags/srp/" class="post-tag no-text-decoration" >SRP</a> <a href="/tags/shader/" class="post-tag no-text-decoration" >Shader</a></div><div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 " ><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF:%E5%88%9D%E8%AF%86%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%20(%E7%BF%BB%E8%AF%91%E4%B8%80)%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&url=www.damonc.top%2Fposts%2Fcustom-render-pipeline%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF:%E5%88%9D%E8%AF%86%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%20(%E7%BF%BB%E8%AF%91%E4%B8%80)%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&u=www.damonc.top%2Fposts%2Fcustom-render-pipeline%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=www.damonc.top%2Fposts%2Fcustom-render-pipeline%2F&text=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF:%E5%88%9D%E8%AF%86%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%20(%E7%BF%BB%E8%AF%91%E4%B8%80)%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!" > <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span></div></div></div></article></main><aside aria-label="Panel" id="panel-wrapper" class="ps-2 text-muted"><div class="access"><section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2><ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2"><li class="text-truncate lh-lg"> <a href="/posts/Unity_Shader_Transparent_1/">Unity 透明渲染(翻译十一)</a><li class="text-truncate lh-lg"> <a href="/posts/Unity_Deferred_Shading/">Unity Shader 延迟渲染(翻译十三)</a><li class="text-truncate lh-lg"> <a href="/posts/Unity_Static_Lightting/">Unity 光照烘焙(翻译十六)</a><li class="text-truncate lh-lg"> <a href="/posts/unity-tessellation/">曲面细分(翻译二十二)</a><li class="text-truncate lh-lg"> <a href="/posts/unity-surface-displacement/">曲面细分表面置换(翻译二十三)</a></ul></section><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/shader/">Shader</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/srp/">SRP</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/post-processing/">Post Processing</a> <a class="post-tag btn btn-outline-primary" href="/tags/anti-aliasing/">Anti-aliasing</a> <a class="post-tag btn btn-outline-primary" href="/tags/architecture/">Architecture</a> <a class="post-tag btn btn-outline-primary" href="/tags/bloom/">Bloom</a> <a class="post-tag btn btn-outline-primary" href="/tags/configuration/">Configuration</a></div></section></div><div class="toc-border-cover z-3"></div><section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2><nav id="toc"></nav></section></aside></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4"><aside id="related-posts" aria-labelledby="related-label"><h3 class="mb-4" id="related-label">Further Reading</h3><nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4"><article class="col"> <a href="/posts/directional-shadows/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1576598400" data-df="ll" > Dec 18, 2019 </time><h4 class="pt-0 my-2">自定义管线:方向阴影 (翻译四)</h4><div class="text-muted"><p>渲染阴影 当绘制物体时，表面和光照信息就足以计算光照了。但是两者之间可能有东西阻挡光线，在我们正在绘制的表面上投下阴影。为了使阴影成为可能，我们必须以某种方式让着色器知道阴影投射物体。有多种技术可以做到这一点。最常见的方法是生成一个阴影贴图，存储光线从光源出发在击中表面之前可以传播多远。同一方向上更远的任何东西都不能被同一个光源照亮。Unity 的渲染管线使用这种方法，我们也一样。 {%...</p></div></div></a></article><article class="col"> <a href="/posts/directional-lights/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1575043200" data-df="ll" > Nov 30, 2019 </time><h4 class="pt-0 my-2">自定义管线:方向光 (翻译三)</h4><div class="text-muted"><p>增加对多个方向光着色（shading）的支持。 已升级至 2022.3.62f2 1 光照 (Lighting) 如果我们想创建一个更真实的场景，那么我们就必须模拟光如何与表面相互作用。这需要一个比我们目前拥有的不发光（unlit）着色器更复杂的着色器。 1.1 受光着色器 (Lit Shader) 复制 UnlitPass.hlsl 文件并将其重命名为 LitPass.h...</p></div></div></a></article><article class="col"> <a href="/posts/drawcalls-shaders-batches/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1572451200" data-df="ll" > Oct 31, 2019 </time><h4 class="pt-0 my-2">自定义渲染管线:Draw Calls、Shaders、 Batches (翻译二)</h4><div class="text-muted"><p>编写一个 HLSL shader 支持 SRP batcher、GPU instancing 以及 dynamic batching 为每个对象配置材质属性，并随机绘制多个对象 创建透明（transparent）和镂空（cutout）材质 Shaders 为了绘制物体，CPU 必须告诉 GPU 绘制什么以及如何绘制。绘制的内容通常是一个 mesh。如何绘制则由 shad...</p></div></div></a></article></nav></aside><nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/triplanar-mapping/" class="btn btn-outline-primary" aria-label="Older" ><p>三平面映射(翻译二十七)</p></a> <a href="/posts/drawcalls-shaders-batches/" class="btn btn-outline-primary" aria-label="Newer" ><p>自定义渲染管线:Draw Calls、Shaders、 Batches (翻译二)</p></a></nav><div id="waline-container" class="mt-5 pt-4" style="border-top: 1px dashed #ccc; padding-top: 20px;"><div id="waline"></div></div><link rel="stylesheet" href="/assets/css/waline.css"> <script type="module"> window.WalinePrefix = "/pro"; const observer = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { observer.disconnect(); import('/assets/js/dist/waline.min.js').then(({ init }) => { init({ el: '#waline', serverURL: 'https://comments.damonc.top', dark: 'html[data-mode="dark"]', emoji: [ 'https://fastly.jsdelivr.net/npm/@waline/emojis@1.4.0/qq' ], reaction: true, pageview: false }); }); } }); observer.observe(document.getElementById('waline-container')); </script><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 " ><p>© <time>2026</time> <a href="https://github.com/damonc-top">仗剑天涯</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author." >Some rights reserved.</span></p><p>The blog is powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer></div></div><div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content"><div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/shader/">Shader</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/srp/">SRP</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/post-processing/">Post Processing</a> <a class="post-tag btn btn-outline-primary" href="/tags/anti-aliasing/">Anti-aliasing</a> <a class="post-tag btn btn-outline-primary" href="/tags/architecture/">Architecture</a> <a class="post-tag btn btn-outline-primary" href="/tags/bloom/">Bloom</a> <a class="post-tag btn btn-outline-primary" href="/tags/configuration/">Configuration</a></div></section></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside></div><div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div><aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false" ><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close" ></button></div><div class="toast-body text-center pt-0"><p class="px-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
