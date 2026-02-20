@@ -1,0 +1,1189 @@
+<!doctype html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover" ><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="自定义渲染管线:多摄像机渲染 (翻译十四)" /><meta name="author" content="afeng" /><meta property="og:locale" content="en" /><meta name="description" content="深入探讨Unity自定义渲染管线中的多摄像机渲染技术，包括分屏渲染、摄像机混合以及渲染层遮罩的实现。" /><meta property="og:description" content="深入探讨Unity自定义渲染管线中的多摄像机渲染技术，包括分屏渲染、摄像机混合以及渲染层遮罩的实现。" /><link rel="canonical" href="www.damonc.top/posts/multiple-camera/" /><meta property="og:url" content="www.damonc.top/posts/multiple-camera/" /><meta property="og:site_name" content="仗剑天涯" /><meta property="og:image" content="https://img.damonc.top/posts/SRP/srp14multiple-camears/tutorial-image.jpg" /><meta property="og:image:alt" content="从不同角度观察同一场景" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-10-26T00:00:00+08:00" /><meta name="twitter:card" content="summary_large_image" /><meta property="twitter:image" content="https://img.damonc.top/posts/SRP/srp14multiple-camears/tutorial-image.jpg" /><meta name="twitter:image:alt" content="从不同角度观察同一场景" /><meta property="twitter:title" content="自定义渲染管线:多摄像机渲染 (翻译十四)" /><meta name="twitter:site" content="@elonmusk" /><meta name="twitter:creator" content="@afeng" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"afeng","url":"https://github.com/damonc-top/"},"dateModified":"2020-10-26T00:00:00+08:00","datePublished":"2020-10-26T00:00:00+08:00","description":"深入探讨Unity自定义渲染管线中的多摄像机渲染技术，包括分屏渲染、摄像机混合以及渲染层遮罩的实现。","headline":"自定义渲染管线:多摄像机渲染 (翻译十四)","image":{"lqip":"data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoUAAoAP3Ggxli0q6ejsAgCkC4JZAC7ACEJ1dzGqgY7r7TAAPe7WoQz4LOiqpeHhABpZ0qmOPUFRz0AEltWqse36gEjPqxXlFA49Fum3KMs03FBjlzVeJSAAAA=","alt":"从不同角度观察同一场景","url":"https://img.damonc.top/posts/SRP/srp14multiple-camears/tutorial-image.jpg","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"www.damonc.top/posts/multiple-camera/"},"url":"www.damonc.top/posts/multiple-camera/"}</script><meta name="fediverse:creator" content="@damonc@mastodon.social"><title>自定义渲染管线:多摄像机渲染 (翻译十四) | 仗剑天涯</title><link rel="icon" type="image/png" href="/assets/img/favicons/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/svg+xml" href="/assets/img/favicons/favicon.svg"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="preconnect" href="https://fonts.loli.net" ><link rel="dns-prefetch" href="https://fonts.loli.net" ><link rel="preconnect" href="https://gstatic.loli.net" crossorigin><link rel="dns-prefetch" href="https://gstatic.loli.net" ><link rel="preconnect" href="https://fastly.jsdelivr.net" ><link rel="dns-prefetch" href="https://fastly.jsdelivr.net" ><link rel="stylesheet" href="/assets/css/jekyll-theme.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"> <script type="module" src="/assets/js/dist/theme.min.js"></script> <script> /* Apply sidebar collapsed state as early as possible to prevent flickering */ if (localStorage.getItem('sidebar-collapsed') === 'true') { document.documentElement.setAttribute('data-sidebar-collapsed', 'true'); } </script> <script defer src="https://fastly.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.18/dayjs.min.js,npm/dayjs@1.11.18/locale/en.js,npm/dayjs@1.11.18/plugin/relativeTime.js,npm/dayjs@1.11.18/plugin/localizedFormat.js,npm/tocbot@4.36.4/dist/tocbot.min.js"></script> <script type="module" defer src="/assets/js/dist/post.min.js"></script> <script src="/assets/js/data/mathjax.js"></script> <script async src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script> <script id="MathJax-script" async src="https://fastly.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script> <script type="module"> window.WalinePrefix = "/pro"; import { pageviewCount } from '/assets/js/dist/waline.min.js'; pageviewCount({ serverURL: 'https://comments.damonc.top', update: true }); </script> <script type="module" defer src="/app.min.js?baseurl=&register=true" ></script><body><aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"> <button type="button" id="sidebar-collapse-btn" class="btn" aria-label="Toggle Sidebar"> <i class="fas fa-bars-staggered"></i> </button><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="https://img.damonc.top/commons/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">仗剑天涯</a><p class="site-subtitle fst-italic mb-0">听说读写看做忘</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a></ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/damonc-top" aria-label="github" target="_blank" rel="noopener noreferrer" > <i class="fab fa-github"></i> </a> <a href="https://twitter.com/elonmusk" aria-label="twitter" target="_blank" rel="noopener noreferrer" > <i class="fa-brands fa-x-twitter"></i> </a> <a href="javascript:location.href = 'mailto:' + ['damoncbl','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></aside><div id="main-wrapper" class="d-flex justify-content-center"><div class="container d-flex flex-column px-xxl-5"><header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100" ><nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>自定义渲染管线:多摄像机渲染 (翻译十四)</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div><button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..." > </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button></div></header><div class="row flex-grow-1"><main aria-label="Main Content" class="col-12 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>自定义渲染管线:多摄像机渲染 (翻译十四)</h1><p class="post-desc fw-light mb-4">深入探讨Unity自定义渲染管线中的多摄像机渲染技术，包括分屏渲染、摄像机混合以及渲染层遮罩的实现。</p><div class="post-meta text-muted"> <span> Posted <time data-ts="1603641600" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom" > Oct 26, 2020 </time> </span><div class="mt-3 mb-3"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/tutorial-image.jpg" class="popup img-link preview-img blur"><img data-src="https://img.damonc.top/posts/SRP/srp14multiple-camears/tutorial-image.jpg" alt="从不同角度观察同一场景" width="1200" height="630" data-lqip="true" src="data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoUAAoAP3Ggxli0q6ejsAgCkC4JZAC7ACEJ1dzGqgY7r7TAAPe7WoQz4LOiqpeHhABpZ0qmOPUFRz0AEltWqse36gEjPqxXlFA49Fum3KMs03FBjlzVeJSAAAA="></a><figcaption class="text-center pt-2 pb-2">从不同角度观察同一场景</figcaption></div><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/damonc-top/">afeng</a> </em> </span><div> <span> <em class="waline-pageview-count" data-path="/posts/multiple-camera/"> <i class="fas fa-spinner fa-spin small"></i> </em> views </span> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="10334 words" > <em>57 min</em> read</span></div></div></div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">自定义渲染管线:多摄像机渲染 (翻译十四)</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button></div><button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between"><div class="label text-truncate py-2 ms-4">自定义渲染管线:多摄像机渲染 (翻译十四)</div><button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75"> <i class="fas fa-close"></i> </button></div><div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content"><ul><li>使用不同的后处理设置渲染多个摄像机<li>使用自定义混合模式对摄像机进行分层<li>支持渲染层遮罩（Rendering Layer Masks）<li>为每个摄像机遮罩光源</ul><hr /><h2 id="组合摄像机"><span class="me-2">组合摄像机</span><a href="#组合摄像机" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>由于剔除（culling）、光照处理和阴影渲染都是针对每个摄像机执行的，因此每帧渲染尽可能少的摄像机是一个好主意，理想情况下只渲染一个。但有时我们确实需要同时渲染多个不同的视角。例如分屏多人游戏、后视镜、俯视图叠加层、游戏内摄像机以及3D角色肖像等场景。</p><aside class="collapsible-aside"><h3>第一人称游戏中的角色手部和工具呢？</h3><div><p>第一人称游戏中角色持有的物品通常以与场景其余部分不同的视野角度显示，原因有很多。这可以通过第二个摄像机来实现，但也可以通过在仍使用同一摄像机的情况下使用调整后的视图矩阵来渲染。</p></div></aside><h3 id="分屏渲染"><span class="me-2">分屏渲染</span><a href="#分屏渲染" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>让我们首先考虑一个分屏场景，由两个并排的摄像机组成。左侧摄像机的视口矩形宽度设置为 0.5。右侧摄像机的宽度也为 0.5，其 X 位置设置为 0.5。如果我们不使用后处理效果，这会按预期工作。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/split-screen-without-post-fx.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/split-screen-without-post-fx.png" alt="不使用后处理的分屏，显示同一场景的两个不同视图" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">不使用后处理的分屏，显示同一场景的两个不同视图</figcaption></figure><p>但如果我们启用后处理效果就会失败。两个摄像机都以正确的大小渲染，但最终覆盖了整个摄像机目标缓冲区，只有最后一个可见。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/split-screen-with-post-fx-incorrect.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/split-screen-with-post-fx-incorrect.png" alt="使用后处理的分屏，错误显示" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">使用后处理的分屏，错误显示</figcaption></figure><p>这是因为调用 <code class="language-plaintext highlighter-rouge">SetRenderTarget</code> 也会将视口重置为覆盖整个目标。要将视口应用于最终后处理通道，我们必须在设置目标之后、绘制之前设置视口。让我们通过复制 <code class="language-plaintext highlighter-rouge">PostFXStack.Draw</code> 来实现这一点，将其重命名为 <code class="language-plaintext highlighter-rouge">DrawFinal</code>，并在 <code class="language-plaintext highlighter-rouge">SetRenderTarget</code> 之后直接在缓冲区上调用 <code class="language-plaintext highlighter-rouge">SetViewport</code>，以摄像机的 <code class="language-plaintext highlighter-rouge">pixelRect</code> 作为参数。由于这是最终绘制，我们可以将除源参数之外的所有参数替换为硬编码值。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">DrawFinal</span> <span class="p">(</span><span class="n">RenderTargetIdentifier</span> <span class="k">from</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetGlobalTexture</span><span class="p">(</span><span class="n">fxSourceId</span><span class="p">,</span> <span class="k">from</span><span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetRenderTarget</span><span class="p">(</span>
+        <span class="n">BuiltinRenderTextureType</span><span class="p">.</span><span class="n">CameraTarget</span><span class="p">,</span>
+        <span class="n">RenderBufferLoadAction</span><span class="p">.</span><span class="n">DontCare</span><span class="p">,</span> <span class="n">RenderBufferStoreAction</span><span class="p">.</span><span class="n">Store</span>
+    <span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetViewport</span><span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="n">pixelRect</span><span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">DrawProcedural</span><span class="p">(</span>
+        <span class="n">Matrix4x4</span><span class="p">.</span><span class="n">identity</span><span class="p">,</span> <span class="n">settings</span><span class="p">.</span><span class="n">Material</span><span class="p">,</span>
+        <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">Pass</span><span class="p">.</span><span class="n">Final</span><span class="p">,</span> <span class="n">MeshTopology</span><span class="p">.</span><span class="n">Triangles</span><span class="p">,</span> <span class="m">3</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>在 <code class="language-plaintext highlighter-rouge">DoColorGradingAndToneMapping</code> 结尾处调用新方法而不是常规的 <code class="language-plaintext highlighter-rouge">Draw</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">DoColorGradingAndToneMapping</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sourceId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="c1">//Draw(....)</span>
+    <span class="nf">DrawFinal</span><span class="p">(</span><span class="n">sourceId</span><span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">ReleaseTemporaryRT</span><span class="p">(</span><span class="n">colorGradingLUTId</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/split-screen-with-post-fx-correct.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/split-screen-with-post-fx-correct.png" alt="使用后处理的分屏，正确显示" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">使用后处理的分屏，正确显示</figcaption></figure><p>如果你使用基于瓦片（tile-based）的 GPU，可能会在渲染视口边缘周围出现渲染伪影，超出其边界。这是因为被遮罩掉的瓦片区域部分包含垃圾数据。我们通过在不使用完整视口时加载目标来修复这个问题。这不是 Unity 2022 特有的，但我注意到这个问题是因为 Apple Silicon Mac 具有基于瓦片的 GPU 并支持 don’t-care 选项，但它们在我编写本系列时还不存在。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="k">static</span> <span class="n">Rect</span> <span class="n">fullViewRect</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Rect</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">1f</span><span class="p">,</span> <span class="m">1f</span><span class="p">);</span>
+<span class="p">....</span>
+<span class="k">void</span> <span class="nf">DrawFinal</span> <span class="p">(</span><span class="n">RenderTargetIdentifier</span> <span class="k">from</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetGlobalTexture</span><span class="p">(</span><span class="n">fxSourceId</span><span class="p">,</span> <span class="k">from</span><span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetRenderTarget</span><span class="p">(</span>
+        <span class="n">BuiltinRenderTextureType</span><span class="p">.</span><span class="n">CameraTarget</span><span class="p">,</span>
+        <span class="n">camera</span><span class="p">.</span><span class="n">rect</span> <span class="p">==</span> <span class="n">fullViewRect</span> <span class="p">?</span>
+            <span class="n">RenderBufferLoadAction</span><span class="p">.</span><span class="n">DontCare</span> <span class="p">:</span> <span class="n">RenderBufferLoadAction</span><span class="p">.</span><span class="n">Load</span><span class="p">,</span>
+        <span class="n">RenderBufferStoreAction</span><span class="p">.</span><span class="n">Store</span>
+    <span class="p">);</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="摄像机分层"><span class="me-2">摄像机分层</span><a href="#摄像机分层" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>除了渲染到单独的区域外，我们还可以让摄像机视口重叠。最简单的例子是使用一个覆盖整个屏幕的常规主摄像机，然后添加一个稍后渲染的第二个摄像机，具有相同的视图但视口较小。我将第二个视口缩小到一半大小，并通过将其 XY 位置设置为 0.25 来使其居中。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/two-camera-layers.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/two-camera-layers.png" alt="两个摄像机层" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">两个摄像机层</figcaption></figure><p>如果我们不使用后处理效果，那么可以通过将顶部摄像机层设置为仅清除深度来将其转换为部分透明的叠加层。这会移除它的天空盒，显示下面的层。但当使用后处理效果时这不起作用，因为我们会强制将其设置为 <code class="language-plaintext highlighter-rouge">CameraClearFlags.Color</code>，所以我们会看到摄像机的背景颜色，默认为深蓝色。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/clear-depth-only-without-post-fx.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/clear-depth-only-without-post-fx.png" alt="第二个摄像机设置为仅清除深度，不使用和使用后处理效果" width="100%" height="auto" loading="lazy"></a></div><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/clear-depth-only-with-post-fx.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/clear-depth-only-with-post-fx.png" alt="第二个摄像机设置为仅清除深度，不使用和使用后处理效果" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">第二个摄像机设置为仅清除深度，不使用和使用后处理效果</figcaption></figure><p>让层透明度与后处理效果一起工作的一种方法是更改 <code class="language-plaintext highlighter-rouge">PostFXStack</code> 着色器的最终通道，使其执行 Alpha 混合而不是默认的 <code class="language-plaintext highlighter-rouge">One Zero</code> 模式。</p><div class="language-hlsl highlighter-rouge"><div class="code-header"> <span data-label-text="Hlsl"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="n">Pass</span> <span class="p">{</span>
+    <span class="n">Name</span> <span class="s">"Final"</span>
+    <span class="n">Blend</span> <span class="n">SrcAlpha</span> <span class="n">OneMinusSrcAlpha</span>
+    <span class="n">HLSLPROGRAM</span>
+    <span class="cp">#pragma target 3.5
+</span>    <span class="cp">#pragma vertex DefaultPassVertex
+</span>    <span class="cp">#pragma fragment FinalPassFragment
+</span>    <span class="n">ENDHLSL</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>这确实需要我们在 <code class="language-plaintext highlighter-rouge">DrawFinal</code> 中始终加载目标缓冲区。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">DrawFinal</span> <span class="p">(</span><span class="n">RenderTargetIdentifier</span> <span class="k">from</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetGlobalTexture</span><span class="p">(</span><span class="n">fxSourceId</span><span class="p">,</span> <span class="k">from</span><span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetRenderTarget</span><span class="p">(</span>
+        <span class="n">BuiltinRenderTextureType</span><span class="p">.</span><span class="n">CameraTarget</span><span class="p">,</span>
+        <span class="n">RenderBufferLoadAction</span><span class="p">.</span><span class="n">Load</span><span class="p">,</span> <span class="n">RenderBufferStoreAction</span><span class="p">.</span><span class="n">Store</span>
+    <span class="p">);</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>现在将叠加摄像机的背景颜色的 alpha 设置为零。只要我们禁用泛光（bloom），这似乎可以工作。我添加了两个非常明亮的自发光对象，以明显显示泛光是否处于活动状态。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/bloom-disabled.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/bloom-disabled.png" alt="泛光禁用和启用" width="100%" height="auto" loading="lazy"></a></div><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/bloom-enabled.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/bloom-enabled.png" alt="泛光禁用和启用" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">泛光禁用和启用</figcaption></figure><p>它不能与泛光一起工作，因为该效果目前不保留透明度。我们可以通过调整最终泛光通道来修复这个问题，使其保持高分辨率源纹理的原始透明度。我们必须调整 <code class="language-plaintext highlighter-rouge">BloomAddPassFragment</code> 和 <code class="language-plaintext highlighter-rouge">BloomScatterFinalPassFragment</code>，因为它们中的任何一个都可能用于最终绘制。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="n">float4</span> <span class="nf">BloomAddPassFragment</span> <span class="p">(</span><span class="n">Varyings</span> <span class="n">input</span><span class="p">)</span> <span class="p">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="n">float4</span> <span class="n">highRes</span> <span class="p">=</span> <span class="nf">GetSource2</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">screenUV</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nf">float4</span><span class="p">(</span><span class="n">lowRes</span> <span class="p">*</span> <span class="n">_BloomIntensity</span> <span class="p">+</span> <span class="n">highRes</span><span class="p">.</span><span class="n">rgb</span><span class="p">,</span> <span class="n">highRes</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">....</span>
+<span class="n">float4</span> <span class="nf">BloomScatterFinalPassFragment</span> <span class="p">(</span><span class="n">Varyings</span> <span class="n">input</span><span class="p">)</span> <span class="p">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="n">float4</span> <span class="n">highRes</span> <span class="p">=</span> <span class="nf">GetSource2</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">screenUV</span><span class="p">);</span>
+    <span class="n">lowRes</span> <span class="p">+=</span> <span class="n">highRes</span><span class="p">.</span><span class="n">rgb</span> <span class="p">-</span> <span class="nf">ApplyBloomThreshold</span><span class="p">(</span><span class="n">highRes</span><span class="p">.</span><span class="n">rgb</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nf">float4</span><span class="p">(</span><span class="nf">lerp</span><span class="p">(</span><span class="n">highRes</span><span class="p">.</span><span class="n">rgb</span><span class="p">,</span> <span class="n">lowRes</span><span class="p">,</span> <span class="n">_BloomIntensity</span><span class="p">),</span> <span class="n">highRes</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/layered-with-bloom.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/layered-with-bloom.png" alt="带透明度和泛光的分层" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">带透明度和泛光的分层</figcaption></figure><p>透明度现在可以与泛光一起工作，但泛光对透明区域的贡献不再可见。我们可以通过将最终通道切换到预乘 alpha 混合来保留泛光。这确实需要我们将摄像机的背景颜色设置为纯透明黑色，因为它将添加到下面的层。</p><div class="language-hlsl highlighter-rouge"><div class="code-header"> <span data-label-text="Hlsl"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">Name</span> <span class="s">"Final"</span>
+<span class="n">Blend</span> <span class="n">One</span> <span class="n">OneMinusSrcAlpha</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/bloom-premultiplied.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/bloom-premultiplied.png" alt="泛光影响透明区域" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">泛光影响透明区域</figcaption></figure><h3 id="分层-alpha"><span class="me-2">分层 Alpha</span><a href="#分层-alpha" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>我们当前的分层方法仅在我们的着色器产生合理的 alpha 值（与摄像机层混合一起工作）时才有效。我们之前不关心写入的 alpha 值，因为我们从未将它们用于任何用途。但现在，如果两个 alpha 为 0.5 的对象最终渲染到同一个纹素，该纹素的最终 alpha 应该是 0.25。当任一 alpha 值为 1 时，结果应该始终为 1。当第二个 alpha 为零时，应保留原始 alpha。所有这些情况都通过在混合 alpha 时使用 <code class="language-plaintext highlighter-rouge">One OneMinusSrcAlpha</code> 来覆盖。我们可以通过在颜色混合模式之后添加逗号，然后是 alpha 的模式，来为 alpha 通道单独配置着色器的混合模式。对我们的 Lit 和 Unlit 着色器的常规通道都这样做。</p><div class="language-hlsl highlighter-rouge"><div class="code-header"> <span data-label-text="Hlsl"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">Blend</span> <span class="p">[</span><span class="n">_SrcBlend</span><span class="p">]</span> <span class="p">[</span><span class="n">_DstBlend</span><span class="p">],</span> <span class="n">One</span> <span class="n">OneMinusSrcAlpha</span>
+</pre></table></code></div></div><p>只要使用适当的 alpha 值，这就会起作用，这通常意味着写入深度的对象也应该始终产生 alpha 值为 1。这对于不透明材质来说似乎很简单，但如果它们最终使用也包含变化 alpha 的基础贴图，就会出错。对于裁剪材质也可能出错，因为它们依赖 alpha 阈值来丢弃片段。如果片段被裁剪，那没问题，但如果没有，其 alpha 应该变为 1。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/cubes-alpha-zero.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/cubes-alpha-zero.png" alt="alpha 为零的不透明立方体添加到基础层而不是替换它" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">alpha 为零的不透明立方体添加到基础层而不是替换它</figcaption></figure><p>确保我们的着色器的 alpha 行为正确的最快方法是将 <code class="language-plaintext highlighter-rouge">_ZWrite</code> 添加到 <code class="language-plaintext highlighter-rouge">UnityPerMaterial</code> 缓冲区，在 <code class="language-plaintext highlighter-rouge">LitInput</code> 和 <code class="language-plaintext highlighter-rouge">UnlitInput</code> 中都添加。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="nf">UNITY_DEFINE_INSTANCED_PROP</span><span class="p">(</span><span class="kt">float</span><span class="p">,</span> <span class="n">_Cutoff</span><span class="p">)</span>
+<span class="nf">UNITY_DEFINE_INSTANCED_PROP</span><span class="p">(</span><span class="kt">float</span><span class="p">,</span> <span class="n">_ZWrite</span><span class="p">)</span>
+</pre></table></code></div></div><p>然后在两个输入文件中添加一个带有 alpha 参数的 <code class="language-plaintext highlighter-rouge">GetFinalAlpha</code> 函数。如果 <code class="language-plaintext highlighter-rouge">_ZWrite</code> 设置为 1，它返回 1，否则返回提供的值。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kt">float</span> <span class="nf">GetFinalAlpha</span> <span class="p">(</span><span class="kt">float</span> <span class="n">alpha</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nf">INPUT_PROP</span><span class="p">(</span><span class="n">_ZWrite</span><span class="p">)</span> <span class="p">?</span> <span class="m">1.0</span> <span class="p">:</span> <span class="n">alpha</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>在 <code class="language-plaintext highlighter-rouge">LitPassFragment</code> 中通过此函数过滤表面 alpha 以在最后获得正确的 alpha 值。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">float4</span> <span class="nf">LitPassFragment</span> <span class="p">(</span><span class="n">Varyings</span> <span class="n">input</span><span class="p">)</span> <span class="p">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="k">return</span> <span class="nf">float4</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="nf">GetFinalAlpha</span><span class="p">(</span><span class="n">surface</span><span class="p">.</span><span class="n">alpha</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>对 <code class="language-plaintext highlighter-rouge">UnlitPassFragment</code> 中的基础 alpha 也做同样的处理。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">float4</span> <span class="nf">UnlitPassFragment</span> <span class="p">(</span><span class="n">Varyings</span> <span class="n">input</span><span class="p">)</span> <span class="p">:</span> <span class="n">SV_TARGET</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="k">return</span> <span class="nf">float4</span><span class="p">(</span><span class="k">base</span><span class="p">.</span><span class="n">rgb</span><span class="p">,</span> <span class="nf">GetFinalAlpha</span><span class="p">(</span><span class="k">base</span><span class="p">.</span><span class="n">a</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="自定义混合"><span class="me-2">自定义混合</span><a href="#自定义混合" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>与前一个摄像机层混合仅对叠加摄像机有意义。底部摄像机将与摄像机目标的初始内容混合，这些内容要么是随机的，要么是前一帧的累积，除非编辑器提供清除的目标。因此第一个摄像机应该使用 <code class="language-plaintext highlighter-rouge">One Zero</code> 模式进行混合。为了支持替换、叠加和更奇特的分层选项，我们将为摄像机添加一个可配置的最终混合模式，在启用后处理效果时使用。我们将创建一个新的可序列化的 <code class="language-plaintext highlighter-rouge">CameraSettings</code> 配置类用于这些设置，就像我们为阴影所做的那样。为了方便，将源和目标混合模式包装在一个内部 <code class="language-plaintext highlighter-rouge">FinalBlendMode</code> 结构中，然后默认将其设置为 <code class="language-plaintext highlighter-rouge">One Zero</code> 混合。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine.Rendering</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">Serializable</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CameraSettings</span> <span class="p">{</span>
+
+    <span class="p">[</span><span class="n">Serializable</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">struct</span> <span class="nc">FinalBlendMode</span> <span class="p">{</span>
+        <span class="k">public</span> <span class="n">BlendMode</span> <span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">FinalBlendMode</span> <span class="n">finalBlendMode</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FinalBlendMode</span> <span class="p">{</span>
+        <span class="n">source</span> <span class="p">=</span> <span class="n">BlendMode</span><span class="p">.</span><span class="n">One</span><span class="p">,</span>
+        <span class="n">destination</span> <span class="p">=</span> <span class="n">BlendMode</span><span class="p">.</span><span class="n">Zero</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>我们不能直接将这些设置添加到 Camera 组件，所以我们将创建一个补充的 <code class="language-plaintext highlighter-rouge">CustomRenderPipelineCamera</code> 组件。它只能添加一次到作为摄像机的游戏对象上，并且只能添加一次。给它一个 <code class="language-plaintext highlighter-rouge">CameraSettings</code> 配置字段和相应的 getter 属性。因为设置是一个类，属性必须确保它存在，所以如果需要，创建一个新的设置对象实例。如果组件尚未被编辑器序列化，或者在运行时将其添加到摄像机后，就会出现这种情况。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">DisallowMultipleComponent</span><span class="p">,</span> <span class="nf">RequireComponent</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">Camera</span><span class="p">))]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CustomRenderPipelineCamera</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+    <span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span>
+    <span class="n">CameraSettings</span> <span class="n">settings</span> <span class="p">=</span> <span class="k">default</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="n">CameraSettings</span> <span class="n">Settings</span> <span class="p">=&gt;</span> <span class="n">settings</span> <span class="p">??</span> <span class="p">(</span><span class="n">settings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CameraSettings</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></table></code></div></div><aside class="collapsible-aside"><h3>`??` 操作符是什么？</h3><div><p>它是空值合并操作符。它是以下代码的简写：</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="n">CameraSettings</span> <span class="n">Settings</span> <span class="p">=&gt;</span>
+    <span class="n">settings</span> <span class="p">==</span> <span class="k">null</span> <span class="p">?</span> <span class="n">settings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CameraSettings</span><span class="p">()</span> <span class="p">:</span> <span class="n">settings</span><span class="p">;</span>
+</pre></table></code></div></div><p>该属性的更详细形式是：</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="n">CameraSettings</span> <span class="n">Settings</span> <span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">settings</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">settings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CameraSettings</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">settings</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div></div></aside><p>现在我们可以在 <code class="language-plaintext highlighter-rouge">CameraRenderer.Render</code> 开始时获取摄像机的 <code class="language-plaintext highlighter-rouge">CustomRenderPipelineCamera</code> 组件。为了支持没有自定义设置的摄像机，我们将检查我们的组件是否存在。如果存在，我们使用它的设置，否则我们将使用我们创建一次并在静态字段中存储引用的默认设置对象。然后我们在设置堆栈时传递最终混合模式。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">static</span> <span class="n">CameraSettings</span> <span class="n">defaultCameraSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CameraSettings</span><span class="p">();</span>
+<span class="p">....</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span> <span class="p">(....)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="n">context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="n">camera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">;</span>
+
+    <span class="kt">var</span> <span class="n">crpCamera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">CustomRenderPipelineCamera</span><span class="p">&gt;();</span>
+    <span class="n">CameraSettings</span> <span class="n">cameraSettings</span> <span class="p">=</span>
+        <span class="n">crpCamera</span> <span class="p">?</span> <span class="n">crpCamera</span><span class="p">.</span><span class="n">Settings</span> <span class="p">:</span> <span class="n">defaultCameraSettings</span><span class="p">;</span>
+    <span class="p">....</span>
+    <span class="n">postFXStack</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span>
+        <span class="n">context</span><span class="p">,</span> <span class="n">camera</span><span class="p">,</span> <span class="n">postFXSettings</span><span class="p">,</span> <span class="n">useHDR</span><span class="p">,</span> <span class="n">colorLUTResolution</span><span class="p">,</span>
+        <span class="n">cameraSettings</span><span class="p">.</span><span class="n">finalBlendMode</span>
+    <span class="p">);</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">PostFXStack</code> 现在必须跟踪摄像机的最终混合模式。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="n">CameraSettings</span><span class="p">.</span><span class="n">FinalBlendMode</span> <span class="n">finalBlendMode</span><span class="p">;</span>
+<span class="p">....</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Setup</span> <span class="p">(</span>
+    <span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">camera</span><span class="p">,</span> <span class="n">PostFXSettings</span> <span class="n">settings</span><span class="p">,</span>
+    <span class="kt">bool</span> <span class="n">useHDR</span><span class="p">,</span> <span class="kt">int</span> <span class="n">colorLUTResolution</span><span class="p">,</span> <span class="n">CameraSettings</span><span class="p">.</span><span class="n">FinalBlendMode</span> <span class="n">finalBlendMode</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="n">finalBlendMode</span> <span class="p">=</span> <span class="n">finalBlendMode</span><span class="p">;</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>因此它可以在 <code class="language-plaintext highlighter-rouge">DrawFinal</code> 开始时设置新的 <code class="language-plaintext highlighter-rouge">_FinalSrcBlend</code> 和 <code class="language-plaintext highlighter-rouge">_FinalDstBlend</code> 浮点着色器属性。另外，如果目标混合模式不是零，我们现在也总是需要加载目标缓冲区。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="kt">int</span>
+    <span class="n">finalSrcBlendId</span> <span class="p">=</span> <span class="n">Shader</span><span class="p">.</span><span class="nf">PropertyToID</span><span class="p">(</span><span class="s">"_FinalSrcBlend"</span><span class="p">),</span>
+    <span class="n">finalDstBlendId</span> <span class="p">=</span> <span class="n">Shader</span><span class="p">.</span><span class="nf">PropertyToID</span><span class="p">(</span><span class="s">"_FinalDstBlend"</span><span class="p">);</span>
+<span class="p">....</span>
+<span class="k">void</span> <span class="nf">DrawFinal</span> <span class="p">(</span><span class="n">RenderTargetIdentifier</span> <span class="k">from</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetGlobalFloat</span><span class="p">(</span><span class="n">finalSrcBlendId</span><span class="p">,</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">finalBlendMode</span><span class="p">.</span><span class="n">source</span><span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetGlobalFloat</span><span class="p">(</span><span class="n">finalDstBlendId</span><span class="p">,</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">finalBlendMode</span><span class="p">.</span><span class="n">destination</span><span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetGlobalTexture</span><span class="p">(</span><span class="n">fxSourceId</span><span class="p">,</span> <span class="k">from</span><span class="p">);</span>
+    <span class="n">buffer</span><span class="p">.</span><span class="nf">SetRenderTarget</span><span class="p">(</span>
+        <span class="n">BuiltinRenderTextureType</span><span class="p">.</span><span class="n">CameraTarget</span><span class="p">,</span>
+        <span class="n">finalBlendMode</span><span class="p">.</span><span class="n">destination</span> <span class="p">==</span> <span class="n">BlendMode</span><span class="p">.</span><span class="n">Zero</span> <span class="p">&amp;&amp;</span> <span class="n">camera</span><span class="p">.</span><span class="n">rect</span> <span class="p">==</span> <span class="n">fullViewRect</span> <span class="p">?</span>
+            <span class="n">RenderBufferLoadAction</span><span class="p">.</span><span class="n">DontCare</span> <span class="p">:</span> <span class="n">RenderBufferLoadAction</span><span class="p">.</span><span class="n">Load</span><span class="p">,</span>
+        <span class="n">RenderBufferStoreAction</span><span class="p">.</span><span class="n">Store</span>
+    <span class="p">);</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>最后，在最终通道中使用新属性而不是硬编码的混合模式。</p><div class="language-hlsl highlighter-rouge"><div class="code-header"> <span data-label-text="Hlsl"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">Name</span> <span class="s">"Final"</span>
+<span class="n">Blend</span> <span class="p">[</span><span class="n">_FinalSrcBlend</span><span class="p">]</span> <span class="p">[</span><span class="n">_FinalDstBlend</span><span class="p">]</span>
+</pre></table></code></div></div><p>从现在开始，没有我们设置的摄像机将覆盖目标缓冲区的内容，这是由于默认的 <code class="language-plaintext highlighter-rouge">One Zero</code> 最终混合模式。叠加摄像机必须给定不同的最终混合模式，通常是 <code class="language-plaintext highlighter-rouge">One OneMinusSrcAlpha</code>。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/camera-settings.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/camera-settings.png" alt="叠加摄像机的设置组件" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">叠加摄像机的设置组件</figcaption></figure><h3 id="渲染纹理"><span class="me-2">渲染纹理</span><a href="#渲染纹理" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>除了创建分屏显示或直接分层摄像机外，通常还使用摄像机进行游戏内显示或作为 GUI 的一部分。在这些情况下，摄像机的目标必须是渲染纹理，可以是资源或在运行时创建的。作为示例，我通过 Assets / Create / Render Texture 创建了一个 200×100 的渲染纹理。我没有给它深度缓冲区，因为我将带有后处理效果的摄像机渲染到它，它会创建自己的带有深度缓冲区的中间渲染纹理。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/render-texture.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/render-texture.png" alt="渲染纹理资源" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">渲染纹理资源</figcaption></figure><p>然后我创建了一个将场景渲染到此纹理的摄像机，通过将其连接到摄像机的 Target Texture 属性。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/target-texture.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/target-texture.png" alt="摄像机目标纹理设置" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">摄像机目标纹理设置</figcaption></figure><p>与常规渲染一样，底部摄像机必须为其最终混合模式使用 <code class="language-plaintext highlighter-rouge">One Zero</code>。编辑器最初会呈现一个清晰的黑色纹理，但之后渲染纹理将包含上次渲染到它的任何内容。多个摄像机可以像正常一样使用任何视口渲染到同一渲染纹理。唯一的区别是 Unity 会自动在渲染到显示器的摄像机之前渲染具有渲染纹理目标的摄像机。首先按深度递增顺序渲染具有目标纹理的摄像机，然后是没有目标纹理的摄像机。</p><h3 id="unity-ui"><span class="me-2">Unity UI</span><a href="#unity-ui" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>渲染纹理可以像任何常规纹理一样使用。要通过 Unity 的 UI 显示它，我们必须使用带有原始图像组件的游戏对象，通过 GameObject / UI / Raw Image 创建。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/raw-image-inspector.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/raw-image-inspector.png" alt="UI 原始图像，部分与按钮重叠" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">UI 原始图像，部分与按钮重叠</figcaption></figure><p>原始图像使用默认的 UI 材质，它执行标准的 <code class="language-plaintext highlighter-rouge">SrcAlpha OneMinusSrcAlpha</code> 混合。因此透明度有效，但泛光不是加法的，除非纹理以像素完美显示，否则双线性过滤会使摄像机的黑色背景颜色在透明边缘周围显示为深色轮廓。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/raw-image-game.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/raw-image-game.png" alt="游戏中的原始图像显示" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">游戏中的原始图像显示</figcaption></figure><p>为了支持其他混合模式，我们必须创建一个自定义 UI 着色器。我们只需通过复制 Default-UI 着色器来实现这一点，通过 <code class="language-plaintext highlighter-rouge">_SrcBlend</code> 和 <code class="language-plaintext highlighter-rouge">_DstBlend</code> 着色器属性添加对可配置混合的支持。我还调整了着色器代码以更好地匹配本教程系列的风格。</p><div class="language-hlsl highlighter-rouge"><div class="code-header"> <span data-label-text="Hlsl"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+</pre><td class="rouge-code"><pre><span class="n">Shader</span> <span class="s">"Custom RP/UI Custom Blending"</span> <span class="p">{</span>
+    <span class="n">Properties</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">PerRendererData</span><span class="p">]</span> <span class="n">_MainTex</span> <span class="p">(</span><span class="s">"Sprite Texture"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
+        <span class="n">_Color</span> <span class="p">(</span><span class="s">"Tint"</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">_StencilComp</span> <span class="p">(</span><span class="s">"Stencil Comparison"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="n">_Stencil</span> <span class="p">(</span><span class="s">"Stencil ID"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">_StencilOp</span> <span class="p">(</span><span class="s">"Stencil Operation"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">_StencilWriteMask</span> <span class="p">(</span><span class="s">"Stencil Write Mask"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">255</span>
+        <span class="n">_StencilReadMask</span> <span class="p">(</span><span class="s">"Stencil Read Mask"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">255</span>
+
+        <span class="n">_ColorMask</span> <span class="p">(</span><span class="s">"Color Mask"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">15</span>
+
+        <span class="p">[</span><span class="n">Toggle</span><span class="p">(</span><span class="n">UNITY_UI_ALPHACLIP</span><span class="p">)]</span> <span class="n">_UseUIAlphaClip</span> <span class="p">(</span><span class="s">"Use Alpha Clip"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="p">[</span><span class="n">Enum</span><span class="p">(</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Rendering</span><span class="p">.</span><span class="n">BlendMode</span><span class="p">)]</span> <span class="n">_SrcBlend</span> <span class="p">(</span><span class="s">"Src Blend"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="p">[</span><span class="n">Enum</span><span class="p">(</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Rendering</span><span class="p">.</span><span class="n">BlendMode</span><span class="p">)]</span> <span class="n">_DstBlend</span> <span class="p">(</span><span class="s">"Dst Blend"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">}</span>
+
+    <span class="n">SubShader</span> <span class="p">{</span>
+        <span class="n">Tags</span> <span class="p">{</span>
+            <span class="s">"Queue"</span> <span class="o">=</span> <span class="s">"Transparent"</span>
+            <span class="s">"IgnoreProjector"</span> <span class="o">=</span> <span class="s">"True"</span>
+            <span class="s">"RenderType"</span> <span class="o">=</span> <span class="s">"Transparent"</span>
+            <span class="s">"PreviewType"</span> <span class="o">=</span> <span class="s">"Plane"</span>
+            <span class="s">"CanUseSpriteAtlas"</span> <span class="o">=</span> <span class="s">"True"</span>
+        <span class="p">}</span>
+
+        <span class="n">Stencil</span> <span class="p">{</span>
+            <span class="n">Ref</span> <span class="p">[</span><span class="n">_Stencil</span><span class="p">]</span>
+            <span class="n">Comp</span> <span class="p">[</span><span class="n">_StencilComp</span><span class="p">]</span>
+            <span class="n">Pass</span> <span class="p">[</span><span class="n">_StencilOp</span><span class="p">]</span>
+            <span class="n">ReadMask</span> <span class="p">[</span><span class="n">_StencilReadMask</span><span class="p">]</span>
+            <span class="n">WriteMask</span> <span class="p">[</span><span class="n">_StencilWriteMask</span><span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="n">Blend</span> <span class="p">[</span><span class="n">_SrcBlend</span><span class="p">]</span> <span class="p">[</span><span class="n">_DstBlend</span><span class="p">]</span>
+        <span class="n">ColorMask</span> <span class="p">[</span><span class="n">_ColorMask</span><span class="p">]</span>
+
+        <span class="n">Cull</span> <span class="n">Off</span>
+        <span class="n">ZWrite</span> <span class="n">Off</span>
+        <span class="n">ZTest</span> <span class="p">[</span><span class="n">unity_GUIZTestMode</span><span class="p">]</span>
+
+        <span class="n">Pass</span> <span class="p">{</span> <span class="p">....</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>这是通道，除了风格外未做修改：</p><div class="language-hlsl highlighter-rouge"><div class="code-header"> <span data-label-text="Hlsl"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+</pre><td class="rouge-code"><pre><span class="n">Pass</span> <span class="p">{</span>
+    <span class="n">Name</span> <span class="s">"Default"</span>
+
+    <span class="n">CGPROGRAM</span>
+    <span class="cp">#pragma vertex UIPassVertex
+</span>    <span class="cp">#pragma fragment UIPassFragment
+</span>    <span class="cp">#pragma target 2.0
+</span>
+    <span class="cp">#include</span> <span class="cpf">"UnityCG.cginc"</span><span class="cp">
+</span>    <span class="cp">#include</span> <span class="cpf">"UnityUI.cginc"</span><span class="cp">
+</span>
+    <span class="cp">#pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+</span>    <span class="cp">#pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+</span>
+    <span class="k">struct</span> <span class="n">Attributes</span> <span class="p">{</span>
+        <span class="kt">float4</span> <span class="n">positionOS</span> <span class="o">:</span> <span class="nb">POSITION</span><span class="p">;</span>
+        <span class="kt">float4</span> <span class="n">color</span> <span class="o">:</span> <span class="nb">COLOR</span><span class="p">;</span>
+        <span class="kt">float2</span> <span class="n">baseUV</span> <span class="o">:</span> <span class="nb">TEXCOORD0</span><span class="p">;</span>
+        <span class="n">UNITY_VERTEX_INPUT_INSTANCE_ID</span>
+    <span class="p">};</span>
+
+    <span class="k">struct</span> <span class="n">Varyings</span> <span class="p">{</span>
+        <span class="kt">float4</span> <span class="n">positionCS</span> <span class="o">:</span> <span class="nb">SV_POSITION</span><span class="p">;</span>
+        <span class="kt">float2</span> <span class="n">positionUI</span> <span class="o">:</span> <span class="n">VAR_POSITION</span><span class="p">;</span>
+        <span class="kt">float2</span> <span class="n">baseUV</span> <span class="o">:</span> <span class="n">VAR_BASE_UV</span><span class="p">;</span>
+        <span class="kt">float4</span> <span class="n">color</span> <span class="o">:</span> <span class="nb">COLOR</span><span class="p">;</span>
+        <span class="n">UNITY_VERTEX_OUTPUT_STEREO</span>
+    <span class="p">};</span>
+
+    <span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
+    <span class="kt">float4</span> <span class="n">_MainTex_ST</span><span class="p">;</span>
+    <span class="kt">float4</span> <span class="n">_Color</span><span class="p">;</span>
+    <span class="kt">float4</span> <span class="n">_TextureSampleAdd</span><span class="p">;</span>
+    <span class="kt">float4</span> <span class="n">_ClipRect</span><span class="p">;</span>
+
+    <span class="n">Varyings</span> <span class="n">UIPassVertex</span> <span class="p">(</span><span class="n">Attributes</span> <span class="n">input</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Varyings</span> <span class="n">output</span><span class="p">;</span>
+        <span class="n">UNITY_SETUP_INSTANCE_ID</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+        <span class="n">UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
+        <span class="n">output</span><span class="p">.</span><span class="n">positionCS</span> <span class="o">=</span> <span class="n">UnityObjectToClipPos</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">positionOS</span><span class="p">);</span>
+        <span class="n">output</span><span class="p">.</span><span class="n">positionUI</span> <span class="o">=</span> <span class="n">input</span><span class="p">.</span><span class="n">positionOS</span><span class="p">.</span><span class="n">xy</span><span class="p">;</span>
+        <span class="n">output</span><span class="p">.</span><span class="n">baseUV</span> <span class="o">=</span> <span class="n">TRANSFORM_TEX</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">baseUV</span><span class="p">,</span> <span class="n">_MainTex</span><span class="p">);</span>
+        <span class="n">output</span><span class="p">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">input</span><span class="p">.</span><span class="n">color</span> <span class="o">*</span> <span class="n">_Color</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">float4</span> <span class="n">UIPassFragment</span> <span class="p">(</span><span class="n">Varyings</span> <span class="n">input</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_Target</span> <span class="p">{</span>
+        <span class="kt">float4</span> <span class="n">color</span> <span class="o">=</span>
+            <span class="p">(</span><span class="nb">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span> <span class="n">input</span><span class="p">.</span><span class="n">baseUV</span><span class="p">)</span> <span class="o">+</span> <span class="n">_TextureSampleAdd</span><span class="p">)</span> <span class="o">*</span> <span class="n">input</span><span class="p">.</span><span class="n">color</span><span class="p">;</span>
+
+        <span class="cp">#if defined(UNITY_UI_CLIP_RECT)
+</span>            <span class="n">color</span><span class="p">.</span><span class="n">a</span> <span class="o">*=</span> <span class="n">UnityGet2DClipping</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">positionUI</span><span class="p">,</span> <span class="n">_ClipRect</span><span class="p">);</span>
+        <span class="cp">#endif
+</span>
+        <span class="cp">#if defined(UNITY_UI_ALPHACLIP)
+</span>            <span class="nb">clip</span> <span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">a</span> <span class="o">-</span> <span class="mi">0</span><span class="p">.</span><span class="mo">001</span><span class="p">);</span>
+        <span class="cp">#endif
+</span>
+        <span class="k">return</span> <span class="n">color</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">ENDCG</span>
+<span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/raw-image-premultiplied.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/raw-image-premultiplied.png" alt="使用预乘 alpha 混合的自定义 UI 着色器的原始 UI 图像" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">使用预乘 alpha 混合的自定义 UI 着色器的原始 UI 图像</figcaption></figure><aside class="collapsible-aside"><h3>我在哪里可以找到默认 UI 着色器源代码？</h3><div><p>访问 Unity 的下载存档，找到所需的 Unity 版本，然后从其中一个下拉菜单中选择 Built in shaders。着色器位于 DefaultResourcesExtra / UI 文件夹中。</p></div></aside><h3 id="每个摄像机的后处理设置"><span class="me-2">每个摄像机的后处理设置</span><a href="#每个摄像机的后处理设置" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>在使用多个摄像机时，应该可以为每个摄像机使用不同的后处理效果，所以让我们添加对它的支持。给 <code class="language-plaintext highlighter-rouge">CameraSettings</code> 添加一个切换开关来控制它是否覆盖全局后处理设置，以及它自己的 <code class="language-plaintext highlighter-rouge">PostFXSettings</code> 字段。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="kt">bool</span> <span class="n">overridePostFX</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="k">public</span> <span class="n">PostFXSettings</span> <span class="n">postFXSettings</span> <span class="p">=</span> <span class="k">default</span><span class="p">;</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/override-post-fx-settings.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/override-post-fx-settings.png" alt="摄像机后处理覆盖设置" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">摄像机后处理覆盖设置</figcaption></figure><p>让 <code class="language-plaintext highlighter-rouge">CameraRenderer.Render</code> 检查摄像机是否覆盖后处理设置。如果是这样，用摄像机的设置替换渲染管线提供的设置。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="kt">var</span> <span class="n">crpCamera</span> <span class="p">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">CustomRenderPipelineCamera</span><span class="p">&gt;();</span>
+<span class="n">CameraSettings</span> <span class="n">cameraSettings</span> <span class="p">=</span>
+    <span class="n">crpCamera</span> <span class="p">?</span> <span class="n">crpCamera</span><span class="p">.</span><span class="n">Settings</span> <span class="p">:</span> <span class="n">defaultCameraSettings</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">cameraSettings</span><span class="p">.</span><span class="n">overridePostFX</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">postFXSettings</span> <span class="p">=</span> <span class="n">cameraSettings</span><span class="p">.</span><span class="n">postFXSettings</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>现在每个摄像机都可以使用默认或自定义后处理效果。例如，我让底部摄像机使用默认设置，为叠加摄像机关闭后处理效果，并为渲染纹理摄像机提供不同的后处理效果，具有冷色温移位和中性色调映射。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/different-post-fx-settings.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/different-post-fx-settings.png" alt="每个摄像机的不同后处理设置" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">每个摄像机的不同后处理设置</figcaption></figure><h2 id="渲染层"><span class="me-2">渲染层</span><a href="#渲染层" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>当同时显示多个摄像机视图时，我们并不总是希望为所有摄像机渲染相同的场景。例如，我们可以渲染主视图和角色肖像。Unity 一次只支持一个全局场景，因此我们必须使用一种方法来限制每个摄像机看到的内容。</p><h3 id="剔除遮罩"><span class="me-2">剔除遮罩</span><a href="#剔除遮罩" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>每个游戏对象都属于一个单一的层。场景窗口可以通过编辑器右上角的 Layers 下拉菜单过滤它显示的层。同样，每个摄像机都有一个 Culling Mask 属性，可以用同样的方式限制它显示的内容。此遮罩在渲染的剔除步骤中应用。</p><p>每个对象恰好属于一个层，而剔除遮罩可以包含多个层。例如，你可以有两个摄像机都渲染 Default 层，而其中一个还渲染 Ignore Raycasts，另一个则还渲染 Water。因此，一些对象为两个摄像机显示，而其他对象只对其中一个可见，还有其他对象可能根本不会被渲染。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/different-culling-masks.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/different-culling-masks.png" alt="每个摄像机具有不同剔除遮罩的分屏" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">每个摄像机具有不同剔除遮罩的分屏</figcaption></figure><aside class="collapsible-aside"><h3>为什么改变对象的层没有任何作用？</h3><div><p>它应该有作用，但有一个错误，即层更改的撤消/重做可能不会影响对象是否被渲染。切换播放模式或再次显式更改层应该可以解决此问题。</p></div></aside><p>光源也有剔除遮罩。其想法是，为光源剔除的对象表现得好像该光源不存在。该对象不受光源照明，也不为其投射阴影。但如果我们用方向光尝试这个，只有它的阴影受到影响。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/culling-mask-directional-light.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/culling-mask-directional-light.png" alt="应用于方向光的剔除遮罩仅影响阴影" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">应用于方向光的剔除遮罩仅影响阴影</figcaption></figure><p>如果我们用另一种光源类型尝试这个，如果我们的 RP 的 Use Lights Per Object 选项被禁用，也会发生同样的事情。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/culling-mask-point-light.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/culling-mask-point-light.png" alt="相同的剔除遮罩应用于明亮的点光源" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">相同的剔除遮罩应用于明亮的点光源</figcaption></figure><p>如果启用 Use Lights Per Object，则光源剔除可以正常工作，但仅适用于点光源和聚光灯。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/culling-mask-point-light-per-object.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/culling-mask-point-light-per-object.png" alt="启用逐对象光源的点光源" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">启用逐对象光源的点光源</figcaption></figure><p>我们得到这些结果是因为当 Unity 将逐对象光源索引发送到 GPU 时会应用光源的剔除遮罩。所以如果我们不使用这些，剔除就不起作用。对于方向光它永远不起作用，因为我们总是将它们应用于所有对象。阴影总是被正确剔除，因为在从光源的角度渲染阴影投射器时，光源的剔除遮罩像摄像机的一样使用。</p><p>我们不能用当前的方法完全支持光源的剔除遮罩。这个限制不是一个障碍，HDRP 也不支持光源的剔除遮罩。Unity 为 SRP 提供渲染层作为替代方案。使用渲染层而不是游戏对象层有两个好处。首先，渲染器不限于只有一个层，这使它们更加灵活。其次，渲染层不用于任何其他用途，不像默认层也用于物理。</p><p>在我们转向渲染层之前，让我们在光源的剔除遮罩设置为 Everything 以外的内容时在光源的检查器中显示警告。光源的剔除遮罩通过其 <code class="language-plaintext highlighter-rouge">cullingMask</code> 整数属性可用，-1 表示所有层。如果 <code class="language-plaintext highlighter-rouge">CustomLightEditor</code> 的目标将其遮罩设置为其他任何内容，则在 <code class="language-plaintext highlighter-rouge">OnInspectorGUI</code> 末尾调用 <code class="language-plaintext highlighter-rouge">EditorGUILayout.HelpBox</code>，使用指示剔除遮罩仅影响阴影的字符串和 <code class="language-plaintext highlighter-rouge">MessageType.Warning</code> 来显示警告图标。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnInspectorGUI</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="kt">var</span> <span class="n">light</span> <span class="p">=</span> <span class="n">target</span> <span class="k">as</span> <span class="n">Light</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">cullingMask</span> <span class="p">!=</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">EditorGUILayout</span><span class="p">.</span><span class="nf">HelpBox</span><span class="p">(</span>
+            <span class="s">"Culling Mask only affects shadows."</span><span class="p">,</span>
+            <span class="n">MessageType</span><span class="p">.</span><span class="n">Warning</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/culling-mask-warning.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/culling-mask-warning.png" alt="光源的剔除遮罩警告" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">光源的剔除遮罩警告</figcaption></figure><p>我们可以更具体一些，提到 Use Lights Per Object 设置对非方向光有影响。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="n">EditorGUILayout</span><span class="p">.</span><span class="nf">HelpBox</span><span class="p">(</span>
+    <span class="n">light</span><span class="p">.</span><span class="n">type</span> <span class="p">==</span> <span class="n">LightType</span><span class="p">.</span><span class="n">Directional</span> <span class="p">?</span>
+        <span class="s">"Culling Mask only affects shadows."</span> <span class="p">:</span>
+        <span class="s">"Culling Mask only affects shadow unless Use Lights Per Objects is on."</span><span class="p">,</span>
+    <span class="n">MessageType</span><span class="p">.</span><span class="n">Warning</span>
+<span class="p">);</span>
+</pre></table></code></div></div><h3 id="调整渲染层遮罩"><span class="me-2">调整渲染层遮罩</span><a href="#调整渲染层遮罩" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>当使用 SRP 时，光源和 MeshRenderer 组件的检查器会显示 Rendering Layer Mask 属性，该属性在使用默认 RP 时是隐藏的。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/mesh-renderer-rendering-layer-mask.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/mesh-renderer-rendering-layer-mask.png" alt="MeshRenderer 的渲染层遮罩" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">MeshRenderer 的渲染层遮罩</figcaption></figure><p>默认情况下，下拉菜单显示 32 层，名为 Layer1、Layer2 等。这些层的名称可以通过覆盖 <code class="language-plaintext highlighter-rouge">RenderPipelineAsset.renderingLayerMaskNames</code> getter 属性为每个 RP 配置。由于这纯粹是下拉菜单的修饰性质，我们只需要为 Unity 编辑器执行此操作。所以将 <code class="language-plaintext highlighter-rouge">CustomRenderPipelineAsset</code> 转换为分部类。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">CustomRenderPipelineAsset</span> <span class="p">:</span> <span class="n">RenderPipelineAsset</span> <span class="p">{</span> <span class="p">....</span> <span class="p">}</span>
+</pre></table></code></div></div><p>然后为它创建一个仅编辑器脚本资源，覆盖该属性。它返回一个字符串数组，我们可以在静态构造函数方法中创建它。我们将从与默认值相同的名称开始，除了在 Layer 词和数字之间有一个空格。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="k">partial</span> <span class="k">class</span> <span class="nc">CustomRenderPipelineAsset</span> <span class="p">{</span>
+
+<span class="cp">#if UNITY_EDITOR
+</span>
+    <span class="k">static</span> <span class="kt">string</span><span class="p">[]</span> <span class="n">renderingLayerNames</span><span class="p">;</span>
+
+    <span class="k">static</span> <span class="nf">CustomRenderPipelineAsset</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">renderingLayerNames</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[</span><span class="m">32</span><span class="p">];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">renderingLayerNames</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+            <span class="n">renderingLayerNames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="s">"Layer "</span> <span class="p">+</span> <span class="p">(</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span><span class="p">[]</span> <span class="n">renderingLayerMaskNames</span> <span class="p">=&gt;</span> <span class="n">renderingLayerNames</span><span class="p">;</span>
+
+<span class="cp">#endif
+</span><span class="p">}</span>
+</pre></table></code></div></div><p>这稍微改变了渲染层标签。它对 MeshRenderer 组件工作良好，但不幸的是光源的属性不响应更改。渲染层下拉菜单显示，但调整不会应用。我们不能直接修复这个问题，但可以添加我们自己的属性版本以便工作。首先在 <code class="language-plaintext highlighter-rouge">CustomLightEditor</code> 中为它创建一个 <code class="language-plaintext highlighter-rouge">GUIContent</code>，具有相同的标签和工具提示，指示这是其上方属性的功能版本。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">static</span> <span class="n">GUIContent</span> <span class="n">renderingLayerMaskLabel</span> <span class="p">=</span>
+    <span class="k">new</span> <span class="nf">GUIContent</span><span class="p">(</span><span class="s">"Rendering Layer Mask"</span><span class="p">,</span> <span class="s">"Functional version of above property."</span><span class="p">);</span>
+</pre></table></code></div></div><p>然后创建一个 <code class="language-plaintext highlighter-rouge">DrawRenderingLayerMask</code> 方法，它是 <code class="language-plaintext highlighter-rouge">LightEditor.DrawRenderingLayerMask</code> 的替代方法，它确实将更改的值分配回属性。为了使下拉菜单使用 RP 的层名称，我们不能简单地依赖 <code class="language-plaintext highlighter-rouge">EditorGUILayout.PropertyField</code>。我们必须从设置中获取相关属性，确保处理多选的混合值，将遮罩作为整数获取，显示它，并将更改的值分配回属性。这是默认光源检查器版本中缺少的最后一步。</p><p>显示下拉菜单是通过调用 <code class="language-plaintext highlighter-rouge">EditorGUILayout.MaskField</code> 完成的，参数为标签、遮罩和 <code class="language-plaintext highlighter-rouge">GraphicsSettings.currentRenderPipeline.renderingLayerMaskNames</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">DrawRenderingLayerMask</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">SerializedProperty</span> <span class="n">property</span> <span class="p">=</span> <span class="n">settings</span><span class="p">.</span><span class="n">renderingLayerMask</span><span class="p">;</span>
+    <span class="n">EditorGUI</span><span class="p">.</span><span class="n">showMixedValue</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">hasMultipleDifferentValues</span><span class="p">;</span>
+    <span class="n">EditorGUI</span><span class="p">.</span><span class="nf">BeginChangeCheck</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">mask</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">intValue</span><span class="p">;</span>
+    <span class="n">mask</span> <span class="p">=</span> <span class="n">EditorGUILayout</span><span class="p">.</span><span class="nf">MaskField</span><span class="p">(</span>
+        <span class="n">renderingLayerMaskLabel</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span>
+        <span class="n">GraphicsSettings</span><span class="p">.</span><span class="n">currentRenderPipeline</span><span class="p">.</span><span class="n">renderingLayerMaskNames</span>
+    <span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">EditorGUI</span><span class="p">.</span><span class="nf">EndChangeCheck</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">property</span><span class="p">.</span><span class="n">intValue</span> <span class="p">=</span> <span class="n">mask</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">EditorGUI</span><span class="p">.</span><span class="n">showMixedValue</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>在调用 <code class="language-plaintext highlighter-rouge">base.OnInspectorGUI</code> 之后直接调用新方法，以便在非功能性属性正下方显示额外的 Rendering Layer Mask 属性。此外，我们现在必须始终调用 <code class="language-plaintext highlighter-rouge">ApplyModifiedProperties</code> 以确保将渲染层遮罩的更改应用于光源。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnInspectorGUI</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">base</span><span class="p">.</span><span class="nf">OnInspectorGUI</span><span class="p">();</span>
+    <span class="nf">DrawRenderingLayerMask</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="p">!</span><span class="n">settings</span><span class="p">.</span><span class="n">lightType</span><span class="p">.</span><span class="n">hasMultipleDifferentValues</span> <span class="p">&amp;&amp;</span>
+        <span class="p">(</span><span class="n">LightType</span><span class="p">)</span><span class="n">settings</span><span class="p">.</span><span class="n">lightType</span><span class="p">.</span><span class="n">enumValueIndex</span> <span class="p">==</span> <span class="n">LightType</span><span class="p">.</span><span class="n">Spot</span>
+    <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">settings</span><span class="p">.</span><span class="nf">DrawInnerAndOuterSpotAngle</span><span class="p">();</span>
+        <span class="c1">//settings.ApplyModifiedProperties();</span>
+    <span class="p">}</span>
+
+    <span class="n">settings</span><span class="p">.</span><span class="nf">ApplyModifiedProperties</span><span class="p">();</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/rendering-layer-mask-light.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/rendering-layer-mask-light.png" alt="光源的额外渲染层遮罩属性" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">光源的额外渲染层遮罩属性</figcaption></figure><p>我们版本的属性确实应用了更改，除了选择 Everything 或 Layer 32 选项会产生与选择 Nothing 相同的结果。这是因为光源的渲染层遮罩在内部存储为无符号整数，一个 <code class="language-plaintext highlighter-rouge">uint</code>。这是有道理的，因为它用作位掩码，但 <code class="language-plaintext highlighter-rouge">SerializedProperty</code> 仅支持获取和设置有符号整数值。</p><p>Everything 选项由 -1 表示，属性将其限制为零。Layer 32 对应于最高位，它表示一个比 <code class="language-plaintext highlighter-rouge">int.MaxValue</code> 大 1 的数字，属性也将其替换为零。</p><p>我们可以通过简单地删除最后一层来解决第二个问题，将渲染层名称的数量减少到 31。这仍然是很多层。HDRP 仅支持八个。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">renderingLayerNames</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[</span><span class="m">31</span><span class="p">];</span>
+</pre></table></code></div></div><p>通过删除一层，Everything 选项现在由除最高位之外的所有位都设置的值表示，这与 <code class="language-plaintext highlighter-rouge">int.MaxValue</code> 匹配。因此我们可以通过在存储 <code class="language-plaintext highlighter-rouge">int.MaxValue</code> 时显示 -1 来解决第一个问题。默认属性不这样做，这就是为什么它在适当时显示 Mixed… 而不是 Everything。HDRP 也遭受这个问题。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="kt">int</span> <span class="n">mask</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">intValue</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">mask</span> <span class="p">==</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mask</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">mask</span> <span class="p">=</span> <span class="n">EditorGUILayout</span><span class="p">.</span><span class="nf">MaskField</span><span class="p">(</span>
+    <span class="n">renderingLayerMaskLabel</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span>
+    <span class="n">GraphicsSettings</span><span class="p">.</span><span class="n">currentRenderPipeline</span><span class="p">.</span><span class="n">renderingLayerMaskNames</span>
+<span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">EditorGUI</span><span class="p">.</span><span class="nf">EndChangeCheck</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">property</span><span class="p">.</span><span class="n">intValue</span> <span class="p">=</span> <span class="n">mask</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span> <span class="p">?</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span> <span class="p">:</span> <span class="n">mask</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/functional-rendering-layer-mask-property.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/functional-rendering-layer-mask-property.png" alt="功能性渲染层遮罩属性" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">功能性渲染层遮罩属性</figcaption></figure><p>我们最终可以正确调整光源的渲染层遮罩属性。但默认情况下不使用遮罩，所以什么都没有改变。我们可以通过在 <code class="language-plaintext highlighter-rouge">Shadows</code> 中启用 <code class="language-plaintext highlighter-rouge">ShadowDrawingSettings</code> 的 <code class="language-plaintext highlighter-rouge">useRenderingLayerMaskTest</code> 将其应用于阴影。对所有光源执行此操作，因此在 <code class="language-plaintext highlighter-rouge">RenderDirectionalShadows</code>、<code class="language-plaintext highlighter-rouge">RenderSpotShadows</code> 和 <code class="language-plaintext highlighter-rouge">RenderPointShadows</code> 中。我们现在可以通过配置对象和光源的渲染层遮罩来消除阴影。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="kt">var</span> <span class="n">shadowSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ShadowDrawingSettings</span><span class="p">(</span>
+    <span class="p">....</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="n">useRenderingLayerMaskTest</span> <span class="p">=</span> <span class="k">true</span>
+<span class="p">};</span>
+</pre></table></code></div></div><h3 id="将遮罩发送到-gpu"><span class="me-2">将遮罩发送到 GPU</span><a href="#将遮罩发送到-gpu" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>要将渲染层遮罩应用于我们的 Lit 着色器的光照计算，对象和光源的遮罩都必须在 GPU 端可用。要访问对象的遮罩，我们必须在 <code class="language-plaintext highlighter-rouge">UnityInput</code> 中的 <code class="language-plaintext highlighter-rouge">UnityPerDraw</code> 结构中添加一个 <code class="language-plaintext highlighter-rouge">float4 unity_RenderingLayer</code> 字段，直接在 <code class="language-plaintext highlighter-rouge">unity_WorldTransformParams</code> 下方。遮罩存储在其第一个分量中。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">real4</span> <span class="n">unity_WorldTransformParams</span><span class="p">;</span>
+<span class="n">float4</span> <span class="n">unity_RenderingLayer</span><span class="p">;</span>
+</pre></table></code></div></div><p>我们将遮罩添加到我们的 <code class="language-plaintext highlighter-rouge">Surface</code> 结构中，作为 <code class="language-plaintext highlighter-rouge">uint</code>，因为它是位掩码。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="nc">Surface</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="kt">uint</span> <span class="n">renderingLayerMask</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></table></code></div></div><p>在 <code class="language-plaintext highlighter-rouge">LitPassFragment</code> 中设置表面的遮罩时，我们必须使用 <code class="language-plaintext highlighter-rouge">asuint</code> 内部函数。这为我们提供原始数据，而不执行从 float 到 uint 的数值类型转换，这会改变位模式。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">surface</span><span class="p">.</span><span class="n">dither</span> <span class="p">=</span> <span class="nf">InterleavedGradientNoise</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">positionCS</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">surface</span><span class="p">.</span><span class="n">renderingLayerMask</span> <span class="p">=</span> <span class="nf">asuint</span><span class="p">(</span><span class="n">unity_RenderingLayer</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+</pre></table></code></div></div><p>我们必须对 <code class="language-plaintext highlighter-rouge">Light</code> 结构执行相同的操作，因此也为其提供一个用于其渲染层遮罩的 <code class="language-plaintext highlighter-rouge">uint</code> 字段。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="nc">Light</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="kt">uint</span> <span class="n">renderingLayerMask</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></table></code></div></div><p>我们负责将遮罩发送到 GPU。让我们通过将其存储在 <code class="language-plaintext highlighter-rouge">_DirectionalLightDirections</code> 和 <code class="language-plaintext highlighter-rouge">_OtherLightDirections</code> 数组的未使用的第四个分量中来实现这一点。为了清晰起见，将 <code class="language-plaintext highlighter-rouge">AndMasks</code> 后缀添加到它们的名称中。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="nf">CBUFFER_START</span><span class="p">(</span><span class="n">_CustomLight</span><span class="p">)</span>
+    <span class="p">....</span>
+    <span class="n">float4</span> <span class="n">_DirectionalLightDirectionsAndMasks</span><span class="p">[</span><span class="n">MAX_DIRECTIONAL_LIGHT_COUNT</span><span class="p">];</span>
+    <span class="p">....</span>
+    <span class="n">float4</span> <span class="n">_OtherLightDirectionsAndMasks</span><span class="p">[</span><span class="n">MAX_OTHER_LIGHT_COUNT</span><span class="p">];</span>
+    <span class="p">....</span>
+<span class="n">CBUFFER_END</span>
+</pre></table></code></div></div><p>在 <code class="language-plaintext highlighter-rouge">GetDirectionalLight</code> 中复制遮罩。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">light</span><span class="p">.</span><span class="n">direction</span> <span class="p">=</span> <span class="n">_DirectionalLightDirectionsAndMasks</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">xyz</span><span class="p">;</span>
+<span class="n">light</span><span class="p">.</span><span class="n">renderingLayerMask</span> <span class="p">=</span> <span class="nf">asuint</span><span class="p">(</span><span class="n">_DirectionalLightDirectionsAndMasks</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">w</span><span class="p">);</span>
+</pre></table></code></div></div><p>在 <code class="language-plaintext highlighter-rouge">GetOtherLight</code> 中也是如此。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">float3</span> <span class="n">spotDirection</span> <span class="p">=</span> <span class="n">_OtherLightDirectionsAndMasks</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">xyz</span><span class="p">;</span>
+<span class="n">light</span><span class="p">.</span><span class="n">renderingLayerMask</span> <span class="p">=</span> <span class="nf">asuint</span><span class="p">(</span><span class="n">_OtherLightDirectionsAndMasks</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">w</span><span class="p">);</span>
+</pre></table></code></div></div><p>在 CPU 端，调整我们的 <code class="language-plaintext highlighter-rouge">Lighting</code> 类中的标识符和数组名称以匹配。然后还复制光源的渲染层遮罩。我们从 <code class="language-plaintext highlighter-rouge">SetupDirectionalLight</code> 开始，它现在还需要直接访问 Light 对象。让我们将其添加为参数。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">SetupDirectionalLight</span> <span class="p">(</span>
+    <span class="kt">int</span> <span class="n">index</span><span class="p">,</span> <span class="kt">int</span> <span class="n">visibleIndex</span><span class="p">,</span> <span class="k">ref</span> <span class="n">VisibleLight</span> <span class="n">visibleLight</span><span class="p">,</span> <span class="n">Light</span> <span class="n">light</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="n">dirLightColors</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span> <span class="n">visibleLight</span><span class="p">.</span><span class="n">finalColor</span><span class="p">;</span>
+    <span class="n">Vector4</span> <span class="n">dirAndMask</span> <span class="p">=</span> <span class="p">-</span><span class="n">visibleLight</span><span class="p">.</span><span class="n">localToWorldMatrix</span><span class="p">.</span><span class="nf">GetColumn</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+    <span class="n">dirAndMask</span><span class="p">.</span><span class="n">w</span> <span class="p">=</span> <span class="n">light</span><span class="p">.</span><span class="n">renderingLayerMask</span><span class="p">;</span>
+    <span class="n">dirLightDirectionsAndMasks</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span> <span class="n">dirAndMask</span><span class="p">;</span>
+    <span class="n">dirLightShadowData</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span>
+        <span class="n">shadows</span><span class="p">.</span><span class="nf">ReserveDirectionalShadows</span><span class="p">(</span><span class="n">light</span><span class="p">,</span> <span class="n">visibleIndex</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>对 <code class="language-plaintext highlighter-rouge">SetupSpotLight</code> 进行相同的更改，还添加 Light 参数以保持一致。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">SetupSpotLight</span> <span class="p">(</span>
+    <span class="kt">int</span> <span class="n">index</span><span class="p">,</span> <span class="kt">int</span> <span class="n">visibleIndex</span><span class="p">,</span> <span class="k">ref</span> <span class="n">VisibleLight</span> <span class="n">visibleLight</span><span class="p">,</span> <span class="n">Light</span> <span class="n">light</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="n">Vector4</span> <span class="n">dirAndMask</span> <span class="p">=</span> <span class="p">-</span><span class="n">visibleLight</span><span class="p">.</span><span class="n">localToWorldMatrix</span><span class="p">.</span><span class="nf">GetColumn</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+    <span class="n">dirAndMask</span><span class="p">.</span><span class="n">w</span> <span class="p">=</span> <span class="n">light</span><span class="p">.</span><span class="n">renderingLayerMask</span><span class="p">;</span>
+    <span class="n">otherLightDirectionsAndMasks</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span> <span class="n">dirAndMask</span><span class="p">;</span>
+    <span class="c1">//Light light = visibleLight.light;</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>然后对 <code class="language-plaintext highlighter-rouge">SetupPointLight</code> 执行此操作，它现在还必须更改 <code class="language-plaintext highlighter-rouge">otherLightDirectionsAndMasks</code>。由于它不使用方向，可以将其设置为零。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">SetupPointLight</span> <span class="p">(</span>
+    <span class="kt">int</span> <span class="n">index</span><span class="p">,</span> <span class="kt">int</span> <span class="n">visibleIndex</span><span class="p">,</span> <span class="k">ref</span> <span class="n">VisibleLight</span> <span class="n">visibleLight</span><span class="p">,</span> <span class="n">Light</span> <span class="n">light</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="n">Vector4</span> <span class="n">dirAndmask</span> <span class="p">=</span> <span class="n">Vector4</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+    <span class="n">dirAndmask</span><span class="p">.</span><span class="n">w</span> <span class="p">=</span> <span class="n">light</span><span class="p">.</span><span class="n">renderingLayerMask</span><span class="p">;</span>
+    <span class="n">otherLightDirectionsAndMasks</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span> <span class="n">dirAndmask</span><span class="p">;</span>
+    <span class="c1">//Light light = visibleLight.light;</span>
+    <span class="n">otherLightShadowData</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span>
+        <span class="n">shadows</span><span class="p">.</span><span class="nf">ReserveOtherShadows</span><span class="p">(</span><span class="n">light</span><span class="p">,</span> <span class="n">visibleIndex</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>现在我们必须在 <code class="language-plaintext highlighter-rouge">SetupLights</code> 中抓取 Light 对象一次并将其传递给所有设置方法。我们也会在这里稍后对光源做其他事情。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre><td class="rouge-code"><pre><span class="n">VisibleLight</span> <span class="n">visibleLight</span> <span class="p">=</span> <span class="n">visibleLights</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="n">Light</span> <span class="n">light</span> <span class="p">=</span> <span class="n">visibleLight</span><span class="p">.</span><span class="n">light</span><span class="p">;</span>
+<span class="k">switch</span> <span class="p">(</span><span class="n">visibleLight</span><span class="p">.</span><span class="n">lightType</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">LightType</span><span class="p">.</span><span class="n">Directional</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dirLightCount</span> <span class="p">&lt;</span> <span class="n">maxDirLightCount</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">SetupDirectionalLight</span><span class="p">(</span>
+                <span class="n">dirLightCount</span><span class="p">++,</span> <span class="n">i</span><span class="p">,</span> <span class="k">ref</span> <span class="n">visibleLight</span><span class="p">,</span> <span class="n">light</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">LightType</span><span class="p">.</span><span class="n">Point</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">otherLightCount</span> <span class="p">&lt;</span> <span class="n">maxOtherLightCount</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">newIndex</span> <span class="p">=</span> <span class="n">otherLightCount</span><span class="p">;</span>
+            <span class="nf">SetupPointLight</span><span class="p">(</span><span class="n">otherLightCount</span><span class="p">++,</span> <span class="n">i</span><span class="p">,</span> <span class="k">ref</span> <span class="n">visibleLight</span><span class="p">,</span> <span class="n">light</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">LightType</span><span class="p">.</span><span class="n">Spot</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">otherLightCount</span> <span class="p">&lt;</span> <span class="n">maxOtherLightCount</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">newIndex</span> <span class="p">=</span> <span class="n">otherLightCount</span><span class="p">;</span>
+            <span class="nf">SetupSpotLight</span><span class="p">(</span><span class="n">otherLightCount</span><span class="p">++,</span> <span class="n">i</span><span class="p">,</span> <span class="k">ref</span> <span class="n">visibleLight</span><span class="p">,</span> <span class="n">light</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>回到 GPU 端，在 <code class="language-plaintext highlighter-rouge">Lighting</code> 中添加一个 <code class="language-plaintext highlighter-rouge">RenderingLayersOverlap</code> 函数，返回表面和光源的遮罩是否重叠。这是通过检查位掩码的按位与是否非零来完成的。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kt">bool</span> <span class="nf">RenderingLayersOverlap</span> <span class="p">(</span><span class="n">Surface</span> <span class="n">surface</span><span class="p">,</span> <span class="n">Light</span> <span class="n">light</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">surface</span><span class="p">.</span><span class="n">renderingLayerMask</span> <span class="p">&amp;</span> <span class="n">light</span><span class="p">.</span><span class="n">renderingLayerMask</span><span class="p">)</span> <span class="p">!=</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><aside class="collapsible-aside"><h3>着色器中支持位运算吗？</h3><div><p>是的，除非你的目标是 OpenGL ES 2.0，而我们不针对它。</p></div></aside><p>现在我们可以使用此方法在 <code class="language-plaintext highlighter-rouge">GetLighting</code> 的三个循环内检查是否需要添加光照。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre><td class="rouge-code"><pre><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="nf">GetDirectionalLightCount</span><span class="p">();</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+    <span class="n">Light</span> <span class="n">light</span> <span class="p">=</span> <span class="nf">GetDirectionalLight</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">surfaceWS</span><span class="p">,</span> <span class="n">shadowData</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nf">RenderingLayersOverlap</span><span class="p">(</span><span class="n">surfaceWS</span><span class="p">,</span> <span class="n">light</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">color</span> <span class="p">+=</span> <span class="nf">GetLighting</span><span class="p">(</span><span class="n">surfaceWS</span><span class="p">,</span> <span class="n">brdf</span><span class="p">,</span> <span class="n">light</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">#if defined(_LIGHTS_PER_OBJECT)
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="nf">min</span><span class="p">(</span><span class="n">unity_LightData</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="m">8</span><span class="p">);</span> <span class="n">j</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">lightIndex</span> <span class="p">=</span> <span class="n">unity_LightIndices</span><span class="p">[</span><span class="n">j</span> <span class="p">/</span> <span class="m">4</span><span class="p">][</span><span class="n">j</span> <span class="p">%</span> <span class="m">4</span><span class="p">];</span>
+        <span class="n">Light</span> <span class="n">light</span> <span class="p">=</span> <span class="nf">GetOtherLight</span><span class="p">(</span><span class="n">lightIndex</span><span class="p">,</span> <span class="n">surfaceWS</span><span class="p">,</span> <span class="n">shadowData</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nf">RenderingLayersOverlap</span><span class="p">(</span><span class="n">surfaceWS</span><span class="p">,</span> <span class="n">light</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">color</span> <span class="p">+=</span> <span class="nf">GetLighting</span><span class="p">(</span><span class="n">surfaceWS</span><span class="p">,</span> <span class="n">brdf</span><span class="p">,</span> <span class="n">light</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="cp">#else
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="nf">GetOtherLightCount</span><span class="p">();</span> <span class="n">j</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="n">Light</span> <span class="n">light</span> <span class="p">=</span> <span class="nf">GetOtherLight</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">surfaceWS</span><span class="p">,</span> <span class="n">shadowData</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nf">RenderingLayersOverlap</span><span class="p">(</span><span class="n">surfaceWS</span><span class="p">,</span> <span class="n">light</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">color</span> <span class="p">+=</span> <span class="nf">GetLighting</span><span class="p">(</span><span class="n">surfaceWS</span><span class="p">,</span> <span class="n">brdf</span><span class="p">,</span> <span class="n">light</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="cp">#endif
+</span></pre></table></code></div></div><aside class="collapsible-aside"><h3>我们不能在另一个 GetLighting 函数中放置检查吗？</h3><div><p>可以，这会导致代码稍微少一些。但是，在这种情况下，着色器编译器不会生成分支。光照总是会被计算，如果不需要则被丢弃。你可以使用 <code class="language-plaintext highlighter-rouge">UNITY_BRANCH</code> 强制分支，但如果在跳过光源时返回零，你仍然可能得到不必要的加法。你也可以解决这个问题，但此时代码变得复杂，收益很小。</p></div></aside><h3 id="将-int-重新解释为-float"><span class="me-2">将 Int 重新解释为 Float</span><a href="#将-int-重新解释为-float" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>尽管此时渲染遮罩影响光照，但它不能正确执行。<code class="language-plaintext highlighter-rouge">Light.renderingLayerMask</code> 属性将其位掩码公开为 int，并且在光源设置方法中转换为 float 时会被破坏。没有办法直接将整数数组发送到 GPU，所以我们必须以某种方式在不转换的情况下将 int 重新解释为 float，但 C# 中没有直接等效于 <code class="language-plaintext highlighter-rouge">asuint</code> 的函数。</p><p>我们不能像在 HLSL 中那样简单地在 C# 中重新解释数据，因为 C# 是强类型的。我们可以做的是通过使用联合结构来别名数据类型。我们将通过向 int 添加 <code class="language-plaintext highlighter-rouge">ReinterpretAsFloat</code> 扩展方法来隐藏这种方法。为此方法创建一个静态 <code class="language-plaintext highlighter-rouge">ReinterpretExtensions</code> 类，它最初只执行常规类型转换。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">ReinterpretExtensions</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">float</span> <span class="nf">ReinterpretAsFloat</span> <span class="p">(</span><span class="k">this</span> <span class="kt">int</span> <span class="k">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>在三个光源设置方法中使用 <code class="language-plaintext highlighter-rouge">ReinterpretAsFloat</code> 而不是依赖隐式转换。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">dirAndMask</span><span class="p">.</span><span class="n">w</span> <span class="p">=</span> <span class="n">light</span><span class="p">.</span><span class="n">renderingLayerMask</span><span class="p">.</span><span class="nf">ReinterpretAsFloat</span><span class="p">();</span>
+</pre></table></code></div></div><p>然后在 <code class="language-plaintext highlighter-rouge">ReinterpretExtensions</code> 内部定义一个结构类型，具有 int 和 float 字段。在 <code class="language-plaintext highlighter-rouge">ReinterpretAsFloat</code> 中初始化此类型的默认变量，设置其整数值，然后返回其浮点值。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="nc">IntFloat</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">intValue</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">floatValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">static</span> <span class="kt">float</span> <span class="nf">ReinterpretAsFloat</span> <span class="p">(</span><span class="k">this</span> <span class="kt">int</span> <span class="k">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">IntFloat</span> <span class="n">converter</span> <span class="p">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="n">converter</span><span class="p">.</span><span class="n">intValue</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">converter</span><span class="p">.</span><span class="n">floatValue</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>要将其转换为重新解释，我们必须使结构的两个字段重叠，以便它们共享相同的数据。这是可能的，因为两种类型的大小都是四个字节。我们通过使结构的布局显式来实现这一点，通过将 <code class="language-plaintext highlighter-rouge">StructLayout</code> 属性附加到类型，设置为 <code class="language-plaintext highlighter-rouge">LayoutKind.Explicit</code>。然后我们必须将 <code class="language-plaintext highlighter-rouge">FieldOffset</code> 属性添加到其字段以指示字段的数据应放置在何处。将两个偏移量都设置为零，以便它们重叠。这些属性来自 <code class="language-plaintext highlighter-rouge">System.Runtime.InteropServices</code> 命名空间。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System.Runtime.InteropServices</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">ReinterpretExtensions</span> <span class="p">{</span>
+
+    <span class="p">[</span><span class="nf">StructLayout</span><span class="p">(</span><span class="n">LayoutKind</span><span class="p">.</span><span class="n">Explicit</span><span class="p">)]</span>
+    <span class="k">struct</span> <span class="nc">IntFloat</span> <span class="p">{</span>
+
+        <span class="p">[</span><span class="nf">FieldOffset</span><span class="p">(</span><span class="m">0</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">intValue</span><span class="p">;</span>
+
+        <span class="p">[</span><span class="nf">FieldOffset</span><span class="p">(</span><span class="m">0</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">float</span> <span class="n">floatValue</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>现在结构的 int 和 float 字段表示相同的数据，但以不同方式解释。这保持位掩码完整，渲染层遮罩现在可以正确工作。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/directional-renderling-layer-mask.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/directional-renderling-layer-mask.png" alt="方向光忽略一半对象" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">方向光忽略一半对象</figcaption></figure><aside class="collapsible-aside"><h3>为什么不使用不安全代码？</h3><div><p>这是可能的，但不安全代码需要为项目显式启用，这使得共享代码更困难。而且，项目团队可能根本不被允许使用不安全代码。联合结构方法避免了这些问题。</p></div></aside><h3 id="摄像机渲染层遮罩"><span class="me-2">摄像机渲染层遮罩</span><a href="#摄像机渲染层遮罩" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>除了使用现有的剔除遮罩外，我们还可以使用渲染层遮罩来限制摄像机渲染的内容。Camera 没有渲染层遮罩属性，但我们可以将其添加到 <code class="language-plaintext highlighter-rouge">CameraSettings</code>。我们将使其为 int，因为光源的遮罩也作为 int 公开。默认设置为 -1，表示所有层。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="kt">int</span> <span class="n">renderingLayerMask</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/camera-rendering-layer-mask-int.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/camera-rendering-layer-mask-int.png" alt="摄像机渲染层遮罩，作为整数公开" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">摄像机渲染层遮罩，作为整数公开</figcaption></figure><p>要将遮罩公开为下拉菜单，我们必须为其创建自定义 GUI。但与其为整个 <code class="language-plaintext highlighter-rouge">CameraSettings</code> 类创建自定义编辑器，不如仅为渲染层遮罩创建一个。</p><p>首先，要指示字段表示渲染层遮罩，创建一个扩展 <code class="language-plaintext highlighter-rouge">PropertyAttribute</code> 的 <code class="language-plaintext highlighter-rouge">RenderingLayerMaskFieldAttribute</code> 类。这只是一个标记属性，不需要做其他任何事情。请注意，这不是编辑器类型，因此不应放在 Editor 文件夹中。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">RenderingLayerMaskFieldAttribute</span> <span class="p">:</span> <span class="n">PropertyAttribute</span> <span class="p">{}</span>
+</pre></table></code></div></div><p>将此属性附加到我们的渲染层遮罩字段。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="p">[</span><span class="n">RenderingLayerMaskField</span><span class="p">]</span>
+<span class="k">public</span> <span class="kt">int</span> <span class="n">renderingLayerMask</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+</pre></table></code></div></div><p>现在创建一个扩展 <code class="language-plaintext highlighter-rouge">PropertyDrawer</code> 的自定义属性绘制器编辑器类，为我们的属性类型使用 <code class="language-plaintext highlighter-rouge">CustomPropertyDrawer</code> 属性。将 <code class="language-plaintext highlighter-rouge">CustomLightEditor.DrawRenderingLayerMask</code> 复制到其中，将其重命名为 <code class="language-plaintext highlighter-rouge">Draw</code>，并将其设为公共静态。然后给它三个参数：位置 Rect、序列化属性和 GUIContent 标签。使用这些来调用 <code class="language-plaintext highlighter-rouge">EditorGUI.MaskField</code> 而不是 <code class="language-plaintext highlighter-rouge">EditorGUILayout.MaskField</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">UnityEditor</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine.Rendering</span><span class="p">;</span>
+
+<span class="p">[</span><span class="nf">CustomPropertyDrawer</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">RenderingLayerMaskFieldAttribute</span><span class="p">))]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">RenderingLayerMaskDrawer</span> <span class="p">:</span> <span class="n">PropertyDrawer</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Draw</span> <span class="p">(</span>
+        <span class="n">Rect</span> <span class="n">position</span><span class="p">,</span> <span class="n">SerializedProperty</span> <span class="n">property</span><span class="p">,</span> <span class="n">GUIContent</span> <span class="n">label</span>
+    <span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//SerializedProperty property = settings.renderingLayerMask;</span>
+        <span class="n">EditorGUI</span><span class="p">.</span><span class="n">showMixedValue</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">hasMultipleDifferentValues</span><span class="p">;</span>
+        <span class="n">EditorGUI</span><span class="p">.</span><span class="nf">BeginChangeCheck</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">mask</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">intValue</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mask</span> <span class="p">==</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mask</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">mask</span> <span class="p">=</span> <span class="n">EditorGUI</span><span class="p">.</span><span class="nf">MaskField</span><span class="p">(</span>
+            <span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span>
+            <span class="n">GraphicsSettings</span><span class="p">.</span><span class="n">currentRenderPipeline</span><span class="p">.</span><span class="n">renderingLayerMaskNames</span>
+        <span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">EditorGUI</span><span class="p">.</span><span class="nf">EndChangeCheck</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">property</span><span class="p">.</span><span class="n">intValue</span> <span class="p">=</span> <span class="n">mask</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span> <span class="p">?</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span> <span class="p">:</span> <span class="n">mask</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">EditorGUI</span><span class="p">.</span><span class="n">showMixedValue</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>我们只需要在属性的基础类型是 uint 时单独处理 -1。如果其 type 属性等于 “uint”，则是这种情况。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="kt">int</span> <span class="n">mask</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">intValue</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="n">isUint</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">type</span> <span class="p">==</span> <span class="s">"uint"</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">isUint</span> <span class="p">&amp;&amp;</span> <span class="n">mask</span> <span class="p">==</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mask</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">....</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">EditorGUI</span><span class="p">.</span><span class="nf">EndChangeCheck</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">property</span><span class="p">.</span><span class="n">intValue</span> <span class="p">=</span> <span class="n">isUint</span> <span class="p">&amp;&amp;</span> <span class="n">mask</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span> <span class="p">?</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span> <span class="p">:</span> <span class="n">mask</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>然后覆盖 <code class="language-plaintext highlighter-rouge">OnGUI</code> 方法，简单地将其调用转发给 <code class="language-plaintext highlighter-rouge">Draw</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnGUI</span> <span class="p">(</span>
+    <span class="n">Rect</span> <span class="n">position</span><span class="p">,</span> <span class="n">SerializedProperty</span> <span class="n">property</span><span class="p">,</span> <span class="n">GUIContent</span> <span class="n">label</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="nf">Draw</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">property</span><span class="p">,</span> <span class="n">label</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/camera-rendering-layer-mask.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/camera-rendering-layer-mask.png" alt="渲染层遮罩下拉菜单" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">渲染层遮罩下拉菜单</figcaption></figure><p>为了使 <code class="language-plaintext highlighter-rouge">Draw</code> 更易于使用，添加一个没有 Rect 参数的版本。调用 <code class="language-plaintext highlighter-rouge">EditorGUILayout.GetControlRect</code> 从布局引擎获取单行位置矩形。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Draw</span> <span class="p">(</span><span class="n">SerializedProperty</span> <span class="n">property</span><span class="p">,</span> <span class="n">GUIContent</span> <span class="n">label</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">Draw</span><span class="p">(</span><span class="n">EditorGUILayout</span><span class="p">.</span><span class="nf">GetControlRect</span><span class="p">(),</span> <span class="n">property</span><span class="p">,</span> <span class="n">label</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>现在我们可以从 <code class="language-plaintext highlighter-rouge">CustomLightEditor</code> 中删除 <code class="language-plaintext highlighter-rouge">DrawRenderingLayerMask</code> 方法并调用 <code class="language-plaintext highlighter-rouge">RenderingLayerMaskDrawer.Draw</code>。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnInspectorGUI</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">base</span><span class="p">.</span><span class="nf">OnInspectorGUI</span><span class="p">();</span>
+    <span class="c1">//DrawRenderingLayerMask();</span>
+    <span class="n">RenderingLayerMaskDrawer</span><span class="p">.</span><span class="nf">Draw</span><span class="p">(</span>
+        <span class="n">settings</span><span class="p">.</span><span class="n">renderingLayerMask</span><span class="p">,</span> <span class="n">renderingLayerMaskLabel</span>
+    <span class="p">);</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+
+<span class="c1">//void DrawRenderingLayerMask () { .... }</span>
+</pre></table></code></div></div><p>要应用摄像机的渲染层遮罩，为 <code class="language-plaintext highlighter-rouge">CameraRenderer.DrawVisibleGeometry</code> 添加一个参数，并将其作为名为 <code class="language-plaintext highlighter-rouge">renderingLayerMask</code> 的参数传递给 <code class="language-plaintext highlighter-rouge">FilteringSettings</code> 构造函数方法，转换为 uint。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">DrawVisibleGeometry</span> <span class="p">(</span>
+    <span class="kt">bool</span> <span class="n">useDynamicBatching</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">useGPUInstancing</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">useLightsPerObject</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">renderingLayerMask</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="kt">var</span> <span class="n">filteringSettings</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FilteringSettings</span><span class="p">(</span>
+        <span class="n">RenderQueueRange</span><span class="p">.</span><span class="n">opaque</span><span class="p">,</span> <span class="n">renderingLayerMask</span><span class="p">:</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="n">renderingLayerMask</span>
+    <span class="p">);</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>然后在 <code class="language-plaintext highlighter-rouge">Render</code> 中调用 <code class="language-plaintext highlighter-rouge">DrawVisibleGeometry</code> 时传递渲染层遮罩。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nf">DrawVisibleGeometry</span><span class="p">(</span>
+    <span class="n">useDynamicBatching</span><span class="p">,</span> <span class="n">useGPUInstancing</span><span class="p">,</span> <span class="n">useLightsPerObject</span><span class="p">,</span>
+    <span class="n">cameraSettings</span><span class="p">.</span><span class="n">renderingLayerMask</span>
+<span class="p">);</span>
+</pre></table></code></div></div><p>现在可以使用更灵活的渲染层遮罩来控制摄像机渲染的内容。例如，我们可以让一些对象投射阴影，即使摄像机看不到它们，而不需要特殊的仅阴影对象。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/rendering-objects-not-affected-by-light.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/rendering-objects-not-affected-by-light.png" alt="仅渲染不受光源影响的对象，加上地面" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">仅渲染不受光源影响的对象，加上地面</figcaption></figure><p>要记住的一件事是，只有剔除遮罩用于剔除，所以如果你排除很多对象，常规剔除遮罩将表现更好。</p><h3 id="为每个摄像机遮罩光源"><span class="me-2">为每个摄像机遮罩光源</span><a href="#为每个摄像机遮罩光源" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>尽管 Unity 的 RP 不这样做，但除了几何体外，还可以为每个摄像机遮罩光源。我们将再次使用渲染层来实现这一点，但因为这是非标准行为，让我们通过向 <code class="language-plaintext highlighter-rouge">CameraSettings</code> 添加一个切换开关来使其可选。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="kt">bool</span> <span class="n">maskLights</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+</pre></table></code></div></div><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/mask-lights.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/mask-lights.png" alt="摄像机设置为遮罩光源" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">摄像机设置为遮罩光源</figcaption></figure><p>我们需要做的就是在 <code class="language-plaintext highlighter-rouge">Lighting.SetupLights</code> 中跳过遮罩光源。为此向方法添加一个渲染层遮罩参数，然后检查每个光源的渲染层遮罩是否与提供的遮罩重叠。如果是这样，继续执行 switch 语句来设置光源，否则跳过它。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="k">void</span> <span class="nf">SetupLights</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">useLightsPerObject</span><span class="p">,</span> <span class="kt">int</span> <span class="n">renderingLayerMask</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">visibleLights</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">newIndex</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="n">VisibleLight</span> <span class="n">visibleLight</span> <span class="p">=</span> <span class="n">visibleLights</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">Light</span> <span class="n">light</span> <span class="p">=</span> <span class="n">visibleLight</span><span class="p">.</span><span class="n">light</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">light</span><span class="p">.</span><span class="n">renderingLayerMask</span> <span class="p">&amp;</span> <span class="n">renderingLayerMask</span><span class="p">)</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">switch</span> <span class="p">(</span><span class="n">visibleLight</span><span class="p">.</span><span class="n">lightType</span><span class="p">)</span> <span class="p">{</span>
+                <span class="p">....</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">useLightsPerObject</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">indexMap</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">newIndex</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">Lighting.Setup</code> 必须传递渲染层遮罩。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="k">public</span> <span class="k">void</span> <span class="nf">Setup</span> <span class="p">(</span>
+    <span class="n">ScriptableRenderContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">CullingResults</span> <span class="n">cullingResults</span><span class="p">,</span>
+    <span class="n">ShadowSettings</span> <span class="n">shadowSettings</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">useLightsPerObject</span><span class="p">,</span> <span class="kt">int</span> <span class="n">renderingLayerMask</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="p">....</span>
+    <span class="nf">SetupLights</span><span class="p">(</span><span class="n">useLightsPerObject</span><span class="p">,</span> <span class="n">renderingLayerMask</span><span class="p">);</span>
+    <span class="p">....</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>我们必须在 <code class="language-plaintext highlighter-rouge">CameraRenderer.Render</code> 中提供摄像机的遮罩，但仅当它适用于光源时，否则使用 -1。</p><div class="language-csharp highlighter-rouge"><div class="code-header"> <span data-label-text="C#"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">lighting</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span>
+    <span class="n">context</span><span class="p">,</span> <span class="n">cullingResults</span><span class="p">,</span> <span class="n">shadowSettings</span><span class="p">,</span> <span class="n">useLightsPerObject</span><span class="p">,</span>
+    <span class="n">cameraSettings</span><span class="p">.</span><span class="n">maskLights</span> <span class="p">?</span> <span class="n">cameraSettings</span><span class="p">.</span><span class="n">renderingLayerMask</span> <span class="p">:</span> <span class="p">-</span><span class="m">1</span>
+<span class="p">);</span>
+</pre></table></code></div></div><p>现在我们可以做一些事情，比如让两个摄像机渲染相同的场景，但使用不同的光照，而不必在它们之间调整光源。这也使得在世界原点渲染单独的场景（如角色肖像）变得容易，而不会受到主场景光照的影响。请注意，这仅适用于实时光照，完全烘焙的光和混合光的烘焙间接贡献无法遮罩。</p><figure style="margin:1rem 0;"><div style="display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;"><div style="flex:0 1 auto;min-width:150px;max-width:300px;"> <a href="https://img.damonc.top/posts/SRP/srp14multiple-camears/two-camera-different-lighting.png" class="popup img-link shimmer" class="img-link shimmer" ><img src="https://img.damonc.top/posts/SRP/srp14multiple-camears/two-camera-different-lighting.png" alt="两个摄像机在不同光照下看到相同场景" width="100%" height="auto" loading="lazy"></a></div></div><figcaption class="text-center pt-2 pb-2" style="font-size:0.8em;color:var(--text-color-secondary);">两个摄像机在不同光照下看到相同场景</figcaption></figure><aside class="collapsible-aside"><h3>如何为该场景配置遮罩的？</h3><div><p>所有可见对象的渲染层遮罩都设置为所有层。方向光的遮罩设置为单个层，点光源的遮罩设置为不同的单个层。左侧摄像机的遮罩设置为除点光源层之外的所有层。右侧摄像机的遮罩设置为除方向光层之外的所有层。结果是每个摄像机只看到两个光源中的一个。</p></div></aside><hr /><p>下一个教程是 <a href="../particles">Particles</a></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw me-1"></i> <a href="/categories/unity3d/">Unity3D</a>, <a href="/categories/scriptrenderpipeline/">ScriptRenderPipeline</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw me-1"></i> <a href="/tags/srp/" class="post-tag no-text-decoration" >SRP</a> <a href="/tags/renderinglayers/" class="post-tag no-text-decoration" >RenderingLayers</a></div><div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 " ><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF:%E5%A4%9A%E6%91%84%E5%83%8F%E6%9C%BA%E6%B8%B2%E6%9F%93%20(%E7%BF%BB%E8%AF%91%E5%8D%81%E5%9B%9B)%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&url=www.damonc.top%2Fposts%2Fmultiple-camera%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF:%E5%A4%9A%E6%91%84%E5%83%8F%E6%9C%BA%E6%B8%B2%E6%9F%93%20(%E7%BF%BB%E8%AF%91%E5%8D%81%E5%9B%9B)%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF&u=www.damonc.top%2Fposts%2Fmultiple-camera%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=www.damonc.top%2Fposts%2Fmultiple-camera%2F&text=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF:%E5%A4%9A%E6%91%84%E5%83%8F%E6%9C%BA%E6%B8%B2%E6%9F%93%20(%E7%BF%BB%E8%AF%91%E5%8D%81%E5%9B%9B)%20-%20%E4%BB%97%E5%89%91%E5%A4%A9%E6%B6%AF" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!" > <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span></div></div></div></article></main><aside aria-label="Panel" id="panel-wrapper" class="ps-2 text-muted"><div class="access"><section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2><ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2"><li class="text-truncate lh-lg"> <a href="/posts/particles/">粒子系统：颜色和深度纹理</a><li class="text-truncate lh-lg"> <a href="/posts/color-grading/">Unity自定义渲染管线13：色彩分级</a><li class="text-truncate lh-lg"> <a href="/posts/post-processing/">自定义渲染管线:后处理 (翻译十一)</a><li class="text-truncate lh-lg"> <a href="/posts/hdr/">自定义渲染管线:HDR (翻译十二)</a><li class="text-truncate lh-lg"> <a href="/posts/point-spot-light-shadow/">自定义渲染管线:点光源与聚光灯阴影 (翻译十)</a></ul></section><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/shader/">Shader</a> <a class="post-tag btn btn-outline-primary" href="/tags/srp/">SRP</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/bloom/">Bloom</a> <a class="post-tag btn btn-outline-primary" href="/tags/point-light/">Point Light</a> <a class="post-tag btn btn-outline-primary" href="/tags/post-processing/">Post Processing</a> <a class="post-tag btn btn-outline-primary" href="/tags/shadows/">Shadows</a> <a class="post-tag btn btn-outline-primary" href="/tags/spot-light/">Spot Light</a></div></section></div><div class="toc-border-cover z-3"></div><section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2><nav id="toc"></nav></section></aside></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4"><aside id="related-posts" aria-labelledby="related-label"><h3 class="mb-4" id="related-label">Further Reading</h3><nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4"><article class="col"> <a href="/posts/particles/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1606406400" data-df="ll" > Nov 27, 2020 </time><h4 class="pt-0 my-2">粒子系统：颜色和深度纹理</h4><div class="text-muted"><p>深入探索Unity粒子系统的渲染技术，包括翻书动画、近距离淡入淡出、软粒子和扭曲效果的实现原理与实践。</p></div></div></a></article><article class="col"> <a href="/posts/color-grading/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1601344800" data-df="ll" > Sep 29, 2020 </time><h4 class="pt-0 my-2">Unity自定义渲染管线13：色彩分级</h4><div class="text-muted"><p>通过色彩分级调整图像的颜色，复制 URP/HDRP 的多种色彩分级工具，并使用色彩查找表（LUT）来优化性能。</p></div></div></a></article><article class="col"> <a href="/posts/hdr/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1597593600" data-df="ll" > Aug 17, 2020 </time><h4 class="pt-0 my-2">自定义渲染管线:HDR (翻译十二)</h4><div class="text-muted"><p>实现高动态范围渲染、散射和高动态范围映射</p></div></div></a></article></nav></aside><nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/color-grading/" class="btn btn-outline-primary" aria-label="Older" ><p>Unity自定义渲染管线13：色彩分级</p></a> <a href="/posts/particles/" class="btn btn-outline-primary" aria-label="Newer" ><p>粒子系统：颜色和深度纹理</p></a></nav><div id="waline-container" class="mt-5 pt-4" style="border-top: 1px dashed #ccc; padding-top: 20px;"><div id="waline"></div></div><link rel="stylesheet" href="/assets/css/waline.css"> <script type="module"> window.WalinePrefix = "/pro"; const observer = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { observer.disconnect(); import('/assets/js/dist/waline.min.js').then(({ init }) => { init({ el: '#waline', serverURL: 'https://comments.damonc.top', dark: 'html[data-mode="dark"]', emoji: [ 'https://fastly.jsdelivr.net/npm/@waline/emojis@1.4.0/qq' ], reaction: true, pageview: false }); }); } }); observer.observe(document.getElementById('waline-container')); </script><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 " ><p>© <time>2026</time> <a href="https://github.com/damonc-top">仗剑天涯</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author." >Some rights reserved.</span></p><p>The blog is powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer></div></div><div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content"><div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2><div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/shader/">Shader</a> <a class="post-tag btn btn-outline-primary" href="/tags/srp/">SRP</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/cli-agent/">CLI Agent</a> <a class="post-tag btn btn-outline-primary" href="/tags/best-practices/">Best Practices</a> <a class="post-tag btn btn-outline-primary" href="/tags/bloom/">Bloom</a> <a class="post-tag btn btn-outline-primary" href="/tags/point-light/">Point Light</a> <a class="post-tag btn btn-outline-primary" href="/tags/post-processing/">Post Processing</a> <a class="post-tag btn btn-outline-primary" href="/tags/shadows/">Shadows</a> <a class="post-tag btn btn-outline-primary" href="/tags/spot-light/">Spot Light</a></div></section></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside></div><div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div><aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false" ><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close" ></button></div><div class="toast-body text-center pt-0"><p class="px-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
