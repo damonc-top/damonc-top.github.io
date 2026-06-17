@@ -3,14 +3,14 @@
 <div align="center">
 
   <!-- Project Shield Badges -->
-  [![Site](https://img.shields.io/badge/Site-www.damonc.top-blue?style=flat-square)](https://www.damonc.top)
-  [![Focus](https://img.shields.io/badge/Focus-GameDev_&_Engine-red?style=flat-square)](https://www.damonc.top)
+  [![Site](https://img.shields.io/badge/Site-blog.damonc.top-blue?style=flat-square)](https://blog.damonc.top)
+  [![Focus](https://img.shields.io/badge/Focus-GameDev_&_Engine-red?style=flat-square)](https://blog.damonc.top)
   [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](./LICENSE)
   [![PWA](https://img.shields.io/badge/PWA-Enabled-orange?style=flat-square)](https://web.dev/progressive-web-apps/)
 
   **听说读写看做忘摊手 —— 专注于游戏开发与引擎技术的深度探索**
 
-  [访问博客主页](https://www.damonc.top) · [文章分类](https://www.damonc.top/categories/) · [关于我](https://www.damonc.top/about/)
+  [访问博客主页](https://blog.damonc.top) · [文章分类](https://blog.damonc.top/categories/) · [关于我](https://blog.damonc.top/about/)
 
 </div>
 
